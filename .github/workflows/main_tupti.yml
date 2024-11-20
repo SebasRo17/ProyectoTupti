@@ -21,6 +21,10 @@ jobs:
         with:
           node-version: '20.x'
 
+      - name: Change to project directory
+        run: cd ProyectoTupti
+
+
       - name: npm install, build, and test
         run: |
           npm install
