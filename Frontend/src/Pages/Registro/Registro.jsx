@@ -1,9 +1,10 @@
 import React from "react";
+import { Link } from 'react-router-dom'
 import "./Registro.css";
 import { FcGoogle } from "react-icons/fc"; // Ícono de Google
 import { FaFacebookF } from "react-icons/fa"; // Ícono de Facebook
 
-function App() {
+function Registro() {
   return (
     <div className="App">
       <div className="modal-overlay">
@@ -60,4 +61,6 @@ function App() {
   );
 }
 
+export default Registro;
 export default App;
+

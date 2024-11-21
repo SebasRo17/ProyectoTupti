@@ -5,6 +5,8 @@ import App from './Pages/Registro/Registro.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
-  </StrictMode>,
-)
+    <BrowserRouter> {/* BrowserRouter envuelve todo para manejar las rutas */}
+      <App />
+    </BrowserRouter>
+  </StrictMode>
+);
