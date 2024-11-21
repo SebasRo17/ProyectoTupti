@@ -1,7 +1,8 @@
 import React from "react";
+import { Link } from 'react-router-dom'
 import "./Registro.css";
 
-function App() {
+function Registro() {
   return (
     <div className="App">
       <div className="modal">
@@ -36,4 +37,4 @@ function App() {
   );
 }
 
-export default App;
+export default Registro;
