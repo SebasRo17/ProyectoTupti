@@ -198,9 +198,18 @@ form button:hover {
     padding: 10px;
     font-size: 0.9rem;
   }
-
-  form button {
-    padding: 10px;
-    font-size: 0.9rem;
+  
+  .social-login button:hover {
+    opacity: 0.9;
+  }
+  
+  a {
+    color: #8c8751;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  a:hover {
+    text-decoration: underline;
   }
 }
