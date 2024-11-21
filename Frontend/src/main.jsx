@@ -1,8 +1,7 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import './index.css';
-import App from './Pages/App.jsx'; // Asegúrate de importar el archivo correcto (App.jsx)
-import { BrowserRouter } from 'react-router-dom'; 
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './Pages/Registro/Registro.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
