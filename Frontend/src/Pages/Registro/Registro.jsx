@@ -1,9 +1,10 @@
 import React from "react";
+import { Link } from 'react-router-dom'
 import "./Registro.css";
 import { FcGoogle } from "react-icons/fc"; // Ícono de Google
 import { FaFacebookF } from "react-icons/fa"; // Ícono de Facebook
 
-function App() {
+function Registro() {
   return (
     <div className="App">
       <div className="modal-overlay">
@@ -38,13 +39,19 @@ function App() {
             {/* Botones sociales */}
             <div className="social-buttons">
               {/* Botón de Google */}
+              <div className="icon-button">
+                <FcGoogle />
+              </div>
               <button className="social-button google">
-                <FcGoogle className="social-icon" /> {/* Ícono de Google */}
+                Registrar con Google
               </button>
 
-              {/* Botón de Facebook con solo el ícono */}
+              {/* Botón de Facebook */}
+              <div className="icon-button">
+                <FaFacebookF />
+              </div>
               <button className="social-button facebook">
-                <FaFacebookF className="social-icon" /> {/* Ícono de Facebook */}
+                Registrar con Facebook
               </button>
             </div>
           </div>
@@ -54,4 +61,5 @@ function App() {
   );
 }
 
-export default App;
+export default Registro;
+
