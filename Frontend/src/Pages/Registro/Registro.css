@@ -3,6 +3,10 @@ body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
   background-color: #f5f5f5;
+  height: 100vh; /* Altura total de la ventana */
+  display: flex; /* Centra directamente si quieres centrar solo un elemento */
+  justify-content: center;
+  align-items: center;
 }
 
 /* Contenedor principal */
@@ -12,6 +16,9 @@ body {
   align-items: center;
   height: 100vh;
   background-color: #f5f5f5;
+}
+p {
+  text-align: center; /* Centra el texto dentro del p */
 }
 
 /* Fondo semitransparente para la ventana emergente */
@@ -25,27 +32,49 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Asegura que esté sobre cualquier contenido */
+  z-index: 900; /* Asegura que esté sobre cualquier contenido */
 }
 
 /* Modal emergente */
 .modal {
   display: flex;
   flex-direction: row;
-  width: 850px;
+  width: 1000px;
   max-width: 90%;
   background-color: #ffffff;
-  border-radius: 15px;
+  border-radius:50px;
   overflow: hidden;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Sombra para destacar */
   z-index: 2000; /* Asegura que esté encima del fondo */
+  height: auto; /* Ajusta automáticamente la altura al contenido */
+  
+}
+
+.modal-right p {
+  text-align: center; /* Centra el texto horizontalmente */
+  margin-top: 0px; /* Espacio entre el texto y el botón superior */
+  font-size: 14px; /* Ajusta el tamaño si es necesario */
+  color: #333; /* Color del texto */
+  margin-bottom: 10px; /* Reduce la distancia debajo del texto */
+}
+
+/* Estilo del enlace "Registrarte" */
+.modal-right p a {
+  color: #31817f; /* Cambia este color al que prefieras */
+  text-decoration: none; /* Elimina el subrayado */
+  font-weight: bold; /* Hace que el texto sea más grueso */
+  transition: color 0.3s; /* Suaviza la transición de color */
+}
+
+.modal-right p a:hover {
+  color: #6f93b7; /* Cambia el color cuando pasas el cursor por encima */
 }
 
 /* Sección izquierda del modal */
 .modal-left {
   background-color: #e3f2fd;
   flex: 1.2;
-  padding: 40px;
+  padding: 1px; /*mas ancho azul*/
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -56,83 +85,98 @@ body {
   color: #1e88e5;
   font-size: 2.5rem;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
+
 }
 
 .modal-left h2 {
   color: #1e88e5;
   font-size: 4rem;
   font-weight: bold;
-  margin: 0;
+  margin: 5;
 }
 
 .modal-left p {
   font-size: 1.2rem;
   color: #1e88e5;
-  margin: 20px 0;
+  margin: 0px 0;
   font-style: italic;
 }
 
 /* Sección derecha del modal */
 .modal-right {
   flex: 1;
-  padding: 40px;
+  padding: 90px; /*mas ancho*/
 }
 
 .modal-right h2 {
   color: #333333;
+  text-align: center;
   font-size: 1.8rem;
   margin-bottom: 20px;
+  background: linear-gradient(135deg, #36d1dc, #5b86e5); /* Gradiente azul claro */
+  color: white;
+  border: none;
 }
+
 
 /* Formularios */
 form {
   display: flex;
   flex-direction: column;
+  
 }
 
 form input {
-  margin-bottom: 15px;
-  padding: 12px;
-  border: 1px solid #dcdcdc;
-  border-radius: 12px; /* Curvas más suaves */
+  margin-bottom: 20px; /* Incrementa el espacio entre los campos */
+  padding: 20px;
+  border: 2px solid #dcdcdc;
+  border-radius: 30px; /* Curvas más suaves */
   font-size: 1rem;
 }
 
 form button {
-  padding: 12px;
+  padding: 10px;
   border: none;
-  border-radius: 12px; /* Curvas más suaves */
-  background-color: #1e88e5;
+  border-radius: 30px; /* Curvas más suaves */
+  background-color: #234f50;
+  background: linear-gradient(135deg, #36d1dc, #5b86e5); /* Gradiente azul claro */
+  color: white;
+  border: none;
   color: white;
   font-size: 1rem;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 5px;
   transition: background-color 0.3s ease;
+  border: 1px solid #050505;
+
 }
 
 form button:hover {
-  background-color: #1565c0;
+  background-color: #56778a;
+  
 }
+
 
 /* Login social */
 .social-buttons {
   display: flex;
-  justify-content: space-between;
-  gap: 20px; /* Espacio entre los botones */
+  justify-content: center;
+  gap: 10px; /* Espacio entre los botones */
   align-items: center;
-  margin-top: 0px;
+  margin-top: 30px;
 }
 
 .social-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 10px;
+  padding: 10px 0px;
   width: 100%; /* Asegura el mismo ancho */
-  max-width: 250px;
-  border-radius: 12px; /* Curvas más suaves */
+  max-width: 90px;
+  border-radius: 70px; /* Curvas más suaves */
   transition: 0.3s ease;
+  
 }
 
 .social-button .social-icon {
@@ -142,9 +186,9 @@ form button:hover {
 
 /* Botón de Google */
 .social-button.google {
-  background-color: #db4437;
+  background-color: #d12828;
   color: white;
-  border: 1px solid #ddd;
+  border: 1px solid #050505;
 }
 
 .social-button.google:hover {
@@ -153,19 +197,22 @@ form button:hover {
 
 /* Botón de Facebook */
 .social-button.facebook {
-  background-color: #f9f9f9;
-  color: #0f78ef;
-  border: 1px solid #ddd;
+  background-color: #2a52cc;
+  color: #fcfeff;
+  border: 1px solid #141313;
 }
 
 .social-button.facebook:hover {
   background-color: #7692b7;
 }
 
+
+
 /* Responsividad para pantallas grandes (pantalla completa) */
 @media (min-width: 1024px) {
   .social-button {
-    max-width: 100px; /* Hace los botones más estrechos en pantallas grandes */
+    
+    max-width: 200px; /* Hace los botones más estrechos en pantallas grandes */
   }
 }
 
@@ -181,7 +228,7 @@ form button:hover {
   }
 
   .modal-right {
-    padding: 20px;
+    padding: 8px;
     flex: 1;
   }
 }
@@ -198,18 +245,9 @@ form button:hover {
     padding: 10px;
     font-size: 0.9rem;
   }
-  
-  .social-login button:hover {
-    opacity: 0.9;
-  }
-  
-  a {
-    color: #8c8751;
-    text-decoration: none;
-    font-weight: bold;
-  }
-  
-  a:hover {
-    text-decoration: underline;
+
+  form button {
+    padding: 10px;
+    font-size: 0.9rem;
   }
 }
