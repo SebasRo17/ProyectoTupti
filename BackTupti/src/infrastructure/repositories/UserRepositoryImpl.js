@@ -33,16 +33,22 @@ class UserRepositoryImpl {
   }
   async findByEmail(email) {
     try {
-      return await User.findOne({
-        where: {
-          Email: email
-        }
-      });
+        console.log('Buscando usuario con email:', email);
+        
+        const user = await User.findOne({
+            where: {
+                Email: email  // Asegúrate de usar 'Email' con E mayúscula
+            }
+        });
+        
+        console.log('Resultado de búsqueda:', user ? 'Usuario encontrado' : 'No encontrado');
+        
+        return user;
     } catch (error) {
-      console.error('Error al buscar usuario por email:', error);
-      throw error;
+        console.error('Error al buscar usuario por email:', error);
+        throw error;
     }
-  }
+}
 }
 
 module.exports = new UserRepositoryImpl();
