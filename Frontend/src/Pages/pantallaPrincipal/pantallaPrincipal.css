@@ -5,7 +5,11 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   color: #333;
-  background-color: #f9f9f9;
+  background-image: url('../../Components/Resources/fondo.png');
+  background-size: 1000px 10px; /* Deja que las imágenes mantengan su tamaño original */
+  background-repeat: repeat; /* Repite el fondo en ambas direcciones */
+  background-position: 0 0;
+  overflow-x: hidden;
 }
 
 /* Header */
@@ -14,7 +18,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #007bff;
+  background-color: #A2C579;
   color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -57,14 +61,14 @@ body {
   padding: 8px 12px;
   border: none;
   border-radius: 4px;
-  background-color: #0056b3;
+  background-color: #D2DE32;
   color: white;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .search-bar button:hover {
-  background-color: #004494;
+  background-color: #D2DE32;
 }
 
 .header-icons {
@@ -100,7 +104,7 @@ body {
 
 .menu-links a {
   display: block;
-  color: #007bff;
+  color: #D2DE32;
   margin-bottom: 10px;
   text-decoration: none;
 }
@@ -121,7 +125,7 @@ body {
   margin: -200px auto;
   position: relative;
   border-radius: 10px;
-  background-color: #b1c1c7;
+  background-color: #FFFFDD;
   margin-left: 400px;
   margin-top: -350px;
 }
@@ -152,7 +156,7 @@ body {
   top: 50%;
   transform: translateY(-50%);
   transform: translateX(100%);
-  background-color: #007bff;
+  background-color: #D2DE32;
   color: white;
   border: none;
   border-radius: 50%;
@@ -178,7 +182,7 @@ body {
   overflow-x: auto;
   gap: 10px;
   padding: 10px;
-  background-color: #e9ecef;
+  background-color: #FFFFDD;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -194,7 +198,7 @@ body {
 .category-item .icon {
   font-size: 24px;
   margin-bottom: 4px;
-  color: #007bff;
+  color: #D2DE32;
 }
 
 .fixed-image {
@@ -321,7 +325,7 @@ body {
 }
 
 .app-buttons button {
-  background-color: #007bff;
+  background-color: #e6ec94;
   color: white;
   border: none;
   padding: 10px;
@@ -331,7 +335,7 @@ body {
 }
 
 .app-buttons button:hover {
-  background-color: #0056b3;
+  background-color: #000000;
 }
 
 .tag-container {
@@ -348,3 +352,96 @@ body {
   font-size: 12px;
 }
 
+/* Responsive Design */
+@media (max-width: 768px) {
+  /* Ajustar el header */
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+  }
+
+  .search-bar {
+    flex-direction: column;
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .search-bar input {
+    width: 100%;
+  }
+
+  .header-icons {
+    justify-content: space-around;
+    width: 100%;
+  }
+
+  /* Ajustar menú vertical */
+  .image-menu {
+    position: static; /* Elimina el posicionamiento absoluto */
+    width: 100%;
+    margin: 10px 0;
+    transform: none;
+    z-index: 1; /* Mantener detrás de la imagen fijada */
+  }
+
+  .fixed-image {
+    position: fixed; /* Mantiene la imagen fija en su lugar */
+    top: 10px; /* Ajusta su posición superior */
+    left: 10px; /* Asegura que no se superponga con otros elementos */
+    width: 60px; /* Reduce su tamaño en móviles */
+  }
+
+  /* Ajustar carrusel */
+  .slider-container {
+    width: 100%; /* Asegura que ocupe todo el ancho disponible */
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 0 10px; /* Añade un pequeño relleno lateral */
+    box-sizing: border-box;
+  }
+
+  .slider-images {
+    display: flex;
+    overflow: hidden;
+    gap: 0; /* Elimina espacios entre imágenes */
+  }
+
+  .slider-image {
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .carousel-button {
+    display: none; /* Oculta los botones del carrusel en móviles */
+  }
+
+  /* Ajustar barra de categorías */
+  .categories-bar {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  /* Ajustar contenido principal */
+  .main-content {
+    margin: 0;
+    padding: 10px;
+    margin-top: 20px;
+  }
+
+  .product-item {
+    flex: 0 0 calc(50% - 10px);
+    margin-bottom: 10px;
+  }
+
+  /* Ajustar footer */
+  .footer-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .footer-column {
+    min-width: 100%;
+  }
+}

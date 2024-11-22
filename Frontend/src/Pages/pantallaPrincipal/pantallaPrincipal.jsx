@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './pantallaPrincipal.css';
 import Registro from '../Registro/Registro.jsx';
 
+
 const TuptiPage = ({ carouselImages, categoryImages }) => {
   // Datos predeterminados para el carrusel
   const defaultCarouselImages = Array.from({ length: 10 }, (_, i) => ({
