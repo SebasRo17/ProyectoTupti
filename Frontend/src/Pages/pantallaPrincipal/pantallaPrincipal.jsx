@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './pantallaPrincipal.css';
-import Registro from '../Registro/Registro.jsx';
+import Login from '../Login/Login.jsx';
 
 
 const TuptiPage = ({ carouselImages, categoryImages }) => {
@@ -47,7 +47,7 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
           <button>☰</button>
           <button>📍</button>
           {/* Redirección al hacer clic en el ícono */}
-          <Link to="../Registro/Registro.jsx">
+          <Link to="../Login/Login.jsx">
             <button>👤</button> {/* Aquí usamos el componente Link para redirigir */}
           </Link>
           <button>🛒</button>

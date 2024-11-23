@@ -1,58 +1,54 @@
-import React from "react";
-import { Link } from 'react-router-dom'
-import "./Registro.css";
-import Login from '../Login/Login.jsx';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import "./Login.css";
+import Registro from '../Registro/Registro.jsx';
 import { FcGoogle } from "react-icons/fc"; // Ícono de Google
 import { FaFacebookF } from "react-icons/fa"; // Ícono de Facebook
-
-function Registro() {
+ 
+function Login() {
   return (
     <div className="App">
       <div className="modal-overlay">
         <div className="modal">
           {/* Sección izquierda */}
           <div className="modal-left">
-            <h1>Bienvenido a Tupti</h1>
+            <h1>TUPTI</h1>
             <h2>1</h2>
             <p>“Todo lo que necesitas directo a tu puerta”</p>
           </div>
-
+ 
           {/* Sección derecha */}
           <div className="modal-right">
-            <h2>Regístrate</h2>
+            <h2>Bienvenidos</h2>
             <form>
-              <input type="text" placeholder="Nombre y Apellido" required />
-              <input
-                type="text"
-                placeholder="Documento de Identidad "
-                pattern="\d{10}"
-                title="Ingrese un número de cédula válido (10 dígitos)"
-                required
-              />
               <input type="email" placeholder="Correo electrónico" required />
+              {/*<div>{errors.email && <p>este campo es requerido</p> }</div>*/}
               <input type="password" placeholder="Contraseña" required />
-              <button type="submit">Regístrate</button>
+              <button type="submit">Login</button>
             </form>
+           
+            {/* Opciones adicionales */}
+            <div className="login-options">
+              <label>
+                <input type="checkbox" /> Mantener iniciada la sesión
+              </label>
+              <a href="#" className="forgot-password">¿Olvidaste tu contraseña?</a>
+            </div>
+           
             <p>
-              ¿Ya tienes una cuenta?  <Link to="../Login/Login.jsx"><a href="#">Inicia sesión</a></Link> 
+              ¿No tienes cuenta?<Link to="/Registro/Registro.jsx"> <a href="#">Registrarte</a></Link>
             </p>
-
+ 
             {/* Botones sociales */}
             <div className="social-buttons">
               {/* Botón de Google */}
-              <div className="icon-button">
-                <FcGoogle />
-              </div>
               <button className="social-button google">
-                Registrar con Google
+                <FcGoogle className="social-icon" /> {/* Ícono de Google */}
               </button>
-
-              {/* Botón de Facebook */}
-              <div className="icon-button">
-                <FaFacebookF />
-              </div>
+ 
+              {/* Botón de Facebook con solo el ícono */}
               <button className="social-button facebook">
-                Registrar con Facebook
+                <FaFacebookF className="social-icon" /> {/* Ícono de Facebook */}
               </button>
             </div>
           </div>
@@ -61,6 +57,5 @@ function Registro() {
     </div>
   );
 }
-
-export default Registro;
-
+ 
+export default Login;
