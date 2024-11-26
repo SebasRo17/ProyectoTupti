@@ -1,215 +1,144 @@
-/* Fondo de la aplicación */
+/* Fondo global: se mantiene intacto */
 body {
-  font-family: 'Poppins', sans-serif;
   margin: 0;
-  background-color: #f5f5f5;
+  font-family: Arial, sans-serif;
+  background: white; /* Fondo principal de la página */
 }
 
-/* Contenedor principal */
-.App {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f5f5f5;
+/* Fondo del área del registro */
+.registro-container {
+  min-height: 100vh; /* Garantiza que el contenedor ocupe al menos toda la altura de la pantalla */
+  width: 100%; /* Ocupa todo el ancho de la pantalla */
+  display: flex; /* Usamos flexbox para centrar el contenido */
+  align-items: center; /* Centra verticalmente el contenido */
+  justify-content: center; /* Centra horizontalmente el contenido */
+  position: absolute; /* Hacerlo flotante */
+  top: 0; /* Alineado al principio de la pantalla */
+  left: 0; /* Alineado al borde izquierdo */
+  background: linear-gradient(135deg, #4CAF50 0%, #2196F3 100%); /* Fondo con un gradiente */
+  padding: 0px; /* Añadir espacio alrededor del contenedor */
+  
+}
+/* Formulario flotante */
+.registro-container .container {
+  background: white; /* Fondo blanco */
+    border-radius: 100px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno para que los elementos no toquen los bordes */
+    width: 100%; /* Ocupar todo el ancho disponible */
+    max-width: 500px; /* Limita el ancho máximo para pantallas grandes */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra suave alrededor de la tarjeta */
+    position: relative; /* Para ser flotante */
+  }
+
+/* Título del formulario */
+.registro-container .form-title h2 {
+  text-align: center; /* Centra el texto */
+    font-size: 40px; /* Tamaño de fuente grande */
+    font-weight: 700; /* Negrita */
+    margin-bottom: 25px; /* Espacio debajo del título */
+    color: #236c2f; /* Color verde */
+    margin-top: 20px; /* Ajusta este valor para moverlo hacia abajo */
+ 
+  }
+/* Etiquetas de campos */
+.registro-container .field-title {
+  display: block;
+  text-align: left;
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 8px;
 }
 
-/* Fondo semitransparente para la ventana emergente */
-.modal-overlay {
-  position: fixed; /* Hace que el modal se superponga */
-  top: 0;
-  left: 0;
+/* Campos de entrada */
+.registro-container input {
   width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6); /* Fondo oscuro semitransparente */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000; /* Asegura que esté sobre cualquier contenido */
-}
-
-/* Modal emergente */
-.modal {
-  display: flex;
-  flex-direction: row;
-  width: 850px;
-  max-width: 90%;
-  background-color: #ffffff;
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Sombra para destacar */
-  z-index: 2000; /* Asegura que esté encima del fondo */
-}
-
-/* Sección izquierda del modal */
-.modal-left {
-  background-color: #e3f2fd;
-  flex: 1.2;
-  padding: 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-}
-
-.modal-left h1 {
-  color: #1e88e5;
-  font-size: 2.5rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.modal-left h2 {
-  color: #1e88e5;
-  font-size: 4rem;
-  font-weight: bold;
-  margin: 0;
-}
-
-.modal-left p {
-  font-size: 1.2rem;
-  color: #1e88e5;
-  margin: 20px 0;
-  font-style: italic;
-}
-
-/* Sección derecha del modal */
-.modal-right {
-  flex: 1;
-  padding: 40px;
-}
-
-.modal-right h2 {
-  color: #333333;
-  font-size: 1.8rem;
+  padding: 12px 20px;
+  border: 1px solid #201f1f;
+  border-radius: 20px;
+  background: #f8f8f8;
+  font-size: 14px;
   margin-bottom: 20px;
+  outline: none;
+  transition: border-color 0.3s;
 }
 
-/* Formularios */
-form {
-  display: flex;
-  flex-direction: column;
+.registro-container input:focus {
+  border-color: #4CAF50;
 }
 
-form input {
-  margin-bottom: 15px;
-  padding: 12px;
-  border: 1px solid #dcdcdc;
-  border-radius: 12px; /* Curvas más suaves */
-  font-size: 1rem;
-}
-
-form button {
-  padding: 12px;
-  border: none;
-  border-radius: 12px; /* Curvas más suaves */
-  background-color: #1e88e5;
+/* Botón principal */
+.registro-container .btn {
+  display: block;
+  background: linear-gradient(135deg, #1b5e20 0%, #66bb6a 50%, #004d40 100%);
   color: white;
-  font-size: 1rem;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px 20px;
+  border-radius: 30px;
+  margin-top: 20px;
   cursor: pointer;
-  margin-top: 10px;
-  transition: background-color 0.3s ease;
+  text-transform: uppercase;
+  transition: background 0.3s;
 }
 
-form button:hover {
-  background-color: #1565c0;
+.registro-container .btn:hover {
+  background: #349c6b;
 }
 
-/* Login social */
-.social-buttons {
+/* Texto de redes sociales */
+.registro-container .social-text {
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+  margin-top: 20px;
+}
+
+/* Botones sociales */
+.registro-container .social-buttons {
   display: flex;
-  justify-content: space-between;
-  gap: 20px; /* Espacio entre los botones */
-  align-items: center;
-  margin-top: 0px;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
 }
 
-.social-button {
+.registro-container .social-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 10px;
-  width: 100%; /* Asegura el mismo ancho */
-  max-width: 250px;
-  border-radius: 12px; /* Curvas más suaves */
-  transition: 0.3s ease;
-}
-
-.social-button .social-icon {
-  font-size: 1.5rem;
-  margin-right: 10px; /* Espacio entre icono y texto */
-}
-
-/* Botón de Google */
-.social-button.google {
-  background-color: #db4437;
+  background: white;
   color: white;
-  border: 1px solid #ddd;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.social-button.google:hover {
-  background-color: #b46d66;
+.registro-container .social-btn.facebook {
+  background: #1877f2;
 }
 
-/* Botón de Facebook */
-.social-button.facebook {
-  background-color: #f9f9f9;
-  color: #0f78ef;
-  border: 1px solid #ddd;
+.registro-container .social-btn.google {
+  background: #db4437;
 }
 
-.social-button.facebook:hover {
-  background-color: #7692b7;
+/* Texto inferior */
+.registro-container .bottom-text {
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+  margin-top: 20px;
 }
 
-/* Responsividad para pantallas grandes (pantalla completa) */
-@media (min-width: 1024px) {
-  .social-button {
-    max-width: 100px; /* Hace los botones más estrechos en pantallas grandes */
-  }
+.registro-container .bottom-text a {
+  color: #4CAF50;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer; /* Cambia el cursor a mano */
 }
 
-@media (max-width: 768px) {
-  .modal {
-    flex-direction: column;
-    width: 100%;
+.registro-container .bottom-text a:hover {
+ 
+  color: #6db443; /* Color verde más oscuro al pasar el cursor */
   }
-
-  .modal-left {
-    padding: 0px;
-    flex: 1;
-  }
-
-  .modal-right {
-    padding: 20px;
-    flex: 1;
-  }
-}
-
-@media (max-width: 480px) {
-  .modal {
-    flex-direction: column;
-    width: 100%;
-    box-shadow: none;
-    border-radius: 0;
-  }
-
-  form input {
-    padding: 10px;
-    font-size: 0.9rem;
-  }
-  
-  .social-login button:hover {
-    opacity: 0.9;
-  }
-  
-  a {
-    color: #8c8751;
-    text-decoration: none;
-    font-weight: bold;
-  }
-  
-  a:hover {
-    text-decoration: underline;
-  }
-}

@@ -130,7 +130,7 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
         </div>
         <div className="header-icons">
           <button>📍 Dirección </button>
-          <Link to="/Login">
+          <Link to="../Login">
             <button>👤 Inicia Sesión</button>
           </Link>
           <button>🛒 Carrito</button>
