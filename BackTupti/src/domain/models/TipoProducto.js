@@ -6,8 +6,11 @@ class TipoProducto extends Model {}
 TipoProducto.init({
   IdTipoProducto: {
     type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
+    primaryKey: true
+  },
+  detalle: {
+    type: DataTypes.STRING(50),
+    allowNull: true
   }
 }, {
   sequelize,
