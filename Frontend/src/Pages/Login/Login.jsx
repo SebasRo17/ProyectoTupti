@@ -74,7 +74,7 @@ function Login() {
           </div>
 
           <div className="forgot-password">
-            <Link to="/olvidoContrasena/olvidoContrasena.jsx" className="forgot-text">¿Olvidaste tu contraseña?</Link>
+            <Link to= "/olvidoContrasena/olvidoContrasena.jsx">¿Olvidaste tu contraseña?</Link>
           </div>
 
           <button type="submit" className="login-button">
