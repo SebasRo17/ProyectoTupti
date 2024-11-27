@@ -20,6 +20,7 @@ export const categoryNames = [
     "Enlatados",
     "Pastas y Arroces",
     "Aceites y Aderezos",
+    "Bebidas Alcohólicas",
 ];
 
 // Objeto de íconos de categorías
