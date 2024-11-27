@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebookF } from "react-icons/fa";
+import { HiEye, HiEyeOff } from "react-icons/hi";
 import "./Login.css";
-import olvidoContrasena from '../olvidoContrasena/olvidoContrasena.jsx';
-import Registro from '../Registro/Registro.jsx';
-import { FcGoogle } from "react-icons/fc"; // Ícono de Google
-import { FaFacebookF } from "react-icons/fa"; // Ícono de Facebook
-import { HiEye, HiEyeOff } from "react-icons/hi"; // Iconos de ojo
-
 
 function Login() {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -74,7 +71,7 @@ function Login() {
           </div>
 
           <div className="forgot-password">
-            <Link to= "/olvidoContrasena">¿Olvidaste tu contraseña?</Link>
+            <Link to="/olvido-contrasena">¿Olvidaste tu contraseña?</Link>
           </div>
 
           <button type="submit" className="login-button">
