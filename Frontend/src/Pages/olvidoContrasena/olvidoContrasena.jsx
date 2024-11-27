@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom'
 import "./olvidoContrasena.css";
-import Login from '../Login/Login.jsx';
-import { HiEye, HiEyeOff } from "react-icons/hi"; // Iconos de ojo
 
 
 function olvidoContrasena() {
@@ -18,7 +16,7 @@ function olvidoContrasena() {
   };
 
   return (
-    <div className="-container">
+    <div className="login-container">
       <div className="login-card">
         <h1> LOGIN </h1>
         
