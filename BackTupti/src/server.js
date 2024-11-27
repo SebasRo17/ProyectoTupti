@@ -7,6 +7,7 @@ const swaggerConfig = require('./config/swagger');
 const userRoutes = require('./presentation/routes/userRoutes');
 const authRoutes = require('./presentation/routes/authRoutes');
 const productRoutes = require('./presentation/routes/prodImgRoutes');
+const bestSellersRoutes = require('./presentation/routes/bestSellersRoutes');
 const { sequelize } = require('./infrastructure/database/mysqlConnection');
 require('./aplication/services/GoogleAuthService'); // Inicializar configuración de passport
 
@@ -25,7 +26,7 @@ app.use(express.json());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig.swaggerSpec));
 app.use('/users', userRoutes);
 app.use('/auth', authRoutes);
-
+app.use('/api', bestSellersRoutes);
 app.use('/apiImg', productRoutes); // Esta línea ya configura la ruta correctamente
 
 // Sincronizar con la base de datos y iniciar el servidor
