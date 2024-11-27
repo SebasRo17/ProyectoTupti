@@ -107,7 +107,7 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
     id: index,
     imageUrl: imageUrl,
     title: `Promoción ${index + 1}`
-  }));
+  }));  
 
   const defaultCategoryImages = categoryNames.map((name, i) => ({
     id: i,
