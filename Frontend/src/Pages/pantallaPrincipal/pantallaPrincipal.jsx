@@ -1,10 +1,84 @@
-import React, { useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { categoryNames, categoryIcons } from '../../data/categoryData.js';
 import './pantallaPrincipal.css';
-import Registro from '../Registro/Registro.jsx';
+import Login from '../Login/Login.jsx';
 
+// CategoriesBar Component
+const CategoriesBar = ({ categoryData }) => {
+  const scrollRef = useRef(null);
+  const [showLeftButton, setShowLeftButton] = useState(false);
+  const [showRightButton, setShowRightButton] = useState(true);
+
+  const handleScroll = () => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      setShowLeftButton(scrollLeft > 0);
+      setShowRightButton(scrollLeft < scrollWidth - clientWidth - 10);
+    }
+  };
+
+  useEffect(() => {
+    const scrollElement = scrollRef.current;
+    if (scrollElement) {
+      scrollElement.addEventListener('scroll', handleScroll);
+      handleScroll();
+    }
+    return () => {
+      if (scrollElement) {
+        scrollElement.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, []);
+
+  const scrollLeft = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: -200, behavior: 'smooth' });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: 200, behavior: 'smooth' });
+    }
+  };
+
+  return (
+    <div className="categories-container">
+      {showLeftButton && (
+        <button 
+          className="category-nav-button left" 
+          onClick={scrollLeft}
+          aria-label="Scroll left"
+        >
+          ❮
+        </button>
+      )}
+      
+      <div className="categories-bar" ref={scrollRef}>
+        {categoryData.map((category) => (
+          <div key={category.id} className="category-item">
+            <img src={category.icon} alt={category.label} className="category-icon" />
+            <div>{category.label}</div>
+          </div>
+        ))}
+      </div>
+
+      {showRightButton && (
+        <button 
+          className="category-nav-button right" 
+          onClick={scrollRight}
+          aria-label="Scroll right"
+        >
+          ❯
+        </button>
+      )}
+    </div>
+  );
+};
+
+// Main TuptiPage Component
 const TuptiPage = ({ carouselImages, categoryImages }) => {
-  // Datos predeterminados para el carrusel
   const defaultCarouselImages = Array.from({ length: 10 }, (_, i) => ({
     id: i,
     imageUrl: `https://via.placeholder.com/300?text=Carrusel+${i + 1}`,
@@ -12,14 +86,13 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
     price: `$${(Math.random() * 100).toFixed(2)}`,
   }));
 
-  // Datos predeterminados para las categorías
-  const defaultCategoryImages = Array.from({ length: 15 }, (_, i) => ({
-    id: i,
-    icon: `https://via.placeholder.com/50?text=Categoría+${i + 1}`,
-    label: `Categoría ${i + 1}`,
-  }));
+// PantallaPrincipal.jsx
+const defaultCategoryImages = categoryNames.map((name, i) => ({
+  id: i,
+  icon: categoryIcons[name],
+  label: name,
+}));
 
-  // Uso de props o valores predeterminados
   const carouselData = carouselImages || defaultCarouselImages;
   const categoryData = categoryImages || defaultCategoryImages;
 
@@ -33,9 +106,24 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
     setActiveSlide((prev) => (prev - 1 + carouselData.length) % carouselData.length);
   };
 
+  // Referencias para cada sección del carrusel
+  const sectionRefs = useRef([]);
+
+  const scrollSectionLeft = (index) => {
+    if (sectionRefs.current[index]) {
+      sectionRefs.current[index].scrollBy({ left: -200, behavior: 'smooth' });
+    }
+  };
+
+  const scrollSectionRight = (index) => {
+    if (sectionRefs.current[index]) {
+      sectionRefs.current[index].scrollBy({ left: 200, behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="tupti-container" id="inicio">
-      {/* Cabecera */}
+      {/* Header */}
       <header className="header">
         <div className="logo">TUPTI</div>
         <div className="search-bar">
@@ -43,35 +131,27 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
           <button>+</button>
         </div>
         <div className="header-icons">
-          <button>☰</button>
-          <button>📍</button>
-          {/* Redirección al hacer clic en el ícono */}
-          <Link to="../Registro/Registro.jsx">
-            <button>👤</button> {/* Aquí usamos el componente Link para redirigir */}
+          <button>📍 Dirección </button>
+          <Link to="../Login/Login.jsx">
+
+            <button>👤 Inicia Sesión</button>
           </Link>
-          <button>🛒</button>
+          <button>🛒 Carrito</button>
         </div>
       </header>
 
-      {/* Barra de Categorías */}
-      <div className="categories-bar">
-        {categoryData.map((category) => (
-          <div key={category.id} className="category-item">
-            <img src={category.icon} alt={category.label} className="category-icon" />
-            <div>{category.label}</div>
-          </div>
-        ))}
-      </div>
+      {/* Categories Bar - Using the new component */}
+      <CategoriesBar categoryData={categoryData} />
       
       <div>
-      <img
-        src="ruta_de_tu_imagen.jpg" /* Reemplaza con la URL de tu imagen */
-        alt="LOGO TIPTI"
-        className="fixed-image"
-      />
+        <img
+          src="https://res.cloudinary.com/dd7etqrf2/image/upload/v1732711339/tupti_1_wt0zve.svg"
+          alt="LOGO TUPTI"
+          className="fixed-image"
+        />
       </div>
 
-      {/* Menú Vertical */}
+      {/* Vertical Menu */}
       <div className="image-menu">
         <h3>Menu Section</h3>
         <div className="menu-links">
@@ -88,7 +168,7 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
         </div>
       </div>
 
-      {/* Carrusel */}
+      {/* Carousel */}
       <div className="slider-container">
         <div className="image-slider">
           <div
@@ -114,20 +194,23 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
           </button>
         </div>
       </div>
-      
-      {/* Contenido Principal */}
+
+      {/* Secciones del Carrusel */}
       <div className="main-content">
         {carouselData
           .reduce((sections, image, index) => {
-            const sectionIndex = Math.floor(index / 5); // Cada sección tendrá 5 imágenes
+            const sectionIndex = Math.floor(index / 15);
             if (!sections[sectionIndex]) sections[sectionIndex] = [];
             sections[sectionIndex].push(image);
             return sections;
           }, [])
           .map((section, sectionIndex) => (
-            <div className="image-section" key={sectionIndex}>
+            <div key={sectionIndex} className="image-section">
               <h3>Sección {sectionIndex + 1}</h3>
-              <div className="image-carousel">
+              <div
+                ref={(el) => (sectionRefs.current[sectionIndex] = el)}
+                className="image-carousel"
+              >
                 {section.map((image) => (
                   <div key={image.id} className="product-item">
                     <img
@@ -140,14 +223,25 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
                   </div>
                 ))}
               </div>
+              <button
+                className="section-button left"
+                onClick={() => scrollSectionLeft(sectionIndex)}
+              >
+                ❮
+              </button>
+              <button
+                className="section-button right"
+                onClick={() => scrollSectionRight(sectionIndex)}
+              >
+                ❯
+              </button>
             </div>
           ))}
       </div>
-
-      {/* Pie de Página */}
+      
+      {/* Footer */}
       <footer className="footer">
         <div className="footer-container">
-          {/* Columna 1: Información de Contacto */}
           <div className="footer-column" id="contacto">
             <h4>TUPTI</h4>
             <p>Quito - Ecuador</p>
@@ -155,7 +249,6 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
             <p>support@tupti.com</p>
           </div>
 
-          {/* Columna 2: Categorías */}
           <div className="footer-column" id="categoria">
             <h4>Top Categorías</h4>
             <ul>
@@ -166,7 +259,6 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
             </ul>
           </div>
 
-          {/* Columna 3: Enlaces Rápidos */}
           <div className="footer-column" id="enlace">
             <h4>Enlaces Rápidos</h4>
             <ul>
@@ -178,7 +270,6 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
             </ul>
           </div>
 
-          {/* Columna 4: Descarga de App */}
           <div className="footer-column" id="botones">
             <h4>Encuéntranos</h4>
             <div className="app-buttons">
@@ -187,7 +278,6 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
             </div>
           </div>
 
-          {/* Columna 5: Etiquetas */}
           <div className="footer-column" id="etiqueta">
             <h4>Etiquetas Populares</h4>
             <div className="tag-container">

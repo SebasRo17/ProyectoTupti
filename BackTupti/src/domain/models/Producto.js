@@ -9,6 +9,18 @@ Producto.init({
     primaryKey: true,
     autoIncrement: true
   },
+  Nombre: {
+    type: DataTypes.STRING(100),
+    allowNull: false
+  },
+  Precio: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: false
+  },
+  Descripcion: {
+    type: DataTypes.TEXT,
+    allowNull: true
+  },
   IdTipoProducto: {
     type: DataTypes.INTEGER,
     allowNull: false
