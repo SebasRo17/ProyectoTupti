@@ -6,17 +6,32 @@ const getProductImages = async (req, res) => {
     console.log(typeof id); // Debería mostrar 'number'
 
     try {
-        const imagenes = await db.query(`
-            SELECT i.ImagenURL
-            FROM productoImagen i
-            WHERE i.IdProducto = ?;
+        const producto = await db.query(`
+            SELECT 
+                p.Nombre,
+                p.Precio,
+                p.Descripcion,
+                i.ImagenURL
+            FROM 
+                producto p
+            LEFT JOIN 
+                productoImagen i ON p.IdProducto = i.IdProducto
+            WHERE 
+                p.IdProducto = ?;
         `, { replacements: [id], type: db.QueryTypes.SELECT });
 
-        if (imagenes.length === 0) {
+        if (producto.length === 0) {
             return res.status(404).json({ message: 'Producto no encontrado' });
         }
 
-        res.status(200).json(imagenes.map(img => img.ImagenURL));
+        const resultado = {
+            Nombre: producto[0].Nombre,
+            Precio: producto[0].Precio,
+            Descripcion: producto[0].Descripcion,
+            Imagenes: producto.map(img => img.ImagenURL)
+        };
+
+        res.status(200).json(resultado);
     } catch (error) {
         res.status(500).json({ message: 'Error en el servidor', error });
     }
