@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { categoryNames, categoryIcons } from '../../data/categoryData.js';
 import './pantallaPrincipal.css';
 import Login from '../Login/Login.jsx';
 
@@ -85,11 +86,12 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
     price: `$${(Math.random() * 100).toFixed(2)}`,
   }));
 
-  const defaultCategoryImages = Array.from({ length: 15 }, (_, i) => ({
-    id: i,
-    icon: `https://via.placeholder.com/50?text=Categoría+${i + 1}`,
-    label: `Categoría ${i + 1}`,
-  }));
+// PantallaPrincipal.jsx
+const defaultCategoryImages = categoryNames.map((name, i) => ({
+  id: i,
+  icon: categoryIcons[name],
+  label: name,
+}));
 
   const carouselData = carouselImages || defaultCarouselImages;
   const categoryData = categoryImages || defaultCategoryImages;
@@ -143,8 +145,8 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
       
       <div>
         <img
-          src="ruta_de_tu_imagen.jpg"
-          alt="LOGO TIPTI"
+          src="https://res.cloudinary.com/dd7etqrf2/image/upload/v1732711339/tupti_1_wt0zve.svg"
+          alt="LOGO TUPTI"
           className="fixed-image"
         />
       </div>
