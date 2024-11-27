@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import "./Login.css";
-import olvidoContrasena from '../olvidoContrasena/olvidoContrasena.jsx';
-import Registro from '../Registro/Registro.jsx';
-import { FcGoogle } from "react-icons/fc"; // Ícono de Google
-import { FaFacebookF } from "react-icons/fa"; // Ícono de Facebook
+import { Link } from 'react-router-dom'
+import "./olvidoContrasena.css";
+import Login from '../Login/Login.jsx';
 import { HiEye, HiEyeOff } from "react-icons/hi"; // Iconos de ojo
 
 
-function Login() {
+function olvidoContrasena() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [stayLoggedIn, setStayLoggedIn] = useState(false);
 
@@ -21,7 +18,7 @@ function Login() {
   };
 
   return (
-    <div className="login-container">
+    <div className="-container">
       <div className="login-card">
         <h1> LOGIN </h1>
         
@@ -73,9 +70,7 @@ function Login() {
             </label>
           </div>
 
-          <div className="forgot-password">
-            <Link to="/olvidoContrasena/olvidoContrasena.jsx" className="forgot-text">¿Olvidaste tu contraseña?</Link>
-          </div>
+
 
           <button type="submit" className="login-button">
             LOGIN
@@ -96,11 +91,11 @@ function Login() {
 
         <div className="signup-link">
           <p>¿No tienes una cuenta?</p>
-          <Link to="/Registro/Registro.jsx" className="signup-text">Registrate</Link>
+          <Link to="../Registro/Registro.jsx" className="signup-text">Registrate</Link>
         </div>
       </div>
     </div>
   );
 }
 
-export default Login;
+export default olvidoContrasena;

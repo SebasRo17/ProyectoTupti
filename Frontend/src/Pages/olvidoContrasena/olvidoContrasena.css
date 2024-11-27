@@ -1,0 +1,251 @@
+/* Contenedor principal del login, aseguramos que ocupe toda la altura de la pantalla
+   y que se ajuste a la pantalla de la computadora, pero sea flotante */
+   .login-container {
+    min-height: 100vh; /* Garantiza que el contenedor ocupe al menos toda la altura de la pantalla */
+    width: 100%; /* Ocupa todo el ancho de la pantalla */
+    display: flex; /* Usamos flexbox para centrar el contenido */
+    align-items: center; /* Centra verticalmente el contenido */
+    justify-content: center; /* Centra horizontalmente el contenido */
+    position: absolute; /* Hacerlo flotante */
+    top: 0; /* Alineado al principio de la pantalla */
+    left: 0; /* Alineado al borde izquierdo */
+    background: linear-gradient(135deg, #4CAF50 0%, #2196F3 100%); /* Fondo con un gradiente */
+    padding: 0px; /* Añadir espacio alrededor del contenedor */
+    overflow: hidden; /* Eliminar scroll */
+  }
+  
+  /* Tarjeta central del login: fondo blanco, bordes redondeados, sombra y centrado */
+  .login-card {
+    background: white; /* Fondo blanco */
+    border-radius: 80px; /* Bordes redondeados */
+    padding: 32px; /* Espaciado interno para que los elementos no toquen los bordes */
+    width: 100%; /* Ocupar todo el ancho disponible */
+    max-width: 500px; /* Limita el ancho máximo para pantallas grandes */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra suave alrededor de la tarjeta */
+    position: relative; /* Para ser flotante */
+  }
+  
+  /* Estilos del título */
+  .login-card h1 {
+    text-align: center; /* Centra el texto */
+    font-size: 40px; /* Tamaño de fuente grande */
+    font-weight: 700; /* Negrita */
+    margin-bottom: 35px; /* Espacio debajo del título */
+    color: #236c2f; /* Color verde */
+  }
+  
+  /* Estilos del formulario */
+  .login-form {
+    display: flex; /* Usamos flexbox */
+    flex-direction: column; /* Los elementos se apilan verticalmente */
+    gap: 25px; /* Espacio entre los elementos */
+  }
+  
+  /* Grupo de cada campo del formulario, incluye etiqueta y campo de entrada */
+  .form-group {
+    display: flex; /* Flexbox para la disposición */
+    flex-direction: column; /* Los elementos se apilan verticalmente */
+    gap: 0px; /* Espacio entre la etiqueta y el campo */
+  }
+  
+  /* Etiqueta para los campos de entrada */
+  .form-group label {
+    font-size: 14px; /* Tamaño de fuente pequeño */
+    color: #666; /* Color gris para las etiquetas */
+  }
+  
+  /* Contenedor del campo de entrada, utilizado para incluir iconos dentro del campo */
+  .input-container {
+    position: relative; /* Necesario para posicionar los iconos dentro del campo */
+    display: flex; /* Usamos flexbox */
+    align-items: center; /* Centra el icono dentro del campo */
+  }
+  
+  /* Estilo del icono dentro del campo de entrada */
+  .input-icon {
+    position: absolute; /* Posición absoluta para colocar el icono dentro del campo */
+    left: 6px; /* Distancia desde la izquierda */
+    color: #999; /* Color gris del icono */
+    display: flex; /* Usamos flexbox */
+    align-items: center; /* Centra el icono verticalmente */
+  }
+  
+  /* Estilo general para los campos de entrada */
+  .input-container input {
+    width: 100%; /* El campo ocupa todo el ancho del contenedor */
+    padding: 10px 10px 10px 10px; /* Espaciado dentro del campo, con mayor espacio a la izquierda para el icono */
+    border: 1px solid #201f1f; /* Borde oscuro */
+    border-radius: 15px; /* Bordes redondeados */
+    background-color: #f8f8f8; /* Fondo gris claro */
+    font-size: 14px; /* Tamaño de fuente pequeño */
+    transition: all 0.3s ease; /* Transición suave para el enfoque */
+  }
+  
+  /* Efecto al enfocar un campo: cambia el color del borde y añade una sombra */
+  .input-container input:focus {
+    outline: none; /* Elimina el borde de enfoque por defecto */
+    border-color: #648266; /* Borde verde cuando se enfoca */
+    box-shadow: 0 0 0 2px rgba(179, 97, 243, 0.1); /* Sombra sutil */
+  }
+  
+  /* Estilo del icono de ojo (para mostrar/ocultar la contraseña) */
+  .password-toggle {
+    position: absolute; /* Posición absoluta dentro del campo */
+    right: 30px; /* Distancia desde la derecha */
+    top: 35%; /* Centrado verticalmente */
+    transform: translateY(-50%); /* Ajusta la posición para centrar el icono */
+    cursor: pointer; /* Cambia el cursor a mano */
+    color: #999; /* Color gris del icono */
+    font-size: 20px; /* Tamaño de fuente para el icono */
+  }
+  
+  /* Efecto hover sobre el icono de ojo */
+  .password-toggle:hover {
+    color: #4CAF50; /* Cambia el color a verde al pasar el mouse */
+  }
+  
+  /* Enlace para recuperación de contraseña */
+  .forgot-password {
+    text-align: right; /* Alinea el enlace a la derecha */
+    position: relative; /* Necesario para usar transform */
+  transform: translateX(0px) translateY(0px); /* Mueve el enlace 30px a la derecha y 20px hacia abajo */
+  }
+  
+  .forgot-password a {
+    font-size: 15px; /* Tamaño de fuente pequeño */
+    color: #459648; /* Color gris */
+    text-decoration: none; /* Elimina el subrayado */
+    transition: color 0.3s ease; /* Transición suave al cambiar el color */
+  
+  }
+  
+  /* Cambia el color al pasar el cursor por encima */
+  .forgot-password a:hover {
+    color: #6db443; /* Color verde más oscuro al pasar el cursor */
+  }
+  
+  /* Botón principal para iniciar sesión */
+  .login-button {
+    display: block; /* Hace que el botón ocupe toda la línea */
+    background: linear-gradient(135deg, #1b5e20 0%, #66bb6a 50%, #004d40 100%); /* Fondo con gradiente verde */
+    color: rgb(38, 60, 40); /* Texto en color verde oscuro */
+    font-size: 19px; /* Tamaño grande para el texto */
+    font-weight: bold; /* Texto en negrita */
+    text-align: center; /* Centra el texto dentro del botón */
+    padding: 10px 160px; /* Espaciado interno (mucho espacio a los lados) */
+    border-radius: 40px; /* Bordes redondeados más grandes */
+    margin-top: 20px; /* Espaciado superior */
+    cursor: pointer; /* Cambia el cursor a mano al pasar el mouse */
+    text-transform: uppercase; /* Convierte el texto a mayúsculas */
+    transition: background 0.3s; /* Transición suave en el fondo al pasar el mouse */
+  }
+
+  /* Estilo cuando el botón está deshabilitado */
+.login-button:disabled {
+  background: #b5d8b5; /* Fondo gris cuando está deshabilitado */
+  cursor: not-allowed; /* Cambia el cursor a no permitido */
+}
+  
+  /* Reduce la opacidad al pasar el cursor */
+  .login-button:hover {
+    opacity: 0.9; /* Opacidad reducida para el efecto hover */
+  }
+  
+  /* Sección para login social (Facebook, Google, Twitter) */
+  .social-login {
+    margin-top: 20px; /* Espacio superior */
+    text-align: center; /* Centrado */
+  }
+  
+  .social-login p {
+    font-size: 14px; /* Tamaño de fuente pequeño */
+    color: #666; /* Color gris */
+    margin-bottom: 16px; /* Espacio debajo */
+  }
+  
+  /* Contenedor de los botones sociales */
+  .social-buttons {
+    display: flex; /* Usamos flexbox */
+    gap: 16px; /* Espacio entre los botones */
+    justify-content: center; /* Centra los botones */
+  }
+  
+  /* Estilo base para los botones sociales */
+  .social-button {
+    width: 50px; /* Tamaño del botón */
+    height: 50px; /* Tamaño del botón */
+    border-radius: 90%; /* Bordes redondeados */
+    border: none; /* Elimina el borde */
+    display: flex; /* Usamos flexbox */
+    align-items: center; /* Centra el icono dentro del botón */
+    justify-content: center; /* Centra el icono dentro del botón */
+    cursor: pointer; /* Cambia el cursor a mano */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición suave de transformaciones y sombra */
+    background: white; /* Fondo blanco */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  }
+  
+  /* Efecto hover: eleva ligeramente el botón */
+  .social-button:hover {
+    transform: translateY(-3px); /* Eleva el botón */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Aumenta la sombra */
+  }
+  
+  /* Estilos de los botones sociales específicos */
+  .social-button.facebook {
+    background: #1b5be4; /* Color de fondo de Facebook */
+    color: white; /* Texto blanco */
+    margin-left: 150px; /* Desplaza el botón hacia la derecha */
+    width: 50px; /* Ancho del botón */
+    height: 50px; /* Alto del botón, igual que el ancho */
+    border-radius: 50%; /* Hace que el botón sea redondo */
+    display: flex; /* Usamos flexbox para centrar el icono */
+    align-items: center; /* Centra el icono verticalmente */
+    justify-content: center; /* Centra el icono horizontalmente */
+    border: none; /* Elimina el borde */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  }
+  
+  .social-button.google {
+    background: #da5b4f; /* Color de fondo de Google */
+  color: white; /* Texto blanco */
+  margin-right: 150px; /* Desplaza el botón hacia la derecha */
+  width: 50px; /* Ancho del botón */
+  height: 50px; /* Alto del botón, igual que el ancho */
+  border-radius: 50%; /* Hace que el botón sea redondo */
+  display: flex; /* Usamos flexbox para centrar el icono */
+  align-items: center; /* Centra el icono verticalmente */
+  justify-content: center; /* Centra el icono horizontalmente */
+  border: none; /* Elimina el borde */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+  
+  /* Enlace para registro */
+  .signup-link {
+    text-align: center; /* Centrado */
+    margin-top: 32px; /* Espacio superior */
+  }
+  
+  .signup-link p {
+    font-size: 14px; /* Tamaño de fuente pequeño */
+    color: #666; /* Color gris */
+  }
+  
+  .signup-text {
+    font-weight: bold; /* Negrita */
+    color: #4CAF50; /* Color verde */
+    cursor: pointer; /* Cambia el cursor a mano */
+  }
+  .signup-text:hover {
+    color: #6db443; /* Color verde más oscuro al pasar el cursor */
+  }
+
+  
+/* Mensajes de error debajo de los campos de entrada */
+.login-error-message {
+  color: red; /* Color rojo para el texto de error */
+  font-size: 12px; /* Tamaño pequeño para los mensajes de error */
+  margin-top: -10px; /* Ajusta la posición vertical del mensaje de error */
+  margin-left: 15px; /* Ajusta la posición horizontal */
+  margin-bottom: 10px; /* Espaciado debajo del mensaje de error */
+}

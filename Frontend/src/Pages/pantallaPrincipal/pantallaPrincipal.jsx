@@ -3,18 +3,23 @@ import { Link } from 'react-router-dom';
 import { categoryNames, categoryIcons } from '../../data/categoryData.js';
 import './pantallaPrincipal.css';
 import Login from '../Login/Login.jsx';
+import Categoria from '../Categoria/Categoria.jsx';
 
-// CategoriesBar Component
 const CategoriesBar = ({ categoryData }) => {
   const scrollRef = useRef(null);
   const [showLeftButton, setShowLeftButton] = useState(false);
-  const [showRightButton, setShowRightButton] = useState(true);
+  const [showRightButton, setShowRightButton] = useState(false);
+
+  // Debug logging
+  useEffect(() => {
+    console.log('Categories passed to CategoriesBar:', categoryData);
+  }, [categoryData]);
 
   const handleScroll = () => {
     if (scrollRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
       setShowLeftButton(scrollLeft > 0);
-      setShowRightButton(scrollLeft < scrollWidth - clientWidth - 10);
+      setShowRightButton(scrollLeft < scrollWidth - clientWidth);
     }
   };
 
@@ -43,6 +48,9 @@ const CategoriesBar = ({ categoryData }) => {
     }
   };
 
+  // Ensure categoryData is always an array
+  const safeCategoryData = Array.isArray(categoryData) ? categoryData : [];
+
   return (
     <div className="categories-container">
       {showLeftButton && (
@@ -56,11 +64,17 @@ const CategoriesBar = ({ categoryData }) => {
       )}
       
       <div className="categories-bar" ref={scrollRef}>
-        {categoryData.map((category) => (
-          <div key={category.id} className="category-item">
-            <img src={category.icon} alt={category.label} className="category-icon" />
-            <div>{category.label}</div>
+        {safeCategoryData.map((category, index) => (
+          <Link to={'../Categoria/Categoria.jsx'} key={category.id || index} className="category-item">
+          <div key={category.id || index} className="category-item">
+            <img 
+              src={category.icon} 
+              alt={category.label || `Category ${index + 1}`} 
+              className="category-icon" 
+            />
+            <div>{category.label || `Category ${index + 1}`}</div>
           </div>
+          </Link>
         ))}
       </div>
 
@@ -125,7 +139,13 @@ const defaultCategoryImages = categoryNames.map((name, i) => ({
     <div className="tupti-container" id="inicio">
       {/* Header */}
       <header className="header">
-        <div className="logo">TUPTI</div>
+        <div className="logo">
+          <img 
+            src="https://res.cloudinary.com/dd7etqrf2/image/upload/v1732717569/tupti_3_r82cww.svg " 
+            alt="TUPTI" 
+            className='logo-imagen'
+          />
+        </div>
         <div className="search-bar">
           <input type="text" placeholder="Search..." />
           <button>+</button>
@@ -133,7 +153,6 @@ const defaultCategoryImages = categoryNames.map((name, i) => ({
         <div className="header-icons">
           <button>📍 Dirección </button>
           <Link to="../Login/Login.jsx">
-
             <button>👤 Inicia Sesión</button>
           </Link>
           <button>🛒 Carrito</button>
@@ -153,7 +172,7 @@ const defaultCategoryImages = categoryNames.map((name, i) => ({
 
       {/* Vertical Menu */}
       <div className="image-menu">
-        <h3>Menu Section</h3>
+        <h3>Menú</h3>
         <div className="menu-links">
           <a href="#">Cupones</a>
           <a href="#">Promociones</a>
