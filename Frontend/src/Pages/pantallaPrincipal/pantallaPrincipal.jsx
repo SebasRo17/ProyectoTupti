@@ -65,7 +65,7 @@ const CategoriesBar = ({ categoryData }) => {
       
       <div className="categories-bar" ref={scrollRef}>
         {safeCategoryData.map((category, index) => (
-          <Link to={'../Categoria/Categoria.jsx'} key={category.id || index} className="category-item">
+          <Link to={'/Categoria'} key={category.id || index} className="category-item">
           <div key={category.id || index} className="category-item">
             <img 
               src={category.icon} 
@@ -152,7 +152,7 @@ const defaultCategoryImages = categoryNames.map((name, i) => ({
         </div>
         <div className="header-icons">
           <button>📍 Dirección </button>
-          <Link to="../Login/Login.jsx">
+          <Link to="/Login">
             <button>👤 Inicia Sesión</button>
           </Link>
           <button>🛒 Carrito</button>
