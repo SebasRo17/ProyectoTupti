@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { categoryNames, categoryIcons } from '../../data/categoryData.js';
+import { promoImg } from '../../data/promoData.js';
 import './pantallaPrincipal.css';
 import Login from '../Login/Login.jsx';
 import Categoria from '../Categoria/Categoria.jsx';
@@ -93,21 +94,27 @@ const CategoriesBar = ({ categoryData }) => {
 
 // Main TuptiPage Component
 const TuptiPage = ({ carouselImages, categoryImages }) => {
-  const defaultCarouselImages = Array.from({ length: 10 }, (_, i) => ({
+  // Nueva constante para imágenes de productos
+  const productCarouselImages = Array.from({ length: 10 }, (_, i) => ({
     id: i,
     imageUrl: `https://via.placeholder.com/300?text=Carrusel+${i + 1}`,
     title: `Producto Carrusel ${i + 1}`,
     price: `$${(Math.random() * 100).toFixed(2)}`,
   }));
 
-// PantallaPrincipal.jsx
-const defaultCategoryImages = categoryNames.map((name, i) => ({
-  id: i,
-  icon: categoryIcons[name],
-  label: name,
-}));
+  // Mantener carouselData para las imágenes promocionales
+  const carouselData = promoImg.map((imageUrl, index) => ({
+    id: index,
+    imageUrl: imageUrl,
+    title: `Promoción ${index + 1}`
+  }));
 
-  const carouselData = carouselImages || defaultCarouselImages;
+  const defaultCategoryImages = categoryNames.map((name, i) => ({
+    id: i,
+    icon: categoryIcons[name],
+    label: name,
+  }));
+
   const categoryData = categoryImages || defaultCategoryImages;
 
   const [activeSlide, setActiveSlide] = useState(0);
@@ -216,7 +223,7 @@ const defaultCategoryImages = categoryNames.map((name, i) => ({
 
       {/* Secciones del Carrusel */}
       <div className="main-content">
-        {carouselData
+        {productCarouselImages
           .reduce((sections, image, index) => {
             const sectionIndex = Math.floor(index / 15);
             if (!sections[sectionIndex]) sections[sectionIndex] = [];
