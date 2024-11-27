@@ -1,28 +1,21 @@
 /* Contenedor principal del login, aseguramos que ocupe toda la altura de la pantalla
    y que se ajuste a la pantalla de la computadora, pero sea flotante */
    .login-container {
-    min-height: 100vh; /* Garantiza que el contenedor ocupe al menos toda la altura de la pantalla */
-    width: 100%; /* Ocupa todo el ancho de la pantalla */
-    display: flex; /* Usamos flexbox para centrar el contenido */
-    align-items: center; /* Centra verticalmente el contenido */
-    justify-content: center; /* Centra horizontalmente el contenido */
-    position: absolute; /* Hacerlo flotante */
-    top: 0; /* Alineado al principio de la pantalla */
-    left: 0; /* Alineado al borde izquierdo */
-    background: linear-gradient(135deg, #4CAF50 0%, #2196F3 100%); /* Fondo con un gradiente */
-    padding: 0px; /* Añadir espacio alrededor del contenedor */
-    overflow: hidden; /* Eliminar scroll */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f5f5f5;
   }
   
   /* Tarjeta central del login: fondo blanco, bordes redondeados, sombra y centrado */
   .login-card {
-    background: white; /* Fondo blanco */
-    border-radius: 80px; /* Bordes redondeados */
-    padding: 32px; /* Espaciado interno para que los elementos no toquen los bordes */
-    width: 100%; /* Ocupar todo el ancho disponible */
-    max-width: 500px; /* Limita el ancho máximo para pantallas grandes */
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra suave alrededor de la tarjeta */
-    position: relative; /* Para ser flotante */
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
   }
   
   /* Estilos del título */
