@@ -74,7 +74,7 @@ function Login() {
           </div>
 
           <div className="forgot-password">
-            <Link to= "/olvidoContrasena/olvidoContrasena.jsx">¿Olvidaste tu contraseña?</Link>
+            <Link to= "/olvidoContrasena">¿Olvidaste tu contraseña?</Link>
           </div>
 
           <button type="submit" className="login-button">
@@ -96,7 +96,7 @@ function Login() {
 
         <div className="signup-link">
           <p>¿No tienes una cuenta?</p>
-          <Link to="/Registro/Registro.jsx" className="signup-text">Registrate</Link>
+          <Link to="/Registro" className="signup-text">Registrate</Link>
         </div>
       </div>
     </div>

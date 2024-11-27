@@ -11,10 +11,10 @@ function App() {
     <div>
       <Routes>
         <Route path="/" element={<TuptiPage />} />
-        <Route path="/Registro/Registro.jsx" element={<Registro />} />
-        <Route path="/Login/Login.jsx" element={<Login />} />
-        <Route path="/Categoria/Categoria.jsx" element={<Categoria />} />
-        <Route path="/olvidoContrasena/olvidoContrasena.jsx" element={<olvidoContrasena />} />
+        <Route path="/Registro" element={<Registro />} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/Categoria" element={<Categoria />} />
+        <Route path="/olvidoContrasena" element={<olvidoContrasena />} />
       </Routes>
     </div>
   );
