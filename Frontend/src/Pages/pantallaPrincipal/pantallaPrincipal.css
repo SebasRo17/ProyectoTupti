@@ -77,26 +77,30 @@ width:100px;
 
 /* Ajuste para asegurar que la barra de categorías esté justo debajo del header */
 .categories-container {
-  position: relative;
-  top: 80px;  /* Ajusta según el tamaño del header */
+  position: fixed;
+  top: 60px;
   width: 100%;
-  background-color: #ffffff00;
-  padding: 0 40px;
-  box-sizing: content-box;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
+  background-color: #ffffff;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  z-index: 999;
 }
 
 .categories-bar {
   display: flex;
   overflow-x: auto;
+  overflow-y: hidden;
   scroll-behavior: smooth;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  gap: 20px;
-  padding: 15px 0;
+  gap: 10px;
+  padding: 20px 15px; /* Aumenta el padding vertical */
   position: relative;
   flex-wrap: nowrap;
   -webkit-overflow-scrolling: touch;
+  margin: 0 auto;
+  max-width: 100%; /* Asegura que no sobrepase el ancho del contenedor */
 }
 
 .categories-bar::-webkit-scrollbar {
@@ -107,7 +111,8 @@ width:100px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 80px;
+  min-width: 85px; /* Aumenta el ancho mínimo */
+  max-width: 100px; /* Aumenta el ancho máximo */
   flex-shrink: 0;
   text-align: center;
   cursor: pointer;
@@ -116,8 +121,8 @@ width:100px;
 }
 
 .category-icon {
-  width: 90px;
-  height: 80px;
+  width: 65px; /* Aumenta el tamaño del icono */
+  height: 65px;
   object-fit: cover;
   margin-bottom: 5px;
 }
@@ -206,18 +211,17 @@ width:100px;
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  width: 80%;
-  max-width: 700px;
-  height: 400px;
-  margin: 0 auto;
-  position: absolute;
-  margin-top: 150px;
-  margin-left: 150px;
-  top: 50%; 
-  left: 50%; 
-  transform: translate(-50%, -50%); 
-  border-radius: 10px;
+  width: 100%;
+  max-width: 100%;
+  height: 300px; /* Aumenta la altura */
+  position: relative;
+  border-radius: 0;
   background-color: #ffffff00;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  top: 0; /* Ajusta la posición para eliminar espacio */
+  margin-top: 160px; /* Ajustado para estar debajo de las categorías */
 }
 
 .image-slider {
@@ -225,20 +229,22 @@ width:100px;
   display: flex;
   overflow: hidden;
   width: 100%;
-  height: 300px;
+  height: 100%;
 }
 
 .slider-images {
   display: flex;
   transition: transform 0.5s ease-in-out;
   width: 100%;
+  height: 100%;
 }
 
 .slider-image {
   min-width: 100%;
+  width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center;
+  object-fit: cover; /* Cambia a cover para mejor visualización */
+  background-color: #f5f5f5;
 }
 
 .carousel-button {
@@ -341,6 +347,59 @@ width:100px;
 
 .section-button.right {
   right: -45px;
+}
+
+/* Tablets (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .header {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .search-bar {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    margin: 10px 0;
+  }
+
+  .header-icons {
+    order: 2;
+  }
+
+  .categories-container {
+    max-width: 760px;
+    top: 70px;
+    padding: 0 20px;
+  }
+
+  .fixed-image {
+    max-width: 400px;
+    margin-left: 60px;
+    margin-top: 80px;
+  }
+
+  .slider-container {
+    width: 100%;
+    max-width: 450px;
+    height: 300px;
+    margin-top: 100px;
+  }
+
+  .main-content {
+    max-width: 400px;
+    margin-left: 350px;
+    margin-top: -350px;
+    padding: 10px;
+  }
+
+  .image-menu {
+    margin-top: 20px;
+  }
+
+  .footer-column {
+    max-width: -10px;
+  }
 }
 
 /* Footer */
