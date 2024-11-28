@@ -147,9 +147,7 @@ function Login() {
 
         <div className="signup-link">
           <p>¿No tienes una cuenta?</p>
-          <Link to="../Registro/Registro.jsx" className="signup-text">
-            Regístrate
-          </Link>
+          <Link to="/Registro" className="signup-text">Regístrate</Link>
         </div>
       </div>
     </div>

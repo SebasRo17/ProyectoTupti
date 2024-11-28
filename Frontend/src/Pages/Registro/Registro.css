@@ -205,7 +205,7 @@ body {
 
 /* Estilo para el enlace "Inicia sesión" */
 .registro-login-link {
-  color: #4CAF50; /* Color azul para el enlace */
+  color: #4CAF50; /* Color verde para el enlace */
   font-weight: bold; /* Texto en negrita */
   text-decoration: none; /* Elimina la subrayado predeterminado */
   cursor: pointer; /* Cambia el cursor a mano */
