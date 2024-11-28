@@ -151,7 +151,7 @@ function Registro() {
 
           <div className="registro-bottom-text">
             ¿Ya tienes una cuenta?{" "}
-            <a href="/Login/Login.jsx" className="registro-login-link">Inicia sesión</a>
+            <a href="/Login" className="registro-login-link">Inicia sesión</a>
           </div>
         </div>
       </div>
