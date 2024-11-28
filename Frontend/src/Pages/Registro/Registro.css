@@ -24,7 +24,7 @@ body {
 .registro-container-inner {
   background: white; /* Fondo blanco */
     border-radius: 80px; /* Bordes redondeados */
-    padding: 10px; /* Espaciado interno para que los elementos no toquen los bordes */
+    padding: 30px; /* Espaciado interno para que los elementos no toquen los bordes */
     width: 100%; /* Ocupar todo el ancho disponible */
     max-width: 500px; /* Limita el ancho máximo para pantallas grandes */
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra suave alrededor de la tarjeta */
@@ -45,10 +45,10 @@ body {
 .registro-field-title {
   display: block; /* Hace que el título del campo sea un bloque */
   text-align: left; /* Alinea el texto a la izquierda */
-  font-size: 13px; /* Tamaño de fuente más pequeño */
+  font-size: 12px; /* Tamaño de fuente más pequeño */
   margin-left: 15px; /* Espaciado a la izquierda */
   color: #555; /* Color gris para el texto */
-  margin-bottom: 5px; /* Espaciado debajo del título */
+  margin-bottom: 3px; /* Espaciado debajo del título */
 }
 
 /* Estilos para los campos de entrada */
@@ -87,13 +87,13 @@ body {
     font-size: 20px; /* Tamaño grande para el texto */
     font-weight: bold; /* Texto en negrita */
     text-align: center; /* Centra el texto dentro del botón */
-    padding: 10px 160px; /* Espaciado interno (mucho espacio a los lados) */
+    padding: 5px 145px; /* Espaciado interno (mucho espacio a los lados) */
     border-radius: 40px; /* Bordes redondeados más grandes */
-    margin-top: 20px; /* Espaciado superior */
+    margin-top: 0px; /* Espaciado superior */
     cursor: pointer; /* Cambia el cursor a mano al pasar el mouse */
     text-transform: uppercase; /* Convierte el texto a mayúsculas */
     transition: background 0.3s; /* Transición suave en el fondo al pasar el mouse */
-    margin-left: 10px;
+    margin-left: 0px;
   }
 
 /* Estilo cuando el botón está deshabilitado */
@@ -125,7 +125,7 @@ body {
   cursor: pointer; /* Cambia el cursor a mano */
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición suave de transformaciones y sombra */
   background: white; /* Fondo blanco */
-  width: 175px; /* Ancho fijo */
+  width: 170px; /* Ancho fijo */
   height: 60px; /* Alto fijo */
   border-radius: 50%; /* Forma circular */
   display: flex; /* Usamos flexbox para centrar el icono dentro del botón */
@@ -183,7 +183,7 @@ body {
 .registro-password-toggle {
   position: absolute; /* Posiciona el icono de manera absoluta dentro del campo */
   right: 30px; /* Posiciona el icono a 30px de la derecha */
-  top: 40%; /* Posiciona verticalmente a la mitad del campo */
+  top: 50%; /* Posiciona verticalmente a la mitad del campo */
   transform: translateY(-50%); /* Ajusta la posición para centrar el icono */
   cursor: pointer; /* Cambia el cursor a mano */
   color: #999; /* Color gris del icono */

@@ -18,7 +18,7 @@ y que se ajuste a la pantalla de la computadora, pero sea flotante */
 .login-card {
     background: white; /* Fondo blanco */
     border-radius: 80px; /* Bordes redondeados */
-    padding: 32px; /* Espaciado interno para que los elementos no toquen los bordes */
+    padding: 40px; /* Espaciado interno para que los elementos no toquen los bordes */
     width: 100%; /* Ocupar todo el ancho disponible */
     max-width: 500px; /* Limita el ancho máximo para pantallas grandes */
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra suave alrededor de la tarjeta */
@@ -28,7 +28,7 @@ y que se ajuste a la pantalla de la computadora, pero sea flotante */
 /* Estilos del título */
 .login-card h1 {
     text-align: center; /* Centra el texto */
-    font-size: 40px; /* Tamaño de fuente grande */
+    font-size: 60px; /* Tamaño de fuente grande */
     font-weight: 700; /* Negrita */
     margin-bottom: 35px; /* Espacio debajo del título */
     color: #236c2f; /* Color verde */
@@ -39,16 +39,18 @@ y que se ajuste a la pantalla de la computadora, pero sea flotante */
   display: block; /* Hace que el título del campo sea un bloque */
   text-align: left; /* Alinea el texto a la izquierda */
   font-size: 10px; /* Tamaño de fuente más pequeño */
-  margin-left: -10px; /* Espaciado a la izquierda */
+  margin-left: -15px; /* Espaciado a la izquierda */
   color: #555; /* Color gris para el texto */
-  margin-bottom: 8px; /* Espaciado debajo del título */
+  margin-bottom: 10px; /* Espaciado debajo del título */
+  
 }
   
 /* Grupo de cada campo del formulario, incluye etiqueta y campo de entrada */
 .form-group {
 display: flex; /* Flexbox para la disposición */
 flex-direction: column; /* Los elementos se apilan verticalmente */
-gap: 0px; /* Espacio entre la etiqueta y el campo */
+gap: 10px; /* Espacio entre la etiqueta y el campo */
+margin-top: 10px;
 }
   
 /* Etiqueta para los campos de entrada */
@@ -78,8 +80,8 @@ color: #666; /* Color gris para las etiquetas */
 .input-container input {
 width: 100%; /* El campo ocupa todo el ancho del contenedor */
 padding: 10px 10px 10px 10px; /* Espaciado dentro del campo, con mayor espacio a la izquierda para el icono */
-border: 4px solid #201f1f; /* Borde oscuro */
-border-radius: 15px; /* Bordes redondeados */
+border: 1px solid #201f1f; /* Borde oscuro */
+border-radius: 50px; /* Bordes redondeados */
 background-color: #f8f8f8; /* Fondo gris claro */
 font-size: 14px; /* Tamaño de fuente pequeño */
 transition: all 0.3s ease; /* Transición suave para el enfoque */
@@ -112,6 +114,21 @@ transition: all 0.3s ease; /* Transición suave para el enfoque */
   color: #6db443; /* Color verde más oscuro al pasar el cursor */
 }
   
+.password-toggle {
+  position: absolute; /* Posiciona el icono de manera absoluta dentro del campo */
+  right: 30px; /* Posiciona el icono a 30px de la derecha */
+  top: 50%; /* Posiciona verticalmente a la mitad del campo */
+  transform: translateY(-50%); /* Ajusta la posición para centrar el icono */
+  cursor: pointer; /* Cambia el cursor a mano */
+  color: #999; /* Color gris del icono */
+  font-size: 20px; /* Tamaño grande para el icono */
+}
+
+/* Estilo cuando el icono del ojo es hover */
+.password-toggle:hover {
+  color: #4CAF50; /* Cambia el color a verde al pasar el mouse */
+}
+
 /* Botón principal para iniciar sesión */
 .login-button {
     display: block; /* Hace que el botón ocupe toda la línea */
@@ -120,9 +137,9 @@ transition: all 0.3s ease; /* Transición suave para el enfoque */
     font-size: 19px; /* Tamaño grande para el texto */
     font-weight: bold; /* Texto en negrita */
     text-align: center; /* Centra el texto dentro del botón */
-    padding: 10px 160px; /* Espaciado interno (mucho espacio a los lados) */
+    padding: 8px 185px; /* Espaciado interno (mucho espacio a los lados) */
     border-radius: 40px; /* Bordes redondeados más grandes */
-    margin-top: 20px; /* Espaciado superior */
+    margin-top: 25px; /* Espaciado superior */
     cursor: pointer; /* Cambia el cursor a mano al pasar el mouse */
     text-transform: uppercase; /* Convierte el texto a mayúsculas */
     transition: background 0.3s; /* Transición suave en el fondo al pasar el mouse */
@@ -155,7 +172,7 @@ transition: all 0.3s ease; /* Transición suave para el enfoque */
 /* Contenedor de los botones sociales */
 .social-buttons {
     display: flex; /* Usamos flexbox */
-    gap: 16px; /* Espacio entre los botones */
+    gap: 20px; /* Espacio entre los botones */
     justify-content: center; /* Centra los botones */
     
 }
@@ -167,7 +184,7 @@ transition: all 0.3s ease; /* Transición suave para el enfoque */
     border-radius: 0%; /* Bordes redondeados */
     border: none; /* Elimina el borde */
     display: flex; /* Usamos flexbox */
-    margin-left: 170px;
+    margin-left: 160px;
     align-items: center; /* Centra el icono dentro del botón */
     justify-content: center; /* Centra el icono dentro del botón */
     cursor: pointer; /* Cambia el cursor a mano */
@@ -238,3 +255,5 @@ transition: all 0.3s ease; /* Transición suave para el enfoque */
   font-size: 12px; /* Tamaño pequeño para los mensajes de error */
   transform: translateY(20px);
 }
+
+
