@@ -5,6 +5,7 @@ import { promoImg } from '../../data/promoData.js';
 import './pantallaPrincipal.css';
 import Login from '../Login/Login.jsx';
 import Categoria from '../Categoria/Categoria.jsx';
+import { getBestSellers } from '../../Api/bestSellApi';
 
 const CategoriesBar = ({ categoryData }) => {
   const scrollRef = useRef(null);
@@ -92,15 +93,39 @@ const CategoriesBar = ({ categoryData }) => {
   );
 };
 
-// Main TuptiPage Component
 const TuptiPage = ({ carouselImages, categoryImages }) => {
-  // Nueva constante para imágenes de productos
-  const productCarouselImages = Array.from({ length: 10 }, (_, i) => ({
-    id: i,
-    imageUrl: `https://via.placeholder.com/300?text=Carrusel+${i + 1}`,
-    title: `Producto Carrusel ${i + 1}`,
-    price: `$${(Math.random() * 100).toFixed(2)}`,
-  }));
+  const [productCarouselImages, setProductCarouselImages] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchBestSellers = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const bestSellers = await getBestSellers();
+        if (!bestSellers || bestSellers.length === 0) {
+          throw new Error('No se recibieron productos del servidor');
+        }
+
+        const formattedProducts = bestSellers.map((product, index) => ({
+          id: product.IdProducto || index,
+          imageUrl: product.Imagenes?.split(',')[0] || 'URL_IMAGEN_DEFAULT',
+          title: product.Producto || 'Sin título',
+          price: product.Precio ? `$${product.Precio}` : 'Precio no disponible',
+          description: product.Descripcion || 'Sin descripción',
+          allImages: product.Imagenes?.split(',') || []
+        }));
+        setProductCarouselImages(formattedProducts);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchBestSellers();
+  }, []);
 
   // Mantener carouselData para las imágenes promocionales
   const carouselData = promoImg.map((imageUrl, index) => ({
@@ -140,6 +165,53 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
     if (sectionRefs.current[index]) {
       sectionRefs.current[index].scrollBy({ left: 200, behavior: 'smooth' });
     }
+  };
+
+  const renderProductSections = () => {
+    if (isLoading) {
+      return <div className="loading-message">Cargando productos...</div>;
+    }
+
+    if (error) {
+      return <div className="error-message">Error: {error}</div>;
+    }
+
+    if (!productCarouselImages || productCarouselImages.length === 0) {
+      return <div className="no-products-message">No hay productos disponibles</div>;
+    }
+
+    return productCarouselImages
+      .reduce((sections, image, index) => {
+        const sectionIndex = Math.floor(index / 15);
+        if (!sections[sectionIndex]) sections[sectionIndex] = [];
+        sections[sectionIndex].push(image);
+        return sections;
+      }, [])
+      .map((section, sectionIndex) => (
+        <div key={sectionIndex} className="image-section">
+          <h3>Sección {sectionIndex + 1}</h3>
+          <div className="image-carousel" ref={(el) => (sectionRefs.current[sectionIndex] = el)}>
+            {section.map((product) => (
+              <div key={product.id} className="product-item">
+                <img
+                  src={product.imageUrl}
+                  alt={product.title}
+                  className="image-placeholder"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = 'URL_DE_IMAGEN_POR_DEFECTO';
+                  }}
+                />
+                <p className="product-title">{product.title}</p>
+                <p className="product-price">{product.price}</p>
+              </div>
+            ))}
+          </div>
+          {/* Botones de navegación */}
+          <button className="section-button left" onClick={() => scrollSectionLeft(sectionIndex)}>❮</button>
+          <button className="section-button right" onClick={() => scrollSectionRight(sectionIndex)}>❯</button>
+        </div>
+      ));
   };
 
   return (
@@ -223,46 +295,7 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
 
       {/* Secciones del Carrusel */}
       <div className="main-content">
-        {productCarouselImages
-          .reduce((sections, image, index) => {
-            const sectionIndex = Math.floor(index / 15);
-            if (!sections[sectionIndex]) sections[sectionIndex] = [];
-            sections[sectionIndex].push(image);
-            return sections;
-          }, [])
-          .map((section, sectionIndex) => (
-            <div key={sectionIndex} className="image-section">
-              <h3>Sección {sectionIndex + 1}</h3>
-              <div
-                ref={(el) => (sectionRefs.current[sectionIndex] = el)}
-                className="image-carousel"
-              >
-                {section.map((image) => (
-                  <div key={image.id} className="product-item">
-                    <img
-                      src={image.imageUrl}
-                      alt={image.title}
-                      className="image-placeholder"
-                    />
-                    <p>{image.title}</p>
-                    <p>{image.price}</p>
-                  </div>
-                ))}
-              </div>
-              <button
-                className="section-button left"
-                onClick={() => scrollSectionLeft(sectionIndex)}
-              >
-                ❮
-              </button>
-              <button
-                className="section-button right"
-                onClick={() => scrollSectionRight(sectionIndex)}
-              >
-                ❯
-              </button>
-            </div>
-          ))}
+        {renderProductSections()}
       </div>
       
       {/* Footer */}

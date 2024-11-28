@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors'); // Agregar esta línea
 const session = require('express-session');
 const passport = require('passport');
 const swaggerUi = require('swagger-ui-express');
@@ -13,6 +14,12 @@ require('./aplication/services/GoogleAuthService'); // Inicializar configuració
 
 const app = express();
 const PORT = 3000;
+
+// Configuración de CORS - Agregar estas líneas antes de otros middlewares
+app.use(cors({
+  origin: 'http://localhost:5173', // Ajusta esto según el puerto de tu frontend
+  credentials: true
+}));
 
 // Configuración de sesión
 app.use(session({
