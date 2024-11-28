@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { categoryNames, categoryIcons } from '../../data/categoryData.js';
 import { promoImg } from '../../data/promoData.js';
 import './pantallaPrincipal.css';
+import './responsivePPrincipal.css'
 import Login from '../Login/Login.jsx';
 import Categoria from '../Categoria/Categoria.jsx';
 import { getBestSellers } from '../../Api/bestSellApi';
@@ -12,10 +13,6 @@ const CategoriesBar = ({ categoryData }) => {
   const [showLeftButton, setShowLeftButton] = useState(false);
   const [showRightButton, setShowRightButton] = useState(false);
 
-  // Debug logging
-  useEffect(() => {
-    console.log('Categories passed to CategoriesBar:', categoryData);
-  }, [categoryData]);
 
   const handleScroll = () => {
     if (scrollRef.current) {
@@ -97,6 +94,7 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
   const [productCarouselImages, setProductCarouselImages] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const fetchBestSellers = async () => {
@@ -182,7 +180,9 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
 
     return productCarouselImages
       .reduce((sections, image, index) => {
-        const sectionIndex = Math.floor(index / 15);
+        // Reducir el número de items por sección en móviles
+        const itemsPerSection = window.innerWidth <= 767 ? 8 : 15;
+        const sectionIndex = Math.floor(index / itemsPerSection);
         if (!sections[sectionIndex]) sections[sectionIndex] = [];
         sections[sectionIndex].push(image);
         return sections;
@@ -197,9 +197,10 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
                   src={product.imageUrl}
                   alt={product.title}
                   className="image-placeholder"
+                  loading="lazy"
                   onError={(e) => {
                     e.target.onerror = null;
-                    e.target.src = 'URL_DE_IMAGEN_POR_DEFECTO';
+                    e.target.src = 'URL_DE_IMAGEN_POR DEFECTO';
                   }}
                 />
                 <p className="product-title">{product.title}</p>
@@ -214,6 +215,35 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
       ));
   };
 
+  const renderProductCarousel = () => {
+    if (isLoading) return <div className="loading-message">Cargando productos...</div>;
+    if (error) return <div className="error-message">Error: {error}</div>;
+    if (!productCarouselImages?.length) return <div>No hay productos disponibles</div>;
+
+    return (
+      <div className="product-carousel-container">
+        <div className="product-list">
+          {productCarouselImages.map((product) => (
+            <div key={product.id} className="product-item">
+              <img
+                src={product.imageUrl}
+                alt={product.title}
+                className="image-placeholder"
+                loading="lazy"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = 'URL_DE_IMAGEN_POR DEFECTO';
+                }}
+              />
+              <p className="product-title">{product.title}</p>
+              <p className="product-price">{product.price}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="tupti-container" id="inicio">
       {/* Header */}
@@ -226,9 +256,43 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
           />
         </div>
         <div className="search-bar">
-          <input type="text" placeholder="Search..." />
-          <button>+</button>
+          <button aria-label="Buscar">🔍</button>
         </div>
+        <button 
+          className="hamburger-menu" 
+          onClick={() => setIsMobileMenuOpen(true)}
+          aria-label="Menú"
+        >
+          ☰
+        </button>
+        
+        {/* Menú móvil actualizado */}
+        <div className={`mobile-nav ${isMobileMenuOpen ? 'active' : ''}`}>
+          <button 
+            className="mobile-nav-close"
+            onClick={() => setIsMobileMenuOpen(false)}
+            aria-label="Cerrar menú"
+          >
+            ×
+          </button>
+          <nav className="mobile-nav-items">
+            <button>
+              <span>📍</span>
+              Dirección
+            </button>
+            <Link to="/Login">
+              <button>
+                <span>👤</span>
+                Inicia Sesión
+              </button>
+            </Link>
+            <button>
+              <span>🛒</span>
+              Carrito
+            </button>
+          </nav>
+        </div>
+
         <div className="header-icons">
           <button>📍 Dirección </button>
           <Link to="/Login">
@@ -293,9 +357,10 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
         </div>
       </div>
 
-      {/* Secciones del Carrusel */}
+      {/* Nuevo carrusel de productos */}
       <div className="main-content">
-        {renderProductSections()}
+        <h2>Productos Destacados</h2>
+        {renderProductCarousel()}
       </div>
       
       {/* Footer */}
