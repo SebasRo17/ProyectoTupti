@@ -276,17 +276,17 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
             ×
           </button>
           <nav className="mobile-nav-items">
-            <button>
+            <button onClick={() => setIsMobileMenuOpen(false)}>
               <span>📍</span>
               Dirección
             </button>
-            <Link to="/Login">
+            <Link to="/Login" onClick={() => setIsMobileMenuOpen(false)}>
               <button>
                 <span>👤</span>
                 Inicia Sesión
               </button>
             </Link>
-            <button>
+            <button onClick={() => setIsMobileMenuOpen(false)}>
               <span>🛒</span>
               Carrito
             </button>

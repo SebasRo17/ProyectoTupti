@@ -227,10 +227,11 @@
       right: 0;
       opacity: 1;
       visibility: visible;
+      z-index: 2000;
     }
   
     .mobile-nav-close {
-      position: absolute;
+      position: fixed;
       right: 15px;
       top: 15px;
       background: none;
@@ -240,6 +241,16 @@
       cursor: pointer;
       padding: 8px;
       z-index: 2001;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  
+    .mobile-nav-close:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
     }
   
     .mobile-nav-items {
@@ -321,8 +332,7 @@
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
-      order: -1;
-      margin-top: -20px; /* Reducido de 10px a 0 */
+      margin-top: 0px; /* Reducido de 10px a 0 */
     }
   
     .product-carousel-container::-webkit-scrollbar {
@@ -392,6 +402,11 @@
     h2 {
       margin-bottom: 10px; /* Añadido para reducir el espacio después del título */
     }
+
+    .main-content h2 {
+      margin-top: -15px; /* Ajuste para móviles */
+      margin-bottom: 10px;
+    }
   }
   
   /* Ajustes de orientación para dispositivos móviles */
@@ -417,6 +432,7 @@
     border: none;
     color: white;
     cursor: pointer;
+    z-index: 1000;
   }
   
   /* Estilos actualizados para el menú hamburguesa y navegación móvil */
@@ -428,7 +444,7 @@
     font-size: 28px;
     cursor: pointer;
     padding: 5px;
-    z-index: 1002;
+    z-index: 1000;
   }
   
   .mobile-nav {
@@ -441,12 +457,13 @@
     background-color: #187946;
     padding: 60px 20px 20px;
     transition: all 0.3s ease-in-out;
-    z-index: 1001;
+    z-index: 2000;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
   }
   
   .mobile-nav.active {
     right: 0;
+    z-index: 2000;
   }
   
   .mobile-nav-items {
@@ -481,7 +498,7 @@
   }
   
   .mobile-nav-close {
-    position: absolute;
+    position: fixed;
     top: 15px;
     right: 15px;
     background: none;
@@ -490,6 +507,30 @@
     font-size: 24px;
     cursor: pointer;
     padding: 5px;
+    z-index: 2001;
+  }
+
+  .mobile-nav-close {
+    position: fixed;
+    right: 15px;
+    top: 15px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 2001;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mobile-nav-close:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
   }
   
   @media screen and (max-width: 767px) {
