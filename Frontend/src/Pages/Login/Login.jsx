@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc"; // Ícono de Google
 import { FaFacebookF } from "react-icons/fa"; // Ícono de Facebook
 import { HiEye, HiEyeOff } from "react-icons/hi"; // Iconos de ojo
 import "./Login.css";
+import { loginUser } from '../../Api/loginUsers';
 
 function Login() {
+  const navigate = useNavigate();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [stayLoggedIn, setStayLoggedIn] = useState(false);
   const [email, setEmail] = useState("");
@@ -48,12 +50,28 @@ function Login() {
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await loginUser(email, password);
+      if (response.success) {
+        if (response.user.isAdmin) {
+          navigate('/admin');
+        } else {
+          navigate('/home');
+        }
+      }
+    } catch (error) {
+      setPasswordError(error.message || 'Error al iniciar sesión');
+    }
+  };
+
   return (
     <div className="login-container">
       <div className="login-card">
         <h1>LOGIN</h1>
 
-        <form className="login-form">
+        <form className="login-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Usuario</label>
             <div className="input-container">

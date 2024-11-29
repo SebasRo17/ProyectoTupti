@@ -5,6 +5,7 @@ import Registro from './Registro/Registro.jsx';
 import Login from './Login/Login.jsx';
 import Categoria from './Categoria/Categoria.jsx';
 import OlvidoContrasena from './olvidoContrasena/olvidoContrasena.jsx';  // Cambiado a PascalCase
+import PantallaAdmin from './pantallaAdmin/pantallaAdmin.jsx';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/categoria" element={<Categoria />} />
         <Route path="/olvido-contrasena" element={<OlvidoContrasena />} />
+        <Route path="/admin" element={<PantallaAdmin />} />
       </Routes>
     </div>
   );
