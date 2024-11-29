@@ -171,7 +171,7 @@ width:100px;
   left: -100px;
   width: 500px;
   height: auto;
-  z-index: 1000;
+  z-index: 960;
   box-shadow: 0 4px 6px rgba(209, 224, 222, 0.1);
   border-radius: 8px;
 }
@@ -196,7 +196,7 @@ width:100px;
 
 .menu-links a {
   display: block;
-  color: #9df069;
+  color: #649c41;
   margin-bottom: 10px;
   text-decoration: none;
 }
@@ -281,7 +281,9 @@ width:100px;
 }
 
 .main-content h2 {
-  margin-bottom: 10px;
+  color:#187946;
+  font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
+  margin-bottom: 1%;
   margin-top: -20px; /* Ajuste para mover el título hacia arriba */
   position: relative; /* Asegura que el título se mantenga en posición */
   z-index: 2; /* Asegura que el título esté por encima del carrusel */
@@ -343,23 +345,24 @@ width:100px;
   border: none;
   border-radius: 50%;
   width: 30px;
-  height: 30px;
+  height: 40px;
   cursor: pointer;
-  z-index: 10;
+  z-index: 100;
 }
 
 .section-button.left {
-  left: -50px;
+  left: -10%;
 }
 
 .section-button.right {
-  right: -45px;
+  right: -10%;
 }
 
 .product-carousel-container {
+  margin-top: -5%;
   position: relative;
-  width: 100%;
-  overflow: hidden;
+  width: 97%;
+  overflow: visible;
   padding: 20px 0;
 }
 
