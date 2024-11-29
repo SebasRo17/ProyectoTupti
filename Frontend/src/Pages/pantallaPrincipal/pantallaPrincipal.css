@@ -465,3 +465,34 @@ width:100px;
 .footer-column li a:hover {
   text-decoration: underline;
 }
+
+.app-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; 
+}
+
+.tag-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; 
+  padding: 10px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 6px 14px;
+  background-color: #ffffff;
+  color: #2e4c47;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 20px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tag:hover {
+  background-color: #2e4c47;
+  color: #ffffff;
+}
