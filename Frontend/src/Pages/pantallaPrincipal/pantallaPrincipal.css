@@ -280,6 +280,13 @@ width:100px;
   padding: 20px;
 }
 
+.main-content h2 {
+  margin-bottom: 10px;
+  margin-top: -20px; /* Ajuste para mover el título hacia arriba */
+  position: relative; /* Asegura que el título se mantenga en posición */
+  z-index: 2; /* Asegura que el título esté por encima del carrusel */
+}
+
 .main-content > .image-section {
   margin-bottom: -150px;
 }
