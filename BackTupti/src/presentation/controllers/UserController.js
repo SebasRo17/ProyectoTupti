@@ -68,11 +68,53 @@ class UserController {
   async login(req, res) {
     try {
       const { email, password } = req.body;
+
+      // Validación de campos requeridos
+      if (!email || !password) {
+        return res.status(400).json({
+          success: false,
+          message: 'Email y contraseña son requeridos'
+        });
+      }
+
       const user = await UserService.login(email, password);
-      res.status(200).json(user);
+
+      // Validación de rol y estructuración de respuesta
+      const response = {
+        success: true,
+        user: {
+          IdUsuario: user.IdUsuario,
+          Email: user.Email,
+          CodigoUs: user.CodigoUs,
+          rol: user.IdRol === 1 ? 'Administrador' : 'Cliente',
+          isAdmin: user.IdRol === 1,
+          isClient: user.IdRol === 2
+        }
+      };
+
+      res.status(200).json(response);
+
     } catch (error) {
       console.error('Error en el login:', error);
-      res.status(401).json({ message: 'Credenciales inválidas' });
+      
+      if (error.message === 'Credenciales inválidas') {
+        return res.status(401).json({
+          success: false,
+          message: 'Credenciales inválidas'
+        });
+      }
+
+      if (error.message === 'Rol de usuario no válido') {
+        return res.status(403).json({
+          success: false,
+          message: 'Rol de usuario no válido'
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        message: 'Error en el servidor'
+      });
     }
   }
 }
