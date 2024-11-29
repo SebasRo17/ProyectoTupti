@@ -1,4 +1,142 @@
 /* Media Queries */
+/* Desktop (1441px and above) */
+@media screen and (min-width: 1441px) {
+  .header {
+    padding: 15px 50px;
+    max-width: auto;
+  }
+  .search-bar {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    margin: 10px 0;
+  }
+
+  .header-icons {
+    order: 3;
+  }
+  .fixed-image{
+    margin-top: 7%;
+    margin-left:0%;
+    max-width: 100%;
+  }
+
+  .categories-container{
+    margin-top: 1%;
+  }
+
+  .slider-container{
+    margin-left: 35%;
+    max-width: 50%;
+    height: 10%;
+    margin-top: -540px;
+  }
+  .main-content{
+    margin-left: 20%;
+    margin-top: 3%;
+  }
+  .footer{
+    width: 100vw;
+    padding: 50px 300px;
+  }
+
+
+}
+
+
+/* Laptops (1024px - 1440px) */
+@media screen and (min-width: 1024px) and (max-width: 1440px) {
+  .header {
+    padding: 10px 30px;
+    max-width: auto;
+  }
+
+  .search-bar input {
+    max-width: 300px;
+  }
+
+  .categories-container {
+    padding: 0 0px;
+    margin-top: 0%;
+  }
+
+  .slider-container {
+    width: 50%;
+    max-width: 100%;
+    height: 100%;
+   margin-left: 35% ;
+   margin-top: -550px;
+  }
+  .fixed-image{
+    margin-top: 10%;
+  }
+  .main-content {
+    margin-left: 25%;
+    margin-top: 4%;
+  }
+
+  .image-menu {
+    width: 17%;
+  }
+  .footer{
+    width: 100vw;
+  }
+  .footer-container{
+    
+    margin-left: 0%;
+    margin-right: 0%;
+    
+  }
+}
+
+/* Tablets (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .header {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .categories-container{
+    max-width:auto;
+    top: 6%;
+    padding: 0 20px;
+  }
+  .fixed-image{
+    max-width: 400px;
+    margin-left: 5%;
+    margin-top: 17%;
+  }
+  .search-bar {
+    order: 2;
+    width: 100%;
+    justify-content: center;
+    margin: 10px 0;
+  }
+
+  .header-icons {
+    order: 3;
+  }
+
+  .slider-container {
+    width: 100%;
+    max-width: 450px;
+    height: 300px;
+    margin-top: -500px;
+    margin-left: 40%;
+  }
+
+  .image-menu {
+    margin-top: 0%; 
+    margin-left: 0%;
+  }
+  .main-content {
+    max-width: 400px;
+    margin-left: 40%;
+    margin-top: auto;
+    padding: 10px;
+  }
+
+
+}
 
 /* Móvil (< 768px) */
 @media screen and (max-width: 767px) {
