@@ -31,7 +31,7 @@ app.use(session({
 // Configuración de middlewares y rutas
 app.use(express.json());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig.swaggerSpec));
-app.use('/users', userRoutes);
+app.use('/users', userRoutes); 
 app.use('/auth', authRoutes);
 app.use('/api', bestSellersRoutes);
 app.use('/apiImg', productRoutes); // Esta línea ya configura la ruta correctamente

@@ -1,6 +1,7 @@
 const UserRepository = require('../../infrastructure/repositories/UserRepositoryImpl');
 const User = require('../../domain/models/User')
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 
 class UserService {
   async getAllUsers() {
@@ -43,16 +44,49 @@ class UserService {
         throw new Error('Credenciales inválidas');
       }
 
-      // Agregar registros para depuración
-      console.log('Contraseña proporcionada:', password);
-      console.log('Contraseña almacenada:', user.Contrasenia);
+      // Debug de contraseñas
+      const md5Hash = crypto.createHash('md5').update(password).digest('hex');
+      
+      console.log('========= Debug de contraseñas =========');
+      console.log('1. Password ingresado:', password);
+      console.log('2. Password en MD5:', md5Hash);
+      console.log('3. Password en BD:', user.Contrasenia);
+      console.log('4. Longitud password BD:', user.Contrasenia.length);
+      
+      // Intentar comparación con ambos métodos
+      const isValidBcrypt = await bcrypt.compare(password, user.Contrasenia);
+      const isValidMD5 = md5Hash === user.Contrasenia;
+      
+      console.log('5. ¿Válido con bcrypt?:', isValidBcrypt);
+      console.log('6. ¿Válido con MD5?:', isValidMD5);
+      console.log('=====================================');
 
-      const isPasswordValid = await bcrypt.compare(password, user.Contrasenia);
-      if (!isPasswordValid) {
+      // Si ninguna validación funciona
+      if (!isValidBcrypt && !isValidMD5) {
         throw new Error('Credenciales inválidas');
       }
 
-      return user;
+      // Validación de roles
+      const userRole = {
+        isAdmin: user.IdRol === 1,
+        isClient: user.IdRol === 2,
+        roleName: user.IdRol === 1 ? 'Administrador' : 'Cliente'
+      };
+
+      // Verificar que el rol sea válido
+      if (![1, 2].includes(user.IdRol)) {
+        throw new Error('Rol de usuario no válido');
+      }
+
+      // Retornar usuario con información de rol
+      return {
+        IdUsuario: user.IdUsuario,
+        Email: user.Email,
+        CodigoUs: user.CodigoUs,
+        IdRol: user.IdRol,
+        ...userRole
+      };
+
     } catch (error) {
       console.error('Error en el servicio de login:', error);
       throw error;
