@@ -1,9 +1,46 @@
 const express = require('express');
-const AuthController = require('../controllers/AuthController');
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
 const router = express.Router();
 
-router.get('/google', (req, res, next) => AuthController.googleAuth(req, res, next));
-router.get('/google/callback', (req, res, next) => AuthController.googleCallback(req, res, next));
-router.get('/dashboard', (req, res) => AuthController.getDashboard(req, res));
+// Ruta para iniciar sesión con Google
+router.get('/google', (req, res, next) => {
+  const redirectUrl = req.query.redirect || 'http://localhost:5173/';
+  passport.authenticate('google', {
+    scope: ['profile', 'email'],
+    state: redirectUrl
+  })(req, res, next);
+});
+
+// Ruta de callback de Google
+router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
+  const redirectUrl = req.query.state || 'http://localhost:5173/';
+  // Redirigir al cliente con el token JWT
+  res.redirect(`${redirectUrl}?token=${req.user.token}`);
+});
+
+// Middleware para validar el token JWT
+function authenticateToken(req, res, next) {
+  const token = req.query.token || req.headers['authorization'];
+  if (!token) {
+    return res.redirect('/'); // Redirigir a la página de inicio de sesión si no hay token
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.redirect('/'); // Redirigir a la página de inicio de sesión si el token no es válido o ha expirado
+    }
+    req.user = decoded;
+    next();
+  });
+}
+
+// Ruta protegida del dashboard
+router.get('/dashboard', authenticateToken, (req, res) => {
+  res.json({
+    message: 'Usuario autenticado exitosamente',
+    user: req.user
+  });
+});
 
 module.exports = router;

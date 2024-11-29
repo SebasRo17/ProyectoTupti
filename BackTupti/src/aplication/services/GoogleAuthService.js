@@ -1,5 +1,6 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const jwt = require('jsonwebtoken');
 const UserService = require('./UserService');
 
 class GoogleAuthService {
@@ -11,8 +12,9 @@ class GoogleAuthService {
     passport.use(new GoogleStrategy({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/auth/google/callback"
-    }, async (accessToken, refreshToken, profile, done) => {
+      callbackURL: "http://localhost:3000/auth/google/callback",
+      passReqToCallback: true
+    }, async (req, accessToken, refreshToken, profile, done) => {
       try {
         const userRepository = require('../../infrastructure/repositories/UserRepositoryImpl');
         let user = await userRepository.findByEmail(profile.emails[0].value);
@@ -25,14 +27,18 @@ class GoogleAuthService {
           });
         }
 
-        return done(null, user);
+        // Generar un token JWT
+        const token = jwt.sign({ id: user.IdUsuario, email: user.Email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        console.log('Token generado:', token);
+
+        return done(null, { user, token });
       } catch (error) {
         return done(error, null);
       }
     }));
 
-    passport.serializeUser((user, done) => {
-      done(null, user.IdUsuario);
+    passport.serializeUser((data, done) => {
+      done(null, data.user.IdUsuario);
     });
 
     passport.deserializeUser(async (id, done) => {
