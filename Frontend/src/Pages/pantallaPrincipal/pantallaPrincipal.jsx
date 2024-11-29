@@ -222,7 +222,7 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
 
     return (
       <div className="product-carousel-container">
-        <div className="product-list">
+        <div className="product-list" ref={(el) => (sectionRefs.current[0] = el)}>
           {productCarouselImages.map((product) => (
             <div key={product.id} className="product-item">
               <img
@@ -240,6 +240,8 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
             </div>
           ))}
         </div>
+        <button className="section-button left" onClick={() => scrollSectionLeft(0)}>❮</button>
+        <button className="section-button right" onClick={() => scrollSectionRight(0)}>❯</button>
       </div>
     );
   };
