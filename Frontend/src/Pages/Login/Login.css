@@ -18,7 +18,7 @@ y que se ajuste a la pantalla de la computadora, pero sea flotante */
 .login-card {
     background: white; /* Fondo blanco */
     border-radius: 80px; /* Bordes redondeados */
-    padding: 40px; /* Espaciado interno para que los elementos no toquen los bordes */
+    padding: 30px; /* Espaciado interno para que los elementos no toquen los bordes */
     width: 100%; /* Ocupar todo el ancho disponible */
     max-width: 500px; /* Limita el ancho máximo para pantallas grandes */
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra suave alrededor de la tarjeta */
@@ -90,7 +90,7 @@ transition: all 0.3s ease; /* Transición suave para el enfoque */
 /* Efecto al enfocar un campo: cambia el color del borde y añade una sombra */
 .input-container input:focus {
   outline: none; /* Elimina el borde de enfoque por defecto */
-  border-color: #648266; /* Borde verde cuando se enfoca */
+  border-color: #4CAF50; /* Borde verde cuando se enfoca */
   box-shadow: 0 0 0 2px rgba(179, 97, 243, 0.1); /* Sombra sutil */
 }
   
@@ -131,18 +131,18 @@ transition: all 0.3s ease; /* Transición suave para el enfoque */
 
 /* Botón principal para iniciar sesión */
 .login-button {
-    display: block; /* Hace que el botón ocupe toda la línea */
-    background: linear-gradient(135deg, #1b5e20 0%, #66bb6a 50%, #004d40 100%); /* Fondo con gradiente verde */
-    color: rgb(38, 60, 40); /* Texto en color verde oscuro */
-    font-size: 19px; /* Tamaño grande para el texto */
-    font-weight: bold; /* Texto en negrita */
-    text-align: center; /* Centra el texto dentro del botón */
-    padding: 8px 185px; /* Espaciado interno (mucho espacio a los lados) */
-    border-radius: 40px; /* Bordes redondeados más grandes */
-    margin-top: 25px; /* Espaciado superior */
-    cursor: pointer; /* Cambia el cursor a mano al pasar el mouse */
-    text-transform: uppercase; /* Convierte el texto a mayúsculas */
-    transition: background 0.3s; /* Transición suave en el fondo al pasar el mouse */
+display: block; /* Hace que el botón ocupe toda la línea */
+background: linear-gradient(135deg, #1b5e20 0%, #66bb6a 50%, #004d40 100%); /* Fondo con gradiente verde */
+color: rgb(38, 60, 40); /* Texto en color verde oscuro */
+font-size: 19px; /* Tamaño grande para el texto */
+font-weight: bold; /* Texto en negrita */
+text-align: center; /* Centra el texto dentro del botón */
+padding: 8px 185px; /* Espaciado interno (mucho espacio a los lados) */
+border-radius: 40px; /* Bordes redondeados más grandes */
+margin-top: 25px; /* Espaciado superior */
+cursor: pointer; /* Cambia el cursor a mano al pasar el mouse */
+text-transform: uppercase; /* Convierte el texto a mayúsculas */
+transition: background 0.3s; /* Transición suave en el fondo al pasar el mouse */
 }
 
 /* Estilo cuando el botón está deshabilitado */
