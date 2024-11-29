@@ -1,244 +1,270 @@
-/* Contenedor principal del login, aseguramos que ocupe toda la altura de la pantalla
-   y que se ajuste a la pantalla de la computadora, pero sea flotante */
-   .login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #f5f5f5;
-  }
-  
-  /* Tarjeta central del login: fondo blanco, bordes redondeados, sombra y centrado */
-  .login-card {
-    background: white;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    width: 100%;
-    max-width: 400px;
-  }
-  
-  /* Estilos del título */
-  .login-card h1 {
-    text-align: center; /* Centra el texto */
-    font-size: 40px; /* Tamaño de fuente grande */
-    font-weight: 700; /* Negrita */
-    margin-bottom: 35px; /* Espacio debajo del título */
-    color: #236c2f; /* Color verde */
-  }
-  
-  /* Estilos del formulario */
-  .login-form {
-    display: flex; /* Usamos flexbox */
-    flex-direction: column; /* Los elementos se apilan verticalmente */
-    gap: 25px; /* Espacio entre los elementos */
-  }
-  
-  /* Grupo de cada campo del formulario, incluye etiqueta y campo de entrada */
-  .form-group {
-    display: flex; /* Flexbox para la disposición */
-    flex-direction: column; /* Los elementos se apilan verticalmente */
-    gap: 0px; /* Espacio entre la etiqueta y el campo */
-  }
-  
-  /* Etiqueta para los campos de entrada */
-  .form-group label {
-    font-size: 14px; /* Tamaño de fuente pequeño */
-    color: #666; /* Color gris para las etiquetas */
-  }
-  
-  /* Contenedor del campo de entrada, utilizado para incluir iconos dentro del campo */
-  .input-container {
-    position: relative; /* Necesario para posicionar los iconos dentro del campo */
-    display: flex; /* Usamos flexbox */
-    align-items: center; /* Centra el icono dentro del campo */
-  }
-  
-  /* Estilo del icono dentro del campo de entrada */
-  .input-icon {
-    position: absolute; /* Posición absoluta para colocar el icono dentro del campo */
-    left: 6px; /* Distancia desde la izquierda */
-    color: #999; /* Color gris del icono */
-    display: flex; /* Usamos flexbox */
-    align-items: center; /* Centra el icono verticalmente */
-  }
-  
-  /* Estilo general para los campos de entrada */
-  .input-container input {
-    width: 100%; /* El campo ocupa todo el ancho del contenedor */
-    padding: 10px 10px 10px 10px; /* Espaciado dentro del campo, con mayor espacio a la izquierda para el icono */
-    border: 1px solid #201f1f; /* Borde oscuro */
-    border-radius: 15px; /* Bordes redondeados */
-    background-color: #f8f8f8; /* Fondo gris claro */
-    font-size: 14px; /* Tamaño de fuente pequeño */
-    transition: all 0.3s ease; /* Transición suave para el enfoque */
-  }
-  
-  /* Efecto al enfocar un campo: cambia el color del borde y añade una sombra */
-  .input-container input:focus {
-    outline: none; /* Elimina el borde de enfoque por defecto */
-    border-color: #648266; /* Borde verde cuando se enfoca */
-    box-shadow: 0 0 0 2px rgba(179, 97, 243, 0.1); /* Sombra sutil */
-  }
-  
-  /* Estilo del icono de ojo (para mostrar/ocultar la contraseña) */
-  .password-toggle {
-    position: absolute; /* Posición absoluta dentro del campo */
-    right: 30px; /* Distancia desde la derecha */
-    top: 35%; /* Centrado verticalmente */
-    transform: translateY(-50%); /* Ajusta la posición para centrar el icono */
-    cursor: pointer; /* Cambia el cursor a mano */
-    color: #999; /* Color gris del icono */
-    font-size: 20px; /* Tamaño de fuente para el icono */
-  }
-  
-  /* Efecto hover sobre el icono de ojo */
-  .password-toggle:hover {
-    color: #4CAF50; /* Cambia el color a verde al pasar el mouse */
-  }
-  
-  /* Enlace para recuperación de contraseña */
-  .forgot-password {
-    text-align: right; /* Alinea el enlace a la derecha */
-    position: relative; /* Necesario para usar transform */
-  transform: translateX(0px) translateY(0px); /* Mueve el enlace 30px a la derecha y 20px hacia abajo */
-  }
-  
-  .forgot-password a {
-    font-size: 15px; /* Tamaño de fuente pequeño */
-    color: #459648; /* Color gris */
-    text-decoration: none; /* Elimina el subrayado */
-    transition: color 0.3s ease; /* Transición suave al cambiar el color */
-  
-  }
-  
-  /* Cambia el color al pasar el cursor por encima */
-  .forgot-password a:hover {
-    color: #6db443; /* Color verde más oscuro al pasar el cursor */
-  }
-  
-  /* Botón principal para iniciar sesión */
-  .login-button {
-    display: block; /* Hace que el botón ocupe toda la línea */
-    background: linear-gradient(135deg, #1b5e20 0%, #66bb6a 50%, #004d40 100%); /* Fondo con gradiente verde */
-    color: rgb(38, 60, 40); /* Texto en color verde oscuro */
-    font-size: 19px; /* Tamaño grande para el texto */
-    font-weight: bold; /* Texto en negrita */
-    text-align: center; /* Centra el texto dentro del botón */
-    padding: 10px 160px; /* Espaciado interno (mucho espacio a los lados) */
-    border-radius: 40px; /* Bordes redondeados más grandes */
-    margin-top: 20px; /* Espaciado superior */
-    cursor: pointer; /* Cambia el cursor a mano al pasar el mouse */
-    text-transform: uppercase; /* Convierte el texto a mayúsculas */
-    transition: background 0.3s; /* Transición suave en el fondo al pasar el mouse */
-  }
-
-  /* Estilo cuando el botón está deshabilitado */
-.login-button:disabled {
-  background: #b5d8b5; /* Fondo gris cuando está deshabilitado */
-  cursor: not-allowed; /* Cambia el cursor a no permitido */
+/* Contenedor principal del olvido de contraseña */
+.olvido-container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: linear-gradient(135deg, #4CAF50 0%, #2196F3 100%);
+  padding: 0;
 }
-  
-  /* Reduce la opacidad al pasar el cursor */
-  .login-button:hover {
-    opacity: 0.9; /* Opacidad reducida para el efecto hover */
-  }
-  
-  /* Sección para login social (Facebook, Google, Twitter) */
-  .social-login {
-    margin-top: 20px; /* Espacio superior */
-    text-align: center; /* Centrado */
-  }
-  
-  .social-login p {
-    font-size: 14px; /* Tamaño de fuente pequeño */
-    color: #666; /* Color gris */
-    margin-bottom: 16px; /* Espacio debajo */
-  }
-  
-  /* Contenedor de los botones sociales */
-  .social-buttons {
-    display: flex; /* Usamos flexbox */
-    gap: 16px; /* Espacio entre los botones */
-    justify-content: center; /* Centra los botones */
-  }
-  
-  /* Estilo base para los botones sociales */
-  .social-button {
-    width: 50px; /* Tamaño del botón */
-    height: 50px; /* Tamaño del botón */
-    border-radius: 90%; /* Bordes redondeados */
-    border: none; /* Elimina el borde */
-    display: flex; /* Usamos flexbox */
-    align-items: center; /* Centra el icono dentro del botón */
-    justify-content: center; /* Centra el icono dentro del botón */
-    cursor: pointer; /* Cambia el cursor a mano */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición suave de transformaciones y sombra */
-    background: white; /* Fondo blanco */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
-  }
-  
-  /* Efecto hover: eleva ligeramente el botón */
-  .social-button:hover {
-    transform: translateY(-3px); /* Eleva el botón */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Aumenta la sombra */
-  }
-  
-  /* Estilos de los botones sociales específicos */
-  .social-button.facebook {
-    background: #1b5be4; /* Color de fondo de Facebook */
-    color: white; /* Texto blanco */
-    margin-left: 150px; /* Desplaza el botón hacia la derecha */
-    width: 50px; /* Ancho del botón */
-    height: 50px; /* Alto del botón, igual que el ancho */
-    border-radius: 50%; /* Hace que el botón sea redondo */
-    display: flex; /* Usamos flexbox para centrar el icono */
-    align-items: center; /* Centra el icono verticalmente */
-    justify-content: center; /* Centra el icono horizontalmente */
-    border: none; /* Elimina el borde */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
-  }
-  
-  .social-button.google {
-    background: #da5b4f; /* Color de fondo de Google */
-  color: white; /* Texto blanco */
-  margin-right: 150px; /* Desplaza el botón hacia la derecha */
-  width: 50px; /* Ancho del botón */
-  height: 50px; /* Alto del botón, igual que el ancho */
-  border-radius: 50%; /* Hace que el botón sea redondo */
-  display: flex; /* Usamos flexbox para centrar el icono */
-  align-items: center; /* Centra el icono verticalmente */
-  justify-content: center; /* Centra el icono horizontalmente */
-  border: none; /* Elimina el borde */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+/* División de la pantalla */
+.olvido-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
+  height: 90%;
+  width: 80%;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
-  
-  /* Enlace para registro */
-  .signup-link {
-    text-align: center; /* Centrado */
-    margin-top: 32px; /* Espacio superior */
-  }
-  
-  .signup-link p {
-    font-size: 14px; /* Tamaño de fuente pequeño */
-    color: #666; /* Color gris */
-  }
-  
-  .signup-text {
-    font-weight: bold; /* Negrita */
-    color: #4CAF50; /* Color verde */
-    cursor: pointer; /* Cambia el cursor a mano */
-  }
-  .signup-text:hover {
-    color: #6db443; /* Color verde más oscuro al pasar el cursor */
-  }
+/* Lado izquierdo (imagen o contenido adicional) */
+.olvido-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #4caf50; /* Color de fondo */
+}
 
+.olvido-image {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Lado derecho (formulario) */
+.olvido-right {
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* Tarjeta central del olvido de contraseña */
+.olvido-card {
+  background: white;
+  border-radius: 90px;
+  padding: 90px;
+  width: 100%;
+  max-width: 600px;
   
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+/* Estilos del título */
+.olvido-card h1 {
+  text-align: center;
+  font-size: 50px;
+  font-weight: 700;
+  margin-top: -20px;
+  margin-bottom: 15px;
+  color: #236c2f;
+  white-space: nowrap;
+  margin-left: -60px;
+}
+
+/* Estilos del formulario */
+.olvido-form {
+  display: block;
+  text-align: left;
+  font-size: 10px;
+  margin-left: -30px;
+  color: #555;
+  margin-bottom: 10px;
+  margin-right: -30px;
+}
+
+.olvido-form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #201f1f;
+  border-radius: 50px;
+  background-color: #f8f8f8;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+/* Estilo al enfocar el campo de entrada */
+.olvido-form input:focus {
+  outline: none;
+  border-color: #4CAF50;
+  box-shadow: 0 0 0 2px rgba(179, 97, 243, 0.1);
+}
+
+/* Estilo de los campos del formulario */
+.olvido-form .form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.olvido-form .form-group label {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Estilo del contenedor del campo de entrada con icono */
+.olvido-form .input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Icono dentro del campo de entrada */
+.olvido-form .input-icon {
+  position: absolute;
+  left: 6px;
+  color: #999;
+  display: flex;
+  align-items: center;
+}
+
+/* Botón principal para enviar las instrucciones */
+.olvido-button {
+  display: block;
+  background: linear-gradient(135deg, #1b5e20 0%, #66bb6a 50%, #004d40 100%);
+  color: rgb(38, 60, 40);
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+  padding: 13px 100px;
+  border-radius: 60px;
+  margin-top: 20px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0px;
+  transition: background 0.3s;
+  white-space: nowrap;
+  margin-left: 60px;
+}
+
+.olvido-button:disabled {
+  background: #b5d8b5;
+  cursor: not-allowed;
+}
+
+.olvido-button:hover {
+  background: #5b8960;
+  opacity: 0.9;
+}
+
+/* Enlace para volver al login */
+.olvido-link {
+  text-align: center;
+  margin-top: 32px;
+}
+
+.olvido-link p {
+  font-size: 14px;
+  color: #666;
+}
+
+.olvido-link .signup-text {
+  font-weight: bold;
+  color: #4CAF50;
+  cursor: pointer;
+}
+
+.olvido-link .signup-text:hover {
+  color: #6db443;
+}
+
 /* Mensajes de error debajo de los campos de entrada */
-.login-error-message {
-  color: red; /* Color rojo para el texto de error */
-  font-size: 12px; /* Tamaño pequeño para los mensajes de error */
-  margin-top: -10px; /* Ajusta la posición vertical del mensaje de error */
-  margin-left: 15px; /* Ajusta la posición horizontal */
-  margin-bottom: 10px; /* Espaciado debajo del mensaje de error */
+.olvido-error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: -10px;
+  margin-left: 15px;
+  margin-bottom: 10px;
 }
+
+.message-info {
+  font-size: 15px;
+  color: #04583d;
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+
+/* RESPONSIVE*/
+/* Media Queries para pantallas pequeñas */
+@media (max-width: 768px) {
+  .olvido-card {
+      padding: 50px; /* Menos padding en pantallas pequeñas */
+  }
+
+  .olvido-card h1 {
+      font-size: 35px; /* Reduce el tamaño de fuente del título */
+      margin-left: -20px; /* Elimina el margen izquierdo */
+  }
+
+  .olvido-form {
+      margin-left: 0; /* Elimina el margen izquierdo */
+      margin-right: 0; /* Elimina el margen derecho */
+  }
+
+  .olvido-form input {
+      padding: 12px; /* Ajusta el padding de los inputs */
+      font-size: 16px; /* Aumenta ligeramente el tamaño de la fuente en inputs */
+  }
+
+  .olvido-button {
+      padding: 13px 100px; /* Reduce el padding del botón */
+      font-size: 14px; /* Reduce el tamaño de fuente del botón */
+      margin-left: 6px;
+  }
+
+  .message-info {
+      font-size: 14px; /* Reduce el tamaño de la fuente del mensaje */
+      margin-top: 20px; /* Ajusta el espacio superior */
+  }
+}
+
+/* Media query para pantallas medianas (tabletas) */
+@media (max-width: 768px) {
+  .olvido-card {
+      padding: 60px; /* Reduce un poco el padding en tabletas */
+      max-width: 90%; /* La tarjeta ocupa el 90% del ancho disponible */
+      border-radius: 60px; /* Bordes un poco menos redondeados */
+  }
+}
+
+/* Media query para pantallas grandes (escritorios) */
+@media (min-width: 1024px) {
+  .olvido-card {
+      padding: 100px; /* Mantén el padding para escritorios grandes */
+      max-width: 600px; /* Mantén el máximo ancho para evitar que se estire demasiado */
+      border-radius: 90px; /* Bordes redondeados más grandes */
+  }
+  
+}
+
+/* Ajustes responsivos doble pantalla */
+@media (max-width: 768px) {
+  .olvido-split {
+    grid-template-columns: 1fr; /* Cambia a una columna */
+  }
+
+  .olvido-left {
+    display: none; /* Oculta el lado izquierdo */
+  }
+
+  .olvido-right {
+    padding: 20px;
+  }
+
+  .olvido-button {
+    width: 100%; /* Asegura que el botón sea ancho en pantallas pequeñas */
+  }
+}
+
