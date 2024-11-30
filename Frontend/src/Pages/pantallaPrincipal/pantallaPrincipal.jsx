@@ -350,15 +350,14 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
               />
             ))}
           </div>
-          <button className="carousel-button left" onClick={handlePrevSlide}>
+        </div>
+      </div>
+      <button className="carousel-button left" onClick={handlePrevSlide}>
             ❮
           </button>
           <button className="carousel-button right" onClick={handleNextSlide}>
             ❯
           </button>
-        </div>
-      </div>
-
       {/* Nuevo carrusel de productos */}
       <div className="main-content">
         <h2>Productos Destacados</h2>

@@ -25,6 +25,7 @@ body {
   position: fixed;
   top: 0;
   z-index: 1000;
+  font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
 }
 
 .logo-imagen {
@@ -85,6 +86,7 @@ width:100px;
   box-sizing: border-box;
   overflow: hidden;
   z-index: 999;
+  font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
 }
 
 .categories-bar {
@@ -187,6 +189,7 @@ width:100px;
   width: 210px;
   text-align: center;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
 }
 
 .image-menu h3 {
@@ -210,7 +213,7 @@ width:100px;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
+  overflow: visible;
   width: 100%;
   max-width: 100%;
   height: 300px; /* Aumenta la altura */
@@ -222,6 +225,7 @@ width:100px;
   box-sizing: border-box;
   top: 0; /* Ajusta la posición para eliminar espacio */
   margin-top: 160px; /* Ajustado para estar debajo de las categorías */
+  z-index: 2;
 }
 
 .image-slider {
@@ -256,17 +260,17 @@ width:100px;
   border: none;
   border-radius: 50%;
   width: 30px;
-  height: 30px;
+  height: 40px;
   cursor: pointer;
-  z-index: 10;
+  z-index: 11;
+  margin-top: 16%;
 }
 
 .carousel-button.left {
-  left: 10px;
+  left: 29%;
 }
-
 .carousel-button.right {
-  right: 10px;
+  right: 6%;
 }
 
 /* Contenido Principal */
@@ -278,15 +282,16 @@ width:100px;
   gap: 30px;
   margin-top: auto;
   padding: 20px;
+  font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
 }
 
 .main-content h2 {
   color:#187946;
   font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
   margin-bottom: 1%;
-  margin-top: -20px; /* Ajuste para mover el título hacia arriba */
-  position: relative; /* Asegura que el título se mantenga en posición */
-  z-index: 2; /* Asegura que el título esté por encima del carrusel */
+  margin-top: -20px; 
+  position: relative; 
+  z-index: 2; 
 }
 
 .main-content > .image-section {
@@ -457,6 +462,7 @@ width:100px;
   margin-top: 175px;
   width: 100%;
   position: relative;
+  font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
   margin-left: auto;
 }
 
