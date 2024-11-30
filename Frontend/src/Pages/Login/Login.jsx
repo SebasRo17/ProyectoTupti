@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc"; // Ícono de Google
 import { FaFacebookF } from "react-icons/fa"; // Ícono de Facebook
 import { HiEye, HiEyeOff } from "react-icons/hi"; // Iconos de ojo
+import { HiArrowLeft } from "react-icons/hi";
 import "./Login.css";
-import { loginUser } from '../../Api/loginUsers';
+
 
 function Login() {
-  const navigate = useNavigate();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [stayLoggedIn, setStayLoggedIn] = useState(false);
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [password, setPassword] = useState(""); // Estado para la contraseña
-  const [passwordError, setPasswordError] = useState(""); // Estado para el mensaje de error
-
+  const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  
 
   const handleCheckboxChange = (e) => {
     setStayLoggedIn(e.target.checked);
@@ -42,7 +42,7 @@ function Login() {
   const handlePasswordChange = (e) => {
     const value = e.target.value;
     setPassword(value);
-  
+
     if (value.length < 6) {
       setPasswordError("La contraseña debe tener al menos 6 caracteres.");
     } else {
@@ -50,28 +50,19 @@ function Login() {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await loginUser(email, password);
-      if (response.success) {
-        if (response.user.isAdmin) {
-          navigate('/admin');
-        } else {
-          navigate('/home');
-        }
-      }
-    } catch (error) {
-      setPasswordError(error.message || 'Error al iniciar sesión');
-    }
-  };
-
   return (
     <div className="login-container">
       <div className="login-card">
-        <h1>LOGIN</h1>
+        {/* Botón "Regresar" */}
+        <div className="login-back-button">
+          <Link to="/">
+            <span className="arrow-icon">&lt;</span>
+            Regresar
+          </Link>
+        </div>
 
-        <form className="login-form" onSubmit={handleSubmit}>
+        <h1>LOGIN</h1>
+        <form className="login-form">
           <div className="form-group">
             <label>Usuario</label>
             <div className="input-container">
@@ -92,39 +83,37 @@ function Login() {
                 value={email}
               />
             </div>
-            {/* Mensaje de error en rojo justo debajo del input */}
             {emailError && <p className="login-error-message">{emailError}</p>}
           </div>
 
-       <div className="form-group">
-         <label htmlFor="password">Contraseña</label>
-          <div className="input-container">
-           <span className="input-icon">
-             <svg
-               xmlns="http://www.w3.org/2000/svg"
-               className="icon"
-               viewBox="0 0 24 24"
-               fill="none"
-               stroke="currentColor"
-              >
-               <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-               <path d="M7 11V7a5 5 0 0110 0v4"></path>
-            </svg>
-          </span>
-          <input
-          id="password"
-          type={passwordVisible ? "text" : "password"}
-          placeholder="Contraseña"
-          value={password}
-          onChange={handlePasswordChange}
-        />
-        <span className="password-toggle" onClick={togglePasswordVisibility}>
-          {passwordVisible ? <HiEyeOff /> : <HiEye />}
-        </span>
-      </div>
-      {passwordError && <p className="login-error-message">{passwordError}</p>}
-    </div>
-  
+          <div className="form-group">
+            <label htmlFor="password">Contraseña</label>
+            <div className="input-container">
+              <span className="input-icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                >
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0110 0v4"></path>
+                </svg>
+              </span>
+              <input
+                id="password"
+                type={passwordVisible ? "text" : "password"}
+                placeholder="Contraseña"
+                value={password}
+                onChange={handlePasswordChange}
+              />
+              <span className="password-toggle" onClick={togglePasswordVisibility}>
+                {passwordVisible ? <HiEyeOff /> : <HiEye />}
+              </span>
+            </div>
+            {passwordError && <p className="login-error-message">{passwordError}</p>}
+          </div>
 
           <div className="form-group">
             <label>
@@ -141,12 +130,11 @@ function Login() {
             <Link to="/olvido-contrasena">¿Olvidaste tu contraseña?</Link>
           </div>
 
-          <button 
-          type="submit" 
-          className="login-button"
-          disabled={emailError !== "" || passwordError !== ""}
+          <button
+            type="submit"
+            className="login-button"
+            disabled={emailError !== "" || passwordError !== ""}
           >
-            
             LOGIN
           </button>
         </form>

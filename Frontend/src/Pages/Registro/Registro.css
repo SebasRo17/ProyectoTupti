@@ -135,12 +135,6 @@ body {
 }
  
 
-/* Efecto hover: eleva ligeramente el botón */
-.registro-social-buttons:hover {
-  transform: translateY(-5px); /* Eleva el botón */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Aumenta la sombra */
-}
-
 /* Estilo para el botón de Facebook */
 .registro-facebook {
   background: #1b5be4; /* Color de fondo de Facebook */
@@ -156,7 +150,12 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
   margin-right: 50px;
 }
-  
+  /* Efecto hover: eleva ligeramente el botón */
+.registro-facebook:hover {
+  transform: translateY(-5px); /* Eleva el botón */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Aumenta la sombra */
+}
+
 
 /* Estilo para el botón de Google */
 .registro-google {
@@ -173,6 +172,12 @@ body {
   margin-left: -20px;
   margin-right: 30px;
 }
+/* Efecto hover: eleva ligeramente el botón */
+.registro-google:hover {
+  transform: translateY(-5px); /* Eleva el botón */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Aumenta la sombra */
+}
+
 
 /* Estilo para los contenedores de los iconos dentro del campo de contraseña */
 .registro-input-container {
@@ -228,4 +233,30 @@ body {
   color: red;
   font-size: 12px;
   margin-top: 5px;
+}
+
+/* Estilo para el botón "Regresar" */
+.registro-back-button {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, #1b5e20 0%, #66bb6a 50%, #004d40 100%); /* Fondo con gradiente verde */
+  padding: 0px 3px;
+  border-radius: 8px;  /* Bordes redondeados */
+  width: fit-content;  /* Ajusta el tamaño al contenido */
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);  /* Sombra suave */
+}
+
+.registro-back-button a {
+  text-decoration: none;
+  color: #f8f3f3;  /* Color blanco para el texto */
+  display: flex;
+  align-items: center;
+  font-weight: bold;  /* Negrita para el texto */
+  font-size: 14px;
+}
+
+.registro-back-button .arrow-icon {
+  font-size: 16px;  /* Tamaño del símbolo de flecha */
+  margin-right: 6px;  /* Espacio entre la flecha y el texto */
 }

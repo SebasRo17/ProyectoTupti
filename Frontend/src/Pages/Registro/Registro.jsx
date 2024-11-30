@@ -14,6 +14,9 @@ function Registro() {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [captchaValue, setCaptchaValue] = useState(""); // Almacenamos el valor del reCAPTCHA
+
+  const RECAPTCHA_SITE_KEY = "YOUR_SITE_KEY"; // Reemplaza con tu Clave del Sitio
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -56,10 +59,22 @@ function Registro() {
     setConfirmPassword("");
   };
 
+  const handleCaptchaChange = (value) => {
+    setCaptchaValue(value); // Guardamos el valor del reCAPTCHA
+    setError(""); // Limpiamos el mensaje de error si el usuario resuelve el captcha
+  };
+
   return (
     <div className="registro-container">
       <div className="registro-container-inner">
         <div className="registro-form-container">
+          {/* Botón "Regresar" */}
+          <div className="registro-back-button">
+            <Link to="/">
+              <span className="arrow-icon">&lt;</span>
+              Regresar
+            </Link>
+          </div>
           <div className="registro-form-title">
             <h2>REGISTRARSE</h2>
           </div>
@@ -125,6 +140,7 @@ function Registro() {
             </div>
             {passwordError && <p className="registro-error-message">{passwordError}</p>}
           </div>
+          
 
           <div className="registro-form-group">
             <button

@@ -80,7 +80,7 @@ function OlvidoContrasena() {
 
         <div className="olvido-link">
           <Link to="/login" className="signup-text">
-            Volver al Login
+            REGRESAR 
           </Link>
         </div>
       </div>

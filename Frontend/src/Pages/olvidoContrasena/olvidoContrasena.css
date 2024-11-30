@@ -199,6 +199,7 @@
 /* RESPONSIVE*/
 /* Media Queries para pantallas pequeñas */
 @media (max-width: 768px) {
+  
   .olvido-card {
       padding: 50px; /* Menos padding en pantallas pequeñas */
   }
