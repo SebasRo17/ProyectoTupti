@@ -14,11 +14,17 @@ y que se ajuste a la pantalla de la computadora, pero sea flotante */
   overflow: hidden; /* Eliminar scroll */
 }
   
+.input-container input {
+
+  color: #000000; 
+  transition: all 0.3s ease;
+}
+  
 /* Tarjeta central del login: fondo blanco, bordes redondeados, sombra y centrado */
 .login-card {
     background: white; /* Fondo blanco */
     border-radius: 80px; /* Bordes redondeados */
-    padding: 30px; /* Espaciado interno para que los elementos no toquen los bordes */
+    padding: 40px; /* Espaciado interno para que los elementos no toquen los bordes */
     width: 100%; /* Ocupar todo el ancho disponible */
     max-width: 500px; /* Limita el ancho máximo para pantallas grandes */
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra suave alrededor de la tarjeta */
@@ -39,7 +45,7 @@ y que se ajuste a la pantalla de la computadora, pero sea flotante */
   display: block; /* Hace que el título del campo sea un bloque */
   text-align: left; /* Alinea el texto a la izquierda */
   font-size: 10px; /* Tamaño de fuente más pequeño */
-  margin-left: -15px; /* Espaciado a la izquierda */
+  margin-left: -12px; /* Espaciado a la izquierda */
   color: #555; /* Color gris para el texto */
   margin-bottom: 10px; /* Espaciado debajo del título */
   
@@ -192,11 +198,7 @@ transition: background 0.3s; /* Transición suave en el fondo al pasar el mouse 
     background: white; /* Fondo blanco */
 }
 
-/* Efecto hover: eleva ligeramente el botón */
-  .social-buttons:hover {
-    transform: translateY(-5px); /* Eleva el botón */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Aumenta la sombra */
-}
+
   
 .login-facebook {
     background: #1b5be4; /* Color de fondo de Facebook */
@@ -213,6 +215,12 @@ transition: background 0.3s; /* Transición suave en el fondo al pasar el mouse 
     margin-right: 20px;
   }
 
+/* Efecto hover: eleva ligeramente el botón */
+.login-facebook:hover {
+  transform: translateY(-5px); /* Eleva el botón */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Aumenta la sombra */
+}
+
 .login-google {
   background: #435449; /* Color de fondo de Google */
   color: rgb(125, 103, 103); /* Texto blanco */
@@ -227,7 +235,11 @@ transition: background 0.3s; /* Transición suave en el fondo al pasar el mouse 
   margin-left: -10px;
   margin-right: 35px;
 }
-
+/* Efecto hover: eleva ligeramente el botón */
+.login-google:hover {
+  transform: translateY(-5px); /* Eleva el botón */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Aumenta la sombra */
+}
 
 /* Enlace para registro */
 .signup-link {
@@ -256,4 +268,28 @@ transition: background 0.3s; /* Transición suave en el fondo al pasar el mouse 
   transform: translateY(20px);
 }
 
+/* Estilo para el botón "Regresar" */
+.login-back-button {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, #1b5e20 0%, #66bb6a 50%, #004d40 100%); /* Fondo con gradiente verde */
+  padding: 0px 3px;
+  border-radius: 8px;  /* Bordes redondeados */
+  width: fit-content;  /* Ajusta el tamaño al contenido */
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);  /* Sombra suave */
+}
 
+.login-back-button a {
+  text-decoration: none;
+  color: #f8f3f3;  /* Color blanco para el texto */
+  display: flex;
+  align-items: center;
+  font-weight: bold;  /* Negrita para el texto */
+  font-size: 14px;
+}
+
+.login-back-button .arrow-icon {
+  font-size: 15px;  /* Tamaño del símbolo de flecha */
+  margin-right: 10px;  /* Espacio entre la flecha y el texto */
+}
