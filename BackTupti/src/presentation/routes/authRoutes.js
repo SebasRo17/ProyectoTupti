@@ -19,16 +19,32 @@ router.get('/google/callback', passport.authenticate('google', { failureRedirect
   res.redirect(`${redirectUrl}?token=${req.user.token}`);
 });
 
+// Ruta para iniciar sesión con Facebook
+router.get('/facebook', (req, res, next) => {
+  const redirectUrl = req.query.redirect || 'http://localhost:5173/';
+  passport.authenticate('facebook', {
+    scope: ['email'],
+    state: redirectUrl
+  })(req, res, next);
+});
+
+// Ruta de callback de Facebook
+router.get('/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/' }), (req, res) => {
+  const redirectUrl = req.query.state || 'http://localhost:5173/';
+  // Redirigir al cliente con el token JWT
+  res.redirect(`${redirectUrl}?token=${req.user.token}`);
+});
+
 // Middleware para validar el token JWT
 function authenticateToken(req, res, next) {
   const token = req.query.token || req.headers['authorization'];
   if (!token) {
-    return res.redirect('/'); // Redirigir a la página de inicio de sesión si no hay token
+    return res.redirect('/');
   }
 
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
-      return res.redirect('/'); // Redirigir a la página de inicio de sesión si el token no es válido o ha expirado
+      return res.redirect('/');
     }
     req.user = decoded;
     next();

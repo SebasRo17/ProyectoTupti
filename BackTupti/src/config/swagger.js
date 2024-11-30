@@ -40,6 +40,30 @@ const options = {
           },
         },
       },
+      '/auth/facebook': {
+        get: {
+          tags: ['Autenticación'],
+          summary: 'Iniciar sesión con Facebook',
+          description: 'Redirige al usuario a la página de inicio de sesión de Facebook',
+          responses: {
+            '302': {
+              description: 'Redirección a Facebook',
+            },
+          },
+        },
+      },
+      '/auth/facebook/callback': {
+        get: {
+          tags: ['Autenticación'],
+          summary: 'Callback de Facebook OAuth',
+          description: 'Endpoint para manejar la respuesta de autenticación de Facebook',
+          responses: {
+            '302': {
+              description: 'Redirección después de la autenticación',
+            },
+          },
+        },
+      },
       '/auth/dashboard': {
         get: {
           tags: ['Autenticación'],
@@ -86,12 +110,12 @@ const options = {
       },
     },
   },
-  apis: ['./src/presentation/routes/*.js'], 
+  apis: ['./src/presentation/routes/*.js'],
 };
 
 const swaggerSpec = swaggerJsdoc(options);
 
 module.exports = {
   swaggerUi: swaggerUi.serve,
-  swaggerSpec
+  swaggerSpec,
 };

@@ -20,12 +20,21 @@ User.init({
   },
   Contrasenia: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: true  // Cambiar a true para permitir login social
   },
   Activo: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: 1
+  },
+  FacebookId: {  // Nuevo campo
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: true
+  },
+  Nombre: {  // Agregar campo de nombre
+    type: DataTypes.STRING,
+    allowNull: true
   }
 }, {
   sequelize,
