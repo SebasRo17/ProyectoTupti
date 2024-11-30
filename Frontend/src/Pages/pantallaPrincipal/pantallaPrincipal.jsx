@@ -142,13 +142,13 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
 
   const [activeSlide, setActiveSlide] = useState(0);
 
-  const handleNextSlide = () => {
-    setActiveSlide((prev) => (prev + 1) % carouselData.length);
-  };
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % carouselData.length);
+    }, 5000); // Cambia de imagen cada 5 segundos
 
-  const handlePrevSlide = () => {
-    setActiveSlide((prev) => (prev - 1 + carouselData.length) % carouselData.length);
-  };
+    return () => clearInterval(timer);
+  }, [carouselData.length]);
 
   // Referencias para cada sección del carrusel
   const sectionRefs = useRef([]);
@@ -258,7 +258,12 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
           />
         </div>
         <div className="search-bar">
-          <button aria-label="Buscar">🔍</button>
+          <input 
+            type="text" 
+            placeholder="Buscar productos..." 
+            className="search-input"
+          />
+          <button className="search-icon" aria-label="Buscar">🔍</button>
         </div>
         <button 
           className="hamburger-menu" 
@@ -350,14 +355,17 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
               />
             ))}
           </div>
+          <div className="progress-indicators">
+            {carouselData.map((_, index) => (
+              <div
+                key={index}
+                className={`progress-bar ${index === activeSlide ? 'active' : ''}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
-      <button className="carousel-button left" onClick={handlePrevSlide}>
-            ❮
-          </button>
-          <button className="carousel-button right" onClick={handleNextSlide}>
-            ❯
-          </button>
+
       {/* Nuevo carrusel de productos */}
       <div className="main-content">
         <h2>Productos Destacados</h2>
