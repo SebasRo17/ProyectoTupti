@@ -18,14 +18,24 @@ User.init({
     allowNull: false
   },
   Contrasenia: {
-    type: DataTypes.STRING(100),
-    allowNull: false
+    type: DataTypes.STRING,
+    allowNull: true  // Cambiar a true para permitir login social
   },
   Activo: {
     type: DataTypes.TINYINT(1),
     allowNull: true,
     defaultValue: 1
   },
+
+  FacebookId: {  // Nuevo campo
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: true
+  },
+  Nombre: {  // Agregar campo de nombre
+    type: DataTypes.STRING,
+    allowNull: true
+
   IdRol: {
     type: DataTypes.INTEGER(11),
     allowNull: true,
