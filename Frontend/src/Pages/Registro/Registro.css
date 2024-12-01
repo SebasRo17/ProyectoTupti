@@ -1,215 +1,262 @@
-/* Fondo de la aplicación */
+/* Establece los márgenes a 0 y usa la fuente Arial para todo el cuerpo */
 body {
-  font-family: 'Poppins', sans-serif;
   margin: 0;
-  background-color: #f5f5f5;
+  font-family: Arial, sans-serif;
+  background: white; /* Establece un fondo blanco para la página */
 }
 
-/* Contenedor principal */
-.App {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f5f5f5;
+/* Contenedor principal del formulario de registro */
+.registro-container {
+  min-height: 100vh; /* Asegura que el contenedor ocupe al menos toda la altura de la pantalla */
+  width: 100%; /* Ocupa todo el ancho de la pantalla */
+  display: flex; /* Usamos flexbox para centrar el contenido */
+  align-items: center; /* Centra el contenido verticalmente */
+  justify-content: center; /* Centra el contenido horizontalmente */
+  position: absolute; /* Posiciona el contenedor en la parte superior */
+  top: 0; /* Alineado al principio de la pantalla */
+  left: 0; /* Alineado al borde izquierdo */
+  background: linear-gradient(135deg, #4CAF50 0%, #2196F3 100%); /* Fondo con un gradiente verde a azul */
+  padding: 0px; /* Elimina el padding alrededor del contenedor */
+  overflow: hidden; /* Elimina el scroll */
 }
 
-/* Fondo semitransparente para la ventana emergente */
-.modal-overlay {
-  position: fixed; /* Hace que el modal se superponga */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6); /* Fondo oscuro semitransparente */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000; /* Asegura que esté sobre cualquier contenido */
+/* Estilos del contenedor interior donde se encuentra el formulario */
+.registro-container-inner {
+  background: white; /* Fondo blanco */
+    border-radius: 80px; /* Bordes redondeados */
+    padding: 30px; /* Espaciado interno para que los elementos no toquen los bordes */
+    width: 100%; /* Ocupar todo el ancho disponible */
+    max-width: 500px; /* Limita el ancho máximo para pantallas grandes */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra suave alrededor de la tarjeta */
+    position: relative; /* Para ser flotante */
+  }
+
+/* Título del formulario de registro */
+.registro-form-title h2 {
+  text-align: center; /* Centra el título */
+  font-size: 40px; /* Tamaño grande de fuente */
+  font-weight: 700; /* Fuente en negrita */
+  margin-bottom: 15px; /* Espaciado debajo del título */
+  color: #236c2f; /* Color verde para el título */
+  margin-top: 20px; /* Espaciado superior */
 }
 
-/* Modal emergente */
-.modal {
-  display: flex;
-  flex-direction: row;
-  width: 850px;
-  max-width: 90%;
-  background-color: #ffffff;
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Sombra para destacar */
-  z-index: 2000; /* Asegura que esté encima del fondo */
+/* Estilo para los títulos de los campos de entrada */
+.registro-field-title {
+  display: block; /* Hace que el título del campo sea un bloque */
+  text-align: left; /* Alinea el texto a la izquierda */
+  font-size: 12px; /* Tamaño de fuente más pequeño */
+  margin-left: 15px; /* Espaciado a la izquierda */
+  color: #555; /* Color gris para el texto */
+  margin-bottom: 3px; /* Espaciado debajo del título */
 }
 
-/* Sección izquierda del modal */
-.modal-left {
-  background-color: #e3f2fd;
-  flex: 1.2;
-  padding: 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
+/* Estilos para los campos de entrada */
+.registro-input {
+  width: 100%; /* Los campos de entrada ocupan el 100% del ancho */
+  padding: 7px 15px; /* Espaciado interno */
+  border: 1px solid #201f1f; /* Borde gris oscuro */
+  border-radius: 50px; /* Bordes redondeados */
+  background: #f8f8f8; /* Fondo gris claro para los campos */
+  font-size: 14px; /* Tamaño de fuente más pequeño */
+  margin-bottom: 0px; /* Espaciado debajo del campo */
+  outline: none; /* Elimina el contorno predeterminado */
+  transition: border-color 0.3s; /* Transición suave en el borde cuando se enfoca */
+
 }
 
-.modal-left h1 {
-  color: #1e88e5;
-  font-size: 2.5rem;
-  font-weight: bold;
-  margin-bottom: 10px;
+/* Estilo para cuando el campo de entrada está enfocado */
+.registro-input:focus {
+  border-color: #4CAF50; /* Cambia el borde a verde cuando el campo es enfocado */
 }
 
-.modal-left h2 {
-  color: #1e88e5;
-  font-size: 4rem;
-  font-weight: bold;
-  margin: 0;
+/* Mensajes de error debajo de los campos de entrada */
+.registro-error-message {
+  color: red; /* Color rojo para el texto de error */
+  font-size: 12px; /* Tamaño pequeño para los mensajes de error */
+  margin-top: -10px; /* Ajusta la posición vertical del mensaje de error */
+  margin-left: 15px; /* Ajusta la posición horizontal */
+  margin-bottom: 10px; /* Espaciado debajo del mensaje de error */
 }
 
-.modal-left p {
-  font-size: 1.2rem;
-  color: #1e88e5;
-  margin: 20px 0;
-  font-style: italic;
+/* Estilo del botón de registro */
+.registro-btn {
+  display: block; /* Hace que el botón ocupe toda la línea */
+    background: linear-gradient(135deg, #1b5e20 0%, #66bb6a 50%, #004d40 100%); /* Fondo con gradiente verde */
+    color: rgb(38, 60, 40); /* Texto en color verde oscuro */
+    font-size: 20px; /* Tamaño grande para el texto */
+    font-weight: bold; /* Texto en negrita */
+    text-align: center; /* Centra el texto dentro del botón */
+    padding: 5px 145px; /* Espaciado interno (mucho espacio a los lados) */
+    border-radius: 40px; /* Bordes redondeados más grandes */
+    margin-top: 0px; /* Espaciado superior */
+    cursor: pointer; /* Cambia el cursor a mano al pasar el mouse */
+    text-transform: uppercase; /* Convierte el texto a mayúsculas */
+    transition: background 0.3s; /* Transición suave en el fondo al pasar el mouse */
+    margin-left: 0px;
+  }
+
+/* Estilo cuando el botón está deshabilitado */
+.registro-btn:disabled {
+  background: #b5d8b5; /* Fondo gris cuando está deshabilitado */
+  cursor: not-allowed; /* Cambia el cursor a no permitido */
 }
 
-/* Sección derecha del modal */
-.modal-right {
-  flex: 1;
-  padding: 40px;
+/* Estilo cuando el mouse pasa por encima del botón */
+.registro-btn:hover {
+  background: #5b8960; /* Cambia el color de fondo a verde oscuro */
+  opacity: 0.9; /* Opacidad reducida para el efecto hover */
 }
 
-.modal-right h2 {
-  color: #333333;
-  font-size: 1.8rem;
+/* Texto debajo de los botones sociales */
+.registro-social-text {
+  margin-top: 20px; /* Espacio superior */
+  text-align: center; /* Centrado */
+  }
+
+
+/* Contenedor para los botones sociales */
+.registro-social-buttons {
+
+  display: flex; /* Usamos flexbox */
+  margin-left: 150px;
+  align-items: center; /* Centra el icono dentro del botón */
+  justify-content: center; /* Centra el icono dentro del botón */
+  cursor: pointer; /* Cambia el cursor a mano */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición suave de transformaciones y sombra */
+  background: white; /* Fondo blanco */
+  width: 170px; /* Ancho fijo */
+  height: 60px; /* Alto fijo */
+  border-radius: 50%; /* Forma circular */
+  display: flex; /* Usamos flexbox para centrar el icono dentro del botón */
+  justify-content: center; /* Centra el icono horizontalmente */
+  align-items: center; /* Centra el icono verticalmente */
+  cursor: pointer; /* Cambia el cursor a mano al pasar el mouse */
+}
+ 
+
+/* Estilo para el botón de Facebook */
+.registro-facebook {
+  background: #1b5be4; /* Color de fondo de Facebook */
+  color: white; /* Texto blanco */
+  margin: 0 20px; /* Ajuste el margen a los lados para centrarlos */
+  width: 60px; /* Ancho del botón */
+  height: 50px; /* Alto del botón, igual que el ancho */
+  border-radius: 50%; /* Hace que el botón sea redondo */
+  display: flex; /* Usamos flexbox para centrar el icono */
+  align-items: center; /* Centra el icono verticalmente */
+  justify-content: center; /* Centra el icono horizontalmente */
+  border: none; /* Elimina el borde */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  margin-right: 50px;
+}
+  /* Efecto hover: eleva ligeramente el botón */
+.registro-facebook:hover {
+  transform: translateY(-5px); /* Eleva el botón */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Aumenta la sombra */
+}
+
+
+/* Estilo para el botón de Google */
+.registro-google {
+  background: #435449; /* Color de fondo de Google */
+  color: rgb(125, 103, 103); /* Texto blanco */
+  width: 60px; /* Ancho del botón */
+  height: 50px; /* Alto del botón, igual que el ancho */
+  border-radius: 60%; /* Hace que el botón sea redondo */
+  display: flex; /* Usamos flexbox para centrar el icono */
+  align-items: center; /* Centra el icono verticalmente */
+  justify-content: center; /* Centra el icono horizontalmente */
+  border: none; /* Elimina el borde */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  margin-left: -20px;
+  margin-right: 30px;
+}
+/* Efecto hover: eleva ligeramente el botón */
+.registro-google:hover {
+  transform: translateY(-5px); /* Eleva el botón */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Aumenta la sombra */
+}
+
+
+/* Estilo para los contenedores de los iconos dentro del campo de contraseña */
+.registro-input-container {
+  position: relative; /* Necesario para posicionar el ícono dentro del input */
+}
+
+/* Estilo para el icono del ojo para mostrar/ocultar la contraseña */
+.registro-password-toggle {
+  position: absolute; /* Posiciona el icono de manera absoluta dentro del campo */
+  right: 30px; /* Posiciona el icono a 30px de la derecha */
+  top: 50%; /* Posiciona verticalmente a la mitad del campo */
+  transform: translateY(-50%); /* Ajusta la posición para centrar el icono */
+  cursor: pointer; /* Cambia el cursor a mano */
+  color: #999; /* Color gris del icono */
+  font-size: 20px; /* Tamaño grande para el icono */
+}
+
+/* Estilo cuando el icono del ojo es hover */
+.registro-password-toggle:hover {
+  color: #4CAF50; /* Cambia el color a verde al pasar el mouse */
+}
+
+/* Estilo para el contenedor del texto */
+.registro-bottom-text {
+  text-align: center; /* Centra el texto */
+  font-size: 16px; /* Tamaño de fuente */
+  color: #555; /* Color gris para el texto */
+  margin-top: 20px; /* Espaciado superior */
+}
+
+/* Estilo para el enlace "Inicia sesión" */
+.registro-login-link {
+  color: #4CAF50; /* Color verde para el enlace */
+  font-weight: bold; /* Texto en negrita */
+  text-decoration: none; /* Elimina la subrayado predeterminado */
+  cursor: pointer; /* Cambia el cursor a mano */
+  transition: color 0.3s ease; /* Transición suave para el color */
+  font-size: 15px; /* Tamaño de fuente pequeño */
+}
+
+/* Cambia el color del enlace cuando el mouse pasa sobre él */
+.registro-login-link:hover {
+  color: #6db443; /* Cambia el color a verde cuando pasa el mouse */
+}
+
+/* Estilos para el contenedor del CAPTCHA */
+.registro-form-group {
   margin-bottom: 20px;
 }
 
-/* Formularios */
-form {
-  display: flex;
-  flex-direction: column;
+/* Estilo para los mensajes de error */
+.registro-error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
 }
 
-form input {
-  margin-bottom: 15px;
-  padding: 12px;
-  border: 1px solid #dcdcdc;
-  border-radius: 12px; /* Curvas más suaves */
-  font-size: 1rem;
-}
-
-form button {
-  padding: 12px;
-  border: none;
-  border-radius: 12px; /* Curvas más suaves */
-  background-color: #1e88e5;
-  color: white;
-  font-size: 1rem;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background-color 0.3s ease;
-}
-
-form button:hover {
-  background-color: #1565c0;
-}
-
-/* Login social */
-.social-buttons {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px; /* Espacio entre los botones */
-  align-items: center;
-  margin-top: 0px;
-}
-
-.social-button {
+/* Estilo para el botón "Regresar" */
+.registro-back-button {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 10px 10px;
-  width: 100%; /* Asegura el mismo ancho */
-  max-width: 250px;
-  border-radius: 12px; /* Curvas más suaves */
-  transition: 0.3s ease;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, #1b5e20 0%, #66bb6a 50%, #004d40 100%); /* Fondo con gradiente verde */
+  padding: 0px 3px;
+  border-radius: 8px;  /* Bordes redondeados */
+  width: fit-content;  /* Ajusta el tamaño al contenido */
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);  /* Sombra suave */
 }
 
-.social-button .social-icon {
-  font-size: 1.5rem;
-  margin-right: 10px; /* Espacio entre icono y texto */
+.registro-back-button a {
+  text-decoration: none;
+  color: #f8f3f3;  /* Color blanco para el texto */
+  display: flex;
+  align-items: center;
+  font-weight: bold;  /* Negrita para el texto */
+  font-size: 14px;
 }
 
-/* Botón de Google */
-.social-button.google {
-  background-color: #db4437;
-  color: white;
-  border: 1px solid #ddd;
-}
-
-.social-button.google:hover {
-  background-color: #b46d66;
-}
-
-/* Botón de Facebook */
-.social-button.facebook {
-  background-color: #f9f9f9;
-  color: #0f78ef;
-  border: 1px solid #ddd;
-}
-
-.social-button.facebook:hover {
-  background-color: #7692b7;
-}
-
-/* Responsividad para pantallas grandes (pantalla completa) */
-@media (min-width: 1024px) {
-  .social-button {
-    max-width: 100px; /* Hace los botones más estrechos en pantallas grandes */
-  }
-}
-
-@media (max-width: 768px) {
-  .modal {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .modal-left {
-    padding: 0px;
-    flex: 1;
-  }
-
-  .modal-right {
-    padding: 20px;
-    flex: 1;
-  }
-}
-
-@media (max-width: 480px) {
-  .modal {
-    flex-direction: column;
-    width: 100%;
-    box-shadow: none;
-    border-radius: 0;
-  }
-
-  form input {
-    padding: 10px;
-    font-size: 0.9rem;
-  }
-  
-  .social-login button:hover {
-    opacity: 0.9;
-  }
-  
-  a {
-    color: #8c8751;
-    text-decoration: none;
-    font-weight: bold;
-  }
-  
-  a:hover {
-    text-decoration: underline;
-  }
+.registro-back-button .arrow-icon {
+  font-size: 16px;  /* Tamaño del símbolo de flecha */
+  margin-right: 6px;  /* Espacio entre la flecha y el texto */
 }

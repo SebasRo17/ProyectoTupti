@@ -5,17 +5,16 @@ class User extends Model {}
 
 User.init({
   IdUsuario: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.INTEGER(11),
     primaryKey: true,
     autoIncrement: true
   },
   CodigoUs: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(45),
     allowNull: true
   },
   Email: {
-    type: DataTypes.STRING,
-    unique: true,
+    type: DataTypes.STRING(45),
     allowNull: false
   },
   Contrasenia: {
@@ -23,10 +22,11 @@ User.init({
     allowNull: true  // Cambiar a true para permitir login social
   },
   Activo: {
-    type: DataTypes.BOOLEAN,
-    allowNull: false,
+    type: DataTypes.TINYINT(1),
+    allowNull: true,
     defaultValue: 1
   },
+
   FacebookId: {  // Nuevo campo
     type: DataTypes.STRING,
     unique: true,
@@ -35,6 +35,14 @@ User.init({
   Nombre: {  // Agregar campo de nombre
     type: DataTypes.STRING,
     allowNull: true
+
+  IdRol: {
+    type: DataTypes.INTEGER(11),
+    allowNull: true,
+    references: {
+      model: 'rol', // Nombre de la tabla referenciada
+      key: 'IdRol'  // Nombre de la columna referenciada
+    }
   }
 }, {
   sequelize,
