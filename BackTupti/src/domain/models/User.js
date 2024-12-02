@@ -35,7 +35,7 @@ User.init({
   Nombre: {  // Agregar campo de nombre
     type: DataTypes.STRING,
     allowNull: true
-
+},
   IdRol: {
     type: DataTypes.INTEGER(11),
     allowNull: true,
