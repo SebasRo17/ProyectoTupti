@@ -24,11 +24,12 @@ body {
 .registro-container-inner {
   background: white; /* Fondo blanco */
     border-radius: 80px; /* Bordes redondeados */
-    padding: 30px; /* Espaciado interno para que los elementos no toquen los bordes */
+    padding: 15px; /* Espaciado interno para que los elementos no toquen los bordes */
     width: 100%; /* Ocupar todo el ancho disponible */
     max-width: 500px; /* Limita el ancho máximo para pantallas grandes */
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra suave alrededor de la tarjeta */
     position: relative; /* Para ser flotante */
+    min-height: 9%; 
   }
 
 /* Título del formulario de registro */
@@ -72,11 +73,13 @@ body {
 
 /* Mensajes de error debajo de los campos de entrada */
 .registro-error-message {
-  color: red; /* Color rojo para el texto de error */
-  font-size: 12px; /* Tamaño pequeño para los mensajes de error */
-  margin-top: -10px; /* Ajusta la posición vertical del mensaje de error */
-  margin-left: 15px; /* Ajusta la posición horizontal */
-  margin-bottom: 10px; /* Espaciado debajo del mensaje de error */
+  margin-bottom: 25px; /* Ajusta este valor según sea necesario */
+color: red;
+font-size: 12px;
+line-height: 0; /* Asegúrate de que el interlineado sea compacto */
+margin-left: 10px;
+transform: translateY(10px);
+
 }
 
 /* Estilo del botón de registro */
@@ -93,7 +96,7 @@ body {
     cursor: pointer; /* Cambia el cursor a mano al pasar el mouse */
     text-transform: uppercase; /* Convierte el texto a mayúsculas */
     transition: background 0.3s; /* Transición suave en el fondo al pasar el mouse */
-    margin-left: 0px;
+    margin-left: 10px;
   }
 
 /* Estilo cuando el botón está deshabilitado */
@@ -237,26 +240,201 @@ body {
 
 /* Estilo para el botón "Regresar" */
 .registro-back-button {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-  background: linear-gradient(135deg, #1b5e20 0%, #66bb6a 50%, #004d40 100%); /* Fondo con gradiente verde */
-  padding: 0px 3px;
-  border-radius: 8px;  /* Bordes redondeados */
-  width: fit-content;  /* Ajusta el tamaño al contenido */
-  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);  /* Sombra suave */
+  position: absolute;
+  top: 25px;
+  left: 30px;
+  margin-left: 10px;
 }
 
-.registro-back-button a {
+.back-registro-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 3px solid #4caf50; /* Borde verde */
+  border-radius: 50%; /* Forma circular */
   text-decoration: none;
-  color: #f8f3f3;  /* Color blanco para el texto */
-  display: flex;
-  align-items: center;
-  font-weight: bold;  /* Negrita para el texto */
-  font-size: 14px;
+  color: #4caf50; /* Color de la flecha */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.registro-back-button .arrow-icon {
-  font-size: 16px;  /* Tamaño del símbolo de flecha */
-  margin-right: 6px;  /* Espacio entre la flecha y el texto */
+.back-registro-circle:hover {
+  background-color: #4caf50; /* Fondo verde al pasar el ratón */
+  color: white; /* Flecha blanca al pasar el ratón */
 }
+
+.icon-arrow {
+  width: 20px;
+  height: 20px;
+}
+
+/* Estilo adicional para reCAPTCHA */
+.registro-form-group .g-recaptcha {
+  display: flex;
+  justify-content: column;
+  margin-top: 10rem;
+  
+}
+
+/*RESPONSIVE*/
+/* Desktop (1441px and above) */
+@media screen and (min-width: 1441px) {
+  .registro-container-inner {
+    width: 40%;
+    padding: 2rem;
+  }
+  
+  .registro-form-title h2 {
+    font-size: 3rem;
+  }
+
+  .registro-input {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .registro-btn {
+    width: 100%;
+    padding: 1rem 3rem;
+  }
+
+  .social-buttons {
+    margin-left: 20%;
+  }
+}
+
+/* Laptops (1024px - 1440px) */
+@media screen and (max-width: 1440px) and (min-width: 1024px) {
+  .registro-container-inner {
+    width: 50%;
+    padding: 1.5rem;
+    border-radius: 60px;
+  }
+ 
+  .registro-form-title h2 {
+    font-size: 2.5rem;
+  }
+
+  .registro-input {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .registro-btn {
+    width: 100%;
+    padding: 0.5rem 2.5rem;
+    margin-left: 0%;
+  }
+  .registro-social-buttons {
+    width: 35%;
+  }
+
+}
+
+/* Tablets (768px - 1023px) */
+@media screen and (max-width: 1023px) and (min-width: 768px) {
+  .registro-container-inner {
+    width: 55%;
+    padding: 1.2rem;
+    border-radius: 60px;
+  }
+
+  .registro-form-title h2 {
+    font-size: 2rem;
+  }
+
+  .registro-input {
+    width: 100%;
+    padding: 0.8rem;
+  }
+
+  .registro-btn {
+    width: 100%;
+    padding: 0.5rem 2rem;
+  }
+
+  .registro-social-buttons {
+    width: 25%;
+  }
+
+}
+
+/* Responsivo para pantallas entre 425px y 767px */
+@media screen and (max-width: 767px) and (min-width: 425px) {
+  .registro-container-inner {
+    width: 80%;
+    padding: 1rem;
+    border-radius: 60px;
+  }
+
+  .registro-form-title h2 {
+    font-size: 1.8rem;
+  }
+
+  .registro-input {
+    width: 100%;
+    padding: 0.7rem;
+  }
+
+  .registro-btn {
+    width: 100%;
+    padding: 0.5rem 1.5rem;
+    margin-left: 0%;
+  }
+
+  .registro-social-buttons {
+    width: 5%;
+  }
+  .registro-back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    margin-left: 10px;
+  }
+  .back-registro-circle {
+    width: 25px; /* Reducido el tamaño */
+    height: 25px; /* Reducido el tamaño */
+  }
+ 
+}
+
+/* Móviles (menos de 425px) */
+@media screen and (max-width: 424px) {
+  .registro-container-inner {
+    width: 90%;
+    padding: 0.8rem;
+    border-radius: 60px;
+  }
+
+  .registro-form-title h2 {
+    font-size: 1.5rem;
+  }
+
+  .registro-input {
+    width: 100%;
+    padding: 0.6rem;
+  }
+
+  .registro-btn {
+    width: 100%;
+    padding: 0.2rem 1.2rem;
+    margin-left: 0px;
+  }
+
+  .registro-social-buttons {
+    width: 10%;
+  }
+  .registro-back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    margin-left: 10px;
+  }
+  .back-registro-circle {
+    width: 25px; /* Reducido el tamaño */
+    height: 25px; /* Reducido el tamaño */
+  }
+}
+
+

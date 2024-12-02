@@ -14,7 +14,6 @@ function Login() {
   const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  
 
   const handleCheckboxChange = (e) => {
     setStayLoggedIn(e.target.checked);
@@ -53,11 +52,23 @@ function Login() {
   return (
     <div className="login-container">
       <div className="login-card">
-        {/* Botón "Regresar" */}
+        {/* Botón "Regresar" como flecha en círculo */}
         <div className="login-back-button">
-          <Link to="/">
-            <span className="arrow-icon">&lt;</span>
-            Regresar
+          <Link to="/" className="back-login-circle">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="icon-arrow"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
           </Link>
         </div>
 
@@ -108,7 +119,7 @@ function Login() {
                 value={password}
                 onChange={handlePasswordChange}
               />
-              <span className="password-toggle" onClick={togglePasswordVisibility}>
+              <span className="password-login-toggle" onClick={togglePasswordVisibility}>
                 {passwordVisible ? <HiEyeOff /> : <HiEye />}
               </span>
             </div>

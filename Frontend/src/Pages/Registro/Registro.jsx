@@ -5,6 +5,8 @@ import Login from '../Login/Login.jsx';
 import { FcGoogle } from "react-icons/fc"; // Ícono de Google
 import { FaFacebookF } from "react-icons/fa"; // Ícono de Facebook
 import { HiEye, HiEyeOff } from "react-icons/hi"; // Iconos de ojo
+import ReCAPTCHA from "react-google-recaptcha";
+
 
 
 function Registro() {
@@ -14,9 +16,7 @@ function Registro() {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [captchaValue, setCaptchaValue] = useState(""); // Almacenamos el valor del reCAPTCHA
-
-  const RECAPTCHA_SITE_KEY = "YOUR_SITE_KEY"; // Reemplaza con tu Clave del Sitio
+  const [captchaVerified, setCaptchaVerified] = useState(false);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -42,39 +42,62 @@ function Registro() {
   };
 
   const handleConfirmPasswordChange = (e) => {
-    setConfirmPassword(e.target.value);
-    if (e.target.value !== password) {
+    const value = e.target.value;
+    setConfirmPassword(value);
+  
+    if (value !== password) {
       setPasswordError("Las contraseñas no coinciden.");
+    } else if (password.length < 6) {
+      setPasswordError("La contraseña debe tener al menos 6 caracteres.");
     } else {
-      setPasswordError("");
+      setPasswordError(""); // Si ambas validaciones son correctas, elimina el mensaje de error
     }
   };
 
   const handleRegister = () => {
-    // Aquí puedes agregar la lógica para guardar los datos
+    if (!captchaVerified) {
+      alert("Por favor, verifica el reCAPTCHA antes de registrarte.");
+      return;
+    }
     console.log("Usuario registrado:", { email, password, confirmPassword });
-    // Limpia los campos después de registrar
     setEmail("");
     setPassword("");
     setConfirmPassword("");
+    setCaptchaVerified(false);
   };
 
   const handleCaptchaChange = (value) => {
-    setCaptchaValue(value); // Guardamos el valor del reCAPTCHA
-    setError(""); // Limpiamos el mensaje de error si el usuario resuelve el captcha
+    if (value) {
+      setCaptchaVerified(true);
+    } else {
+      setCaptchaVerified(false);
+    }
   };
 
   return (
     <div className="registro-container">
       <div className="registro-container-inner">
         <div className="registro-form-container">
-          {/* Botón "Regresar" */}
+          {/* Botón "Regresar" como flecha en círculo */}
           <div className="registro-back-button">
-            <Link to="/">
-              <span className="arrow-icon">&lt;</span>
-              Regresar
+            <Link to="/" className="back-registro-circle">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="icon-arrow"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
             </Link>
           </div>
+
           <div className="registro-form-title">
             <h2>REGISTRARSE</h2>
           </div>
@@ -140,13 +163,22 @@ function Registro() {
             </div>
             {passwordError && <p className="registro-error-message">{passwordError}</p>}
           </div>
-          
+
+          {/* reCAPTCHA Condicional */}
+          {emailError === "" && passwordError === "" && email && password && confirmPassword && (
+            <div className="registro-form-group">
+              <ReCAPTCHA
+                sitekey="6LcUDY8qAAAAAFFqpqNlmf4SMbDQ3vVgWno4ZLf_"
+                onChange={handleCaptchaChange}
+              />
+            </div>
+          )}
 
           <div className="registro-form-group">
             <button
               type="button"
               className="registro-btn"
-              disabled={emailError !== "" || passwordError !== ""}
+              disabled={!captchaVerified || emailError !== "" || passwordError !== ""}
               onClick={handleRegister}
             >
               REGISTRARSE

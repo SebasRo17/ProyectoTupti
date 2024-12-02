@@ -18,6 +18,8 @@ y que se ajuste a la pantalla de la computadora, pero sea flotante */
 
   color: #000000; 
   transition: all 0.3s ease;
+  margin-bottom: 10px; /* Este margen define el espacio debajo de cada campo de entrada */
+    gap: 10px; /* Si deseas más espacio entre el icono y el campo */
 }
   
 /* Tarjeta central del login: fondo blanco, bordes redondeados, sombra y centrado */
@@ -29,6 +31,7 @@ y que se ajuste a la pantalla de la computadora, pero sea flotante */
     max-width: 500px; /* Limita el ancho máximo para pantallas grandes */
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra suave alrededor de la tarjeta */
     position: relative; /* Para ser flotante */
+    min-height: 600px; /* Asegura que la tarjeta sea lo suficientemente alta */
 }
   
 /* Estilos del título */
@@ -36,8 +39,10 @@ y que se ajuste a la pantalla de la computadora, pero sea flotante */
     text-align: center; /* Centra el texto */
     font-size: 60px; /* Tamaño de fuente grande */
     font-weight: 700; /* Negrita */
-    margin-bottom: 35px; /* Espacio debajo del título */
+    margin-bottom: 40px; /* Espacio debajo del título */
     color: #236c2f; /* Color verde */
+    transform: translateY( 25px);
+
 }
   
 /* Estilos del formulario */
@@ -63,6 +68,14 @@ margin-top: 10px;
 .form-group label {
 font-size: 14px; /* Tamaño de fuente pequeño */
 color: #666; /* Color gris para las etiquetas */
+margin-left: 10px;
+}
+  /* Estilo del checkbox dentro del contenedor */
+.form-group input[type="checkbox"] {
+  margin-right: 10px; /* Añadir espacio a la derecha del checkbox */
+  width: 18px; /* Cambia el tamaño del checkbox */
+  height: 18px;
+  cursor: pointer; /* Cambia el cursor al pasar sobre el checkbox */
 }
   
 /* Contenedor del campo de entrada, utilizado para incluir iconos dentro del campo */
@@ -104,7 +117,7 @@ transition: all 0.3s ease; /* Transición suave para el enfoque */
 .forgot-password {
   text-align: right; /* Alinea el enlace a la derecha */
   position: relative; /* Necesario para usar transform */
-  transform: translateX(0px) translateY(0px); /* Mueve el enlace 30px a la derecha y 20px hacia abajo */
+  transform: translateX(0px) translateY(-45px); /* Mueve el enlace 30px a la derecha y 20px hacia abajo */
 }
   
 .forgot-password a {
@@ -120,10 +133,10 @@ transition: all 0.3s ease; /* Transición suave para el enfoque */
   color: #6db443; /* Color verde más oscuro al pasar el cursor */
 }
   
-.password-toggle {
+.password-login-toggle {
   position: absolute; /* Posiciona el icono de manera absoluta dentro del campo */
   right: 30px; /* Posiciona el icono a 30px de la derecha */
-  top: 50%; /* Posiciona verticalmente a la mitad del campo */
+  top: 40%; /* Posiciona verticalmente a la mitad del campo */
   transform: translateY(-50%); /* Ajusta la posición para centrar el icono */
   cursor: pointer; /* Cambia el cursor a mano */
   color: #999; /* Color gris del icono */
@@ -131,7 +144,7 @@ transition: all 0.3s ease; /* Transición suave para el enfoque */
 }
 
 /* Estilo cuando el icono del ojo es hover */
-.password-toggle:hover {
+.password-login-toggle:hover {
   color: #4CAF50; /* Cambia el color a verde al pasar el mouse */
 }
 
@@ -145,10 +158,11 @@ font-weight: bold; /* Texto en negrita */
 text-align: center; /* Centra el texto dentro del botón */
 padding: 8px 185px; /* Espaciado interno (mucho espacio a los lados) */
 border-radius: 40px; /* Bordes redondeados más grandes */
-margin-top: 25px; /* Espaciado superior */
+margin-top: -25px; /* Espaciado superior */
 cursor: pointer; /* Cambia el cursor a mano al pasar el mouse */
 text-transform: uppercase; /* Convierte el texto a mayúsculas */
 transition: background 0.3s; /* Transición suave en el fondo al pasar el mouse */
+margin-left: 20px;
 }
 
 /* Estilo cuando el botón está deshabilitado */
@@ -190,7 +204,7 @@ transition: background 0.3s; /* Transición suave en el fondo al pasar el mouse 
     border-radius: 0%; /* Bordes redondeados */
     border: none; /* Elimina el borde */
     display: flex; /* Usamos flexbox */
-    margin-left: 160px;
+    margin-left: 170px;
     align-items: center; /* Centra el icono dentro del botón */
     justify-content: center; /* Centra el icono dentro del botón */
     cursor: pointer; /* Cambia el cursor a mano */
@@ -198,8 +212,6 @@ transition: background 0.3s; /* Transición suave en el fondo al pasar el mouse 
     background: white; /* Fondo blanco */
 }
 
-
-  
 .login-facebook {
     background: #1b5be4; /* Color de fondo de Facebook */
     color: white; /* Texto blanco */
@@ -213,6 +225,7 @@ transition: background 0.3s; /* Transición suave en el fondo al pasar el mouse 
     border: none; /* Elimina el borde */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
     margin-right: 20px;
+    margin-left: 190px;
   }
 
 /* Efecto hover: eleva ligeramente el botón */
@@ -233,7 +246,7 @@ transition: background 0.3s; /* Transición suave en el fondo al pasar el mouse 
   border: none; /* Elimina el borde */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
   margin-left: -10px;
-  margin-right: 35px;
+  margin-right: -30px;
 }
 /* Efecto hover: eleva ligeramente el botón */
 .login-google:hover {
@@ -263,33 +276,374 @@ transition: background 0.3s; /* Transición suave en el fondo al pasar el mouse 
 }
 
 .login-error-message {
-  color: red; /* Color rojo para el texto de error */
-  font-size: 12px; /* Tamaño pequeño para los mensajes de error */
-  transform: translateY(20px);
+margin-bottom: 5px; /* Ajusta este valor según sea necesario */
+color: red;
+font-size: 12px;
+line-height: 0; /* Asegúrate de que el interlineado sea compacto */
+margin-left: 5px;
 }
 
-/* Estilo para el botón "Regresar" */
+/*boton de regreso */
 .login-back-button {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-  background: linear-gradient(135deg, #1b5e20 0%, #66bb6a 50%, #004d40 100%); /* Fondo con gradiente verde */
-  padding: 0px 3px;
-  border-radius: 8px;  /* Bordes redondeados */
-  width: fit-content;  /* Ajusta el tamaño al contenido */
-  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);  /* Sombra suave */
+  position: absolute;
+  top: 30px;
+  left: 30px;
 }
 
-.login-back-button a {
+.back-login-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 3px solid #4caf50; /* Borde verde */
+  border-radius: 50%; /* Forma circular */
   text-decoration: none;
-  color: #f8f3f3;  /* Color blanco para el texto */
-  display: flex;
-  align-items: center;
-  font-weight: bold;  /* Negrita para el texto */
-  font-size: 14px;
+  color: #4caf50; /* Color de la flecha */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.login-back-button .arrow-icon {
-  font-size: 15px;  /* Tamaño del símbolo de flecha */
-  margin-right: 10px;  /* Espacio entre la flecha y el texto */
+.back-login-circle:hover {
+  background-color: #4caf50; /* Fondo verde al pasar el ratón */
+  color: white; /* Flecha blanca al pasar el ratón */
+}
+
+.icon-arrow {
+  width: 20px;
+  height: 20px;
+}
+
+/* Media Queries */
+
+/* Desktop (1441px and above) */
+@media screen and (min-width: 1441px) {
+  .login-container {
+    padding: 0 -30%; /* Añadir padding en porcentaje */
+  }
+  .login-card {
+    max-width: 40%; /* Ajustar el ancho máximo con porcentaje */
+  }
+  .login-card h1 {
+    font-size: 4vw; /* Tamaño de fuente en porcentaje con respecto al ancho de la pantalla */
+  }
+  .login-button {
+    padding: 1% 30%; /* Ajustar tamaño del botón con porcentaje */
+  margin-left: 15%;
+  }
+  .social-buttons {
+    margin-left: 11px;
+    
+  }
+  
+  
+}
+
+/* Laptops (1024px - 1440px) */
+@media screen and (max-width: 1440px) and (min-width: 1024px) {
+  .login-container {
+    padding: 50 10%; /* Añadir padding moderado en porcentaje */
+  }
+  .login-card {
+    max-width: 50%; /* Reducir el ancho máximo con porcentaje */
+  }
+  .login-card h1 {
+    font-size: 5vw; /* Reducir tamaño del título con porcentaje */
+  }
+  .login-button {
+    padding: 1% 30%; /* Ajustar padding del botón en porcentaje */
+    margin-left: 12%;
+  }
+  .social-buttons {
+    margin-left: 12%;
+  }
+   .forgot-password {
+    margin-top: 2rem; /* Agregar espacio arriba para moverlo hacia abajo */
+    transform: translateY(-100%); /* Mover ligeramente hacia abajo */
+    font-size: 1.5rem;
+  }
+}
+
+
+/* Tablets (768px - 1023px) */
+@media screen and (max-width: 1023px) and (min-width: 768px) {
+  .login-container {
+    padding: 0 20%; /* Menos padding para pantallas de tablet en porcentaje */
+  
+  }
+  .login-card {
+    max-width: 100%; /* Reducir aún más el ancho máximo */
+    padding: -0%; /* Ajustar padding en porcentaje */
+    border-radius: 60px; /* Hacer el borde menos redondeado (puedes ajustar el valor) */
+    max-height: 80vh;
+    margin-top: -5%;
+
+  }
+  .login-card h1 {
+    font-size: 6vw; /* Reducir el tamaño del título con porcentaje */
+  }
+  .login-button {
+    padding: 2% 30%; /* Ajustar tamaño del botón */
+    border-radius: 50px; /* Hacer el borde del botón menos redondeado */
+    margin-left: 10%;
+  }
+  .forgot-password {
+    transform: translateX(0) translateY(-185%); /* Ajustar la posición del enlace con porcentaje */
+  }
+  .social-buttons {
+    margin-left: 15%;
+  }
+  .login-form {
+    display: block; /* Hace que el título del campo sea un bloque */
+    text-align: left; /* Alinea el texto a la izquierda */
+    font-size: 1px; /* Tamaño de fuente más pequeño */
+    margin-left: 5%; /* Espaciado a la izquierda */
+    margin-right: 5%;
+    color: #555; /* Color gris para el texto */
+    margin-bottom: 10px; /* Espaciado debajo del título */
+  }
+  .register-link {
+    margin-top: 10%;
+    text-align: center;
+    font-size: 0.9rem;
+    word-wrap: break-word; /* Evita que el texto se desborde en pantallas pequeñas */
+  }
+}
+
+/* Responsivo para pantallas entre 425px y 767px */
+@media screen and (max-width: 767px) and (min-width: 425px) {
+  .login-container {
+    padding: 0 5%; /* Menos padding para pantallas de tablet en porcentaje */
+  
+  }
+  .login-card {
+    max-width: 100%; /* Asegura que el formulario ocupe el ancho completo disponible */
+    padding: 10px;
+    border-radius: 60px;
+  }
+
+  .login-card h1 {
+    font-size: 2rem; /* Ajustar el tamaño del título */
+  }
+  .login-form {
+    display: block; /* Hace que el título del campo sea un bloque */
+    text-align: left; /* Alinea el texto a la izquierda */
+    font-size: 1px; /* Tamaño de fuente más pequeño */
+    margin-left: 5%; /* Espaciado a la izquierda */
+    margin-right: 5%;
+    color: #555; /* Color gris para el texto */
+    margin-bottom: 10px; /* Espaciado debajo del título */
+  }
+  
+  .form-group input {
+    font-size: 1rem; /* Mantener el tamaño de los campos de entrada adecuado */
+    padding: 8px; /* Ajustar el padding para mejor usabilidad */
+  }
+
+  .login-button {
+    padding: 2% 30%; /* Ajustar tamaño del botón */
+    border-radius: 50px; /* Hacer el borde del botón menos redondeado */
+    margin-left: 10%;
+  }
+
+  .register-link {
+    font-size: 0.8rem; /* Ajuste de tamaño para el enlace */
+    margin-top: 12px;
+  }
+
+  .register-link a {
+    font-size: 0.8rem; /* Ajustar tamaño del enlace */
+  
+  }
+
+  .forgot-password {
+    transform: translateX(0) translateY(-275%); /* Ajustar la posición del enlace con porcentaje */
+  margin-top:70px;
+  }
+  .social-buttons {
+    margin-left: 5%;
+  }
+  .back-login-circle {
+    width: 30px;
+    height: 30px;
+  }
+  
+}
+
+@media screen and (min-width: 375px) and (max-width: 424px) {
+  /* Contenedor principal */
+  .login-container {
+    padding: 5% 8%; /* Espacio adecuado para pantallas pequeñas */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Alineación vertical */
+    height: auto; /* Ajustar la altura según el contenido */
+    overflow-y: auto; /* Permitir desplazamiento si es necesario */
+  }
+
+  /* Tarjeta de login */
+  .login-card {
+    width: 100%; /* Aseguramos que ocupe todo el ancho */
+    max-width: 90%; /* No exceder el 90% del ancho de la pantalla */
+    min-height: auto; /* Ajustar la altura según el contenido */
+    padding: 15px; /* Espacio dentro de la tarjeta */
+    margin-top: 10px; /* Separación superior */
+    border-radius: 15px; /* Bordes redondeados */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    border-radius: 60px;
+  }
+
+  /* Título */
+  .login-card h1 {
+    font-size: 7vw; /* Reducir tamaño de fuente con base al ancho de la pantalla */
+    margin-bottom: 12%; /* Espacio adicional debajo del título */
+    text-align: center; /* Centrar el título */
+    transform: translateY(30%); /* Ajuste en la posición */
+  }
+
+  /* Botón de login */
+  .login-button {
+    padding: 3% 30%; /* Reducir tamaño del botón */
+    font-size: 14px; /* Ajustar tamaño de fuente */
+    width: auto; /* Ajustar al contenido */
+    text-align: center;
+    margin-top: 20px; /* Espacio entre botones */
+    margin-left: 30px;
+  }
+
+  /* Enlace de "olvidé mi contraseña" */
+  .forgot-password {
+    font-size: 0.9rem; /* Ajuste del tamaño de la fuente */
+    margin-top: 12px; /* Espacio entre el campo y el enlace */
+    text-align: center; /* Centrado del enlace */
+    transform: translateY(-50%);
+  }
+
+  /* Enlace de "olvidé mi contraseña" */
+  .forgot-password a {
+    font-size: 0.9rem; /* Ajustar tamaño de fuente */
+    margin-left: 80px;
+  }
+
+  .social-buttons {
+    margin-left: -5%;
+  }
+
+  .login-facebook {
+    margin-right: 15px;
+    margin-left: 145px;
+  }
+
+  /* Mensaje de error */
+  .login-error-message {
+    margin-bottom: 10px;
+    font-size: 12px;
+    text-align: center; /* Centrar el mensaje de error */
+    margin-left: 0; /* Eliminar margen izquierdo */
+  }
+
+  /* Flecha de retroceso */
+  .back-login-circle {
+    width: 25px;
+    height: 25px;
+    margin-top: -10px;
+    margin-left: -10px;
+  }
+
+  /* Asegurarse que los campos estén bien distribuidos */
+  .form-group {
+    margin-bottom: 15px; /* Espacio adecuado entre campos */
+  }
+}
+
+
+@media screen and (max-width: 374px) {
+  
+  .login-container {
+    padding: 5% 0%; 
+    display: flex;
+    overflow-y: auto; 
+  }
+
+  /* Tarjeta de login */
+  .login-card {
+    width: 100%; /* Ajustar al 100% del ancho */
+    max-width: 90%; /* Hacer la tarjeta un poco más pequeña para evitar amontonamiento */
+    min-height: auto; /* Ajustar la altura a su contenido */
+    padding: 20px; /* Espacio adecuado dentro de la tarjeta */
+    margin-top: 10px; /* Espacio superior para separación */
+    border-radius: 15px; /* Bordes redondeados */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    border-radius: 60px;
+  }
+
+  /* Título */
+  .login-card h1 {
+    font-size: 10vw; /* Tamaño adecuado para pantallas pequeñas */
+    margin-bottom: 10%; /* Mayor espacio debajo del título */
+    text-align: center;
+    transform: translateY(-10%); /* Ajuste leve en la posición */
+  }
+
+  /* Botón de login */
+  .login-button {
+    padding: 3% 30%; /* Espacio adecuado para el botón */
+    font-size: 14px; /* Tamaño de fuente legible */
+    width: auto; /* Ajustar al tamaño del texto */
+    text-align: center;
+    margin-top: 20px; /* Espacio entre los botones */
+  }
+
+  
+  .forgot-password {
+    font-size: 0.8rem; /* Ajustar tamaño de fuente para ser legible */
+    margin-top: 15px; /* Ajustar espacio para no quedar tan cerca del campo */
+    text-align: center; /* Centrar el enlace */
+    transform: translateY(-50%);
+ 
+    margin-right: -90px;
+  }
+
+ 
+  .forgot-password a {
+    font-size: 0.9rem; /* Tamaño adecuado */
+    color: #4CAF50;
+    transform: translateY(10%);
+  }
+
+  /* Botones sociales */
+  .social-buttons {
+    margin-left: -8%;
+  }
+
+  /* Mensaje de error */
+  .login-error-message {
+    margin-bottom: 5px;
+    font-size: 10px;
+    text-align: center;
+    margin-right: 20px; 
+  }
+
+  .back-login-circle {
+    width: 30px;
+    height: 30px;
+    margin-top: 20px; 
+  }
+
+  .form-group {
+    margin-bottom: 20px; 
+  }
+  .back-login-circle {
+    width: 25px;
+    height: 25px;
+  }
+  .login-back-button {
+    position: absolute;
+    top: -5px;
+    left: 25px;
+  }
+  .login-facebook {
+    margin-right: 30px;
+    margin-left: 150px;
+  }
+
 }
