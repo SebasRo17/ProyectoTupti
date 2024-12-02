@@ -34,11 +34,31 @@ function OlvidoContrasena() {
   return (
     <div className="olvido-container">
       <div className="olvido-card">
+        {/* Botón "Regresar" con flecha en círculo */}
+        <div className="olvido-back-button">
+          <Link to="/" className="back-olvido-circle">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="icon-arrow"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+          </Link>
+        </div>
+
         <h1>Recuperar Contraseña</h1>
 
         {/* Mensaje debajo del título */}
         <p className="message-info">
-          Escribe la dirección de correo electrónico vinculada a tu cuenta de Tupti y te enviaremos un mensaje.
+          Escribe la dirección de correo electrónico vinculada a tu cuenta y te enviaremos un mensaje.
         </p>
 
         <form className="olvido-form" onSubmit={handleSubmit}>
@@ -77,12 +97,6 @@ function OlvidoContrasena() {
             Enviar Correo
           </button>
         </form>
-
-        <div className="olvido-link">
-          <Link to="/login" className="signup-text">
-            REGRESAR 
-          </Link>
-        </div>
       </div>
     </div>
   );

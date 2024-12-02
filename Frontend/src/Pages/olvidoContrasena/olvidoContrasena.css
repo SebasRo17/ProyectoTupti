@@ -11,48 +11,14 @@
   background: linear-gradient(135deg, #4CAF50 0%, #2196F3 100%);
   padding: 0;
 }
-/* División de la pantalla */
-.olvido-split {
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
-  height: 90%;
-  width: 80%;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-}
-/* Lado izquierdo (imagen o contenido adicional) */
-.olvido-left {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #4caf50; /* Color de fondo */
-}
-
-.olvido-image {
-  max-width: 100%;
-  height: auto;
-  object-fit: cover;
-}
-
-/* Lado derecho (formulario) */
-.olvido-right {
-  padding: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
 
 /* Tarjeta central del olvido de contraseña */
 .olvido-card {
   background: white;
-  border-radius: 90px;
+  border-radius: 60px;
   padding: 90px;
   width: 100%;
   max-width: 600px;
-  
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   position: relative;
 }
@@ -60,13 +26,14 @@
 /* Estilos del título */
 .olvido-card h1 {
   text-align: center;
-  font-size: 50px;
+  font-size: 40px;
   font-weight: 700;
   margin-top: -20px;
   margin-bottom: 15px;
   color: #236c2f;
   white-space: nowrap;
-  margin-left: -60px;
+  transform: translateY(-10px);
+  
 }
 
 /* Estilos del formulario */
@@ -196,76 +163,196 @@
 }
 
 
-/* RESPONSIVE*/
-/* Media Queries para pantallas pequeñas */
-@media (max-width: 768px) {
-  
+.olvido-back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.back-olvido-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-left: 20px;
+  border: 3px solid #4caf50; /* Borde verde */
+  border-radius: 50%; /* Forma circular */
+  text-decoration: none;
+  color: #4caf50; /* Color de la flecha */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.back-olvido-circle:hover {
+  background-color: #4caf50; /* Fondo verde al pasar el ratón */
+  color: white; /* Flecha blanca al pasar el ratón */
+}
+
+.icon-arrow {
+  width: 20px;
+  height: 20px;
+}
+
+/*RESPONSIVE*/
+/* Responsivo para pantallas entre 425px y 767px */
+@media screen and (max-width: 767px) {
+  .olvido-container {
+    padding: 0 3%;
+  }
+
   .olvido-card {
-      padding: 50px; /* Menos padding en pantallas pequeñas */
+    padding: 30px;
+    width: 100%;
+    border-radius: 60px;
   }
 
   .olvido-card h1 {
-      font-size: 35px; /* Reduce el tamaño de fuente del título */
-      margin-left: -20px; /* Elimina el margen izquierdo */
-  }
-
-  .olvido-form {
-      margin-left: 0; /* Elimina el margen izquierdo */
-      margin-right: 0; /* Elimina el margen derecho */
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 8px;
   }
 
   .olvido-form input {
-      padding: 12px; /* Ajusta el padding de los inputs */
-      font-size: 16px; /* Aumenta ligeramente el tamaño de la fuente en inputs */
+    padding: 10px;
+    font-size: 14px;
+    margin-left: 0px;
+    margin-right: 15px;
   }
+  
+.olvido-form .form-group {
+  margin-left: 10px;
+}
 
   .olvido-button {
-      padding: 13px 100px; /* Reduce el padding del botón */
-      font-size: 14px; /* Reduce el tamaño de fuente del botón */
-      margin-left: 6px;
+    padding: 12px 60px;
+  }
+
+  .olvido-link p {
+    font-size: 12px;
   }
 
   .message-info {
-      font-size: 14px; /* Reduce el tamaño de la fuente del mensaje */
-      margin-top: 20px; /* Ajusta el espacio superior */
+    font-size: 13px;
+  }
+
+  .back-olvido-circle {
+    width: 20px;
+    height: 20px;
+  }
+  .olvido-back-button {
+    position: absolute;
+    top: 15px;
+    left: 12px;
+  }
+
+  .olvido-error-message {
+    margin-left: 10px; /* Ajuste del margen hacia la izquierda para pantallas pequeñas */
+    
   }
 }
 
-/* Media query para pantallas medianas (tabletas) */
-@media (max-width: 768px) {
+/* Responsivo para pantallas entre 375px y 424px */
+@media screen and (min-width: 375px) and (max-width: 424px) {
+  .olvido-container {
+    padding: 0 5%;
+  }
+
   .olvido-card {
-      padding: 60px; /* Reduce un poco el padding en tabletas */
-      max-width: 90%; /* La tarjeta ocupa el 90% del ancho disponible */
-      border-radius: 60px; /* Bordes un poco menos redondeados */
-  }
-}
-
-/* Media query para pantallas grandes (escritorios) */
-@media (min-width: 1024px) {
-  .olvido-card {
-      padding: 100px; /* Mantén el padding para escritorios grandes */
-      max-width: 600px; /* Mantén el máximo ancho para evitar que se estire demasiado */
-      border-radius: 90px; /* Bordes redondeados más grandes */
-  }
-  
-}
-
-/* Ajustes responsivos doble pantalla */
-@media (max-width: 768px) {
-  .olvido-split {
-    grid-template-columns: 1fr; /* Cambia a una columna */
-  }
-
-  .olvido-left {
-    display: none; /* Oculta el lado izquierdo */
-  }
-
-  .olvido-right {
     padding: 20px;
+    width: 100%;
+  }
+
+  .olvido-card h1 {
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 6px;
+    transform: translateY(50%);
+  }
+
+  .olvido-form input {
+    padding: 8px;
+    font-size: 12px;
   }
 
   .olvido-button {
-    width: 100%; /* Asegura que el botón sea ancho en pantallas pequeñas */
+    padding: 12px 50px;
+  }
+
+  .olvido-link p {
+    font-size: 11px;
+  }
+
+  .message-info {
+    font-size: 12px;
+  }
+
+  .back-olvido-circle {
+    width: 20px;
+    height: 20px;
+  }
+  .olvido-error-message {
+    
+    font-size: 12px;
+    margin-top: -10px;
+    margin-left: 15px;
+    margin-bottom: 10px;
+  }
+
+  .icon-arrow {
+    width: 10px;
+    height: 10px;
   }
 }
 
+/* Responsivo para pantallas menores a 320px */
+@media screen and (max-width: 374px) {
+  .olvido-container {
+    padding: 0 5%;
+  }
+
+  .olvido-card {
+    padding: 15px;
+    width: 100%;
+  }
+
+  .olvido-card h1 {
+    font-size: 15px;
+    margin-top: 0;
+    margin-bottom: 5px;
+    transform: translateY(60%);
+  }
+
+  .olvido-form input {
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .olvido-button {
+    padding: 7px 30px;
+  }
+
+  .olvido-link p {
+    font-size: 10px;
+  }
+
+  .message-info {
+    font-size: 11px;
+  }
+
+  .back-olvido-circle {
+    width: 20px;
+    height: 20px;
+  }
+
+  .olvido-back-button {
+    position: absolute;
+    top: 15px;
+    left: 5px;
+  }
+  .olvido-form .form-group {
+    margin-left: 25px;
+    margin-right: 5px;
+    font-size: 14px; 
+  }
+
+}
