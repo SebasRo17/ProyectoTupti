@@ -25,19 +25,45 @@ class UserRepositoryImpl {
       if (!user) {
         throw new Error(`Usuario con ID ${userId} no encontrado`);
       }
+      
+      // Validar que no se pueda cambiar el rol a uno inválido
+      if (userData.IdRol && ![1, 2].includes(Number(userData.IdRol))) {
+        throw new Error('Rol inválido. Solo se permiten roles 1 (Admin) o 2 (Cliente)');
+      }
+
       return await user.update(userData);
     } catch (error) {
       console.error('Error al actualizar usuario en el repositorio:', error);
       throw error;
     }
   }
+
   async findByEmail(email) {
     try {
-      return await User.findOne({
+      console.log('Buscando usuario con email:', email);
+      
+      const user = await User.findOne({
         where: {
-          Email: email
+          Email: email,
+          Activo: 1 // Solo usuarios activos
         }
       });
+      
+      console.log('Resultado de búsqueda:', user ? 'Usuario encontrado' : 'No encontrado');
+      
+      if (user) {
+        // Añadir validación de rol
+        const isAdmin = user.IdRol === 1;
+        const isClient = user.IdRol === 2;
+        
+        return {
+          ...user.toJSON(),
+          isAdmin,
+          isClient
+        };
+      }
+      
+      return null;
     } catch (error) {
       console.error('Error al buscar usuario por email:', error);
       throw error;

@@ -1,0 +1,183 @@
+/* Contenedor principal */
+.recuperar-container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: linear-gradient(135deg, #4CAF50 0%, #2196F3 100%);
+  padding: 0;
+}
+  
+  /* Tarjeta principal */
+  .recuperar-card {
+    background: white; /* Fondo blanco */
+    border-radius: 60px; /* Bordes redondeados */
+    padding: 40px; /* Aumento el padding para más espacio interno */
+    width: 100%; /* Ocupar todo el ancho disponible */
+    max-width: 500px; /* Limita el ancho máximo a 500px */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra suave alrededor de la tarjeta */
+    position: relative; /* Para ser flotante */
+    min-height: 420px; /* Asegura que la tarjeta sea lo suficientemente alta */
+}
+  
+  /* Botón de regreso */
+  .recuperar-back-button {
+    position: absolute;
+    top: 20px;
+    left: 40px;
+  }
+  
+  .back-recuperar-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 3px solid #4caf50; /* Borde verde */
+    border-radius: 50%; /* Forma circular */
+    text-decoration: none;
+    color: #4caf50; /* Color de la flecha */
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+.back-recuperar-circle:hover {
+  background-color: #4caf50; /* Fondo verde al pasar el ratón */
+  color: white; /* Flecha blanca al pasar el ratón */
+}
+  
+  .icon-arrow {
+    width: 20px;
+    height: 20px;
+  }
+  
+  /* Título */
+  h1 {
+    text-align: center; /* Centra el texto */
+    font-size: 25px; /* Tamaño de fuente grande */
+    font-weight: 700; /* Negrita */
+    margin-bottom: 0px; /* Espacio debajo del título */
+    color: #236c2f; /* Color verde */
+    transform: translateY(60%);
+}
+
+
+  /* Formulario */
+  .recuperar-form {
+    margin-top: 40px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 0px;
+    font-size: 15px;
+    color: #333;
+  }
+  
+  .input-container {
+    position: relative;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px 40px 10px 15px;
+    border: 2px solid #ddd;
+    border-radius: 50px;
+    font-size: 14px;
+  }
+  
+  input:focus {
+    border-color: #4caf50;
+    outline: none;
+  }
+  
+  .password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-80%);
+    cursor: pointer;
+    color: #666;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: -10px;
+    margin-left: 10px;
+    height: 20px; 
+    transition: none;
+  }
+  
+/* Botón principal */
+.recuperar-button {
+  display: block; /* Hace que el botón ocupe toda la línea */
+  width: 100%; /* Asegura que el botón ocupe todo el ancho disponible */
+  background: linear-gradient(135deg, #1b5e20 0%, #66bb6a 50%, #004d40 100%); /* Fondo con gradiente verde */
+  color: rgb(38, 60, 40); /* Texto en color verde oscuro */
+  font-size: 19px; /* Tamaño grande para el texto */
+  font-weight: bold; /* Texto en negrita */
+  text-align: center; /* Centra el texto dentro del botón */
+  padding: 5px 0; /* Espaciado interno (espaciado equilibrado) */
+  border-radius: 40px; /* Bordes redondeados más grandes */
+  margin-top: -25px; /* Espaciado superior */
+  cursor: pointer; /* Cambia el cursor a mano al pasar el mouse */
+  text-transform: uppercase; /* Convierte el texto a mayúsculas */
+  transition: background 0.3s; /* Transición suave en el fondo al pasar el mouse */
+  margin-left: 0px;
+  transform: translateY(60%);
+}
+
+.recuperar-button:hover {
+  background: #5b8960;
+  opacity: 0.9;
+}
+
+/* Estilo para el botón deshabilitado */
+/* Botón de regreso */
+.recuperar-back-button {
+  position: absolute;
+  top: 20px;
+  left: 40px;
+  z-index: 10; /* Asegúrate de que esté por encima de otros elementos */
+}
+
+/* Estilo del círculo donde se encuentra el enlace */
+.back-recuperar-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; /* Aumenta el tamaño del área de clic */
+  height: 40px; /* Aumenta el tamaño del área de clic */
+  border: 3px solid #4caf50; /* Borde verde */
+  border-radius: 50%; /* Forma circular */
+  text-decoration: none;
+  color: #4caf50; /* Color de la flecha */
+  transition: background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer; /* Cambia el cursor a mano al pasar el mouse */
+  /* Hacer que el área de clic cubra toda la parte del círculo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box; /* Asegura que el padding no se salga del borde */
+  
+}
+
+.back-recuperar-circle:hover {
+  background-color: #4caf50; /* Fondo verde al pasar el ratón */
+  color: white; /* Flecha blanca al pasar el ratón */
+}
+
+.icon-arrow {
+  width: 20px;
+  height: 20px;
+  pointer-events: none; /* Desactiva los eventos de puntero sobre el icono */
+}
