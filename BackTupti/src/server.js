@@ -1,6 +1,5 @@
 require('dotenv').config();
 const express = require('express');
-const cors = require('cors'); // Agregar esta línea
 const session = require('express-session');
 const passport = require('passport');
 const cors = require('cors');
@@ -9,8 +8,6 @@ const authRoutes = require('./presentation/routes/authRoutes');
 const userRoutes = require('./presentation/routes/userRoutes');
 const swaggerUi = require('swagger-ui-express');
 const swaggerConfig = require('./config/swagger');
-const userRoutes = require('./presentation/routes/userRoutes');
-const authRoutes = require('./presentation/routes/authRoutes');
 const productRoutes = require('./presentation/routes/prodImgRoutes');
 const bestSellersRoutes = require('./presentation/routes/bestSellersRoutes');
 const { sequelize } = require('./infrastructure/database/mysqlConnection');

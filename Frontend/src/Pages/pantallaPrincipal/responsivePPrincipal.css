@@ -34,11 +34,11 @@
   .main-content{
     margin-left: 20%;
     margin-top: 3%;
-    max-width: 60%;
+    max-width: 70%;
   }
 
   .section-button{
-    margin-left: 5%;
+    margin-left: -5%;
     margin-right: 5%;
   }
   .footer{
@@ -72,16 +72,16 @@
     width: 35%;
     max-width: 80%;
     height: 100%;
-   margin-left: 20% ;
-   margin-top: -550px;
+   margin-left: 23% ;
+   margin-top: -650px;
   }
   .fixed-image{
     margin-top: 6.5%;
   }
   .main-content {
-    margin-left: 15%;
+    margin-left: 20%;
     margin-top: 1%;
-    width: 45%;
+    width: 40%;
   }
   .section-button{
     margin-left: 5%;
@@ -89,7 +89,7 @@
   }
 
   .image-menu {
-    width: 10%;
+    width: 15%;
   }
   .footer{
     width: 100vw;
