@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./RecuperarContrasena.css";
+import "./recuperarContrasena.css";
 import { HiEye, HiEyeOff } from "react-icons/hi"; // Iconos para mostrar/ocultar contraseña
 
 
