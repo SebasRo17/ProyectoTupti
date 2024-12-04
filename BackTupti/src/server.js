@@ -20,7 +20,8 @@ const PORT = process.env.PORT || 3000;
 // Configuración de CORS actualizada
 app.use(cors({
     origin: [
-        'https://tupti.store', 
+        'https://tupti.store',
+        'https://www.tupti.store', // Agregando www subdomain
         'http://localhost:3000',
         'https://proyecto-tupti-vwl2-n68e6b66v-sebasro17s-projects.vercel.app',
         'https://proyecto-tupti-vwl2-nu4otzt8r-sebasro17s-projects.vercel.app', // Nuevo dominio
@@ -38,6 +39,7 @@ app.use((req, res, next) => {
         // Verifica si el origen está en la lista de permitidos
         const allowedOrigins = [
             'https://tupti.store',
+            'https://www.tupti.store', // Agregando www subdomain
             'http://localhost:3000',
             'https://proyecto-tupti-vwl2-n68e6b66v-sebasro17s-projects.vercel.app',
             'https://proyecto-tupti-vwl2-nu4otzt8r-sebasro17s-projects.vercel.app'
