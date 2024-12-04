@@ -21,25 +21,25 @@ const PORT = process.env.PORT || 3000;
 app.use(cors({
     origin: [
         'https://tupti.store',
-        'https://www.tupti.store', // Agregando www subdomain
+        'https://www.tupti.store',
         'http://localhost:3000',
         'https://proyecto-tupti-vwl2-n68e6b66v-sebasro17s-projects.vercel.app',
-        'https://proyecto-tupti-vwl2-nu4otzt8r-sebasro17s-projects.vercel.app', // Nuevo dominio
-        /\.vercel\.app$/ // Regex para cualquier subdominio de vercel.app
+        'https://proyecto-tupti-vwl2-nu4otzt8r-sebasro17s-projects.vercel.app',
+        /\.vercel\.app$/
     ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With', 'Accept'],
+    exposedHeaders: ['Access-Control-Allow-Origin']
 }));
 
-// Middleware adicional para asegurar headers CORS
+// Middleware mejorado para headers CORS
 app.use((req, res, next) => {
     const origin = req.headers.origin;
     if (origin) {
-        // Verifica si el origen está en la lista de permitidos
         const allowedOrigins = [
             'https://tupti.store',
-            'https://www.tupti.store', // Agregando www subdomain
+            'https://www.tupti.store',
             'http://localhost:3000',
             'https://proyecto-tupti-vwl2-n68e6b66v-sebasro17s-projects.vercel.app',
             'https://proyecto-tupti-vwl2-nu4otzt8r-sebasro17s-projects.vercel.app'
@@ -47,15 +47,16 @@ app.use((req, res, next) => {
         
         if (allowedOrigins.includes(origin) || origin.match(/\.vercel\.app$/)) {
             res.header('Access-Control-Allow-Origin', origin);
+            res.header('Access-Control-Allow-Credentials', 'true');
+            res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+            res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+            res.header('Access-Control-Expose-Headers', 'Access-Control-Allow-Origin');
         }
     }
-    
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    res.header('Access-Control-Allow-Credentials', 'true');
-    
+
+    // Manejar preflight requests
     if (req.method === 'OPTIONS') {
-        return res.status(200).end();
+        return res.status(204).end();
     }
     
     next();
