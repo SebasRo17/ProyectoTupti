@@ -18,10 +18,9 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Configuración de CORS
-
 app.use(cors({
-  origin: 'http://localhost:5173', // Ajusta esto según el puerto de tu frontend
-  credentials: true
+    origin: ['https://tupti.store', 'http://localhost:3000'],
+    credentials: true
 }));
 
 // Middlewares
@@ -49,11 +48,14 @@ app.use('/apiImg', productRoutes); // Esta línea ya configura la ruta correctam
 
 // Sincronizar con la base de datos y iniciar el servidor
 sequelize.sync()
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Servidor corriendo en http://localhost:${PORT}`);
-    });
-  })
-  .catch(error => {
-    console.error('Error al sincronizar con la base de datos:', error);
+.then(() => {
+  app.listen(PORT, () => {
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
+    console.log(`Entorno: ${process.env.NODE_ENV}`);
+    console.log(`URL de la base de datos: ${process.env.DATABASE_URL}`);
+    console.log(`CORS habilitado para: ${process.env.FRONTEND_URL}`);
   });
+})
+.catch(error => {
+  console.error('Error detallado:', error.stack);
+});
