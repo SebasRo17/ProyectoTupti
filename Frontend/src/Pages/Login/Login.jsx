@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc"; // Ícono de Google
 import { FaFacebookF } from "react-icons/fa"; // Ícono de Facebook
 import { HiEye, HiEyeOff } from "react-icons/hi"; // Iconos de ojo
 import { HiArrowLeft } from "react-icons/hi";
 import "./Login.css";
-
+import { loginUser } from '../../Api/loginUsers';
 
 function Login() {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -14,6 +14,7 @@ function Login() {
   const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const navigate = useNavigate();
 
   const handleCheckboxChange = (e) => {
     setStayLoggedIn(e.target.checked);
@@ -49,6 +50,27 @@ function Login() {
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    try {
+      const response = await loginUser(email, password);
+      
+      if (response.success) {
+        const { isAdmin, isClient } = response.user;
+        
+        // Redireccionar según el rol
+        if (isAdmin) {
+          navigate('/admin');
+        } else if (isClient) {
+          navigate('/');
+        }
+      }
+    } catch (error) {
+      setPasswordError(error.message || 'Error al iniciar sesión');
+    }
+  };
+
   return (
     <div className="login-container">
       <div className="login-card">
@@ -73,7 +95,7 @@ function Login() {
         </div>
 
         <h1>LOGIN</h1>
-        <form className="login-form">
+        <form className="login-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Usuario</label>
             <div className="input-container">
