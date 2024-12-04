@@ -23,13 +23,41 @@ app.use(cors({
         'https://tupti.store', 
         'http://localhost:3000',
         'https://proyecto-tupti-vwl2-n68e6b66v-sebasro17s-projects.vercel.app',
-        // Para permitir cualquier subdominio de vercel.app
-        /\.vercel\.app$/
+        'https://proyecto-tupti-vwl2-nu4otzt8r-sebasro17s-projects.vercel.app', // Nuevo dominio
+        /\.vercel\.app$/ // Regex para cualquier subdominio de vercel.app
     ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+// Middleware adicional para asegurar headers CORS
+app.use((req, res, next) => {
+    const origin = req.headers.origin;
+    if (origin) {
+        // Verifica si el origen está en la lista de permitidos
+        const allowedOrigins = [
+            'https://tupti.store',
+            'http://localhost:3000',
+            'https://proyecto-tupti-vwl2-n68e6b66v-sebasro17s-projects.vercel.app',
+            'https://proyecto-tupti-vwl2-nu4otzt8r-sebasro17s-projects.vercel.app'
+        ];
+        
+        if (allowedOrigins.includes(origin) || origin.match(/\.vercel\.app$/)) {
+            res.header('Access-Control-Allow-Origin', origin);
+        }
+    }
+    
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
+    
+    next();
+});
 
 // Middlewares
 app.use(express.json());
