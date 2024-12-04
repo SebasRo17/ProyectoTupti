@@ -168,7 +168,7 @@ function Registro() {
           {emailError === "" && passwordError === "" && email && password && confirmPassword && (
             <div className="registro-form-group">
               <ReCAPTCHA
-                sitekey="6LcUDY8qAAAAAFFqpqNlmf4SMbDQ3vVgWno4ZLf_"
+                sitekey="6LeYz5EqAAAAAJvWbZOIS_CjZAtLw_zmZQycIvoZ"
                 onChange={handleCaptchaChange}
               />
             </div>
