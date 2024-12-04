@@ -1,11 +1,10 @@
 // src/Api/bestSellApi.js
 import axios from 'axios';
-
-const BASE_URL = 'https://proyectotupti.onrender.com/api';
+import { API_BASE } from '../config/config';
 
 export const getBestSellers = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/best-sellers`, {
+    const response = await axios.get(`${API_BASE}/best-sellers`, {
       withCredentials: true,
       headers: {
         'Accept': 'application/json',

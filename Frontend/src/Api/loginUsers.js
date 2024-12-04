@@ -1,6 +1,5 @@
 import axios from 'axios';
-
-const API_URL = 'https://proyectotupti.onrender.com';
+import { API_URL } from '../config/config';
 
 export const loginUser = async (email, password) => {
   try {
