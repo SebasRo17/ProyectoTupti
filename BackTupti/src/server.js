@@ -17,10 +17,18 @@ require('./aplication/services/FacebookAuthService'); // Inicializar configuraci
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Configuración de CORS
+// Configuración de CORS actualizada
 app.use(cors({
-    origin: ['https://tupti.store', 'http://localhost:3000'],
-    credentials: true
+    origin: [
+        'https://tupti.store', 
+        'http://localhost:3000',
+        'https://proyecto-tupti-vwl2-n68e6b66v-sebasro17s-projects.vercel.app',
+        // Para permitir cualquier subdominio de vercel.app
+        /\.vercel\.app$/
+    ],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 // Middlewares
