@@ -1,9 +1,7 @@
 // src/Api/bestSellApi.js
 import axios from 'axios';
 
-const BASE_URL = process.env.NODE_ENV === 'production'
-  ? 'https://proyectotupti.onrender.com/api'
-  : 'http://localhost:10000/api';
+const BASE_URL = 'https://proyectotupti.onrender.com/api';
 
 export const getBestSellers = async () => {
   try {
