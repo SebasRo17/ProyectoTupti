@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './categoriesBar.css';
+import { categoryNames, categoryIcons } from '../../data/categoryData.js';
 
 const CategoriesBar = ({ categoryData }) => {
   const scrollRef = useRef(null);
@@ -40,8 +40,14 @@ const CategoriesBar = ({ categoryData }) => {
     }
   };
 
-  // Ensure categoryData is always an array
-  const safeCategoryData = Array.isArray(categoryData) ? categoryData : [];
+  // Si no se proporciona categoryData, usar los datos predeterminados
+  const defaultCategoryImages = categoryNames.map((name, i) => ({
+    id: i,
+    icon: categoryIcons[name],
+    label: name,
+  }));
+
+  const safeCategoryData = Array.isArray(categoryData) ? categoryData : defaultCategoryImages;
 
   return (
     <div className="categories-container">
@@ -58,7 +64,7 @@ const CategoriesBar = ({ categoryData }) => {
       <div className="categories-bar" ref={scrollRef}>
         {safeCategoryData.map((category, index) => (
           <Link to={'/Categoria'} key={category.id || index} className="category-item">
-            <div className="category-item">
+            <div key={category.id || index} className="category-item">
               <img 
                 src={category.icon} 
                 alt={category.label || `Category ${index + 1}`} 
