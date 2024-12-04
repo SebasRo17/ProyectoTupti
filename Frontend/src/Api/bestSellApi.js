@@ -1,7 +1,7 @@
 // src/Api/bestSellApi.js
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:3000/api';
+const BASE_URL = 'https://proyectotupti.onrender.com/api';
 
 export const getBestSellers = async () => {
   try {
@@ -17,6 +17,7 @@ export const getBestSellers = async () => {
     if (error.code === 'ERR_NETWORK') {
       throw new Error('No se pudo conectar con el servidor. Verifica que el servidor esté corriendo.');
     }
+    console.error('Error en la petición:', error);
     throw error;
   }
 };

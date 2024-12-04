@@ -17,12 +17,50 @@ require('./aplication/services/FacebookAuthService'); // Inicializar configuraci
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Configuración de CORS
-
+// Configuración de CORS actualizada
 app.use(cors({
-  origin: 'http://localhost:5173', // Ajusta esto según el puerto de tu frontend
-  credentials: true
+    origin: [
+        'https://tupti.store',
+        'https://www.tupti.store',
+        'http://localhost:3000',
+        'https://proyecto-tupti-vwl2-n68e6b66v-sebasro17s-projects.vercel.app',
+        'https://proyecto-tupti-vwl2-nu4otzt8r-sebasro17s-projects.vercel.app',
+        /\.vercel\.app$/
+    ],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With', 'Accept'],
+    exposedHeaders: ['Access-Control-Allow-Origin']
 }));
+
+// Middleware mejorado para headers CORS
+app.use((req, res, next) => {
+    const origin = req.headers.origin;
+    if (origin) {
+        const allowedOrigins = [
+            'https://tupti.store',
+            'https://www.tupti.store',
+            'http://localhost:3000',
+            'https://proyecto-tupti-vwl2-n68e6b66v-sebasro17s-projects.vercel.app',
+            'https://proyecto-tupti-vwl2-nu4otzt8r-sebasro17s-projects.vercel.app'
+        ];
+        
+        if (allowedOrigins.includes(origin) || origin.match(/\.vercel\.app$/)) {
+            res.header('Access-Control-Allow-Origin', origin);
+            res.header('Access-Control-Allow-Credentials', 'true');
+            res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+            res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+            res.header('Access-Control-Expose-Headers', 'Access-Control-Allow-Origin');
+        }
+    }
+
+    // Manejar preflight requests
+    if (req.method === 'OPTIONS') {
+        return res.status(204).end();
+    }
+    
+    next();
+});
 
 // Middlewares
 app.use(express.json());
@@ -49,11 +87,14 @@ app.use('/apiImg', productRoutes); // Esta línea ya configura la ruta correctam
 
 // Sincronizar con la base de datos y iniciar el servidor
 sequelize.sync()
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Servidor corriendo en http://localhost:${PORT}`);
-    });
-  })
-  .catch(error => {
-    console.error('Error al sincronizar con la base de datos:', error);
+.then(() => {
+  app.listen(PORT, () => {
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
+    console.log(`Entorno: ${process.env.NODE_ENV}`);
+    console.log(`URL de la base de datos: ${process.env.DATABASE_URL}`);
+    console.log(`CORS habilitado para: ${process.env.FRONTEND_URL}`);
   });
+})
+.catch(error => {
+  console.error('Error detallado:', error.stack);
+});
