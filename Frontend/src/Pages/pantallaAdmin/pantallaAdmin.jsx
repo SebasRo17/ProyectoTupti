@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function PantallaAdmin() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Verificar si el usuario es administrador
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user || !user.isAdmin) {
+      navigate('/');
+    }
+  }, [navigate]);
 
   const handleLogout = () => {
     // Limpiar cualquier dato de sesión si existe
@@ -10,7 +18,7 @@ function PantallaAdmin() {
     sessionStorage.removeItem('user');
     navigate('/');
   };
-
+ 
   return (
     <div style={{ 
       padding: '40px',
