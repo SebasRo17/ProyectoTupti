@@ -15,10 +15,17 @@ router.get('/google', (req, res, next) => {
 // Ruta de callback de Google
 router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
   const redirectUrl = req.query.state || 'http://localhost:5173/';
-  // Redirigir al cliente con el token JWT
-  res.redirect(`${redirectUrl}?token=${req.user.token}`);
+  const token = jwt.sign({ id: req.user.id, email: req.user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+  // Redirigir al cliente a la URL principal
+  const script = `
+    <script>
+    window.opener.postMessage({ token: '${token}' }, '${redirectUrl}');
+      window.opener.location.href = '${redirectUrl}?token=${req.user.token}';
+      window.close();
+    </script>
+  `;
+  res.send(script);
 });
-
 // Ruta para iniciar sesión con Facebook
 router.get('/facebook', (req, res, next) => {
   const redirectUrl = req.query.redirect || 'http://localhost:5173/';
@@ -31,8 +38,16 @@ router.get('/facebook', (req, res, next) => {
 // Ruta de callback de Facebook
 router.get('/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/' }), (req, res) => {
   const redirectUrl = req.query.state || 'http://localhost:5173/';
+  const token = jwt.sign({ id: req.user.id, email: req.user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
   // Redirigir al cliente con el token JWT
-  res.redirect(`${redirectUrl}?token=${req.user.token}`);
+  const script = `
+    <script>
+    window.opener.postMessage({ token: '${token}' }, '${redirectUrl}');
+      window.opener.location.href = '${redirectUrl}?token=${req.user.token}';
+      window.close();
+    </script>
+  `;
+  res.send(script);
 });
 
 // Middleware para validar el token JWT
@@ -52,7 +67,7 @@ function authenticateToken(req, res, next) {
 }
 
 // Ruta protegida del dashboard
-router.get('/dashboard', authenticateToken, (req, res) => {
+router.get('/Admin', authenticateToken, (req, res) => {
   res.json({
     message: 'Usuario autenticado exitosamente',
     user: req.user
