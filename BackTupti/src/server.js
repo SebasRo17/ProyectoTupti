@@ -18,15 +18,18 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Configuración de CORS actualizada
+const allowedOrigins = [
+    'https://tupti.store',
+    'https://www.tupti.store',
+    'http://localhost:3000',
+    'http://localhost:5173',
+    'https://proyecto-tupti-vwl2-n68e6b66v-sebasro17s-projects.vercel.app',
+    'https://proyecto-tupti-vwl2-nu4otzt8r-sebasro17s-projects.vercel.app',
+    'https://proyectotupti.onrender.com'
+];
+
 app.use(cors({
-    origin: [
-        'https://tupti.store',
-        'https://www.tupti.store',
-        'http://localhost:3000',
-        'https://proyecto-tupti-vwl2-n68e6b66v-sebasro17s-projects.vercel.app',
-        'https://proyecto-tupti-vwl2-nu4otzt8r-sebasro17s-projects.vercel.app',
-        /\.vercel\.app$/
-    ],
+    origin: [...allowedOrigins, /\.vercel\.app$/],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With', 'Accept'],
@@ -37,14 +40,6 @@ app.use(cors({
 app.use((req, res, next) => {
     const origin = req.headers.origin;
     if (origin) {
-        const allowedOrigins = [
-            'https://tupti.store',
-            'https://www.tupti.store',
-            'http://localhost:3000',
-            'https://proyecto-tupti-vwl2-n68e6b66v-sebasro17s-projects.vercel.app',
-            'https://proyecto-tupti-vwl2-nu4otzt8r-sebasro17s-projects.vercel.app'
-        ];
-        
         if (allowedOrigins.includes(origin) || origin.match(/\.vercel\.app$/)) {
             res.header('Access-Control-Allow-Origin', origin);
             res.header('Access-Control-Allow-Credentials', 'true');
@@ -56,7 +51,7 @@ app.use((req, res, next) => {
 
     // Manejar preflight requests
     if (req.method === 'OPTIONS') {
-        return res.status(204).end();
+        return res.status(200).end();
     }
     
     next();
@@ -89,7 +84,10 @@ app.use('/apiImg', productRoutes); // Esta línea ya configura la ruta correctam
 sequelize.sync()
 .then(() => {
   app.listen(PORT, () => {
-    console.log(`Servidor corriendo en el puerto ${PORT}`);
+    console.log(`Servidor corriendo: http://localhost:${PORT}`);
+    //En caso de que el puerto 3000 este en uso, usar este comando para matar el proceso
+    //npx kill-port 3000
+    //SOLO EN AMBIENTE DE DESARRROLLO
     console.log(`Entorno: ${process.env.NODE_ENV}`);
     console.log(`URL de la base de datos: ${process.env.DATABASE_URL}`);
     console.log(`CORS habilitado para: ${process.env.FRONTEND_URL}`);
