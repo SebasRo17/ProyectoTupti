@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import "./Registro.css";
-import Login from '../Login/Login.jsx';
 import { FcGoogle } from "react-icons/fc"; // Ícono de Google
 import { FaFacebookF } from "react-icons/fa"; // Ícono de Facebook
 import { HiEye, HiEyeOff } from "react-icons/hi"; // Iconos de ojo
@@ -18,6 +17,22 @@ function Registro() {
   const [passwordError, setPasswordError] = useState("");
   const [captchaVerified, setCaptchaVerified] = useState(false);
 
+  useEffect(() => {
+    const handleMessage = (event) => {
+      if (event.origin === 'http://localhost:5173' && event.data.token) {
+        console.log('Token JWT:', event.data.token);
+        // Guardar el token en el almacenamiento local
+        localStorage.setItem('jwtToken', event.data.token);
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, []);
+
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
@@ -27,6 +42,37 @@ function Registro() {
     return emailRegex.test(email);
   };
 
+  const handleFacebookLogin = () => {
+    const facebookAuthUrl = 'http://localhost:3000/auth/facebook';
+    const width = 600;
+    const height = 600;
+    const left = (window.innerWidth - width) / 2;
+    const top = (window.innerHeight - height) / 2;
+
+    const newWindow = window.open(facebookAuthUrl, 'Facebook Login', `width=${width},height=${height},top=${top},left=${left}`);
+    const checkWindowClosed = setInterval(() => {
+      if (newWindow.closed) {
+        clearInterval(checkWindowClosed);
+        window.location.reload(); // Recargar la página principal después de cerrar la ventana emergente
+      }
+    }, 1000);
+  };
+  const handleGoogleLogin = () => {
+    const googleAuthUrl = 'http://localhost:3000/auth/google';
+    const width = 600;
+    const height = 600;
+    const left = (window.innerWidth - width) / 2;
+    const top = (window.innerHeight - height) / 2;
+
+    const newWindow = window.open(googleAuthUrl, 'Google Login', `width=${width},height=${height},top=${top},left=${left}`);
+
+    const checkWindowClosed = setInterval(() => {
+      if (newWindow.closed) {
+        clearInterval(checkWindowClosed);
+        window.location.reload(); // Recargar la página principal después de cerrar la ventana emergente
+      }
+    }, 1000);
+  };
   const handleEmailChange = (e) => {
     const value = e.target.value;
     setEmail(value);
@@ -188,10 +234,10 @@ function Registro() {
           <div className="registro-social-text">
             <p>Regístrate con</p>
             <div className="registro-social-buttons">
-              <button className="registro-facebook">
+              <button className="registro-facebook" onClick={handleFacebookLogin}>
                 <FaFacebookF />
               </button>
-              <button className="registro-google">
+              <button className="registro-google" onClick={handleGoogleLogin}>
                 <FcGoogle />
               </button>
             </div>
