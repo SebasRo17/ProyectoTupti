@@ -76,7 +76,7 @@ class UserController {
           message: 'Email y contraseña son requeridos'
         });
       }
-
+ 
       const user = await UserService.login(email, password);
 
       // Validación de rol y estructuración de respuesta

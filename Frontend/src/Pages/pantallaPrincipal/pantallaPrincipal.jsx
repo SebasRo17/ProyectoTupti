@@ -7,6 +7,7 @@ import './responsivePPrincipal.css'
 import Login from '../Login/Login.jsx';
 import Categoria from '../Categoria/Categoria.jsx';
 import { getBestSellers } from '../../Api/bestSellApi';
+import CarritoCompras from '../../Components/CarritoCompras/CarritoCompras.jsx';
 
 const CategoriesBar = ({ categoryData }) => {
   const scrollRef = useRef(null);
@@ -306,6 +307,7 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
             <button>👤 Inicia Sesión</button>
           </Link>
           <button>🛒 Carrito</button>
+          <Link to="/Login"></Link>
         </div>
       </header>
 
