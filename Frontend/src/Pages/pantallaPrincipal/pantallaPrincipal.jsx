@@ -7,6 +7,7 @@ import './responsivePPrincipal.css'
 import Login from '../Login/Login.jsx';
 import Categoria from '../Categoria/Categoria.jsx';
 import { getBestSellers } from '../../Api/bestSellApi';
+import CarritoCompras from '../../Components/CarritoCompras/CarritoCompras.jsx';
 
 const CategoriesBar = ({ categoryData }) => {
   const scrollRef = useRef(null);
@@ -95,6 +96,11 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const toggleCart = () => {
+    setIsCartOpen(!isCartOpen);
+  };
 
   useEffect(() => {
     const fetchBestSellers = async () => {
@@ -293,24 +299,42 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
                 Inicia Sesión
               </button>
             </Link>
-            <button onClick={() => setIsMobileMenuOpen(false)}>
-              <span>🛒</span>
-              Carrito
-            </button>
+            <button onClick={() => { 
+  toggleCart(); 
+  setIsMobileMenuOpen(false); 
+}}>
+  <span>🛒</span>
+  Carrito
+</button>
           </nav>
         </div>
 
         <div className="header-icons">
           <button class="icon-button">📍 Dirección </button>
-          <button class="icon-button">🛒 Carrito</button>
           <Link to="/Login">
             <button className='btnLogin'>Inicia Sesión</button>
           </Link>
           <Link to="/registro">
             <button className='btnRegister'>Registrate</button>
           </Link>
+          <button className="header-cart-button" onClick={toggleCart}>
+        🛒 Carrito
+      </button>
+
         </div>
       </header>
+
+      {/* Renderizar el carrito si está abierto */}
+      {isCartOpen && (
+        <div className="cart-overlay">
+          <div className="cart-container">
+            <button className="close-cart-button" onClick={toggleCart}>
+              ✖ Cerrar
+            </button>
+            <CarritoCompras />
+          </div>
+        </div>
+      )}
 
       {/* Categories Bar - Using the new component */}
       <CategoriesBar categoryData={categoryData} />
