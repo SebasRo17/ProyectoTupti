@@ -96,6 +96,11 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const toggleCart = () => {
+    setIsCartOpen(!isCartOpen);
+  };
 
   useEffect(() => {
     const fetchBestSellers = async () => {
@@ -294,10 +299,13 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
                 Inicia Sesión
               </button>
             </Link>
-            <button onClick={() => setIsMobileMenuOpen(false)}>
-              <span>🛒</span>
-              Carrito
-            </button>
+            <button onClick={() => { 
+  toggleCart(); 
+  setIsMobileMenuOpen(false); 
+}}>
+  <span>🛒</span>
+  Carrito
+</button>
           </nav>
         </div>
 
@@ -306,10 +314,23 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
           <Link to="/Login">
             <button>👤 Inicia Sesión</button>
           </Link>
-          <button>🛒 Carrito</button>
-          <Link to="/Login"></Link>
+          <button className="header-cart-button" onClick={toggleCart}>
+        🛒 Carrito
+      </button>
         </div>
       </header>
+
+      {/* Renderizar el carrito si está abierto */}
+      {isCartOpen && (
+        <div className="cart-overlay">
+          <div className="cart-container">
+            <button className="close-cart-button" onClick={toggleCart}>
+              ✖ Cerrar
+            </button>
+            <CarritoCompras />
+          </div>
+        </div>
+      )}
 
       {/* Categories Bar - Using the new component */}
       <CategoriesBar categoryData={categoryData} />

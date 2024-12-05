@@ -1,108 +1,100 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import "./CarritoCompras.css";
 
+
 const CarritoCompras = () => {
-  const [productos, setProductos] = useState([]);
-  const [contador, setContador] = useState(0);
+  const [productos, setProductos] = useState([
+    { id: 1, nombre: "Producto 1", precio: 10.5, cantidad: 1 },
+    { id: 2, nombre: "Producto 2", precio: 20.0, cantidad: 2 },
+    { id: 3, nombre: "Producto 3", precio: 5.5, cantidad: 5 },
+    { id: 4, nombre: "Producto 4", precio: 2.0, cantidad: 2 },
 
-  // Ejemplo de productos disponibles (puedes reemplazar con datos reales o de una API)
-  const productosDisponibles = [
-    { id: 1, nombre: "Bebida A", precio: 10 },
-    { id: 2, nombre: "Bebida B", precio: 15 },
-    { id: 3, nombre: "Bebida C", precio: 20 },
-  ];
+  ]);
 
-  // Función para agregar un producto al carrito
-  const agregarProducto = (producto) => {
-    const existe = productos.find((p) => p.id === producto.id);
-    if (existe) {
-      setProductos(
-        productos.map((p) =>
-          p.id === producto.id ? { ...p, cantidad: p.cantidad + 1 } : p
-        )
-      );
-    } else {
-      setProductos([...productos, { ...producto, cantidad: 1 }]);
-    }
-    setContador(contador + 1);
+  const eliminarProducto = (id) => {
+    setProductos(productos.filter((producto) => producto.id !== id));
   };
 
-  // Función para actualizar la cantidad de un producto
   const actualizarCantidad = (id, cantidad) => {
     setProductos(
-      productos.map((p) =>
-        p.id === id ? { ...p, cantidad: Math.max(1, cantidad) } : p
+      productos.map((producto) =>
+        producto.id === id
+          ? { ...producto, cantidad: Math.max(1, producto.cantidad + cantidad) }
+          : producto
       )
     );
-    calcularContador();
   };
 
-  // Función para eliminar un producto del carrito
-  const eliminarProducto = (id) => {
-    const producto = productos.find((p) => p.id === id);
-    setProductos(productos.filter((p) => p.id !== id));
-    setContador(contador - producto.cantidad);
-  };
-
-  // Función para recalcular el contador de productos
-  const calcularContador = () => {
-    const totalProductos = productos.reduce((total, p) => total + p.cantidad, 0);
-    setContador(totalProductos);
-  };
-
-  // Calcular el total del carrito
-  const totalCarrito = productos.reduce(
-    (total, p) => total + p.precio * p.cantidad,
+  const subtotal = productos.reduce(
+    (acc, producto) => acc + producto.precio * producto.cantidad,
     0
   );
+  const comisionServicio = 0.08 * subtotal;
+  const iva = 0.16 * subtotal;
+  const ahorroTotal = 3.37; // Ejemplo de ahorro
 
   return (
     <div className="carrito-container">
       <header>
-        <h1>TUPTI</h1>
+        <h1>Carrito de Compras</h1>
         <div className="carrito-icon">
-          🛒 <span>{contador}</span>
+          🛒
+          <span>{productos.length}</span>
         </div>
       </header>
 
-      <div className="productos-disponibles">
-        <h2>Productos Disponibles</h2>
-        <div className="lista-productos">
-          {productosDisponibles.map((producto) => (
-            <div key={producto.id} className="producto">
+      {/* Lista de productos */}
+      <div className="productos-lista">
+        {productos.length > 0 ? (
+          productos.map((producto) => (
+            <div key={producto.id} className="producto-item">
               <p>{producto.nombre}</p>
-              <p>${producto.precio}</p>
-              <button onClick={() => agregarProducto(producto)}>Agregar</button>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="carrito">
-        <h2>Carrito</h2>
-        {productos.length === 0 ? (
-          <p>El carrito está vacío</p>
-        ) : (
-          <div className="lista-carrito">
-            {productos.map((producto) => (
-              <div key={producto.id} className="producto-carrito">
-                <p>{producto.nombre}</p>
-                <p>${producto.precio}</p>
-                <div className="cantidad-controles">
-                  <button onClick={() => actualizarCantidad(producto.id, producto.cantidad - 1)}>-</button>
-                  <span>{producto.cantidad}</span>
-                  <button onClick={() => actualizarCantidad(producto.id, producto.cantidad + 1)}>+</button>
-                </div>
+              <p>${producto.precio.toFixed(2)}</p>
+              <div className="cantidad-controles">
+                <button
+                  onClick={() => actualizarCantidad(producto.id, -1)}
+                  disabled={producto.cantidad <= 1}
+                >
+                  -
+                </button>
+                <span>{producto.cantidad}</span>
+                <button onClick={() => actualizarCantidad(producto.id, 1)}>+</button>
                 <button onClick={() => eliminarProducto(producto.id)}>Eliminar</button>
               </div>
-            ))}
-            <div className="total">
-              <p>Total: ${totalCarrito}</p>
             </div>
-            <button className="comprar">Comprar Ahora</button>
-          </div>
+          ))
+        ) : (
+          <p className="carrito-vacio">Tu carrito está vacío</p>
         )}
       </div>
+
+      {/* Mostrar desglose solo si hay productos */}
+      {productos.length > 0 && (
+        <div className="resumen">
+          <p>
+            <span>Subtotal</span>
+            <span>${subtotal.toFixed(2)}</span>
+          </p>
+          <p>
+            <span>Comisión de servicio</span>
+            <span>${comisionServicio.toFixed(2)}</span>
+          </p>
+          <p>
+            <span>IVA</span>
+            <span>${iva.toFixed(2)}</span>
+          </p>
+          <p className="ahorro">
+            <span>Ahorro total</span>
+            <span>-${ahorroTotal.toFixed(2)}</span>
+          </p>
+          <p className="total">
+            <span>Total</span>
+            <span>${(subtotal + comisionServicio + iva - ahorroTotal).toFixed(2)}</span>
+          </p>
+          <button className="boton-continuar">Continuar a información de entrega</button>
+        </div>
+      )}
     </div>
   );
 };
