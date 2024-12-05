@@ -14,6 +14,7 @@ class ProductController {
     async createProducts(req, res) {
         try {
             const productData = {
+                IdProducto: req.body.IdProducto, // Agregar esta línea
                 Nombre: req.body.Nombre,
                 Precio: req.body.Precio,
                 Descripcion: req.body.Descripcion,
