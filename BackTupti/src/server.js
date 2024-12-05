@@ -13,6 +13,7 @@ const bestSellersRoutes = require('./presentation/routes/bestSellersRoutes');
 const { sequelize } = require('./infrastructure/database/mysqlConnection');
 require('./aplication/services/GoogleAuthService'); // Inicializar configuración de Google Auth
 require('./aplication/services/FacebookAuthService'); // Inicializar configuración de Facebook Auth
+const productsRoutes = require('./presentation/routes/productRoutes'); // Corregir importación
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -77,6 +78,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig.swaggerSpec)
 app.use('/users', userRoutes); 
 app.use('/auth', authRoutes);
 app.use('/api', bestSellersRoutes);
+app.use('/products', productsRoutes); // Agregar ruta de productos
 app.use('/apiImg', productRoutes); // Esta línea ya configura la ruta correctamente
 
 
