@@ -23,6 +23,9 @@ class ProductService {
     static async createProducts(productData) {
         try {
             // Validar campos requeridos
+            if (!productData.IdProducto) {
+                throw new Error('El ID del producto es requerido');
+            }
             if (!productData.Nombre) {
                 throw new Error('El nombre del producto es requerido');
             }

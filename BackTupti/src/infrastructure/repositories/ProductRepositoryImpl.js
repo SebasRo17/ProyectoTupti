@@ -1,22 +1,31 @@
 const { create } = require('axios');
 const Product = require('../../domain/models/Producto');
 
-class ProductRepositoryImpl{
-    async findId(productId){
-        try{
+class ProductRepositoryImpl {
+    async findId(productId) {
+        try {
             const product = await Product.findByPk(productId);
-            if(!product){
+            if (!product) {
                 throw new Error('Producto no encontrado');
             }
             return product;
-        }catch(error){
-                throw new Error('Error al buscar el producto');
-            }
+        } catch (error) {
+            throw new Error('Error al buscar el producto');
         }
+    }
 
-    async create(productData){
-        try{
+    async create(productData) {
+        try {
+            // Verificar si ya existe un producto con ese ID
+            if (productData.IdProducto) {
+                const existingProduct = await Product.findByPk(productData.IdProducto);
+                if (existingProduct) {
+                    throw new Error('Ya existe un producto con este ID');
+                }
+            }
+
             const product = await Product.create({
+                IdProducto: productData.IdProducto,
                 Nombre: productData.Nombre,
                 Precio: productData.Precio,
                 Descripcion: productData.Descripcion,
@@ -24,13 +33,13 @@ class ProductRepositoryImpl{
                 Stock: productData.Stock || 0
             });
             return product;
-        }catch(error){
+        } catch (error) {
             console.error('Error detallado:', error);
             throw new Error(`Error al crear el producto: ${error.message}`);
         }
     }
 
-    async update(productId, productData){
+    async update(productId, productData) {
         try {
             const [updated] = await Product.update(productData, {
                 where: { IdProducto: productId }
@@ -44,16 +53,16 @@ class ProductRepositoryImpl{
         }
     }
 
-    async delete(productId){
+    async delete(productId) {
         try {
             const deleted = await Product.destroy({
                 where: { IdProducto: productId }
             });
-            if (!deleted){
+            if (!deleted) {
                 throw new Error('Producto no encontrado');
             }
             return true;
-        }catch(error){
+        } catch (error) {
             throw new Error(`Error al eliminar el producto: ${error.message}`);
         }
     }
