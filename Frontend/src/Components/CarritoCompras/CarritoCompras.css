@@ -1,18 +1,20 @@
-/* Contenedor general */
-.carrito-container {
+/* Contenedor principal único */
+.mi-carrito .carrito-container {
   max-width: 800px;
-  margin: 20px auto;
+  margin: 0px auto;
   background: #ffffff;
-  border-radius: 16px;
+  border-radius: 0px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   color: #333;
   font-family: "Poppins", sans-serif;
+  max-height: 95vh; /* Asegura que no exceda la ventana */
+  overflow-y: auto;
 }
 
 /* Encabezado */
-header {
-  background: #4caf50;
+.mi-carrito header {
+  background: linear-gradient(90deg, #4caf50, #a6d6a8); /* Degradado verde */
   color: white;
   padding: 20px;
   text-align: center;
@@ -22,28 +24,31 @@ header {
   position: sticky;
   top: 0;
   z-index: 10;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Efecto de sombra */
+  border-bottom: 8px solid #388e3c; /* Borde verde más oscuro */
 }
 
-header h1 {
-  font-size: 20px;
+.mi-carrito header h1 {
+  font-size: 120%;
   margin: 0;
+  margin-left: 30%;
 }
 
-.carrito-icon {
-  font-size: 24px;
+.mi-carrito .carrito-icon {
+  font-size: 170%;
   position: relative;
   cursor: pointer;
 }
 
-.carrito-icon span {
+.mi-carrito .carrito-icon span {
   position: absolute;
-  top: -8px;
-  right: -8px;
+  top: -30%;
+  right: -20%;
   background: #ff5252;
   color: white;
   border-radius: 50%;
-  padding: 5px 8px;
-  font-size: 12px;
+  padding: 10% 25%;
+  font-size: 50%;
   font-weight: bold;
   display: flex;
   align-items: center;
@@ -52,13 +57,11 @@ header h1 {
 }
 
 /* Lista de productos */
-.productos-lista {
-  max-height: 400px;
-  overflow-y: auto;
-  padding: 20px;
+.mi-carrito .productos-lista {
+  padding: -30%;
 }
 
-.producto-item {
+.mi-carrito .producto-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -70,65 +73,142 @@ header h1 {
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.producto-item:hover {
+.mi-carrito .producto-item:hover {
   transform: scale(1.02);
   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
 }
 
-.cantidad-controles button {
+/* Contenedor de la cantidad y controles */
+.mi-carrito .cantidad-controles {
+  display: flex; /* Hace que los botones se alineen horizontalmente */
+  justify-content: space-between; /* Mantiene los botones distribuidos */
+  align-items: center; /* Alinea los botones verticalmente */
+  gap: 10px; /* Ajusta el espacio entre los botones */
+}
+
+.mi-carrito .cantidad-controles button {
   background: #4caf50;
   color: white;
   border: none;
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  font-size: 18px;
+  width: 30px; /* Tamaño del botón */
+  height: 30px;
+  font-size: 16px; /* Tamaño del texto o ícono */
   cursor: pointer;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.cantidad-controles button:hover {
-  background: #388e3c;
+.mi-carrito .cantidad-controles button:hover {
+  background: #388e3c; /* Fondo cuando el ratón pasa por encima */
+}
+
+.mi-carrito .cantidad-controles button.eliminar {
+  background: #f44336; /* Color rojo para el botón de eliminar */
+}
+
+.mi-carrito .cantidad-controles button.eliminar:hover {
+  background: #d32f2f; /* Color más oscuro para el hover */
 }
 
 /* Resumen */
-.resumen {
+.mi-carrito .resumen {
   border-top: 1px solid #ccc;
   padding: 20px;
   background-color: #fff;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  bottom: 0; /* Fijo al final */
 }
 
-.resumen p {
+.mi-carrito .resumen p {
   margin: 10px 0;
   display: flex;
   justify-content: space-between;
   font-size: 14px;
 }
 
-.resumen .total {
+.mi-carrito .resumen .total {
   font-size: 18px;
   font-weight: bold;
   margin-top: 10px;
 }
 
-.resumen .ahorro {
+.mi-carrito .resumen .ahorro {
   color: red;
   font-weight: bold;
 }
 
-.boton-continuar {
-  margin-top: 20px;
+.mi-carrito .boton-continuar {
+margin-top: 20px;
   background-color: #4caf50;
   color: white;
   border: none;
-  padding: 15px 20px;
-  font-size: 16px;
-  border-radius: 5px;
+  padding: 15px;
+  font-size: 1rem;
+  border-radius: 25px; /* Bordes circulares */
   cursor: pointer;
   width: 100%;
   text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.boton-continuar:hover {
+.mi-carrito .boton-continuar:hover {
   background-color: #388e3c;
+}
+
+/* Contenedor de la imagen del producto */
+.mi-carrito .producto-item .producto-imagen {
+  width: 20%; /* Ajusta el tamaño según tu diseño */
+  padding-top: 15%; /* Esto asegura que sea un cuadrado */
+  background-color: #f1f1f1; /* Color de fondo temporal */
+  border-radius: 12px; /* Opcional, para bordes redondeados */
+  overflow: hidden; /* Para que la imagen no se salga del contenedor */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative; /* Necesario para colocar el texto encima */
+}
+
+.mi-carrito .producto-item .producto-imagen img {
+  max-width: 100%; /* La imagen se ajustará al contenedor */
+  max-height: 100%; /* Sin deformarse */
+  object-fit: cover; /* Recorta y ajusta la imagen al cuadrado */
+}
+
+/* Nombre del producto encima de la imagen */
+.mi-carrito .producto-item .producto-nombre {
+  position: absolute;
+  top: 0; /* Ajusta la posición para que quede sobre la parte superior */
+  left: 50%;
+  transform: translateX(-50%); /* Centrado horizontal */
+  font-size: 14px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.6); /* Fondo oscuro con transparencia */
+  padding: 5px;
+  border-radius: 5px;
+  width: 100%; /* Ocupa todo el ancho del contenedor de la imagen */
+  text-align: center; /* Centrado del texto */
+  box-sizing: border-box; /* Asegura que el padding no afecte el tamaño */
+}
+
+/* Botón para cerrar el carrito */
+.mi-carrito header .cerrar-carrito {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  transition: transform 0.2s ease;
+}
+
+.mi-carrito header .cerrar-carrito:hover {
+  transform: scale(1.2);
 }
