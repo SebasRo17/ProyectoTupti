@@ -469,6 +469,8 @@ margin-left: 5px;
   
 }
 
+/*RESPONSIVE*/
+
 @media screen and (min-width: 375px) and (max-width: 424px) {
   /* Contenedor principal */
   .login-container {

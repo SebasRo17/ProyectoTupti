@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc"; // Ícono de Google
 import { FaFacebookF } from "react-icons/fa"; // Ícono de Facebook
 import { HiEye, HiEyeOff } from "react-icons/hi"; // Iconos de ojo
 import { HiArrowLeft } from "react-icons/hi";
 import "./Login.css";
-
+import { loginUser } from '../../Api/loginUsers';
 
 function Login() {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -14,10 +15,7 @@ function Login() {
   const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
-
-  const handleCheckboxChange = (e) => {
-    setStayLoggedIn(e.target.checked);
-  };
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -26,6 +24,52 @@ function Login() {
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+  };
+  useEffect(() => {
+    const handleMessage = (event) => {
+      if (event.origin === 'http://localhost:5173' && event.data.token) {
+        console.log('Token JWT:', event.data.token);
+        // Guardar el token en el almacenamiento local
+        localStorage.setItem('jwtToken', event.data.token);
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, []);
+  const handleFacebookLogin = () => {
+    const facebookAuthUrl = 'http://localhost:3000/auth/facebook';
+    const width = 600;
+    const height = 600;
+    const left = (window.innerWidth - width) / 2;
+    const top = (window.innerHeight - height) / 2;
+
+    const newWindow = window.open(facebookAuthUrl, 'Facebook Login', `width=${width},height=${height},top=${top},left=${left}`);
+    const checkWindowClosed = setInterval(() => {
+      if (newWindow.closed) {
+        clearInterval(checkWindowClosed);
+        window.location.reload(); // Recargar la página principal después de cerrar la ventana emergente
+      }
+    }, 1000);
+  };
+  const handleGoogleLogin = () => {
+    const googleAuthUrl = 'http://localhost:3000/auth/google';
+    const width = 600;
+    const height = 600;
+    const left = (window.innerWidth - width) / 2;
+    const top = (window.innerHeight - height) / 2;
+
+    const newWindow = window.open(googleAuthUrl, 'Google Login', `width=${width},height=${height},top=${top},left=${left}`);
+
+    const checkWindowClosed = setInterval(() => {
+      if (newWindow.closed) {
+        clearInterval(checkWindowClosed);
+        window.location.reload(); // Recargar la página principal después de cerrar la ventana emergente
+      }
+    }, 1000);
   };
 
   const handleEmailChange = (e) => {
@@ -46,6 +90,27 @@ function Login() {
       setPasswordError("La contraseña debe tener al menos 6 caracteres.");
     } else {
       setPasswordError("");
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    try {
+      const response = await loginUser(email, password);
+      
+      if (response.success) {
+        const { isAdmin, isClient } = response.user;
+        
+        // Redireccionar según el rol
+        if (isAdmin) {
+          navigate('/admin');
+        } else if (isClient) {
+          navigate('/');
+        }
+      }
+    } catch (error) {
+      setPasswordError(error.message || 'Error al iniciar sesión');
     }
   };
 
@@ -73,7 +138,7 @@ function Login() {
         </div>
 
         <h1>LOGIN</h1>
-        <form className="login-form">
+        <form className="login-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Usuario</label>
             <div className="input-container">
@@ -127,14 +192,7 @@ function Login() {
           </div>
 
           <div className="form-group">
-            <label>
-              <input
-                type="checkbox"
-                checked={stayLoggedIn}
-                onChange={handleCheckboxChange}
-              />
-              Mantener sesión iniciada
-            </label>
+            
           </div>
 
           <div className="forgot-password">
@@ -153,10 +211,10 @@ function Login() {
         <div className="social-login">
           <p>Regístrate con</p>
           <div className="social-buttons">
-            <button className="login-facebook">
+            <button className="login-facebook" onClick={handleFacebookLogin}>
               <FaFacebookF />
             </button>
-            <button className="login-google">
+            <button className="login-google" onClick={handleGoogleLogin}>
               <FcGoogle />
             </button>
           </div>

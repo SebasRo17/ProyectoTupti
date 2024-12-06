@@ -7,6 +7,8 @@ import Categoria from './Categoria/Categoria.jsx';
 import OlvidoContrasena from './olvidoContrasena/olvidoContrasena.jsx';  // Cambiado a PascalCase
 import PantallaAdmin from './pantallaAdmin/pantallaAdmin.jsx';
 import RecuperarContrasena from './recuperarContrasena/recuperarContrasena';
+import CarritoCompras from '../Components/CarritoCompras/CarritoCompras.jsx';
+
 
 function App() {
   return (
@@ -19,6 +21,7 @@ function App() {
         <Route path="/olvido-contrasena" element={<OlvidoContrasena />} />
         <Route path="/admin" element={<PantallaAdmin />} />
         <Route path="/recuperar-contrasena" element={<RecuperarContrasena />} />
+        <Route path="/carrito-compras" element={<CarritoCompras />} />
       </Routes>
     </div>
   );
