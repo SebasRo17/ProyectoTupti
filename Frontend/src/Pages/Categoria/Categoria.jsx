@@ -1,11 +1,16 @@
+
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getCategoryProducts } from "../../Api/cetgoryProductsApi";
 import { categoryNames, categoryIcons } from '../../data/categoryData';
 import CategoriesBar from '../../Components/categoriesBar/categoriesBar';
+import Header from "../../Components/header/header.jsx";
+import Footer from "../../Components/footer/footer.jsx";
 import "./Categoria.css";
+import "./ResponsiveCategoria.css";
 
 function Categoria() {
+
    const [productos, setProductos] = useState([]);
    const [loading, setLoading] = useState(true);
    const [error, setError] = useState(null);
@@ -42,6 +47,7 @@ function Categoria() {
          <CategoriesBar categoryData={categoryData} />
          
          <div className="categoria-container">
+
             <h1 className="categoria-titulo">Productos de la Categoría</h1>
             <div className="productos-grid">
                {productos.map((producto) => (
@@ -62,6 +68,7 @@ function Categoria() {
                ))}
             </div>
          </div>
+
       </div>
    );
 }
