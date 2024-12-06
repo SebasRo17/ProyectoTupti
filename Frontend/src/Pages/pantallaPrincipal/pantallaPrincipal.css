@@ -106,12 +106,48 @@ width:100px;
   gap: 15px;
 }
 
-.header-icons button {
+.header-icons .icon-button {
   background: none;
   border: none;
-  font-size: 20px;
-  color: rgb(205, 226, 203);
+  font-size: 18px;
   cursor: pointer;
+}
+
+.btnLogin, .btnRegister{
+	width: 9em;
+	height: 3em;
+	border-radius: 30em;
+	border: none;
+	position: relative;
+	cursor:	pointer;
+	overflow: hidden;
+	z-index: 1;
+  background-color: transparent;
+  color: whitesmoke;
+  transition: color 0.3s ease;
+}
+
+.btnLogin::before, .btnRegister::before{
+	content: '';
+	width: 0;
+	height: 3em;
+	border-radius: 30em;
+	position: absolute;
+	top:0;
+	left:0;
+	background-image: linear-gradient(to
+		right, #0fd850 0%, #f9f047 100%);
+	transition: .5s ease;
+	display: block;
+	z-index: -1;
+}
+
+.btnLogin:hover, .btnRegister:hover{
+  color: #0066cc !important;
+}
+
+.btnLogin:hover::before, .btnRegister:hover::before{
+	width: 9em;
 }
 
 /* Ajuste para asegurar que la barra de categorías esté justo debajo del header */
@@ -601,4 +637,35 @@ width:100px;
 .tag:hover {
   background-color: #2e4c47;
   color: #ffffff;
+}
+
+/*CARRITO*/
+.cart-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  justify-content: flex-end; /* Alinea el carrito al lado derecho */
+}
+
+.cart-container {
+  background: white;
+  width: 25%; /* Ajusta el ancho del carrito */
+  height: 100%;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.close-cart-button {
+  position: absolute;
+  top: 0%;
+  left: 0%; /* Cambiar a la izquierda */
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
 }
