@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { categoryNames, categoryIcons } from '../../data/categoryData.js';
+import { categoryNames, categoryIcons, categoryIds } from '../../data/categoryData.js';
 import { promoImg } from '../../data/promoData.js';
 import './pantallaPrincipal.css';
 import './responsivePPrincipal.css'
@@ -65,15 +65,15 @@ const CategoriesBar = ({ categoryData }) => {
       
       <div className="categories-bar" ref={scrollRef}>
         {safeCategoryData.map((category, index) => (
-          <Link to={'/Categoria'} key={category.id || index} className="category-item">
-          <div key={category.id || index} className="category-item">
-            <img 
-              src={category.icon} 
-              alt={category.label || `Category ${index + 1}`} 
-              className="category-icon" 
-            />
-            <div>{category.label || `Category ${index + 1}`}</div>
-          </div>
+          <Link to={`/Categoria/${category.id}`} key={category.id} className="category-item">
+            <div className="category-item">
+              <img 
+                src={category.icon} 
+                alt={category.label} 
+                className="category-icon" 
+              />
+              <div>{category.label}</div>
+            </div>
           </Link>
         ))}
       </div>
