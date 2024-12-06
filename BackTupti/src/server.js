@@ -10,6 +10,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerConfig = require('./config/swagger');
 const productRoutes = require('./presentation/routes/prodImgRoutes');
 const bestSellersRoutes = require('./presentation/routes/bestSellersRoutes');
+const categoryProductsRoutes = require('./presentation/routes/categoryProductsRoutes');
 const { sequelize } = require('./infrastructure/database/mysqlConnection');
 require('./aplication/services/GoogleAuthService'); // Inicializar configuración de Google Auth
 require('./aplication/services/FacebookAuthService'); // Inicializar configuración de Facebook Auth
@@ -77,6 +78,7 @@ configurePassport();
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig.swaggerSpec));
 app.use('/users', userRoutes); 
 app.use('/auth', authRoutes);
+app.use('/api', categoryProductsRoutes); // Mover esta línea antes de otras rutas /api
 app.use('/api', bestSellersRoutes);
 app.use('/products', productsRoutes); // Agregar ruta de productos
 app.use('/apiImg', productRoutes); // Esta línea ya configura la ruta correctamente

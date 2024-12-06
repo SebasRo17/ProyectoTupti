@@ -45,3 +45,26 @@ export const categoryIcons = {
     "Aceites y Aderezos": "https://res.cloudinary.com/dd7etqrf2/image/upload/v1732543795/productos-de-aceites-y-aderezos_evoxai.svg",
     "Bebidas Alcohólicas": "https://res.cloudinary.com/dd7etqrf2/image/upload/v1732543819/bebidas_ctfyyl.svg"
 };
+
+// Agregar IDs de categorías
+export const categoryIds = {
+    "Carnes": 1,
+    "Vegetales": 2,
+    "Frutas": 3,
+    "Bebidas": 4,
+    "Lácteos": 5,
+    "Panadería": 6,
+    "Snacks": 7,
+    "Limpieza": 8,
+    "Congelados": 9,
+    "Granos": 10,
+    "Condimentos": 11,
+    "Cuidado Personal": 12,
+    "Mascotas": 13,
+    "Electrónica": 14,
+    "Dulces y Chocolates": 15,
+    "Enlatados": 16,
+    "Pastas y Arroces": 17,
+    "Aceites y Aderezos": 18,
+    "Bebidas Alcohólicas": 19
+};

@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import { Link } from 'react-router-dom';
-import { categoryNames, categoryIcons } from '../../data/categoryData.js';
+import { categoryNames, categoryIcons, categoryIds } from '../../data/categoryData.js';
 import { promoImg } from '../../data/promoData.js';
 import './pantallaPrincipal.css';
 import './responsivePPrincipal.css'
