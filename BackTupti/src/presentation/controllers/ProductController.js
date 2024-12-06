@@ -1,11 +1,12 @@
 const ProductService = require('../../aplication/services/ProductService');
 
 class ProductController {
-    async getProducts(req,res) {
-        try{
-            const products = await ProductService.getIdProducts();
+    async getProducts(req, res) {
+        try {
+            const { id } = req.params; // Obtener el ID de los parámetros
+            const products = await ProductService.getIdProducts(id);
             res.json(products);
-        }catch(error){
+        } catch(error) {
             console.error('Error en el controlador:', error);
             res.status(500).json({message: 'Error al obtener los productos'});
         }
