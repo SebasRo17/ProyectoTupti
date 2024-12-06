@@ -7,9 +7,9 @@ class ProductService {
     static async getIdProducts(productId) {
         try {
             if (!productId) {
-                const product = await ProductRepository.findId(productId);
                 throw new Error('El ID del producto es requerido');
             }            
+            const product = await this.productRepository.findId(productId);
             if (!product) {
                 throw new Error('Producto no encontrado');
             }
@@ -63,7 +63,7 @@ class ProductService {
                 throw new Error('El stock debe ser un número entero');
             }
 
-            const updatedProduct = await ProductRepository.update(productId, productData);
+            const updatedProduct = await this.productRepository.update(productId, productData);
             return updatedProduct;
         } catch (error) {
             console.error('Error al actualizar el producto:', error.message);
@@ -76,7 +76,7 @@ class ProductService {
             if (!productId) {
                 throw new Error('El ID del producto es requerido');
             }
-            const deletedProduct = await ProductRepository.delete(productId);
+            const deletedProduct = await this.productRepository.delete(productId);
             if (!deletedProduct) {
                 throw new Error('No se pudo eliminar el producto');
             }
