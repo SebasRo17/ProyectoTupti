@@ -17,7 +17,7 @@ function App() {
         <Route path="/" element={<TuptiPage />} />
         <Route path="/registro" element={<Registro />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/categoria" element={<Categoria />} />
+        <Route path="/Categoria/:id" element={<Categoria />} /> {/* Corregido para incluir el parámetro id */}
         <Route path="/olvido-contrasena" element={<OlvidoContrasena />} />
         <Route path="/admin" element={<PantallaAdmin />} />
         <Route path="/recuperar-contrasena" element={<RecuperarContrasena />} />

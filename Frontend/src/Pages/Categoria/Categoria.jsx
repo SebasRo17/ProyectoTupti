@@ -1,51 +1,67 @@
-import React from "react";
-import Header from '../../Components/header/header.jsx'; 
-import CategoriesBar from '../../Components/categoriesBar/categoriesBar.jsx';
-import Footer from '../../Components/footer/footer.jsx'; 
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { getCategoryProducts } from "../../Api/cetgoryProductsApi";
+import { categoryNames, categoryIcons } from '../../data/categoryData';
+import CategoriesBar from '../../Components/categoriesBar/categoriesBar';
 import "./Categoria.css";
 
 function Categoria() {
-   // Simulación de productos, puedes reemplazarlo con datos reales desde un backend
-   const productos = [
-      { id: 1, nombre: "Producto 1", imagen: "url_de_imagen" },
-      { id: 2, nombre: "Producto 2", imagen: "url_de_imagen" },
-      { id: 3, nombre: "Producto 3", imagen: "url_de_imagen" },
-      { id: 4, nombre: "Producto 4", imagen: "url_de_imagen" },
-      { id: 5, nombre: "Producto 5", imagen: "url_de_imagen" },
-      { id: 6, nombre: "Producto 6", imagen: "url_de_imagen" },
-      // Agrega más productos según necesites
-   ];
+   const [productos, setProductos] = useState([]);
+   const [loading, setLoading] = useState(true);
+   const [error, setError] = useState(null);
+   const { id } = useParams();
+
+   // Preparar los datos de categorías
+   const categoryData = categoryNames.map((name, i) => ({
+     id: i + 1,
+     icon: categoryIcons[name],
+     label: name,
+   }));
+
+   useEffect(() => {
+      const fetchProducts = async () => {
+         try {
+            const data = await getCategoryProducts(id);
+            setProductos(data);
+         } catch (err) {
+            setError(err.message);
+         } finally {
+            setLoading(false);
+         }
+      };
+
+      fetchProducts();
+   }, [id]);
+
+   if (loading) return <div>Cargando...</div>;
+   if (error) return <div>Error: {error}</div>;
 
    return (
-      <div>
-         <Header />  
-         <CategoriesBar /> 
-
-         {/* Contenedor principal de la pantalla */}
+      <div className="categoria-page">
+         {/* Incluir CategoriesBar con los datos de categoría */}
+         <CategoriesBar categoryData={categoryData} />
+         
          <div className="categoria-container">
-            <h1 className="categoria-titulo">Productos</h1>
-            {/* Contenedor de la lista de productos */}
+            <h1 className="categoria-titulo">Productos de la Categoría</h1>
             <div className="productos-grid">
                {productos.map((producto) => (
-                  <div key={producto.id} className="producto-card">
+                  <div key={producto.IdProducto} className="producto-card">
                      <img
-                        src={producto.imagen || "placeholder_de_imagen"}
-                        alt={producto.nombre}
+                        src={producto.Imagenes?.split(',')[0]}
+                        alt={producto.Producto}
                         className="producto-imagen"
+                        onError={(e) => {
+                           e.target.src = 'URL_IMAGEN_DEFAULT';
+                        }}
                      />
-                     <p className="producto-nombre">{producto.nombre}</p>
+                     <div className="producto-info">
+                        <h3>{producto.Producto}</h3>
+                        <p className="producto-precio">${producto.Precio}</p>
+                     </div>
                   </div>
                ))}
             </div>
          </div>
-      <div className="filter">
-        <h3>Filtro de Busqueda </h3>
-        <div className="filtro-busqueda">
-          <a href="#">Cupones</a>
-          <a href="#">Promociones</a>
-        </div>
-        </div>
-         <Footer />  
       </div>
    );
 }
