@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getCategoryProducts } from "../../Api/cetgoryProductsApi";
@@ -10,7 +9,6 @@ import "./Categoria.css";
 import "./ResponsiveCategoria.css";
 
 function Categoria() {
-
    const [productos, setProductos] = useState([]);
    const [loading, setLoading] = useState(true);
    const [error, setError] = useState(null);
@@ -43,11 +41,9 @@ function Categoria() {
 
    return (
       <div className="categoria-page">
-         {/* Incluir CategoriesBar con los datos de categoría */}
+         <Header />
          <CategoriesBar categoryData={categoryData} />
-         
          <div className="categoria-container">
-
             <h1 className="categoria-titulo">Productos de la Categoría</h1>
             <div className="productos-grid">
                {productos.map((producto) => (
@@ -68,7 +64,14 @@ function Categoria() {
                ))}
             </div>
          </div>
-
+         <div className="filter">
+            <h3>Filtro de Búsqueda</h3>
+            <div className="filtro-busqueda">
+               <a href="#">Cupones</a>
+               <a href="#">Promociones</a>
+            </div>
+         </div>
+         <Footer />
       </div>
    );
 }
