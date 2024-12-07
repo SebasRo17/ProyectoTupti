@@ -2,41 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import "./CarritoCompras.css";
 import { FaTrash } from 'react-icons/fa'; // Importar el ícono de la basura
+import "./responsiveCarrito.css";
 
 
-
-const CarritoCompras = ({ toggleCart }) => {
-  const [productos, setProductos] = useState([
-    { id: 1, nombre: "Manzana", precio: 10.5, cantidad: 1, imagen: "https://via.placeholder.com/150" },
-    { id: 2, nombre: "Chocolate", precio: 20.0, cantidad: 2, imagen: "https://via.placeholder.com/150" },
-    { id: 3, nombre: "Producto 3", precio: 5.5, cantidad: 5, imagen: "https://via.placeholder.com/150" },
-    { id: 4, nombre: "Producto 4", precio: 2.0, cantidad: 2, imagen: "https://via.placeholder.com/150" },
-    { id: 5, nombre: "Producto 5", precio: 6.0, cantidad: 2, imagen: "https://via.placeholder.com/150" },
-    { id: 6, nombre: "Producto 6", precio: 1.0, cantidad: 3, imagen: "https://via.placeholder.com/150" },
-  ]);
-
-  const eliminarProducto = (id) => {
-    setProductos(productos.filter((producto) => producto.id !== id));
-  };
-
-  const actualizarCantidad = (id, cantidad) => {
-    setProductos(
-      productos.map((producto) =>
-        producto.id === id
-          ? { ...producto, cantidad: Math.max(1, producto.cantidad + cantidad) }
-          : producto
-      )
-    );
-  };
-
+const CarritoCompras = ({ productos, eliminarProducto, actualizarCantidad }) => {
   const subtotal = productos.reduce(
     (acc, producto) => acc + producto.precio * producto.cantidad,
     0
   );
-
   const comisionServicio = 0.08 * subtotal;
   const iva = 0.15 * subtotal;
-
   const ahorroTotal = 3.37; // Ejemplo de ahorro
 
   return (
@@ -46,7 +21,7 @@ const CarritoCompras = ({ toggleCart }) => {
           <h1>Carrito de Compras</h1>
           <div className="carrito-icon">
             🛒
-            <span>{productos.length}</span>
+            <span>{productos.length}</span> {/* Contador de productos */}
           </div>
         </header>
 
@@ -59,27 +34,24 @@ const CarritoCompras = ({ toggleCart }) => {
                   <img src={producto.imagen} alt={producto.nombre} />
                 </div>
                 <div className="producto-info">
-                  {/* Nombre del producto */}
                   <p><strong>{producto.nombre}</strong></p>
-                  
-                  {/* Precio total por cantidad */}
                   <p>${(producto.precio * producto.cantidad).toFixed(2)}</p>
-                  
-                  {/* Precio unitario x cantidad */}
                   <p>{producto.precio.toFixed(2)} x {producto.cantidad}</p>
                 </div>
                 <div className="cantidad-controles">
+                  {/* Botón para disminuir la cantidad */}
                   <button
                     onClick={() => actualizarCantidad(producto.id, -1)}
-                    disabled={producto.cantidad <= 1}
+                    disabled={producto.cantidad <= 1} // Deshabilitado si la cantidad es 1
                   >
                     -
                   </button>
                   <span>{producto.cantidad}</span>
+                  {/* Botón para aumentar la cantidad */}
                   <button onClick={() => actualizarCantidad(producto.id, 1)}>
                     +
                   </button>
-                  {/* Botón de eliminar con ícono */}
+                  {/* Botón para eliminar el producto */}
                   <button
                     onClick={() => eliminarProducto(producto.id)}
                     className="eliminar"
