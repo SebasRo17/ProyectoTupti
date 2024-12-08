@@ -94,7 +94,7 @@
     .footer{
         margin-top: 0%;
         margin-left: 0%;
-        width: 100vw;
+        width: 140%;
         padding: 50px 300px;
       }
   }
@@ -102,12 +102,13 @@
   /* Footer - Laptops (1024px - 1440px) */
   @media screen and (min-width: 1024px) and (max-width: 1440px) {
     .footer{
-        width: 100vw;
+        width: 130%;
         margin-left: 0%;
         margin-top: 0%;
         margin-bottom: -50%;
       }
       .footer-container{
+        width: 130%;
         margin-left: 0%;
         margin-right: 0%;
       }
@@ -116,9 +117,9 @@
   /* Footer - Tablets (768px - 1023px) */
   @media (min-width: 768px) and (max-width: 1023px) {
     .footer{
-        width: 100vw;
+        width: 160%;
         margin-left: 0%;
-        margin-top: -2%;
+        margin-top: 35%;
       }
     }
   
@@ -126,13 +127,15 @@
   @media screen and (max-width: 767px) {
     .footer {
         padding: 20px 15px;
-        max-width: 100wv;
+        max-width: 150%;
+        margin-bottom: 0;
     }
 
     .footer-container {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 20px;
+        max-width: 150%;
         padding: 0;
         flex-direction: column;
     }
@@ -172,5 +175,11 @@
         justify-content: center;
         gap: 8px;
     }
+}
+
+@media screen and (max-width: 390px) {
+.footer{
+  margin-bottom: 0;
+}
 }
   

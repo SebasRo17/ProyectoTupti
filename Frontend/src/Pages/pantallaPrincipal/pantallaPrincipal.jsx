@@ -12,6 +12,7 @@ import { getBestSellers } from '../../Api/bestSellApi';
 import CarritoCompras from '../../Components/CarritoCompras/CarritoCompras.jsx';
 import Footer from '../../Components/footer/footer.jsx';
 import CategoriesBar from '../../Components/categoriesBar/categoriesBar.jsx';
+import Header from '../../Components/header/header.jsx';
 
 
 const TuptiPage = ({ carouselImages, categoryImages }) => {

@@ -1,10 +1,9 @@
 /* Media Queries */
 /* Desktop (1441px and above) */
 @media screen and (min-width: 1441px) {
-  .header {
-    padding: 15px 50px;
-    max-width: auto;
-  }
+.header{
+  width: 100vw;
+}
   .search-bar {
     order: 3;
     width: 100%;
@@ -21,23 +20,26 @@
   }
 
   .slider-container{
-    margin-left: 24%;
-    max-width: 50%;
+    margin-left: 18%;
+    max-width: 70%;
     height: 10%;
-    margin-top: -540px;
+    margin-top: -120%;
   }
   .main-content{
-    margin-left: 20%;
-    margin-top: 3%;
+    margin-left: 0%;
+    margin-top: 15%;
     max-width: 70%;
   }
-
-  .section-button{
-    margin-left: -5%;
-    margin-right: 5%;
+  .main-content h2{
+    margin-left: -70%;
+    margin-top: -45%;
   }
-
-
+  .main-content .product-carousel-container{
+    margin-top: -40%;
+    max-width: 170%;
+    margin-left: -15%;
+  }
+  
 }
 
 
@@ -69,14 +71,16 @@
     margin-left: 20%;
     margin-top: 1%;
     width: 40%;
+    margin-bottom: 15%;
   }
   .section-button{
     margin-left: 5%;
     margin-right: 5%;
   }
-
+  .footer-container{
+    width: 100%;
+  }
 }
-
 /* Tablets (768px - 1023px) */
 @media (min-width: 768px) and (max-width: 1023px) {
   .header {
@@ -87,6 +91,7 @@
     max-width:auto;
     top: 6%;
     padding: 0 20px;
+  
   }
 
   .search-bar {
@@ -102,22 +107,21 @@
 
   .slider-container {
     width: 100%;
-    max-width: 450px;
-    height: 300px;
-    margin-top: -500px;
-    margin-left: 40%;
+    max-width: 110%;
+    height: 100%;
+    margin-top: -205%;
+    margin-left: 30%;
   }
 
-  .main-content {
-    max-width: 400px;
-    margin-left: 40%;
-    margin-top: 5%;
+  .main-content h2 {
+    margin-left: 20%;
+    margin-top: 18%;
     padding: 10px;
   }
-  .footer{
-    width: 100vw;
-    margin-left: 0%;
-    margin-top: -2%;
+  .main-content .product-carousel-container{
+    margin-top: 25%;
+    max-width: 1000%;
+    margin-left: 130%;
   }
 
 }
@@ -169,10 +173,10 @@
     }
   
     .categories-container {
-      top: 60px; /* Altura del header en móvil */
+      top: 60px; 
       padding: 5px 0;
       margin: 0;
-      width: 100vw; /* Usa el ancho total de la ventana */
+      width: 100vw; 
       margin-bottom: 0;
       background-color: #ffffff;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -208,11 +212,10 @@
       margin: 0;
       padding: 0;
       position: relative;
-      top: 180px; /* Aumentado para dar más espacio después de las categorías */
       left: 0;
       transform: none;
       border-radius: 0;
-      margin-top: 160px; /* Ajustado para móvil */
+      margin-top: -25%; /* Ajustado para móvil */
       z-index: 1;
     }
   
@@ -435,7 +438,9 @@
       width: 100%;
       padding: 0;
     }
-  
+  .main-content{
+    margin-top: 80%;
+  }
     .product-item {
       min-width: 140px;
       max-width: 45%;
@@ -467,60 +472,6 @@
       margin-right: 5px;
     }
 
-    .footer {
-      padding: 20px 15px;
-    }
-
-    .footer-container {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      padding: 0;
-    }
-
-    .footer-column {
-      min-width: unset;
-      width: 100%;
-      margin: 0;
-    }
-
-    /* Ajuste para que el contacto y el último elemento ocupen toda la fila */
-    .footer-column#contacto,
-    .footer-column#etiqueta {
-      grid-column: 1 / -1;
-    }
-
-    .footer-column h4 {
-      font-size: 16px;
-      margin-bottom: 10px;
-    }
-
-    .footer-column p,
-    .footer-column ul {
-      font-size: 13px;
-    }
-
-    .app-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .tag-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    h2 {
-      margin-bottom: 10px; /* Añadido para reducir el espacio después del título */
-    }
-
-    .main-content h2 {
-      margin-top: -15px; /* Ajuste para móviles */
-      margin-bottom: 10px;
-    }
   }
   
   /* Ajustes de orientación para dispositivos móviles */
@@ -662,6 +613,35 @@
     .mobile-nav {
       display: block;
     }
+
+    .slider-container {
+      top: 0;
+      height: 180px;
+      top: -10%; /* Ajustado para iPhone */
+      margin-top: -45%;
+    }
+
+    .main-content{
+      height: fit-content;
+    }
+    .main-content h2{
+      margin-top: 35%; /* Reducido de 380px a 280px para iPhone */
+    }
+  
+    .main-content .product-carousel-container{
+      margin-top: 80%;
+      margin-bottom: 10%
+
+    }
+  
+    .main-content .alice-carousel {
+      width: 60%;
+      margin-left: 30%;
+      margin-bottom: 10%;
+      margin-top: 0%;
+      height: 150px;
+    }
+    
   }
   
   @media screen and (max-width: 390px) {
@@ -695,7 +675,7 @@
       top: 0;
       height: 180px;
       top: 160px; /* Ajustado para iPhone */
-      margin-top: 110px;
+      margin-top: -85%;
     }
   
     .image-slider {
@@ -711,8 +691,25 @@
       height: 25px;
       font-size: 14px;
     }
+
+    .main-content{
+      height: fit-content;
+    }
+    .main-content h2{
+      margin-top: 220px; /* Reducido de 380px a 280px para iPhone */
+    }
   
-    .main-content {
-      margin-top: 280px; /* Reducido de 380px a 280px para iPhone */
+    .main-content .product-carousel-container{
+      margin-top: 180%;
+      margin-bottom: 10%
+
+    }
+  
+    .main-content .alice-carousel {
+      width: 60%;
+      margin-left: 30%;
+      margin-bottom: 10%;
+      margin-top: 0%;
+      height: 150px;
     }
   }

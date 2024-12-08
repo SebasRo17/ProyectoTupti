@@ -1,7 +1,7 @@
 /* Contenedor principal */
 .categoria-container {
-   max-width: 1200px;
-   margin-top: -7%;
+   max-width: 100%;
+   margin-top: 15%;
    padding: 20px;
    font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
    margin-left: 25%;
@@ -18,7 +18,7 @@
 /* Cuadrícula de productos */
 .productos-grid {
    display: grid;
-   grid-template-columns: repeat(4, 1fr);
+   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
    gap: 20px;
    margin-top: 20px;
 }
@@ -31,6 +31,7 @@
    text-align: center;
    padding: 10px;
    transition: transform 0.2s;
+   width: 100%;
 }
 
 .producto-card:hover {
