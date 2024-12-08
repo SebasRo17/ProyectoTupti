@@ -31,7 +31,7 @@
 .mi-carrito header h1 {
   font-size: 120%;
   margin: 0;
-  margin-left: 30%;
+  margin-left: 25%;
 }
 
 .mi-carrito .carrito-icon {
@@ -42,7 +42,7 @@
 
 .mi-carrito .carrito-icon span {
   position: absolute;
-  top: -30%;
+  top: -35%;
   right: -20%;
   background: #ff5252;
   color: white;
@@ -162,11 +162,11 @@ margin-top: 20px;
 
 /* Contenedor de la imagen del producto */
 .mi-carrito .producto-item .producto-imagen {
-  width: 20%; /* Ajusta el tamaño según tu diseño */
-  padding-top: 15%; /* Esto asegura que sea un cuadrado */
-  background-color: #f1f1f1; /* Color de fondo temporal */
-  border-radius: 12px; /* Opcional, para bordes redondeados */
-  overflow: hidden; /* Para que la imagen no se salga del contenedor */
+  width: 20%; 
+  padding-top: 15%; 
+  background-color: #79986a; 
+  border-radius: 12px; 
+  overflow: hidden; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -196,19 +196,3 @@ margin-top: 20px;
   box-sizing: border-box; /* Asegura que el padding no afecte el tamaño */
 }
 
-/* Botón para cerrar el carrito */
-.mi-carrito header .cerrar-carrito {
-  background: transparent;
-  border: none;
-  font-size: 1.5rem;
-  color: white;
-  cursor: pointer;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  transition: transform 0.2s ease;
-}
-
-.mi-carrito header .cerrar-carrito:hover {
-  transform: scale(1.2);
-}
