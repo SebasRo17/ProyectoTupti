@@ -399,7 +399,7 @@ transform: translateY(10px);
  
 }
 
-/* Móviles (menos de 425px) */
+/* Móviles (menos de 424px) */
 @media screen and (max-width: 424px) {
   .registro-container-inner {
     width: 90%;

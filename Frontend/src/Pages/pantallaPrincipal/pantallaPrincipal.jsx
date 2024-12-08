@@ -21,6 +21,36 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
   const [error, setError] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  
+
+  const [productos, setProductos] = useState([
+    { id: 1, nombre: "Manzana", precio: 10.5, cantidad: 1, imagen: "https://via.placeholder.com/150" },
+    { id: 2, nombre: "Chocolate", precio: 20.0, cantidad: 2, imagen: "https://via.placeholder.com/150" },
+    { id: 3, nombre: "Producto 3", precio: 5.5, cantidad: 5, imagen: "https://via.placeholder.com/150" },
+    { id: 4, nombre: "Producto 4", precio: 2.0, cantidad: 2, imagen: "https://via.placeholder.com/150" },
+    { id: 5, nombre: "Producto 5", precio: 6.0, cantidad: 2, imagen: "https://via.placeholder.com/150" },
+    { id: 6, nombre: "Producto 6", precio: 1.0, cantidad: 3, imagen: "https://via.placeholder.com/150" },
+  ]);
+
+
+
+  // Función para eliminar un producto del carrito
+  const eliminarProducto = (productoId) => {
+    const productosActualizados = productos.filter(producto => producto.id !== productoId);
+    setProductos(productosActualizados);
+  };
+  
+  const actualizarCantidad = (id, cantidad) => {
+    setProductos(
+      productos.map((producto) =>
+        producto.id === id
+          ? { ...producto, cantidad: Math.max(1, producto.cantidad + cantidad) }
+          : producto
+      )
+    );
+  };
+  
+  
 
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
@@ -188,10 +218,95 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
   return (
     <div className="tupti-container" id="inicio">
       {/* Header */}
-      <Header />
+      <header className="header">
+        <div className="logo">
+          <img 
+            src="https://res.cloudinary.com/dd7etqrf2/image/upload/v1732717569/tupti_3_r82cww.svg " 
+            alt="TUPTI" 
+            className='logo-imagen'
+          />
+        </div>
+        <div className="search-bar">
+          <input 
+            type="text" 
+            placeholder="Buscar productos..." 
+            className="search-input"
+          />
+          <button className="search-icon" aria-label="Buscar">🔍</button>
+        </div>
+        <button 
+          className="hamburger-menu" 
+          onClick={() => setIsMobileMenuOpen(true)}
+          aria-label="Menú"
+        >
+          ☰
+        </button>
+        
+        {/* Menú móvil actualizado */}
+        <div className={`mobile-nav ${isMobileMenuOpen ? 'active' : ''}`}>
+          <button 
+            className="mobile-nav-close"
+            onClick={() => setIsMobileMenuOpen(false)}
+            aria-label="Cerrar menú"
+          >
+            ×
+          </button>
+          <nav className="mobile-nav-items">
+            <button onClick={() => setIsMobileMenuOpen(false)}>
+              <span>📍</span>
+              Dirección
+            </button>
+            <Link to="/Login" onClick={() => setIsMobileMenuOpen(false)}>
+              <button>
+                <span>👤</span>
+                Inicia Sesión
+              </button>
+            </Link>
+            <button onClick={() => { 
+  toggleCart(); 
+  setIsMobileMenuOpen(false); 
+}}>
+  <span>🛒</span>
+  Carrito
+</button>
+          </nav>
+        </div>
 
-      {/* CategoriesBar */}
-      <CategoriesBar />
+        <div className="header-icons">
+          <button class="icon-button">📍 Dirección </button>
+          <Link to="/Login">
+            <button className='btnLogin'>Inicia Sesión</button>
+          </Link>
+          <Link to="/registro">
+            <button className='btnRegister'>Registrate</button>
+          </Link>
+          <button className="header-cart-button" onClick={toggleCart}>
+        🛒 Carrito
+        <span className="icons-cart-counter">{productos.length}</span>
+      </button>
+
+        </div>
+      </header>
+      
+   {/* Categories Bar */}
+    <CategoriesBar />
+    
+      {/* Renderizar el carrito si está abierto */}
+      {isCartOpen && (
+        <div className="cart-overlay">
+          <div className="cart-container">
+            <button className="close-cart-button" onClick={toggleCart}>
+              ✖ 
+            </button>
+            <CarritoCompras 
+            productos={productos}
+            eliminarProducto={eliminarProducto}
+            actualizarCantidad={actualizarCantidad}
+          />
+          </div>
+        </div>
+      )}
+
 
 
       {/* Carousel */}

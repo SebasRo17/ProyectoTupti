@@ -7,6 +7,7 @@ import { HiEye, HiEyeOff } from "react-icons/hi"; // Iconos de ojo
 import { HiArrowLeft } from "react-icons/hi";
 import "./Login.css";
 import { loginUser } from '../../Api/loginUsers';
+import "./responsiveLogin.css";
 
 function Login() {
   const [passwordVisible, setPasswordVisible] = useState(false);
