@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './header.css'; // Crea un archivo CSS para los estilos específicos del header
-import TuptiPage from '../../Pages/pantallaPrincipal/pantallaPrincipal';'../../Pages/pantallaPrincipal/pantallaPrincipal.jsx'
-import CarritoCompras from '../CarritoCompras/CarritoCompras';
+import TuptiPage from '../../Pages/pantallaPrincipal/pantallaPrincipal';
+
 
 const Header = ({ toggleCart }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
