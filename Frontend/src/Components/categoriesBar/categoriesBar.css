@@ -9,6 +9,7 @@
     overflow: hidden;
     z-index: 999;
     font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
+    margin-top: 2%;
   }
   
   .categories-bar {
@@ -88,6 +89,11 @@
     right: 5px;
   }
 
+  @media screen and (min-width: 1441px) {
+    .categories-container{
+    width: 100%;
+    }
+  }
   /* Mobile styles */
 @media screen and (max-width: 767px) {
     .categories-container {
