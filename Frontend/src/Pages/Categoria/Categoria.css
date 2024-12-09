@@ -4,7 +4,7 @@
    margin-top: 15%;
    padding: 20px;
    font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
-   margin-left: 25%;
+   margin-left: 25%; 
 }
 
 /* Título de la categoría */
@@ -61,8 +61,8 @@
 }
 
 
- /* Menú Vertical */
- .filter {
+/* Menú Vertical */
+.filter {
    position: relative;
    margin-top: -15%;
    left: 60px;
@@ -73,20 +73,171 @@
    text-align: center;
    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
    font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
- }
- 
- .filter h3 {
+}
+
+.filter h3 {
    font-size: 20px;
    margin-bottom: 20px;
- }
- 
- .filtro-busqueda a {
+}
+
+.filtro-busqueda a {
    display: block;
    color: #649c41;
    margin-bottom: 10px;
    text-decoration: none;
- }
- 
- .filtro-busqueda a:hover {
+}
+
+.filtro-busqueda a:hover {
    text-decoration: underline;
- }
+}
+
+/* Estilos del Modal */
+.modal-overlay {
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   background-color: rgba(0, 0, 0, 0.7);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   z-index: 1000;
+}
+
+.modal-content {
+   background-color: white;
+   padding: 20px;
+   border-radius: 8px;
+   max-width: 80%;
+   max-height: 80vh;
+   overflow-y: auto;
+   position: relative;
+}
+
+.modal-close {
+   position: absolute;
+   right: 10px;
+   top: 10px;
+   background: none;
+   border: none;
+   font-size: 24px;
+   cursor: pointer;
+   color: #333;
+}
+
+.modal-product {
+   display: flex;
+   gap: 20px;
+}
+
+.modal-images {
+   flex: 1;
+   display: flex;
+   flex-wrap: wrap;
+   gap: 10px;
+}
+
+.modal-image {
+   width: 200px;
+   height: 200px;
+   object-fit: cover;
+   border-radius: 4px;
+}
+
+.modal-info {
+   flex: 1;
+   padding: 20px;
+}
+
+.modal-precio {
+   font-size: 1.5rem;
+   color: #649c41;
+   margin: 10px 0;
+}
+
+.modal-descripcion {
+   line-height: 1.6;
+   color: #555;
+   margin: 15px 0;
+}
+
+.modal-id {
+   color: #999;
+   font-size: 0.9rem;
+}
+
+/* Estilos para cantidad y carrito */
+.cantidad-container {
+   margin: 20px 0;
+   display: flex;
+   align-items: center;
+   gap: 10px;
+}
+
+.cantidad-input {
+   width: 60px;
+   padding: 5px;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+}
+
+.btn-agregar-carrito {
+   background-color: #649c41;
+   color: white;
+   padding: 10px 20px;
+   border: none;
+   border-radius: 4px;
+   cursor: pointer;
+   font-size: 1rem;
+   transition: background-color 0.3s;
+}
+
+.btn-agregar-carrito:hover {
+   background-color: #4c7832;
+}
+
+/* Estilos para reseñas */
+.resenas-container {
+   margin-top: 30px;
+   padding-top: 20px;
+   border-top: 1px solid #eee;
+}
+
+.estrellas-container {
+   margin: 15px 0;
+}
+
+.estrella {
+   font-size: 24px;
+   color: #ddd;
+   cursor: pointer;
+   transition: color 0.2s;
+}
+
+.estrella:hover,
+.estrella.active {
+   color: #ffd700;
+}
+
+.resena-input {
+   width: 100%;
+   padding: 10px;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+   margin-bottom: 10px;
+   resize: vertical;
+}
+
+.btn-enviar-resena {
+   background-color: #333;
+   color: white;
+   padding: 8px 16px;
+   border: none;
+   border-radius: 4px;
+   cursor: pointer;
+}
+
+.btn-enviar-resena:hover {
+   background-color: #555;
+}

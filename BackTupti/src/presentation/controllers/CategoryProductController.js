@@ -2,25 +2,23 @@ const {sequelize: db} = require('../../infrastructure/database/mysqlConnection')
 
 const getCategoryProducts = async (req, res) => {
     try {
-        const { id } = req.params; // Obtener el ID de los parámetros
+        const { id } = req.params;
         const categoryProducts = await db.query(`
             SELECT 
                 p.IdProducto, 
                 p.Nombre AS Producto, 
                 p.Descripcion, 
                 p.Precio, 
-                p.Stock,  
-                GROUP_CONCAT(pi.ImagenUrl) AS Imagenes
+                p.Stock,
+                GROUP_CONCAT(DISTINCT pi.ImagenUrl) AS Imagenes
             FROM 
                 producto p
-            INNER JOIN 
-                tipoproducto tp ON p.IdTipoProducto = tp.IdTipoProducto
-            LEFT JOIN 
-                productoImagen pi ON p.IdProducto = pi.IdProducto
+                INNER JOIN tipoproducto tp ON p.IdTipoProducto = tp.IdTipoProducto
+                LEFT JOIN productoImagen pi ON p.IdProducto = pi.IdProducto
             WHERE 
-                tp.IdTipoProducto = :categoryId 
+                tp.IdTipoProducto = :categoryId
             GROUP BY 
-                p.IdProducto;
+                p.IdProducto, p.Nombre, p.Descripcion, p.Precio, p.Stock;
         `, {
             replacements: { categoryId: id },
             type: db.QueryTypes.SELECT
