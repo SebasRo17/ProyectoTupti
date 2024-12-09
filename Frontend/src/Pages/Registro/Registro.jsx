@@ -5,6 +5,7 @@ import { FcGoogle } from "react-icons/fc"; // Ícono de Google
 import { FaFacebookF } from "react-icons/fa"; // Ícono de Facebook
 import { HiEye, HiEyeOff } from "react-icons/hi"; // Iconos de ojo
 import ReCAPTCHA from "react-google-recaptcha";
+import "./responsiveRegistro.css";
 
 
 

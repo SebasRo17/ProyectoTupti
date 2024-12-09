@@ -1,0 +1,209 @@
+/* Desktop (1920px - 1950px) */
+@media screen and (min-width: 1920px) and (max-width: 1950px) {
+    .recuperar-card {
+      padding: 50px;
+      max-width: 600px;
+      min-height: 500px;
+    }
+  
+    h1 {
+      font-size: 30px;
+    }
+  
+    .recuperar-button {
+      font-size: 20px;
+    }
+  }
+  
+/* Desktop (1801px - 1919px) */
+  @media screen and (min-width: 1801px) and (max-width: 1919px) {
+    .recuperar-card {
+      padding: 45px;
+      max-width: 550px;
+      min-height: 480px;
+    }
+  
+    h1 {
+      font-size: 28px;
+    }
+  
+    .recuperar-button {
+      font-size: 18px;
+    }
+}
+  
+/* Desktop (1650px - 1800px) */
+  @media screen and (min-width: 1650px) and (max-width: 1800px) {
+    .recuperar-card {
+      padding: 40px;
+      max-width: 500px;
+      min-height: 460px;
+    }
+  
+    h1 {
+      font-size: 26px;
+    }
+  
+    .recuperar-button {
+      font-size: 17px;
+    }
+}
+  
+/* Desktop (1440px - 1649px) */
+  @media screen and (min-width: 1440px) and (max-width: 1649px) {
+    .recuperar-card {
+      padding: 35px;
+      max-width: 480px;
+      min-height: 440px;
+    }
+  
+    h1 {
+      font-size: 24px;
+    }
+  
+    .recuperar-button {
+      font-size: 16px;
+    }
+}
+  
+/* Laptops (1024px - 1440px) */
+  @media screen and (max-width: 1439px) and (min-width: 1024px) {
+    .recuperar-card {
+      padding: 30px;
+      max-width: 450px;
+      min-height: 420px;
+    }
+  
+    h1 {
+      font-size: 22px;
+    }
+  
+    .recuperar-button {
+      font-size: 15px;
+    }
+}
+  
+/* Tablets (768px - 1023px) */
+  @media screen and (max-width: 1023px) and (min-width: 768px) {
+    .recuperar-card {
+      padding: 25px;
+      max-width: 400px;
+    }
+  
+    h1 {
+      font-size: 20px;
+    }
+  
+    .recuperar-button {
+      font-size: 14px;
+    }
+}
+  
+/* Responsivo para pantallas entre 425px y 767px */
+  @media (min-width: 425px) and (max-width: 767px) {
+    .recuperar-card {
+      padding: 20px;
+      max-width: 350px;
+    }
+  
+    h1 {
+      font-size: 18px;
+    }
+  
+    .recuperar-button {
+      font-size: 13px;
+    }
+}
+  
+/* Pantallas entre 424px y 375px */
+  @media (min-width: 375px) and (max-width: 424px) {
+    .recuperar-card {
+      padding: 15px;
+      max-width: 300px;
+    }
+  
+    h1 {
+      font-size: 16px;
+    }
+  
+    .recuperar-button {
+      font-size: 12px;
+    }
+  }
+  
+/* Pantallas entre 374px y 320px */
+  @media (max-width: 374px) and (min-width: 320px) {
+    .recuperar-card {
+      padding: 10px;
+      max-width: 280px;
+    }
+  
+    h1 {
+      font-size: 14px;
+    }
+  
+    .recuperar-button {
+      font-size: 11px;
+    }
+}
+  
+/* Pantallas de 430 */
+  @media (max-width: 430px) {
+    .recuperar-card {
+      padding: 15px;
+      max-width: 320px;
+    }
+  
+    h1 {
+      font-size: 16px;
+    }
+}
+  
+/* Pantallas de 412 */
+  @media (max-width: 412px) {
+    .recuperar-card {
+      padding: 12px;
+      max-width: 300px;
+    }
+  
+    h1 {
+      font-size: 15px;
+    }
+}
+  
+/* Pantallas de 360 */
+  @media (max-width: 360px) {
+    .recuperar-card {
+      padding: 10px;
+      max-width: 280px;
+    }
+  
+    h1 {
+      font-size: 14px;
+    }
+}
+  
+/* Pantallas de 344 */
+  @media (max-width: 344px) {
+    .recuperar-card {
+      padding: 8px;
+      max-width: 260px;
+    }
+  
+    h1 {
+      font-size: 13px;
+    }
+}
+  
+/* Pantallas de 320 */
+  @media (max-width: 320px) {
+    .recuperar-card {
+      padding: 5px;
+      max-width: 240px;
+    }
+  
+    h1 {
+      font-size: 12px;
+    }
+}
+  

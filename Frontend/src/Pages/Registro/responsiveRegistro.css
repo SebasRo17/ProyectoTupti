@@ -1,0 +1,358 @@
+/*RESPONSIVE*/
+/* Desktop (1920px - 1950px) */
+@media screen and (min-width: 1920px) and (max-width: 1950px) {
+    .registro-container-inner {
+      width: 35%;
+      padding: 2.5rem;
+    }
+    .registro-form-title h2 {
+      font-size: 3.5rem;
+    }
+    .registro-input {
+      width: 100%;
+      padding: 1.2rem;
+    }
+    .registro-btn {
+      width: 100%;
+      padding: 1.2rem 3.5rem;
+    }
+    .social-buttons {
+      margin-left: 20%;
+    }
+}
+
+/* Desktop (1801px - 1919px) */
+@media screen and (min-width: 1801px) and (max-width: 1919px) {
+    .registro-container-inner {
+      width: 38%;
+      padding: 2.2rem;
+    }
+    .registro-form-title h2 {
+      font-size: 3.3rem;
+    }
+    .registro-input {
+      width: 100%;
+      padding: 1.1rem;
+    }
+    .registro-btn {
+      width: 100%;
+      padding: 1.1rem 3.3rem;
+    }
+  
+}
+/* Desktop (1650px - 1800px) */
+@media screen and (min-width: 1650px) and (max-width: 1800px) {
+    .registro-container-inner {
+      width: 40%;
+      padding: 2rem;
+    }
+    .registro-form-title h2 {
+      font-size: 3rem;
+    }
+    .registro-input {
+      width: 100%;
+      padding: 1rem;
+    }
+    .registro-btn {
+      width: 100%;
+      padding: 1rem 3rem;
+      margin-right: 30px;
+    }
+    .social-buttons {
+        margin-left: 20px;
+      }
+}
+
+/* Desktop (1440px a 1649 ) */
+@media screen and (min-width: 1440px) and (max-width: 1649px) {
+    .registro-container-inner {
+      width: 40%;
+      padding: 2rem;
+    }
+    
+    .registro-form-title h2 {
+      font-size: 3rem;
+    }
+  
+    .registro-input {
+      width: 100%;
+      padding: 1rem;
+    }
+  
+    .registro-btn {
+      width: 100%;
+      padding: 1rem 3rem;
+    }
+  
+    .social-buttons {
+      margin-left: 20%;
+    }
+  }
+  
+  /* Laptops (1024px - 1440px) */
+  @media screen and (max-width: 1439px) and (min-width: 1024px) {
+    .registro-container-inner {
+      width: 50%;
+      padding: 1.5rem;
+      border-radius: 60px;
+    }
+   
+    .registro-form-title h2 {
+      font-size: 2.5rem;
+    }
+  
+    .registro-input {
+      width: 100%;
+      padding: 1rem;
+    }
+  
+    .registro-btn {
+      width: 100%;
+      padding: 0.5rem 2.5rem;
+      margin-left: 0%;
+    }
+    .registro-social-buttons {
+      width: 35%;
+    }
+  
+  }
+  
+  /* Tablets (768px - 1023px) */
+  @media screen and (max-width: 1023px) and (min-width: 768px) {
+    .registro-container-inner {
+      width: 55%;
+      padding: 1.2rem;
+      border-radius: 60px;
+    }
+  
+    .registro-form-title h2 {
+      font-size: 2rem;
+    }
+  
+    .registro-input {
+      width: 100%;
+      padding: 0.8rem;
+    }
+  
+    .registro-btn {
+      width: 100%;
+      padding: 0.5rem 2rem;
+    }
+  
+    .registro-social-buttons {
+      width: 25%;
+    }
+  
+  }
+  
+/* Responsivo para pantallas entre 425px y 767px */
+@media (min-width: 425px) and (max-width: 767px) {
+    .registro-container-inner {
+      width: 80%;
+      padding: 1rem;
+      border-radius: 50px;
+    }
+    .registro-form-title h2 {
+      font-size: 1.8rem;
+    }
+    .registro-input {
+      width: 100%;
+      padding: 0.7rem;
+    }
+    .registro-btn {
+      width: 100%;
+      padding: 0.5rem 1.5rem;
+    }
+    .registro-social-buttons {
+      width: 5%;
+    }
+    .registro-back-button {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+    }
+    .back-registro-circle {
+      width: 30px;
+      height: 30px;
+    }
+  }
+  
+/* Pantallas entre 424px y 375px */
+@media (min-width: 375px) and (max-width: 424px) {
+    .registro-container-inner {
+      width: 80%;
+      padding: 1rem;
+      border-radius: 60px;
+    }
+  
+    .registro-form-title h2 {
+      font-size: 1.8rem;
+    }
+  
+    .registro-input {
+      width: 100%;
+      padding: 0.7rem;
+    }
+  
+    .registro-btn {
+      width: 100%;
+      padding: 0.5rem 1.5rem;
+      margin-left: 0%;
+    }
+  
+    .registro-social-buttons {
+      width: 8%;
+    }
+    .registro-back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      margin-left: 10px;
+    }
+    .back-registro-circle {
+      width: 25px; /* Reducido el tamaño */
+      height: 25px; /* Reducido el tamaño */
+    }
+   
+  }
+
+  /* Pantallas entre 374px y 320px */
+@media (max-width: 374px) and (min-width: 320px) {
+    .registro-container-inner {
+      width: 95%;
+      padding: 0.5rem;
+      border-radius: 40px;
+    }
+    .registro-form-title h2 {
+      font-size: 1.4rem;
+    }
+    .registro-input {
+      width: 100%;
+      padding: 0.5rem;
+    }
+    .registro-btn {
+      width: 100%;
+      padding: 0.3rem 1rem;
+      margin-left: -0px;
+    }
+    .registro-social-buttons {
+        width: 5%;
+    }
+    .back-registro-circle {
+        width: 30px; /* Reducido el tamaño */
+        height: 30px; /* Reducido el tamaño */
+        margin-left: -30px;
+        transform: translateY(-10px);
+        
+    }
+  }
+
+  /* Pantallas de 430 */
+  @media (max-width: 430px) {
+    .registro-container-inner {
+      width: 90%;
+      padding: 0.7rem;
+      border-radius: 50px;
+    }
+    .registro-form-title h2 {
+      font-size: 1.6rem;
+    }
+    .registro-input {
+      width: 100%;
+      padding: 0.6rem;
+    }
+    .registro-btn {
+      width: 100%;
+      padding: 0.5rem 1.2rem;
+    }
+    .registro-social-buttons {
+        width: 15%;
+    }
+  }
+  
+  /* Pantallas de 412 */
+  @media (max-width: 412px) {
+    .registro-container-inner {
+      width: 90%;
+      padding: 0.7rem;
+      border-radius: 50px;
+    }
+    .registro-form-title h2 {
+      font-size: 1.6rem;
+    }
+    .registro-input {
+      width: 100%;
+      padding: 0.6rem;
+    }
+    .registro-btn {
+      width: 100%;
+      padding: 0.5rem 1.2rem;
+    }
+    .registro-social-buttons {
+        width: 15%;
+    }
+  }
+  
+  /* Pantallas de 360 */
+  @media (max-width: 360px) {
+    .registro-container-inner {
+      width: 95%;
+      padding: 0.6rem;
+      border-radius: 35px;
+    }
+    .registro-form-title h2 {
+      font-size: 1.4rem;
+    }
+    .registro-input {
+      width: 100%;
+      padding: 0.5rem;
+    }
+    .registro-btn {
+      width: 100%;
+      padding: 0.3rem 0.9rem;
+    }
+  }
+  
+/* Pantallas de 344 */
+@media (max-width: 344px) {
+    .registro-container-inner {
+        width: 95%;
+        padding: 0.4rem;
+        border-radius: 30px;
+    }
+    .registro-form-title h2 {
+        font-size: 1.3rem;
+    }
+    .registro-input {
+        width: 100%;
+        padding: 0.4rem;
+    }
+    .registro-btn {
+        width: 100%;
+        padding: 0.2rem 0.8rem;
+    }
+    .registro-social-buttons {
+        width: 4%;
+    }
+}
+
+  /* Pantallas de 320 */
+  @media (max-width: 320px) {
+    .registro-container-inner {
+      width: 98%;
+      padding: 0.3rem;
+      border-radius: 25px;
+    }
+    .registro-form-title h2 {
+      font-size: 1.2rem;
+    }
+    .registro-input {
+      width: 100%;
+      padding: 0.3rem;
+    }
+    .registro-btn {
+      width: 100%;
+      padding: 0.1rem 0.7rem;
+    }
+  }
+  
