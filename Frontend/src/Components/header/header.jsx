@@ -1,11 +1,35 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './header.css'; // Crea un archivo CSS para los estilos específicos del header
+import './header.css';
+import { productos } from '../../data/productos';
 import TuptiPage from '../../Pages/pantallaPrincipal/pantallaPrincipal';
-
 
 const Header = ({ toggleCart }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+
+    if (value.length > 0) {
+      const filteredProducts = productos.filter(product =>
+        product.toLowerCase().includes(value.toLowerCase())
+      );
+      setSuggestions(filteredProducts);
+      setShowSuggestions(true);
+    } else {
+      setSuggestions([]);
+      setShowSuggestions(false);
+    }
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    setSearchTerm(suggestion);
+    setShowSuggestions(false);
+  };
 
   return (
     <header className="header">
@@ -24,12 +48,29 @@ const Header = ({ toggleCart }) => {
 
       {/* Barra de búsqueda */}
       <div className="search-bar">
-        <input 
-          type="text" 
-          placeholder="Buscar productos..." 
-          className="search-input"
-        />
-        <button className="search-icon" aria-label="Buscar">🔍</button>
+        <div className="search-container">
+          <input 
+            type="text" 
+            placeholder="Buscar productos..." 
+            className="search-input"
+            value={searchTerm}
+            onChange={handleSearch}
+            onFocus={() => setShowSuggestions(true)}
+          />
+          {showSuggestions && suggestions.length > 0 && (
+            <ul className="suggestions-list">
+              {suggestions.map((suggestion, index) => (
+                <li 
+                  key={index} 
+                  onClick={() => handleSuggestionClick(suggestion)}
+                >
+                  {suggestion}
+                </li>
+              ))}
+            </ul>
+          )}
+          <button className="search-icon" aria-label="Buscar">🔍</button>
+        </div>
       </div>
 
       {/* Botón de menú móvil */}
