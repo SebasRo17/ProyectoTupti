@@ -40,6 +40,7 @@
   outline: none;
   font-size: 14px;
   background-color: white;
+  color: black;
 }
 
 .search-icon {
@@ -138,6 +139,38 @@
 
 .btnLogin:hover::before, .btnRegister:hover::before{
 	width: 9em;
+}
+
+.search-container {
+  position: relative;
+  width: 100%;
+}
+
+.suggestions-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-top: 5px;
+  padding: 0;
+  list-style: none;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.suggestions-list li {
+  padding: 8px 12px;
+  cursor: pointer;
+  color: #333;
+}
+
+.suggestions-list li:hover {
+  background-color: #f0f0f0;
 }
 
   /* RESPONSIVE */
