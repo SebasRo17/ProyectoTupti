@@ -1,0 +1,711 @@
+/*RESPONSIVE*/
+/* Desktop (1920px - 1950px) */
+@media screen and (min-width: 1920px) and (max-width: 1950px) {
+    .olvido-container {
+        padding: 0 3%;
+    }
+    
+    .olvido-card {
+        padding: 30px;
+        width: 100%;
+        border-radius: 60px;
+    }
+    
+    .olvido-card h1 {
+        font-size: 20px;
+        margin-top: 0;
+        margin-bottom: 8px;
+    }
+    
+    .olvido-form input {
+        padding: 10px;
+        font-size: 14px;
+        margin-left: 10px;
+        margin-right: 15px;
+    }
+      
+  
+    .olvido-form .form-group {
+      margin-left: 10px;
+    }
+    
+    .olvido-button {
+        padding: 12px 120px;
+        margin-left: 20%;
+    }
+    
+    .olvido-link p {
+        font-size: 12px;
+    }
+    
+    .message-info {
+        font-size: 13px;
+    }
+    
+    .back-olvido-circle {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .olvido-back-button {
+        position: absolute;
+        top: 15px;
+        left: 12px;
+    }
+}
+
+/* Desktop (1801px - 1919px) */
+@media screen and (min-width: 1801px) and (max-width: 1919px) {
+    .olvido-container {
+        padding: 0 3%;
+    }
+    
+    .olvido-card {
+        padding: 30px;
+        width: 100%;
+        border-radius: 60px;
+    }
+    
+    .olvido-card h1 {
+        font-size: 20px;
+        margin-top: 0;
+        margin-bottom: 8px;
+    }
+    
+    .olvido-form input {
+        padding: 10px;
+        font-size: 14px;
+        margin-left: 10px;
+        margin-right: 15px;
+    }
+      
+  
+    .olvido-form .form-group {
+      margin-left: 10px;
+    }
+    
+    .olvido-button {
+        padding: 12px 120px;
+        margin-left: 20%;
+    }
+    
+    .olvido-link p {
+        font-size: 12px;
+    }
+    
+    .message-info {
+        font-size: 13px;
+    }
+    
+    .back-olvido-circle {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .olvido-back-button {
+        position: absolute;
+        top: 15px;
+        left: 12px;
+    }
+}    
+    
+/* Desktop (1650px - 1800px) */
+@media screen and (min-width: 1650px) and (max-width: 1800px) {
+    .olvido-container {
+        padding: 0 3%;
+    }
+    
+    .olvido-card {
+        padding: 30px;
+        width: 100%;
+        border-radius: 60px;
+    }
+    
+    .olvido-card h1 {
+        font-size: 20px;
+        margin-top: 0;
+        margin-bottom: 8px;
+    }
+    
+    .olvido-form input {
+        padding: 10px;
+        font-size: 14px;
+        margin-left: 10px;
+        margin-right: 15px;
+    }
+      
+  
+    .olvido-form .form-group {
+      margin-left: 10px;
+    }
+    
+    .olvido-button {
+        padding: 12px 120px;
+        margin-left: 20%;
+    }
+    
+    .olvido-link p {
+        font-size: 12px;
+    }
+    
+    .message-info {
+        font-size: 13px;
+    }
+    
+    .back-olvido-circle {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .olvido-back-button {
+        position: absolute;
+        top: 15px;
+        left: 12px;
+    }
+}
+
+  
+/* Laptops (1024px - 1439px) */
+  @media screen and (min-width: 1024px) and (max-width: 1439px) {
+    .olvido-container {
+        padding: 0 3%;
+      
+    }
+    
+    .olvido-card {
+        padding: 30px;
+        width: 100%;
+        border-radius: 60px;
+      }
+    
+      .olvido-card h1 {
+        font-size: 20px;
+        margin-top: 0;
+        margin-bottom: 8px;
+      }
+    
+      .olvido-form input {
+        padding: 10px;
+        font-size: 14px;
+        margin-left: 10px;
+        margin-right: 15px;
+      }
+      
+  
+    .olvido-form .form-group {
+      margin-left: 10px;
+    }
+    
+      .olvido-button {
+        padding: 12px 120px;
+        margin-left: 20%;
+      }
+    
+      .olvido-link p {
+        font-size: 12px;
+      }
+    
+      .message-info {
+        font-size: 13px;
+      }
+    
+      .back-olvido-circle {
+        width: 20px;
+        height: 20px;
+      }
+      .olvido-back-button {
+        position: absolute;
+        top: 15px;
+        left: 12px;
+      }
+    
+}   
+
+/* Tablets (768px - 1023px) */
+  @media screen and (max-width: 1023px) and (min-width: 768px) {
+    .olvido-container {
+        padding: 0 3%;
+      }
+    
+      .olvido-card {
+        padding: 30px;
+        width: 100%;
+        border-radius: 60px;
+      }
+    
+      .olvido-card h1 {
+        font-size: 20px;
+        margin-top: 0;
+        margin-bottom: 8px;
+      }
+    
+      .olvido-form input {
+        padding: 10px;
+        font-size: 14px;
+        margin-left: 10px;
+        margin-right: 15px;
+      }
+      
+  
+    .olvido-form .form-group {
+      margin-left: 10px;
+    }
+    
+      .olvido-button {
+        padding: 12px 120px;
+        margin-left: 20%;
+      }
+    
+      .olvido-link p {
+        font-size: 12px;
+      }
+    
+      .message-info {
+        font-size: 13px;
+      }
+    
+      .back-olvido-circle {
+        width: 20px;
+        height: 20px;
+      }
+      .olvido-back-button {
+        position: absolute;
+        top: 15px;
+        left: 12px;
+      }
+}    
+
+/* Responsivo para pantallas entre 425px y 767px */
+@media screen and (max-width: 767px) {
+    .olvido-container {
+      padding: 0 3%;
+    }
+  
+    .olvido-card {
+      padding: 30px;
+      width: 100%;
+      border-radius: 60px;
+    }
+  
+    .olvido-card h1 {
+      font-size: 20px;
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+  
+    .olvido-form input {
+      padding: 10px;
+      font-size: 14px;
+      margin-left: 10px;
+      margin-right: 15px;
+    }
+    
+
+  .olvido-form .form-group {
+    margin-left: 10px;
+  }
+  
+    .olvido-button {
+      padding: 12px 60px;
+      margin-left: 20%;
+    }
+  
+    .olvido-link p {
+      font-size: 12px;
+    }
+  
+    .message-info {
+      font-size: 13px;
+    }
+  
+    .back-olvido-circle {
+      width: 20px;
+      height: 20px;
+    }
+    .olvido-back-button {
+      position: absolute;
+      top: 15px;
+      left: 12px;
+    }
+  
+    .olvido-error-message {
+      margin-left: 10px; /* Ajuste del margen hacia la izquierda para pantallas pequeñas */
+      
+    }
+}
+
+
+/* Responsivo para pantallas entre 375px y 424px */
+  @media screen and (min-width: 375px) and (max-width: 424px) {
+    .olvido-container {
+      padding: 0 5%;
+    }
+  
+    .olvido-card {
+      padding: 20px;
+      width: 100%;
+    }
+  
+    .olvido-card h1 {
+      font-size: 20px;
+      margin-top: 0;
+      margin-bottom: 6px;
+      transform: translateY(50%);
+    }
+  
+    .olvido-form input {
+      padding: 8px;
+      font-size: 12px;
+    }
+  
+    .olvido-button {
+      padding: 12px 50px;
+    }
+  
+    .olvido-link p {
+      font-size: 11px;
+    }
+  
+    .message-info {
+      font-size: 12px;
+    }
+  
+    .back-olvido-circle {
+      width: 20px;
+      height: 20px;
+    }
+    .olvido-error-message {
+      
+      font-size: 12px;
+      margin-top: -10px;
+      margin-left: 15px;
+      margin-bottom: 10px;
+    }
+  
+    .icon-arrow {
+      width: 10px;
+      height: 10px;
+    }
+}
+  
+/* Pantallas entre 374px y 320px */
+@media (max-width: 374px) and (min-width: 320px) {
+    .olvido-container {
+        padding: 0 5%;
+      }
+    
+      .olvido-card {
+        padding: 20px;
+        width: 100%;
+      }
+    
+      .olvido-card h1 {
+        font-size: 20px;
+        margin-top: 0;
+        margin-bottom: 6px;
+        transform: translateY(-50%);
+      }
+    
+      .olvido-form input {
+        padding: 8px;
+        font-size: 12px;
+      }
+    
+      .olvido-button {
+        padding: 12px 50px;
+        margin-left: 12%;
+      }
+    
+      .olvido-link p {
+        font-size: 11px;
+      }
+    
+      .message-info {
+        font-size: 12px;
+        transform: translateY(5px);
+      }
+    
+      .back-olvido-circle {
+        width: 20px;
+        height: 20px;
+        transform: translateY(-5px);
+      }
+      .olvido-error-message {
+        
+        font-size: 12px;
+        margin-top: -10px;
+        margin-left: 15px;
+        margin-bottom: 10px;
+      }
+    
+      .icon-arrow {
+        width: 10px;
+        height: 10px;
+      }
+}
+  
+/* Pantallas de 430px */
+  @media (max-width: 430px) {
+    .olvido-container {
+        padding: 0 5%;
+      }
+    
+      .olvido-card {
+        padding: 20px;
+        width: 100%;
+      }
+    
+      .olvido-card h1 {
+        font-size: 20px;
+        margin-top: 0;
+        margin-bottom: 6px;
+        transform: translateY(50%);
+      }
+    
+      .olvido-form input {
+        padding: 8px;
+        font-size: 12px;
+      }
+    
+      .olvido-button {
+        padding: 12px 50px;
+      }
+    
+      .olvido-link p {
+        font-size: 11px;
+      }
+    
+      .message-info {
+        font-size: 12px;
+      }
+    
+      .back-olvido-circle {
+        width: 20px;
+        height: 20px;
+      }
+      .olvido-error-message {
+        
+        font-size: 12px;
+        margin-top: -10px;
+        margin-left: 15px;
+        margin-bottom: 10px;
+      }
+    
+      .icon-arrow {
+        width: 10px;
+        height: 10px;
+      }
+}
+  
+/* Pantallas de 412px */
+  @media (max-width: 412px) {
+    .olvido-container {
+        padding: 0 5%;
+      }
+    
+      .olvido-card {
+        padding: 20px;
+        width: 100%;
+      }
+    
+      .olvido-card h1 {
+        font-size: 20px;
+        margin-top: 0;
+        margin-bottom: 6px;
+        transform: translateY(50%);
+      }
+    
+      .olvido-form input {
+        padding: 8px;
+        font-size: 12px;
+      }
+    
+      .olvido-button {
+        padding: 12px 50px;
+      }
+    
+      .olvido-link p {
+        font-size: 11px;
+      }
+    
+      .message-info {
+        font-size: 12px;
+      }
+    
+      .back-olvido-circle {
+        width: 20px;
+        height: 20px;
+      }
+      .olvido-error-message {
+        
+        font-size: 12px;
+        margin-top: -10px;
+        margin-left: 15px;
+        margin-bottom: 10px;
+      }
+    
+      .icon-arrow {
+        width: 10px;
+        height: 10px;
+      }
+}
+  
+/* Pantallas de 360px */
+  @media (max-width: 360px) {
+    .olvido-container {
+        padding: 0 5%;
+      }
+    
+      .olvido-card {
+        padding: 20px;
+        width: 100%;
+      }
+    
+      .olvido-card h1 {
+        font-size: 20px;
+        margin-top: 0;
+        margin-bottom: 6px;
+        transform: translateY(50%);
+      }
+    
+      .olvido-form input {
+        padding: 8px;
+        font-size: 12px;
+      }
+    
+      .olvido-button {
+        padding: 12px 50px;
+      }
+    
+      .olvido-link p {
+        font-size: 11px;
+      }
+    
+      .message-info {
+        font-size: 12px;
+      }
+    
+      .back-olvido-circle {
+        width: 20px;
+        height: 20px;
+    }
+      .olvido-error-message {
+        
+        font-size: 12px;
+        margin-top: -10px;
+        margin-left: 15px;
+        margin-bottom: 10px;
+    }
+    
+      .icon-arrow {
+        width: 10px;
+        height: 10px;
+    }
+}
+
+/* Pantallas de 344px */
+  @media (max-width: 344px) {
+    .olvido-container {
+        padding: 0 5%;
+      }
+    
+      .olvido-card {
+        padding: 20px;
+        width: 100%;
+      }
+    
+      .olvido-card h1 {
+        font-size: 20px;
+        margin-top: 0;
+        margin-bottom: 6px;
+        transform: translateY(50%);
+      }
+    
+      .olvido-form input {
+        padding: 8px;
+        font-size: 12px;
+      }
+    
+      .olvido-button {
+        padding: 12px 50px;
+      }
+    
+      .olvido-link p {
+        font-size: 11px;
+      }
+    
+      .message-info {
+        font-size: 12px;
+      }
+    
+      .back-olvido-circle {
+        width: 20px;
+        height: 20px;
+      }
+      .olvido-error-message {
+        
+        font-size: 12px;
+        margin-top: -10px;
+        margin-left: 15px;
+        margin-bottom: 10px;
+    }
+    
+      .icon-arrow {
+        width: 10px;
+        height: 10px;
+    }
+
+}
+
+/* Pantallas de 320px */
+  @media (max-width: 320px) {
+    .olvido-container {
+        padding: 0 5%;
+      }
+    
+      .olvido-card {
+        padding: 20px;
+        width: 100%;
+      }
+    
+      .olvido-card h1 {
+        font-size: 20px;
+        margin-top: 0;
+        margin-bottom: 6px;
+        transform: translateY(50%);
+      }
+    
+      .olvido-form input {
+        padding: 8px;
+        font-size: 12px;
+      }
+    
+      .olvido-button {
+        padding: 12px 50px;
+      }
+    
+      .olvido-link p {
+        font-size: 11px;
+      }
+    
+      .message-info {
+        font-size: 12px;
+      }
+    
+      .back-olvido-circle {
+        width: 20px;
+        height: 20px;
+      }
+      .olvido-error-message {
+        
+        font-size: 12px;
+        margin-top: -10px;
+        margin-left: 15px;
+        margin-bottom: 10px;
+      }
+    
+      .icon-arrow {
+        width: 10px;
+        height: 10px;
+    }
+}
