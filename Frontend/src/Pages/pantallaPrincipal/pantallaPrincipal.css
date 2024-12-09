@@ -212,7 +212,7 @@ body {
   margin-top: -70%;
   margin-left: 45%;
   z-index: 1;
-  background-color: #15c6ba00;
+  background-color: transparent;
   height: 0;
   width: 300%;
   margin-bottom: 10%;
@@ -225,7 +225,7 @@ body {
   margin: 20px auto;
   width: 100%; 
   max-width: 75%; 
-  background-color: #900808f6; 
+  background-color: transparent; 
   border-radius: 8px; 
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
   padding: 20px; 
