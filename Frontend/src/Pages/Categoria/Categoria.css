@@ -93,37 +93,47 @@
 
 /* Estilos del Modal */
 .modal-overlay {
-   position: fixed;
-   top: 0;
-   left: 0;
-   right: 0;
-   bottom: 0;
-   background-color: rgba(0, 0, 0, 0.7);
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
 }
 
 .modal-content {
-   background-color: white;
-   padding: 20px;
-   border-radius: 8px;
-   max-width: 80%;
-   max-height: 80vh;
-   overflow-y: auto;
-   position: relative;
+  background-color: white;
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 80%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  animation: modalFadeIn 0.4s ease-out;
 }
 
 .modal-close {
-   position: absolute;
-   right: 10px;
-   top: 10px;
-   background: none;
-   border: none;
-   font-size: 24px;
-   cursor: pointer;
-   color: #333;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.modal-close:hover {
+  transform: rotate(90deg);
+  color: #649c41;
 }
 
 .modal-product {
@@ -151,9 +161,16 @@
 }
 
 .modal-precio {
-   font-size: 1.5rem;
-   color: #649c41;
-   margin: 10px 0;
+  font-size: 2rem;
+  color: #649c41;
+  margin: 15px 0;
+  font-weight: bold;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
+  transition: color 0.3s ease;
+}
+
+.modal-precio:hover {
+  color: #4c7832;
 }
 
 .modal-descripcion {
@@ -169,75 +186,148 @@
 
 /* Estilos para cantidad y carrito */
 .cantidad-container {
-   margin: 20px 0;
-   display: flex;
-   align-items: center;
-   gap: 10px;
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background-color: #f8f8f8;
+  padding: 15px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.cantidad-container:hover {
+  background-color: #f0f0f0;
 }
 
 .cantidad-input {
-   width: 60px;
-   padding: 5px;
-   border: 1px solid #ccc;
-   border-radius: 4px;
+  width: 70px;
+  padding: 8px;
+  border: 2px solid #649c41;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.cantidad-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(100, 156, 65, 0.3);
+  transform: scale(1.05);
 }
 
 .btn-agregar-carrito {
-   background-color: #649c41;
-   color: white;
-   padding: 10px 20px;
-   border: none;
-   border-radius: 4px;
-   cursor: pointer;
-   font-size: 1rem;
-   transition: background-color 0.3s;
+  background-color: #649c41;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(100, 156, 65, 0.2);
 }
 
 .btn-agregar-carrito:hover {
-   background-color: #4c7832;
+  background-color: #4c7832;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(100, 156, 65, 0.3);
+}
+
+.btn-agregar-carrito:active {
+  transform: translateY(0);
 }
 
 /* Estilos para reseñas */
 .resenas-container {
-   margin-top: 30px;
-   padding-top: 20px;
-   border-top: 1px solid #eee;
+  margin-top: 40px;
+  padding-top: 30px;
+  border-top: 2px solid #eee;
 }
 
 .estrellas-container {
-   margin: 15px 0;
+  margin: 15px 0;
+  display: flex;
+  gap: 5px;
 }
 
 .estrella {
-   font-size: 24px;
-   color: #ddd;
-   cursor: pointer;
-   transition: color 0.2s;
+  font-size: 28px;
+  color: #ddd;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
 }
 
+/* Efecto de iluminación progresiva */
 .estrella:hover,
+.estrella:hover ~ .estrella {
+  color: #ddd;
+}
+
+.estrellas-container:hover .estrella {
+  color: #ffd700;
+}
+
+.estrella:hover ~ .estrella {
+  color: #ddd !important;
+}
+
+/* Mantener estrellas activas iluminadas */
 .estrella.active {
-   color: #ffd700;
+  color: #ffd700;
+}
+
+/* Animación al hacer hover */
+.estrella:hover {
+  transform: scale(1.2);
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
 }
 
 .resena-input {
-   width: 100%;
-   padding: 10px;
-   border: 1px solid #ccc;
-   border-radius: 4px;
-   margin-bottom: 10px;
-   resize: vertical;
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #eee;
+  border-radius: 10px;
+  margin: 15px 0;
+  resize: vertical;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.resena-input:focus {
+  outline: none;
+  border-color: #649c41;
+  box-shadow: 0 0 0 2px rgba(100, 156, 65, 0.1);
 }
 
 .btn-enviar-resena {
-   background-color: #333;
-   color: white;
-   padding: 8px 16px;
-   border: none;
-   border-radius: 4px;
-   cursor: pointer;
+  background-color: #333;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .btn-enviar-resena:hover {
-   background-color: #555;
+  background-color: #444;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Animación entrada modal */
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
