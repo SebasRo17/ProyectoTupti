@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './barraLateralAdmin.css';
 
-const barraLateralAdmin = () => {
+const BarraLateralAdmin = () => {
   return (
-    <aside className="barra-lateral-admin">
+    <div className="barra-lateral-admin">
       <div className="barra-lateral-logo">
         <h1>TUPTI</h1>
       </div>
@@ -18,8 +18,8 @@ const barraLateralAdmin = () => {
           <li><a href="#configuracion">⚙️ Configuración</a></li>
         </ul>
       </nav>
-    </aside>
+    </div>
   );
 };
 
-export default barraLateralAdmin;
+export default BarraLateralAdmin;

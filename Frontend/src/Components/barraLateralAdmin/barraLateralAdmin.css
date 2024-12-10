@@ -1,14 +1,15 @@
 .barra-lateral-admin {
-    background-color: #1b2330;
+    background-color: #15683b;
     color: #fff;
     height: 100vh;
-    width: 250px;
+    width: 170px;
     padding: 20px;
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     display: flex;
     flex-direction: column;
+    margin-left: 0%;
     align-items: flex-start;
   }
   

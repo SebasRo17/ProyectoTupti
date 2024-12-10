@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HeaderAdmin from '../../Components/headerAdmin/headerAdmin.jsx'
-import barraLateralAdmin from '../../Components/barraLateralAdmin/barraLateralAdmin.jsx';
+import BarraLateralAdmin from '../../Components/barraLateralAdmin/barraLateralAdmin.jsx';
 
 function PantallaAdmin() {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ function PantallaAdmin() {
   return (
     <div className="PantallaAdmin">
       <HeaderAdmin />
-      <barraLateralAdmin />
+      <BarraLateralAdmin />
     <div style={{ 
       padding: '40px',
       maxWidth: '1200px',
