@@ -1,7 +1,7 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const jwt = require('jsonwebtoken');
 const UserService = require('./UserService');
+const AuthService = require('./AuthService');
 const User = require('../../domain/models/User');
 
 class GoogleAuthService {
@@ -24,12 +24,12 @@ class GoogleAuthService {
           user = await UserService.createUser({
             Email: profile.emails[0].value,
             Contrasenia: 'google-auth', 
-            CodigoUs: `GOOGLE-${Date.now()}` 
+            CodigoUs: `GOOGLE-${Date.now()}`,
+            IdRol: 2 // Rol por defecto para usuarios de Google
           });
         }
 
-        // Generar un token JWT
-        const token = jwt.sign({ id: user.IdUsuario, email: user.Email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = AuthService.generateToken(user);
         console.log('Token generado:', token);
 
         return done(null, { user, token });

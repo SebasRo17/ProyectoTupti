@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import './barraLateralAdmin.css';
 
 const barraLateralAdmin = () => {

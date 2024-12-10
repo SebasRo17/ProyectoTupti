@@ -1,73 +1,90 @@
-const express = require('express');
+const jwt = require('jsonwebtoken');
 const passport = require('passport');
+const User = require('./../../domain/models/User');
+const AuthService = require('../../aplication/services/AuthService');
 
-class AuthController {
-  async googleAuth(req, res, next) {
-    passport.authenticate('google', { 
-      scope: ['profile', 'email'] 
-    })(req, res, next);
-  }
-
-  async googleCallback(req, res, next) {
+const AuthController = {
+  // Ruta para iniciar sesión con Google
+  googleLogin: (req, res, next) => {
+    const redirectUrl = req.query.redirect || 'http://localhost:5173/';
     passport.authenticate('google', {
-      successRedirect: '/dashboard',
-      failureRedirect: '/login'
+      scope: ['profile', 'email'],
+      state: redirectUrl
     })(req, res, next);
-  }
+  },
 
-  async getDashboard(req, res) {
-    if (!req.user) {
-      return res.redirect('/login');
+  // Ruta de callback de Google
+  googleCallback: (req, res) => {
+    const redirectUrl = req.query.state || 'http://localhost:5173/';
+
+    console.log('Datos de req.user:', req.user);
+
+    // Usar el usuario del objeto req.user
+    const userData = req.user.user;
+    const token = AuthService.generateToken(userData);
+    console.log('Token generado en callback:', token);
+
+    const script = `
+      <script>
+        window.opener.postMessage({ token: '${token}' }, '${redirectUrl}');
+        window.close();
+      </script>
+    `;
+    res.send(script);
+  },
+
+  // Ruta para iniciar sesión con Facebook
+  facebookLogin: (req, res, next) => {
+    const redirectUrl = req.query.redirect || 'http://localhost:5173/';
+    passport.authenticate('facebook', {
+      scope: ['email'],
+      state: redirectUrl
+    })(req, res, next);
+  },
+
+  // Ruta de callback de Facebook
+  facebookCallback: (req, res) => {
+    const redirectUrl = req.query.state || 'http://localhost:5173/';
+
+    console.log('Datos de req.user:', req.user);
+    
+    // Usar el usuario del objeto req.user
+    const userData = req.user.user;
+    const token = AuthService.generateToken(userData);
+    console.log('Token generado en callback:', token);
+
+    const script = `
+      <script>
+        window.opener.postMessage({ token: '${token}' }, '${redirectUrl}');
+        window.close();
+      </script>
+    `;
+    res.send(script);
+  },
+
+  // Middleware para validar el token JWT
+  authenticateToken: (req, res, next) => {
+    const token = req.query.token || req.headers['authorization'];
+    if (!token) {
+      return res.redirect('/');
     }
-    res.json({ message: 'Logged in successfully', user: req.user });
-  }
 
-   // Método para encontrar o crear usuario de Facebook
-   async findOrCreateFacebookUser(profile) {
     try {
-      // Buscar usuario por ID de Facebook
-      let user = await User.findOne({
-        where: { FacebookId: profile.id }
-      });
-
-      // Si no existe, crear nuevo usuario
-      if (!user) {
-        user = await User.create({
-          Email: profile.emails[0].value,
-          Nombre: profile.displayName,
-          FacebookId: profile.id,
-          Activo: true
-        });
-      }
-
-      return user;
+      const decoded = AuthService.verifyToken(token);
+      req.user = decoded;
+      next();
     } catch (error) {
-      console.error('Error en findOrCreateFacebookUser:', error);
-      throw error;
+      return res.redirect('/');
     }
-  }
+  },
 
-  // Generar token JWT
-  generateToken(user) {
-    return jwt.sign(
-      { 
-        id: user.IdUsuario, 
-        email: user.Email,
-        nombre: user.Nombre
-      }, 
-      process.env.JWT_SECRET, 
-      { expiresIn: '1h' }
-    );
+  // Ruta protegida del dashboard
+  adminDashboard: (req, res) => {
+    res.json({
+      message: 'Usuario autenticado exitosamente',
+      user: req.user
+    });
   }
+};
 
-  // Verificar token
-  verifyToken(token) {
-    try {
-      return jwt.verify(token, process.env.JWT_SECRET);
-    } catch (error) {
-      return null;
-    }
-  }
-}
-
-module.exports = new AuthController();
+module.exports = AuthController;
