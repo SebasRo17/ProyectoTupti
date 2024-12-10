@@ -1,7 +1,7 @@
 import React from 'react';
 import './barraLateralAdmin.css';
 
-const BarraLateralAdmin = () => {
+const barraLateralAdmin = () => {
   return (
     <aside className="barra-lateral-admin">
       <div className="barra-lateral-logo">
@@ -21,4 +21,4 @@ const BarraLateralAdmin = () => {
   );
 };
 
-export default BarraLateralAdmin;
+export default barraLateralAdmin;
