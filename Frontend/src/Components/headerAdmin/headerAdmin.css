@@ -1,5 +1,5 @@
 .headerAdmin {
-    background-color: #1b2330;
+    background-color: #15683b;
     color: #fff;
     height: 60px;
     display: flex;
@@ -9,8 +9,8 @@
     position: fixed;
     top: 0;
     left: 250px;
-    width: 100%;
-    margin-left: -18.4%;
+    width: 88%;
+    margin-left: -6%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
@@ -28,11 +28,11 @@
   }
   
   .search-button {
-    background-color: #5a67d8;
+    background-color: #1dd056;
     color: #fff;
     border: none;
     height: 35px;
-    width: 35px;
+    width: 38px;
     border-radius: 4px;
     cursor: pointer;
   }

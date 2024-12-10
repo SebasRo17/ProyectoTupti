@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HeaderAdmin from '../../Components/headerAdmin/headerAdmin.jsx';
-import barraLateralAdmin from '../../Components/barraLateralAdmin/barraLateralAdmin.jsx'; 
+import BarraLateralAdmin from '../../Components/barraLateralAdmin/barraLateralAdmin.jsx'; 
+import './pantallaAdmin.css'
 
 function PantallaAdmin() {
   const navigate = useNavigate();
@@ -24,59 +25,62 @@ function PantallaAdmin() {
   return (
     <div className="PantallaAdmin">
       <HeaderAdmin />
-      <barraLateralAdmin /> 
-      <div style={{ 
-        padding: '40px',
-        maxWidth: '1200px',
-        margin: '0 auto'
-      }}>
-        <h1 style={{ 
-          color: '#333',
-          marginBottom: '30px' 
-        }}>Panel de Administración</h1>
-        
-        <div style={{ marginTop: '20px' }}>
-          <h2 style={{ color: '#666' }}>Bienvenido Administrador</h2>
-          <div style={{ 
-            display: 'flex', 
-            gap: '20px', 
-            marginTop: '30px',
-            flexWrap: 'wrap'
-          }}>
-            <button 
-              onClick={() => navigate('/users')}
-              style={buttonStyle}
-            >
-              Gestionar Usuarios
-            </button>
-            <button 
-              onClick={() => navigate('/products')}
-              style={buttonStyle}
-            >
-              Gestionar Productos
-            </button>
-            <button 
-              onClick={handleLogout}
-              style={{...buttonStyle, backgroundColor: '#dc3545'}}
-            >
-              Cerrar Sesión
-            </button>
+      <BarraLateralAdmin />
+      <div className="dashboard">
+      <header className="dashboard-header">
+        <h1>Estadísticas</h1>
+      </header>
+      <div className="dashboard-content">
+        <div className="card overview">
+          <h2>ShopPoint - Retail</h2>
+          <p>
+            Aliquam erat volutpat. Duis molestie ultrices tempus. Mauris sem
+            orci, euismod sit amet.
+          </p>
+          <div className="stats">
+            <div className="stat">
+              <h3>$15,412</h3>
+              <p>Income</p>
+              <span className="positive">+45.21%</span>
+            </div>
+            <div className="stat">
+              <h3>$53,487</h3>
+              <p>Expense</p>
+              <span className="negative">-12%</span>
+            </div>
+            <div className="stat">
+              <h3>5,412</h3>
+              <p>New Orders</p>
+              <span className="positive">+14.36%</span>
+            </div>
           </div>
         </div>
+        <div className="chart-section">
+          <div className="chart-card">
+            <h3>Sales Statistic 2022</h3>
+            <div className="chart-placeholder">[Chart Placeholder]</div>
+          </div>
+          <div className="report-card">
+            <h3>Total Report</h3>
+            <ul>
+              <li>
+                Revenue <span className="positive">$176,120 (+45%)</span>
+              </li>
+              <li>
+                Expense <span className="negative">$310,452 (-12%)</span>
+              </li>
+              <li>
+                Profit <span className="positive">$349,658 (+14.36%)</span>
+              </li>
+            </ul>
+            <button className="details-button">More Details</button>
+          </div>
+        </div>
+      </div>
       </div>
     </div>
   );
 }
 
-const buttonStyle = {
-  padding: '12px 24px',
-  backgroundColor: '#007bff',
-  color: 'white',
-  border: 'none',
-  borderRadius: '5px',
-  cursor: 'pointer',
-  fontSize: '16px',
-  transition: 'background-color 0.3s'
-};
 
 export default PantallaAdmin;

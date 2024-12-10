@@ -1,21 +1,23 @@
 .barra-lateral-admin {
-    background-color: #1b2330;
+    background-color: #15683b;
     color: #fff;
-    height: 100vh;
-    width: 250px;
+    height: 100vw;
+    width: 190px;
     padding: 20px;
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     display: flex;
     flex-direction: column;
+    margin-left: 0%;
     align-items: flex-start;
+    font-family:  Comfortaa, Georgia, 'Times New Roman', Times, serif;;
   }
   
   .barra-lateral-logo {
     font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 30px;
+    margin-top: 1%
+    
   }
   
   .barra-lateral-nav ul {
