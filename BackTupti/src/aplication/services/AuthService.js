@@ -16,7 +16,8 @@ class AuthService {
           Contrasenia: 'facebook-auth',
           CodigoUs: `FACEBOOK-${Date.now()}`,
           FacebookId: profile.id,
-          Nombre: profile.displayName
+          Nombre: profile.displayName,
+          IdRol: 2 // Rol por defecto para usuarios de Facebook
         });
       }
 
@@ -27,7 +28,20 @@ class AuthService {
   }
 
   static generateToken(user) {
-    return jwt.sign({ id: user.IdUsuario, email: user.Email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    return jwt.sign({ 
+      id: user.IdUsuario, 
+      email: user.Email,
+      isAdmin: user.IdRol === 1,
+      idRol: user.IdRol
+    }, process.env.JWT_SECRET, { expiresIn: '1h' });
+  }
+
+  static verifyToken(token) {
+    try {
+      return jwt.verify(token, process.env.JWT_SECRET);
+    } catch (error) {
+      throw error;
+    }
   }
 }
 

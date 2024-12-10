@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import './barraLateralAdmin.css';
 
-const barraLateralAdmin = () => {
+const BarraLateralAdmin = () => {
   return (
     <aside className="barra-lateral-admin">
       <div className="barra-lateral-logo">
@@ -22,4 +21,4 @@ const barraLateralAdmin = () => {
   );
 };
 
-export default barraLateralAdmin;
+export default BarraLateralAdmin;
