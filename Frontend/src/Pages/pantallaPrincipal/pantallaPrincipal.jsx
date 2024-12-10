@@ -93,7 +93,7 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
   }));  
 
   const defaultCategoryImages = categoryNames.map((name, i) => ({
-    id: i,
+    id: i + 1, // Modificado para empezar en 1 en lugar de 0
     icon: categoryIcons[name],
     label: name,
   }));
@@ -197,7 +197,7 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
               loading="lazy"
               onError={(e) => {
                 e.target.onerror = null;
-                e.target.src = 'URL_DE_IMAGEN_POR_DEFECTO'; // Imagen por defecto
+                e.target.src = 'URL_DE_IMAGEN_POR DEFECTO'; // Imagen por defecto
               }}
             />
             <p className="product-title">{product.title}</p>
@@ -273,7 +273,7 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
         </div>
 
         <div className="header-icons">
-          <button class="icon-button">📍 Dirección </button>
+          <button className="icon-button">📍 Dirección </button>
           <Link to="/Login">
             <button className='btnLogin'>Inicia Sesión</button>
           </Link>

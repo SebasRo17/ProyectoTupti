@@ -10,7 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/jquery": "^3.5.32",
+    "@types/jqueryui": "^1.12.23",
     "axios": "^1.7.8",
+    "jquery": "^3.7.1",
+    "jquery-ui-dist": "^1.13.3",
     "react": "^18.3.1",
     "react-alice-carousel": "^2.9.1",
     "react-dom": "^18.3.1",
