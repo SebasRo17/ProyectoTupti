@@ -1,17 +1,27 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './barraLateralAdmin.css';
+import PantallaAdmin from '../../Pages/pantallaAdmin/pantallaAdmin';
+import ProductosAdmin from '../../Pages/productosAdmin/productosAdmin';
 
 const BarraLateralAdmin = () => {
   return (
     <div className="barra-lateral-admin">
       <div className="barra-lateral-logo">
-        <h1>TUPTI</h1>
+      <img 
+          src="https://res.cloudinary.com/dd7etqrf2/image/upload/v1732717569/tupti_3_r82cww.svg" 
+          alt="TUPTI" 
+          className="logo-imagen" 
+        />
       </div>
       <nav className="barra-lateral-nav">
         <ul>
-          <li><a href="#dashboard">📊 Dashboard</a></li>
-          <li><a href="#productos">🛒 Productos</a></li>
+        <li>
+            <Link to="/admin">📊 Dashboard</Link>
+          </li>
+          <li>
+            <Link to="/ProductosAdmin">🛒 Productos</Link>
+          </li>
           <li><a href="#categorias">📂 Categorías</a></li>
           <li><a href="#pedidos">📦 Pedidos</a></li>
           <li><a href="#usuarios">👤 Usuarios</a></li>

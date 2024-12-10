@@ -8,6 +8,7 @@ import OlvidoContrasena from './olvidoContrasena/olvidoContrasena.jsx';  // Camb
 import PantallaAdmin from './pantallaAdmin/pantallaAdmin.jsx';
 import RecuperarContrasena from './recuperarContrasena/recuperarContrasena';
 import CarritoCompras from '../Components/CarritoCompras/CarritoCompras.jsx';
+import ProductosAdmin from './productosAdmin/productosAdmin.jsx';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path="/admin" element={<PantallaAdmin />} />
         <Route path="/recuperar-contrasena" element={<RecuperarContrasena />} />
         <Route path="/carrito-compras" element={<CarritoCompras />} />
+        <Route path="/ProductosAdmin" element={<ProductosAdmin />} />
       </Routes>
     </div>
   );
