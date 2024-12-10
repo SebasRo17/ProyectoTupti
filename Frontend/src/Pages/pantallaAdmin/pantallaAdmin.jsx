@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import HeaderAdmin from '../../Components/headerAdmin/headerAdmin.jsx'
-import BarraLateralAdmin from '../../Components/barraLateralAdmin/barraLateralAdmin.jsx';
+import HeaderAdmin from '../../Components/headerAdmin/headerAdmin.jsx';
+import BarraLateralAdmin from '../../Components/barraLateralAdmin/barraLateralAdmin.jsx'; 
 import './pantallaAdmin.css'
 
 function PantallaAdmin() {
@@ -21,7 +21,7 @@ function PantallaAdmin() {
     sessionStorage.removeItem('user');
     navigate('/');
   };
- 
+
   return (
     <div className="PantallaAdmin">
       <HeaderAdmin />

@@ -8,6 +8,8 @@ import { HiArrowLeft } from "react-icons/hi";
 import "./Login.css";
 import { loginUser } from '../../Api/loginUsers';
 import "./responsiveLogin.css";
+import jwtDecode from 'jwt-decode';
+
 
 function Login() {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -26,51 +28,76 @@ function Login() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
+
   useEffect(() => {
     const handleMessage = (event) => {
-      if (event.origin === 'http://localhost:5173' && event.data.token) {
-        console.log('Token JWT:', event.data.token);
-        // Guardar el token en el almacenamiento local
-        localStorage.setItem('jwtToken', event.data.token);
+      console.log('Mensaje recibido:', event);
+  
+      if (event.origin !== 'http://localhost:3000') {
+        console.warn('Origen no autorizado', event.origin);
+        return;
+      }
+  
+      if (event.data && event.data.token) {
+        try {
+          console.log('Token recibido:', event.data.token);
+          
+          // Decodifica el token
+          const payload = jwtDecode(event.data.token); 
+          console.log('Payload decodificado:', payload);
+  
+          // Verifica que la estructura de 'payload' sea la que esperas
+          console.log('isAdmin en el payload:', payload.isAdmin);
+  
+          // Almacena el token
+          localStorage.setItem('jwtToken', event.data.token);
+          if (payload.isAdmin) {
+            console.log('Redirigiendo a /admin');
+            navigate('/admin');
+          } else {
+            console.log('Redirigiendo a /');
+            navigate('/');
+          }
+        } catch (error) {
+          console.error('Error procesando el token:', error);
+        }
       }
     };
-
+  
     window.addEventListener('message', handleMessage);
-
+  
     return () => {
       window.removeEventListener('message', handleMessage);
     };
-  }, []);
+  }, [navigate]);
+  
+  
   const handleFacebookLogin = () => {
     const facebookAuthUrl = 'http://localhost:3000/auth/facebook';
     const width = 600;
     const height = 600;
     const left = (window.innerWidth - width) / 2;
     const top = (window.innerHeight - height) / 2;
-
-    const newWindow = window.open(facebookAuthUrl, 'Facebook Login', `width=${width},height=${height},top=${top},left=${left}`);
-    const checkWindowClosed = setInterval(() => {
-      if (newWindow.closed) {
-        clearInterval(checkWindowClosed);
-        window.location.reload(); // Recargar la página principal después de cerrar la ventana emergente
-      }
-    }, 1000);
+  
+    window.open(
+      facebookAuthUrl, 
+      'Facebook Login', 
+      `width=${width},height=${height},top=${top},left=${left}`
+    );
   };
+  
   const handleGoogleLogin = () => {
     const googleAuthUrl = 'http://localhost:3000/auth/google';
     const width = 600;
     const height = 600;
     const left = (window.innerWidth - width) / 2;
     const top = (window.innerHeight - height) / 2;
-
-    const newWindow = window.open(googleAuthUrl, 'Google Login', `width=${width},height=${height},top=${top},left=${left}`);
-
-    const checkWindowClosed = setInterval(() => {
-      if (newWindow.closed) {
-        clearInterval(checkWindowClosed);
-        window.location.reload(); // Recargar la página principal después de cerrar la ventana emergente
-      }
-    }, 1000);
+  
+    window.open(
+      googleAuthUrl, 
+      'Google Login', 
+      `width=${width},height=${height},top=${top},left=${left}`
+    );
   };
 
   const handleEmailChange = (e) => {

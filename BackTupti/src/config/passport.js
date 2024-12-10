@@ -1,8 +1,8 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
-const jwt = require('jsonwebtoken');
 const UserService = require('../aplication/services/UserService');
+const AuthService = require('../aplication/services/AuthService');
 
 module.exports = function configurePassport() {
   // Configurar estrategia de Google
@@ -20,12 +20,12 @@ module.exports = function configurePassport() {
         user = await UserService.createUser({
           Email: profile.emails[0].value,
           Contrasenia: 'google-auth', 
-          CodigoUs: `GOOGLE-${Date.now()}` 
+          CodigoUs: `GOOGLE-${Date.now()}`,
+          IdRol: 2 // Rol por defecto para usuarios de Google
         });
       }
 
-      // Generar un token JWT
-      const token = jwt.sign({ id: user.IdUsuario, email: user.Email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+      const token = AuthService.generateToken(user);
       console.log('Token generado:', token);
 
       return done(null, { user, token });
@@ -51,12 +51,12 @@ module.exports = function configurePassport() {
           Contrasenia: 'facebook-auth', 
           CodigoUs: `FACEBOOK-${Date.now()}`,
           FacebookId: profile.id,
-          Nombre: `${profile.name.givenName} ${profile.name.familyName}`
+          Nombre: `${profile.name.givenName} ${profile.name.familyName}`,
+          IdRol: 2 // Rol por defecto para usuarios de Facebook
         });
       }
 
-      // Generar un token JWT
-      const token = jwt.sign({ id: user.IdUsuario, email: user.Email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+      const token = AuthService.generateToken(user);
       console.log('Token generado:', token);
 
       return done(null, { user, token });
