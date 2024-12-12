@@ -15,6 +15,7 @@ const { sequelize } = require('./infrastructure/database/mysqlConnection');
 require('./aplication/services/GoogleAuthService'); // Inicializar configuración de Google Auth
 require('./aplication/services/FacebookAuthService'); // Inicializar configuración de Facebook Auth
 const productsRoutes = require('./presentation/routes/productRoutes'); // Corregir importación
+const calificacionRoutes = require('./presentation/routes/calificacionRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -82,7 +83,7 @@ app.use('/api', categoryProductsRoutes); // Mover esta línea antes de otras rut
 app.use('/api', bestSellersRoutes);
 app.use('/products', productsRoutes); // Agregar ruta de productos
 app.use('/apiImg', productRoutes); // Esta línea ya configura la ruta correctamente
-
+app.use('/api', calificacionRoutes);
 
 // Sincronizar con la base de datos y iniciar el servidor
 sequelize.sync()
