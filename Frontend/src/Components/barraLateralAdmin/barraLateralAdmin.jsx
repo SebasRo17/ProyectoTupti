@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './barraLateralAdmin.css';
 import PantallaAdmin from '../../Pages/pantallaAdmin/pantallaAdmin';
-import ProductosAdmin from '../../Pages/productosAdmin/productosAdmin';
+//import ProductosAdmin from '../../Pages/productosAdmin/productosAdmin';
 
 const BarraLateralAdmin = () => {
   return (
@@ -19,9 +19,9 @@ const BarraLateralAdmin = () => {
         <li>
             <Link to="/admin">📊 Dashboard</Link>
           </li>
-          <li>
-            <Link to="/ProductosAdmin">🛒 Productos</Link>
-          </li>
+           {/*<li>
+           <Link to="/ProductosAdmin">🛒 Productos</Link>
+          </li>*/}
           <li><a href="#categorias">📂 Categorías</a></li>
           <li><a href="#pedidos">📦 Pedidos</a></li>
           <li><a href="#usuarios">👤 Usuarios</a></li>
