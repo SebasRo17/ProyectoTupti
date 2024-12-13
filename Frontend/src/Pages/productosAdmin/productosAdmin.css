@@ -27,11 +27,31 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 7%;
-  width: 80%;
-  margin-left: 2%;
+  padding: 10px 20px;
+  background-color: #187946;
+  color: #042d2a;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
 }
 
+@media screen and (min-width: 1024px) and (max-width: 1440px) {
+    .header {
+        padding: 10px 30px;
+    }
+}
+
+header {
+    display: block;
+    unicode-bidi: isolate;
+}
+
+*, ::after, ::before {
+    box-sizing: border-box;
+}
 
 .dropdown {
   padding: 10px;
@@ -43,12 +63,32 @@ body {
 .search-button,
 .export-button,
 .new-product-button {
-  padding: 10px 15px;
+  padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  color: white;
   cursor: pointer;
 }
+
+.filter-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.search-button {
+  background-color: #2196f3;
+  color: white;
+}
+
+.export-button {
+  background-color: #ff9800;
+  color: white;
+}
+
+.new-product-button {
+  background-color: #f44336;
+  color: white;
+}
+
 .search-container {
   display: flex;
   gap: 10px;
@@ -60,20 +100,6 @@ body {
   border-radius: 5px;
   flex-grow: 1;
 }
-.filter-button {
-  background-color: #1dd056;
-  width: 0%;
-  padding-right: 20% ;
-}
-.search-button{
-  width: 25%;
-  height: 5%;
-}
-.search-button,
-.export-button,
-.new-product-button {
-  background-color: #1dd056;
-}
 
 .action-buttons {
   display: flex;
@@ -83,18 +109,17 @@ body {
 .product-grid {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   gap: 20px;
+  margin-top: 20px;
 }
 
 .product-card {
   background-color: white;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  width: 200px;
-  text-align: center;
-  transition: transform 0.3s ease;
+  width: calc(33.333% - 20px);
+  box-sizing: border-box;
 }
 
 .product-card:hover {
@@ -102,30 +127,26 @@ body {
 }
 
 .product-image {
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
+  width: 100%;
+  height: auto;
   border-radius: 8px;
-  margin-bottom: 15px;
 }
 
 .product-title {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 10px;
+  font-size: 18px;
+  margin: 10px 0;
 }
 
 .product-details {
   font-size: 14px;
-  color: #555;
-  margin-bottom: 10px;
+  color: #666;
 }
 
 .product-price {
   font-size: 16px;
-  color: #1dd056;
   font-weight: bold;
-  margin-bottom: 15px;
+  color: #4caf50;
+  margin: 10px 0;
 }
 
 .card-buttons {
@@ -135,17 +156,14 @@ body {
 
 .edit-button,
 .delete-button {
-  flex-grow: 1;
-  margin: 0 5px;
-  padding: 10px;
+  padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: opacity 0.3s ease;
 }
 
 .edit-button {
-  background-color: #1dd056;
+  background-color: #2196f3;
   color: white;
 }
 
@@ -154,7 +172,7 @@ body {
 }
 
 .delete-button {
-  background-color: #ff4d4d;
+  background-color: #f44336;
   color: white;
 }
 
