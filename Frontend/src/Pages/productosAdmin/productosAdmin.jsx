@@ -31,29 +31,27 @@ const ProductosAdmin = () => {
             <HeaderAdmin />
             <BarraLateralAdmin />
             <div className="productos-container">
-            <h1>Productos</h1>
-            <header className="header">
-                
-                <div className="search-container">
-                <input type="text" placeholder="Búsqueda Avanzada" className="search-input" />
-                <button className="search-button">Buscar</button>
-                <select className="dropdown">
-                    <option>Stock</option>
-                    <option>Sin stock</option>
-                </select>
-                <select className="dropdown">
-                    <option>Categoría</option>
-                    <option>Consolas</option>
-                    <option>Electrónicos</option>
-                </select>
-
-                <button className="filter-button">Filtrar</button>
-                </div>
-                <div className="action-buttons">
-                <button className="export-button">Exportar</button>
-                <button className="new-product-button">Nuevo Producto</button>
-                </div>
-            </header>
+                <h1>Productos</h1>
+                <header className="productos-header">
+                    <div className="search-container">
+                        <input type="text" placeholder="Búsqueda Avanzada" className="search-input" />
+                        <button className="search-button">Buscar</button>
+                        <select className="dropdown">
+                            <option>Stock</option>
+                            <option>Sin stock</option>
+                        </select>
+                        <select className="dropdown">
+                            <option>Categoría</option>
+                            <option>Consolas</option>
+                            <option>Electrónicos</option>
+                        </select>
+                        <button className="filter-button">Filtrar</button>
+                    </div>
+                    <div className="action-buttons">
+                        <button className="export-button">Exportar</button>
+                        <button className="new-product-button">Nuevo Producto</button>
+                    </div>
+                </header>
                 <main className="product-grid">
                     {productos.map((product) => (
                         <div className="product-card" key={product.id}>
