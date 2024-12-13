@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { categoryNames, categoryIcons, categoryIds } from '../../data/categoryData.js';
 import { promoImg } from '../../data/promoData.js';
 import './pantallaPrincipal.css';
@@ -13,6 +13,7 @@ import CarritoCompras from '../../Components/CarritoCompras/CarritoCompras.jsx';
 import Footer from '../../Components/footer/footer.jsx';
 import CategoriesBar from '../../Components/categoriesBar/categoriesBar.jsx';
 import Header from '../../Components/header/header.jsx';
+import jwtDecode from 'jwt-decode';
 
 
 const TuptiPage = ({ carouselImages, categoryImages }) => {
@@ -21,7 +22,33 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
   const [error, setError] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isTokenActive, setIsTokenActive] = useState(false);
+  const navigate = useNavigate();
+
   
+  useEffect(() => {
+    // Verifica el token al cargar el componente
+    const token = localStorage.getItem('jwtToken');
+    if (token) {
+      try {
+        const payload = jwtDecode(token);
+        const currentTime = Date.now() / 1000;
+        setIsTokenActive(payload.exp > currentTime);
+        if (payload.exp <= currentTime) {
+          localStorage.removeItem('jwtToken'); // Elimina token expirado
+        }
+      } catch (error) {
+        console.error('Error decodificando el token:', error);
+        localStorage.removeItem('jwtToken'); // Limpia token corrupto
+      }
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('jwtToken');
+    setIsTokenActive(false);
+    navigate('/');
+  };
 
   const [productos, setProductos] = useState([
     { id: 1, nombre: "Manzana", precio: 10.5, cantidad: 1, imagen: "https://via.placeholder.com/150" },
@@ -242,49 +269,79 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
           ☰
         </button>
         
-        {/* Menú móvil actualizado */}
-        <div className={`mobile-nav ${isMobileMenuOpen ? 'active' : ''}`}>
-          <button 
-            className="mobile-nav-close"
-            onClick={() => setIsMobileMenuOpen(false)}
-            aria-label="Cerrar menú"
-          >
-            ×
-          </button>
-          <nav className="mobile-nav-items">
-            <button onClick={() => setIsMobileMenuOpen(false)}>
-              <span>📍</span>
-              Dirección
+                {/* Menú móvil actualizado */}
+          <div className={`mobile-nav ${isMobileMenuOpen ? 'active' : ''}`}>
+            <button 
+              className="mobile-nav-close"
+              onClick={() => setIsMobileMenuOpen(false)}
+              aria-label="Cerrar menú"
+            >
+              ×
             </button>
-            <Link to="/Login" onClick={() => setIsMobileMenuOpen(false)}>
-              <button>
-                <span>👤</span>
-                Inicia Sesión
+            <nav className="mobile-nav-items">
+              <button onClick={() => setIsMobileMenuOpen(false)}>
+                <span>📍</span>
+                Dirección
               </button>
-            </Link>
-            <button onClick={() => { 
-  toggleCart(); 
-  setIsMobileMenuOpen(false); 
-}}>
-  <span>🛒</span>
-  Carrito
-</button>
-          </nav>
-        </div>
+              
+              {!isTokenActive ? (
+                <Link to="/Login" onClick={() => setIsMobileMenuOpen(false)}>
+                  <button>
+                    <span>👤</span>
+                    Inicia Sesión
+                  </button>
+                </Link>
+              ) : (
+                <button onClick={() => {
+                  handleLogout();
+                  setIsMobileMenuOpen(false);
+                }}>
+                  <span>👤</span>
+                  Usuario
+                </button>
+              )}
+
+              <button onClick={() => { 
+                toggleCart(); 
+                setIsMobileMenuOpen(false); 
+              }}>
+                <span>🛒</span>
+                Carrito
+              </button>
+            </nav>
+          </div>
 
         <div className="header-icons">
-          <button className="icon-button">📍 Dirección </button>
-          <Link to="/Login">
-            <button className='btnLogin'>Inicia Sesión</button>
-          </Link>
-          <Link to="/registro">
-            <button className='btnRegister'>Registrate</button>
-          </Link>
+          {/* Botón de Dirección */}
+          <button className="icon-button">📍 Dirección</button>
+          {/* Mostrar botones de sesión o icono de usuario según el estado del token */}
+          {!isTokenActive ? (
+            <>
+              <Link to="/Login">
+                <button className="btnLogin">Inicia Sesión</button>
+              </Link>
+              <Link to="/registro">
+                <button className="btnRegister">Regístrate</button>
+              </Link>
+            </>
+          ) : (
+            <div className="user-section">
+              <span>👤</span>
+              Usuario
+              <button
+                className="logout-button"
+                onClick={handleLogout}
+                aria-label="Cerrar sesión"
+              >
+                Salir
+              </button>
+            </div>
+          )}
+          {/* Botón del carrito */}
           <button className="header-cart-button" onClick={toggleCart}>
-        🛒 Carrito
-        <span className="icons-cart-counter">{productos.length}</span>
-      </button>
-
+            🛒 Carrito
+            <span className="icons-cart-counter">{productos.length}</span>
+          </button>
         </div>
       </header>
       

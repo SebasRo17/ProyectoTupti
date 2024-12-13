@@ -53,9 +53,11 @@ function Login() {
           localStorage.setItem('jwtToken', event.data.token);
           if (payload.isAdmin) {
             console.log('Redirigiendo a /admin');
+            localStorage.setItem('jwtToken', event.data.token);
             navigate('/admin');
           } else {
             console.log('Redirigiendo a /');
+            localStorage.setItem('jwtToken', event.data.token);
             navigate('/');
           }
         } catch (error) {
@@ -128,6 +130,7 @@ function Login() {
       const response = await loginUser(email, password);
       
       if (response.success) {
+        localStorage.setItem('jwtToken', response.token);
         const { isAdmin, isClient } = response.user;
         
         // Redireccionar según el rol
