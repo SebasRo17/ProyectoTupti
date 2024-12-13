@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React from "react";
 import './headerAdmin.css';
-import PantallaAdmin from "../../Pages/pantallaAdmin/pantallaAdmin.jsx";
+
 const HeaderAdmin = () => {
   return (
     <header className="headerAdmin">
