@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import HeaderAdmin from '../../Components/headerAdmin/headerAdmin.jsx';
 import BarraLateralAdmin from '../../Components/barraLateralAdmin/barraLateralAdmin.jsx';
 import './productosAdmin.css';
+import Filtros from "../../Components/Filtros/Filtros.jsx";
 
 const ProductosAdmin = () => {
     const navigate = useNavigate();
@@ -84,6 +85,8 @@ const ProductosAdmin = () => {
                         </div>
                     ))}
                 </main>
+                <Filtros />
+                //aqui debo de poner el codigo para qe se vea al lado derecho
             </div>
         </div>
     );

@@ -1,0 +1,39 @@
+.filtro-container {
+    padding: 1rem;
+    background-color: #1f804c; /* Fondo verde oscuro */
+    color: #e5ffe5; /* Texto claro en tono verde */
+    border-radius: 8px;
+    width: 200px;
+    transform:translateY(-1200px);
+    margin-left: 15px;
+    font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
+  }
+  
+  .filtro-container h3{
+    margin-bottom: 1rem;
+    color: #ffffff; /* Verde brillante */
+    font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
+    margin-left: 20%;
+
+  }
+  
+  .filtro-radio {
+    margin-bottom: 0.5rem;
+  }
+  
+  label {
+    font-size: 0.9rem;
+    color: #a7f3d0;
+    font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
+  }
+  
+  input[type="checkbox"],
+  input[type="radio"] {
+    margin-right: 0.5rem;
+    accent-color: #4ade80; /* Personalización del color del input */
+  }
+  
+  input[type="checkbox"]:hover,
+  input[type="radio"]:hover {
+    filter: brightness(1.2); /* Efecto de brillo al pasar el ratón */
+  }

@@ -7,6 +7,8 @@ import Header from "../../Components/header/header.jsx";
 import Footer from "../../Components/footer/footer.jsx";
 import "./Categoria.css";
 import "./ResponsiveCategoria.css";
+import Filtros from "../../Components/Filtros/Filtros.jsx";
+
 
 function Categoria() {
    const [productos, setProductos] = useState([]);
@@ -184,13 +186,7 @@ function Categoria() {
             </div>
          )}
 
-         <div className="filter">
-            <h3>Filtro de Búsqueda</h3>
-            <div className="filtro-busqueda">
-               <a href="#">Cupones</a>
-               <a href="#">Promociones</a>
-            </div>
-         </div>
+         <Filtros />
          <Footer />
       </div>
    );

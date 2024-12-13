@@ -4,6 +4,7 @@ import HeaderAdmin from '../../Components/headerAdmin/headerAdmin.jsx';
 import BarraLateralAdmin from '../../Components/barraLateralAdmin/barraLateralAdmin.jsx'; 
 import './pantallaAdmin.css'
 
+
 function PantallaAdmin() {
   const navigate = useNavigate();
 
