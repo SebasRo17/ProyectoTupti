@@ -1,24 +1,40 @@
 /* Header */
 .header {
-  padding: 10px 20px;
+  position: fixed; /* Cambiado de sticky a fixed */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 68px; /* Altura fija del header */
+  background-color: #f8f8f8; /* O el color que prefieras */
+  z-index: 9999; /* Mayor que otros elementos fijos */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  background-color: #187946;
-  color: #042d2a;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 100%; 
-  position: fixed;
-  top: 0;
-  z-index: 1000;
-  font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+
+.btnLogo{
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
 }
 
 .logo{
   background-color: transparent;
 }
-.logo-imagen {
-  width:100px;
+/* Logo styles */
+header .logo-imagen {
+  height: 60px;
+  width: 185px;
+  object-fit: contain;
+  margin-top: 0;
   background-color: transparent;
 }
 
@@ -26,56 +42,33 @@
 .search-bar {
   display: flex;
   align-items: center;
-  gap: 5px;
-  flex: 1;
+  background: white;
+  border-radius: 25px;
+  padding: 0 15px;
+  height: 42px;
   margin: 0 20px;
   max-width: 600px;
+  flex: 1;
 }
 
-.search-input {
-  width: 100%;
-  padding: 8px 12px;
+header .search-input {
   border: none;
-  border-radius: 4px;
-  outline: none;
+  background: none;
+  padding: 10px;
+  width: 300px;
   font-size: 14px;
-  background-color: white;
-  color: black;
+  outline: none; /* Quita el borde al hacer focus */
 }
 
 .search-icon {
-  padding: 8px 12px;
+  background: transparent !important; /* Forzar transparencia */
   border: none;
-  border-radius: 4px;
-  background-color: #1dd056;
-  color: white;
   cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-/* Por defecto, mostrar el input en desktop */
-@media screen and (min-width: 1024px) {
-  .search-input {
-    display: block;
-  }
-  .search-icon {
-    padding: 8px 12px;
-  }
-}
-
-/* En tablets y móviles, ocultar el input y mostrar solo el icono */
-@media screen and (max-width: 1023px) {
-  .search-input {
-    display: none;
-  }
-  .search-bar {
-    flex: 0;
-    margin: 0 10px;
-  }
-  .search-icon {
-    padding: 10px;
-    font-size: 18px;
-  }
+  padding: 5px;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .search-bar button {
@@ -94,7 +87,21 @@
 
 .header-icons {
   display: flex;
-  gap: 15px;
+  gap: 20px;
+  align-items: center;
+}
+/* Reordering buttons */
+.header-icons .btnLogin,
+.header-icons .btnRegister {
+  order: 1;
+}
+
+.header-icons .icon-button {
+  order: 2;
+}
+
+.header-icons .header-cart-button {
+  order: 3;
 }
 
 .header-icons .icon-button {
@@ -173,12 +180,34 @@
   background-color: #f0f0f0;
 }
 
-  /* RESPONSIVE */
+/* Estilos del carrito */
+.icons-cart-counter {
+  background-color: #3fd781;
+  color: white;
+  font-size: 70%;
+  font-weight: bold;
+  border-radius: 50%;
+  padding: 5px 11px;
+  margin-left: 7px;
+  display: inline-block;
+  transform: translateY(-3px);
+}
+
+.header-cart-button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+/* RESPONSIVE */
 /* Desktop (1441px and above) */
 @media screen and (min-width: 1441px) {
     .header {
-      padding: 15px 50px;
-      width: 100%;
+      width: 100vw;
     }
     .search-bar {
       order: 3;
@@ -207,7 +236,6 @@
     .header {
       flex-wrap: wrap;
       justify-content: center;
-      width: 100%;
     }
     .search-bar {
       order: 2;
@@ -225,20 +253,20 @@
     .header {
       flex-direction: row;
       justify-content: space-between;
-      padding: 10px 15px;
-      height: 60px;
-      align-items: center;
+      padding: 0px 16px;
+      height: 56px;
     }
     .logo {
       order: 1;
     }
     .logo-imagen {
       width: 80px;
+      margin-right: auto;
     }
     .search-bar {
       order: 2;
       width: auto;
-      margin: 0 10px;
+      margin: 0;
     }
     .search-bar input {
       display: none;
@@ -250,7 +278,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 24px;
+      font-size: 20px;
       background: none;
       color: white;
     }
@@ -258,11 +286,6 @@
       order: 3;
       display: block;
       font-size: 28px;
-      background: none;
-      border: none;
-      color: white;
-      padding: 5px;
-      cursor: pointer;
     }
     .header-icons {
       display: none;
