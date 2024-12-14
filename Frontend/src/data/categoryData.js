@@ -13,14 +13,14 @@ export const categoryNames = [
     "Congelados",
     "Granos",
     "Condimentos",
-    "Cuidado Personal",
+    "Cuidado",
     "Mascotas",
     "Electrónica",
-    "Dulces y Chocolates",
+    "Dulces",
     "Enlatados",
-    "Pastas y Arroces",
-    "Aceites y Aderezos",
-    "Bebidas Alcohólicas",
+    "Pastas",
+    "Aceites",
+    "Licor",
 ];
 
 // Objeto de íconos de categorías
@@ -36,14 +36,14 @@ export const categoryIcons = {
     "Congelados": "https://res.cloudinary.com/dd7etqrf2/image/upload/v1732543814/productos-congelados-de-supermercado_tzblyl.svg",
     "Granos": "https://res.cloudinary.com/dd7etqrf2/image/upload/v1732543813/ma-z--alverja--y-mas-productos-de-granos_d3vsqv.svg",
     "Condimentos": "https://res.cloudinary.com/dd7etqrf2/image/upload/v1732543812/productos-de-condimentos-_fpy7u6.svg",
-    "Cuidado Personal": "https://res.cloudinary.com/dd7etqrf2/image/upload/v1732543811/productos-de-cuidado-personal_e6ljcf.svg",
+    "Cuidado": "https://res.cloudinary.com/dd7etqrf2/image/upload/v1732543811/productos-de-cuidado-personal_e6ljcf.svg",
     "Mascotas": "https://res.cloudinary.com/dd7etqrf2/image/upload/v1732543810/productos-de-mascotas_eywrqs.svg",
     "Electrónica": "https://res.cloudinary.com/dd7etqrf2/image/upload/v1732543823/electr-nicos_nhtzot.svg",
-    "Dulces y Chocolates": "https://res.cloudinary.com/dd7etqrf2/image/upload/v1732543796/productos-de-dulces-y-chocolates_twqe5w.svg",
+    "Dulces": "https://res.cloudinary.com/dd7etqrf2/image/upload/v1732543796/productos-de-dulces-y-chocolates_twqe5w.svg",
     "Enlatados": "https://res.cloudinary.com/dd7etqrf2/image/upload/v1732543797/productos-de-latas-de-atun-y-otros-similares_p5apgs.svg",
-    "Pastas y Arroces": "https://res.cloudinary.com/dd7etqrf2/image/upload/v1732543796/productos-de-pastas-y-arroces_czyppv.svg",
-    "Aceites y Aderezos": "https://res.cloudinary.com/dd7etqrf2/image/upload/v1732543795/productos-de-aceites-y-aderezos_evoxai.svg",
-    "Bebidas Alcohólicas": "https://res.cloudinary.com/dd7etqrf2/image/upload/v1732543819/bebidas_ctfyyl.svg"
+    "Pastas": "https://res.cloudinary.com/dd7etqrf2/image/upload/v1732543796/productos-de-pastas-y-arroces_czyppv.svg",
+    "Aceites": "https://res.cloudinary.com/dd7etqrf2/image/upload/v1732543795/productos-de-aceites-y-aderezos_evoxai.svg",
+    "Licor": "https://res.cloudinary.com/dd7etqrf2/image/upload/v1732543819/bebidas_ctfyyl.svg"
 };
 
 // Agregar IDs de categorías
@@ -59,12 +59,12 @@ export const categoryIds = {
     "Congelados": 9,
     "Granos": 10,
     "Condimentos": 11,
-    "Cuidado Personal": 12,
+    "Cuidado": 12,
     "Mascotas": 13,
     "Electrónica": 14,
-    "Dulces y Chocolates": 15,
+    "Dulces": 15,
     "Enlatados": 16,
-    "Pastas y Arroces": 17,
-    "Aceites y Aderezos": 18,
-    "Bebidas Alcohólicas": 19
+    "Pastas": 17,
+    "Aceites": 18,
+    "Licor": 19
 };

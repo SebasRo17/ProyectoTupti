@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc"; // Ícono de Google
 import { FaFacebookF } from "react-icons/fa"; // Ícono de Facebook
 import { HiEye, HiEyeOff } from "react-icons/hi"; // Iconos de ojo
@@ -19,6 +18,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -125,20 +125,16 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     try {
       const response = await loginUser(email, password);
       
       if (response.success) {
         localStorage.setItem('jwtToken', response.token);
-        const { isAdmin, isClient } = response.user;
+        const { isAdmin } = response.user;
         
-        // Redireccionar según el rol
-        if (isAdmin) {
-          navigate('/admin');
-        } else if (isClient) {
-          navigate('/');
-        }
+        // Redirigir al usuario a la página anterior o a la ruta por defecto
+        const from = location.state?.from || (isAdmin ? '/admin' : '/');
+        navigate(from);
       }
     } catch (error) {
       setPasswordError(error.message || 'Error al iniciar sesión');
