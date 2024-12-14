@@ -206,37 +206,50 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
     if (isLoading) return <div className="loading-message">Cargando productos...</div>;
     if (error) return <div className="error-message">Error: {error}</div>;
     if (!productCarouselImages?.length) return <div>No hay productos disponibles</div>;
-  
+
     return (
       <div className="product-carousel-container">
-        {/* Carrusel Alice */}
         <AliceCarousel
-        autoPlay
-        autoPlayInterval={2000} // Intervalo para el auto-play (3 segundos)
-        infinite={true}
-        disableDotsControls={true} // Si quieres desactivar los puntos de navegación
-        items={productCarouselImages.map((product) => (
-          <div key={product.id} className="product-item">
-            <img
-              src={product.imageUrl}
-              alt={product.title}
-              className="image-placeholder"
-              loading="lazy"
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = 'URL_DE_IMAGEN_POR DEFECTO'; // Imagen por defecto
-              }}
-            />
-            <p className="product-title">{product.title}</p>
-            <p className="product-price">{product.price}</p>
-          </div>
-        ))}
-        responsive={{
-          0: { items: 2 },
-          600: { items: 3 }, 
-          1024: { items: 5 },
-        }}
-      />
+          autoPlay
+          autoPlayInterval={5000} // Aumentado a 5 segundos
+          animationDuration={1500} // Duración de la animación más lenta
+          infinite={false} // Desactivar el modo infinito
+          disableDotsControls={false} // Mostrar los puntos de navegación
+          disableButtonsControls={true}
+          mouseTracking={true}
+          items={productCarouselImages.map((product) => (
+            <div key={product.id} className="product-item">
+              <img
+                src={product.imageUrl}
+                alt={product.title}
+                className="image-placeholder"
+                loading="lazy"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = 'URL_DE_IMAGEN_POR DEFECTO';
+                }}
+              />
+              <p className="product-title">{product.title}</p>
+              <p className="product-price">{product.price}</p>
+            </div>
+          ))}
+          responsive={{
+            0: { 
+              items: 2,
+              itemsFit: 'contain' // Asegura que los items se ajusten correctamente
+            },
+            600: { 
+              items: 3,
+              itemsFit: 'contain'
+            },
+            1024: { 
+              items: 5,
+              itemsFit: 'contain'
+            }
+          }}
+          paddingLeft={10} // Añadir padding
+          paddingRight={10} // Añadir padding
+        />
       </div>
     );
   };
@@ -244,108 +257,13 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
 
   return (
     <div className="tupti-container" id="inicio">
-      {/* Header */}
-      <header className="header">
-        <div className="logo">
-          <img 
-            src="https://res.cloudinary.com/dd7etqrf2/image/upload/v1732717569/tupti_3_r82cww.svg " 
-            alt="TUPTI" 
-            className='logo-imagen'
-          />
-        </div>
-        <div className="search-bar">
-          <input 
-            type="text" 
-            placeholder="Buscar productos..." 
-            className="search-input"
-          />
-          <button className="search-icon" aria-label="Buscar">🔍</button>
-        </div>
-        <button 
-          className="hamburger-menu" 
-          onClick={() => setIsMobileMenuOpen(true)}
-          aria-label="Menú"
-        >
-          ☰
-        </button>
-        
-                {/* Menú móvil actualizado */}
-          <div className={`mobile-nav ${isMobileMenuOpen ? 'active' : ''}`}>
-            <button 
-              className="mobile-nav-close"
-              onClick={() => setIsMobileMenuOpen(false)}
-              aria-label="Cerrar menú"
-            >
-              ×
-            </button>
-            <nav className="mobile-nav-items">
-              <button onClick={() => setIsMobileMenuOpen(false)}>
-                <span>📍</span>
-                Dirección
-              </button>
-              
-              {!isTokenActive ? (
-                <Link to="/Login" onClick={() => setIsMobileMenuOpen(false)}>
-                  <button>
-                    <span>👤</span>
-                    Inicia Sesión
-                  </button>
-                </Link>
-              ) : (
-                <button onClick={() => {
-                  handleLogout();
-                  setIsMobileMenuOpen(false);
-                }}>
-                  <span>👤</span>
-                  Usuario
-                </button>
-              )}
-
-              <button onClick={() => { 
-                toggleCart(); 
-                setIsMobileMenuOpen(false); 
-              }}>
-                <span>🛒</span>
-                Carrito
-              </button>
-            </nav>
-          </div>
-
-        <div className="header-icons">
-          {/* Botón de Dirección */}
-          <button className="icon-button">📍 Dirección</button>
-          {/* Mostrar botones de sesión o icono de usuario según el estado del token */}
-          {!isTokenActive ? (
-            <>
-              <Link to="/Login">
-                <button className="btnLogin">Inicia Sesión</button>
-              </Link>
-              <Link to="/registro">
-                <button className="btnRegister">Regístrate</button>
-              </Link>
-            </>
-          ) : (
-            <div className="user-section">
-              <span>👤</span>
-              Usuario
-              <button
-                className="logout-button"
-                onClick={handleLogout}
-                aria-label="Cerrar sesión"
-              >
-                Salir
-              </button>
-            </div>
-          )}
-          {/* Botón del carrito */}
-          <button className="header-cart-button" onClick={toggleCart}>
-            🛒 Carrito
-            <span className="icons-cart-counter">{productos.length}</span>
-          </button>
-        </div>
-      </header>
+      <Header 
+        toggleCart={toggleCart} 
+        isTokenActive={isTokenActive}
+        handleLogout={handleLogout}
+      />
       
-   {/* Categories Bar */}
+      {/* Categories Bar */}
     <CategoriesBar />
     
       {/* Renderizar el carrito si está abierto */}
@@ -393,6 +311,13 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
             ))}
           </div>
         </div>
+      </div>
+
+      {/* Botones de promoción */}
+      <div className="promo-buttons-container">
+        <button className="promo-button button-1"></button>
+        <button className="promo-button button-2"></button>
+        <button className="promo-button button-3"></button>
       </div>
 
       {/* Nuevo carrusel de productos */}

@@ -5,116 +5,40 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   color: #ffffff;
-  background-image: url('../../Components/Resources/fondo.png');
   background-size: 1000px 10px;
   background-repeat: repeat;
   background-position: 0 0;
   overflow-x: hidden;
-}
- 
-
-/* Ajuste para asegurar que la barra de categorías esté justo debajo del header */
-.categories-container {
-  position: fixed;
-  top: 60px;
-  width: 100%;
-  background-color: #ffffff;
   padding: 0;
-  box-sizing: border-box;
-  overflow: hidden;
-  z-index: 999;
-  font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
+  padding-top: 100px; /* Compensar la altura del header fijo */
+  position: relative; /* Asegurar que es el contenedor principal */
+  min-height: 100vh;
+  background-color: #f4f5f4; /* Añadir color de fondo base */
+  overflow-y: hidden; /* Prevenir doble scroll */
+  background-image: none;
 }
 
-.categories-bar {
-  display: flex;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  gap: 10px;
-  padding: 20px 15px; /* Aumenta el padding vertical */
+.tupti-container {
+  min-height: 100vh;
+  width: 100%;
   position: relative;
-  flex-wrap: nowrap;
-  -webkit-overflow-scrolling: touch;
-  margin: 0 auto;
-  max-width: 100%; /* Asegura que no sobrepase el ancho del contenedor */
+  overflow-x: hidden;
+  padding-bottom: 50px; /* Espacio para el footer */
+  background-color: #f4f5f4;
+  overflow-y: auto; /* Permitir scroll solo en el contenedor */
+  background-image: none;
 }
-
-.categories-bar::-webkit-scrollbar {
-  display: none;
-}
-
-.category-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 85px; /* Aumenta el ancho mínimo */
-  max-width: 100px; /* Aumenta el ancho máximo */
-  flex-shrink: 0;
-  text-align: center;
-  cursor: pointer;
-  transition: transform 0.2s;
-  padding: 0 5px;
-}
-
-.category-icon {
-  width: 65px; /* Aumenta el tamaño del icono */
-  height: 65px;
-  object-fit: cover;
-  margin-bottom: 5px;
-}
-
-.category-item:hover {
-  transform: scale(1.05);
-}
-
-.category-nav-button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: #1dd056;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  font-size: 18px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
-}
-
-.category-nav-button:hover {
-  background-color: #1dd056;
-  transform: translateY(-50%) scale(1.1);
-}
-
-.category-nav-button.left {
-  left: 5px;
-}
-
-.category-nav-button.right {
-  right: 5px;
-}
-
-
 
 /* Carrusel */
-.slider-container {
+slider-container {
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: visible;
   width: 150%;
-  max-width: 100%;
-  height: 300px; /* Aumenta la altura */
-  margin-top: auto;
+  max-width: 1350px;
+  height: 100px; /* Aumenta la altura */
+  margin-top: 20px; /* Ajustado para estar justo debajo de las categorías */
   position: relative;
   border-radius: 0;
   background-color: #87191900;
@@ -123,16 +47,26 @@ body {
   box-sizing: border-box;
   z-index: 2;
   flex: 1;
-  margin-bottom: 30%;
+  margin-bottom: 20px; /* Reducido el margen inferior */
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+.slider-container {
+  width: calc(100% - 506px); /* 253px * 2 = 506px total de márgenes */
+  margin-left: 253px;
+  margin-right: 253px;
+  position: relative;
 }
 
 .image-slider {
   position: relative;
   display: flex;
   overflow: hidden;
-  width: 100%;
-  height: 100%;
-  margin-top: 180%;
+  width: 1060px;
+  height: 450px;
+  margin-top: 180px; /* Eliminado el margen superior excesivo */
 }
 
 .slider-images {
@@ -146,7 +80,7 @@ body {
   min-width: 100%;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Cambia a cover para mejor visualización */
+  object-fit: fill; /* Cambia a cover para mejor visualización */
   background-color: #f5f5f5;
 }
 
@@ -178,8 +112,9 @@ body {
 }
 
 .main-content {
-  position: relative; 
-  margin-top: -40%;
+  margin-top: 90px; /* Igual a la altura del header */
+  position: relative;
+  z-index: 1;
   margin-left: 20%;
   flex: 1;
   display: flex;
@@ -189,59 +124,93 @@ body {
   padding: 20px;
   max-width: 50%;
   font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
+  padding-top: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 0; /* Eliminar margin-top ya que usamos padding-top en body */
+  background: transparent; /* Asegurar que el contenido principal es transparente */
+  position: relative;
+  z-index: 2;
+  background-color: #f4f5f4;
 }
-
-/* Estilo del contenedor de cada elemento en el carrusel */
-.alice-carousel .alice-carousel-item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 
 .main-content h2 {
   color:#187946;
   font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
   margin-bottom: 20%;
-  margin-top: -80%; 
+  margin-top: 0px; 
   position: relative; 
   z-index: 2; 
 }
 .main-content .product-carousel-container{
   position: absolute; 
-  margin-top: -70%;
+  margin-top: 0px;
   margin-left: 45%;
   z-index: 1;
-  background-color: transparent;
+  background-color: transparent !important;
   height: 0;
   width: 300%;
   margin-bottom: 10%;
+  background-color: #f4f5f4;
 }
 
 /* Estilo del AliceCarousel dentro de main-content */
 .main-content .alice-carousel {
   position: relative;
   margin-top: 10%;
+  margin-left: 75px;
   margin: 20px auto;
   width: 100%; 
   max-width: 75%; 
-  background-color: transparent; 
+  background-color: transparent !important; 
   border-radius: 8px; 
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
   padding: 20px; 
 
 }
 
+.alice-carousel {
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+}
+
+.alice-carousel__stage-item {
+  padding: 0 10px;
+  box-sizing: border-box;
+  width: 100% !important;
+}
+
+.alice-carousel__prev-btn,
+.alice-carousel__next-btn {
+  display: none; /* Ocultar botones por defecto */
+}
+
+.alice-carousel__dots {
+  margin: 20px 0;
+}
+
+.alice-carousel__dots-item {
+  width: 8px;
+  height: 8px;
+  background-color: #ccc;
+  border-radius: 50%;
+  margin: 0 5px;
+}
+
+.alice-carousel__dots-item.__active {
+  background-color: #187946;
+}
 
 .main-content .alice-carousel__stage {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 15px; /* Espaciado entre los elementos del carrusel */
+  background-color: transparent !important; 
+  gap: 18px; /* Espaciado entre los elementos del carrusel */
 }
 
 .main-content .alice-carousel__stage-item {
-  transition: transform 0.3s ease;
+  transition: transform 0.5s ease;
 }
 
 .main-content .alice-carousel__stage-item:hover {
@@ -312,11 +281,12 @@ body {
 
 
 .product-carousel-container {
-  margin-top: -5%;
-  position: fixed;
-  width: 97%;
+  margin-top: 20px; /* Ajustar el margen superior */
+  position: relative;
+  width: 100%;
   overflow: visible;
   padding: 20px 0;
+  background-color: #f4f5f4;
 }
 
 .product-list {
@@ -395,3 +365,52 @@ body {
   display: inline-block;
   transform: translateY(-3px);
 }
+
+/* Botones de promoción */
+.promo-buttons-container {
+  width: calc(100% - 506px);
+  margin-left: 253px;
+  margin-right: 253px;
+  padding: 20px 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  box-sizing: border-box;
+  background: transparent;
+  position: relative;
+  z-index: 2;
+  margin-bottom: 30px; /* Añadir espacio después de los botones */
+  background-color: #f4f5f4;
+}
+
+.promo-button {
+  width: calc(33.33% - 14px + 15px); /* Añadir 15px al ancho */
+  height: 200px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  background-size: 100% 100%; /* Cambiado de 'cover' a '100% 100%' */
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.promo-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.button-1 {
+  background-image: url('https://res.cloudinary.com/dd7etqrf2/image/upload/v1734134674/1_l9hngn.svg');
+}
+
+.button-2 {
+  background-image: url('https://res.cloudinary.com/dd7etqrf2/image/upload/v1734134674/3_ubnmcx.svg');
+}
+
+.button-3 {
+  background-image: url('https://res.cloudinary.com/dd7etqrf2/image/upload/v1734134962/tupti_Imagen_de_productos_osnxye.png');
+}
+
+
