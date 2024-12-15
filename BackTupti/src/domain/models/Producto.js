@@ -1,11 +1,13 @@
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../../infrastructure/database/mysqlConnection');
+const TipoProducto = require('./TipoProducto');
+const ProductoImagen = require('./ProductoImagen');
 
-class Producto extends Model {}
+class Product extends Model {}
 
-Producto.init({
+Product.init({
   IdProducto: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.INTEGER(11),
     primaryKey: true,
     autoIncrement: true
   },
@@ -22,8 +24,12 @@ Producto.init({
     allowNull: true
   },
   IdTipoProducto: {
-    type: DataTypes.INTEGER,
-    allowNull: false
+    type: DataTypes.INTEGER(11),
+    allowNull: false,
+    references: {
+      model: 'tipoproducto',
+      key: 'IdTipoProducto'
+    }
   },
   Stock: {
     type: DataTypes.INTEGER,
@@ -35,4 +41,14 @@ Producto.init({
   timestamps: false
 });
 
-module.exports = Producto;
+// Establecer asociaciones
+Product.belongsTo(TipoProducto, { 
+  foreignKey: 'IdTipoProducto', 
+  as: 'TipoProducto' 
+});
+Product.hasMany(ProductoImagen, { 
+  foreignKey: 'IdProducto', 
+  as: 'Imagenes' 
+});
+
+module.exports = Product;

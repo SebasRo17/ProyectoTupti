@@ -79,6 +79,25 @@ class ProductController {
             });
         }
     }
+    async getProducts(req, res) {
+        try {
+          const { Nombre, PrecioMin, PrecioMax, IdTipoProducto } = req.query;
+          
+          const filters = {};
+          
+          // Solo agregar filtros si están presentes
+          if (Nombre) filters.Nombre = Nombre;
+          if (PrecioMin) filters.PrecioMin = parseFloat(PrecioMin);
+          if (PrecioMax) filters.PrecioMax = parseFloat(PrecioMax);
+          if (IdTipoProducto) filters.IdTipoProducto = parseInt(IdTipoProducto);
+    
+          const productos = await ProductService.getAllProducts(filters);
+          res.json(productos);
+        } catch (error) {
+          console.error('Error en el controlador:', error);
+          res.status(500).json({ message: 'Error al obtener productos' });
+        }
+      }
 }
 
 module.exports = new ProductController();
