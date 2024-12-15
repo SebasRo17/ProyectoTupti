@@ -15,9 +15,12 @@
   }
   
   .barra-lateral-logo {
-    font-size: 24px;
     margin-top: 1%
     
+  }
+  .barra-lateral-logo img {
+    width: 80%;
+    margin-bottom: 20px;
   }
   
   .barra-lateral-nav ul {
