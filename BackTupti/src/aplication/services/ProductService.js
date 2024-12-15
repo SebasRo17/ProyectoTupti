@@ -2,8 +2,6 @@ const ProductRepositoryImpl = require("../../infrastructure/repositories/Product
 const Product = require("../../domain/models/Producto")
 
 class ProductService {
-    static productRepository = new ProductRepositoryImpl();
-
     static async getIdProducts(productId) {
         try {
             if (!productId) {
@@ -86,6 +84,14 @@ class ProductService {
             throw error;
         }
     }
+    async getAllProducts(filters = {}) {
+        try {
+          return await ProductRepositoryImpl.findAll(filters);
+        } catch (error) {
+          console.error('Error en el servicio de productos:', error);
+          throw error;
+        }
+      }
 }
 
-module.exports = ProductService;
+module.exports = new ProductService();

@@ -19,9 +19,9 @@ const BarraLateralAdmin = () => {
         <li>
             <Link to="/admin">📊 Dashboard</Link>
           </li>
-           {/*<li>
+           <li>
            <Link to="/ProductosAdmin">🛒 Productos</Link>
-          </li>*/}
+          </li>
           <li><a href="#categorias">📂 Categorías</a></li>
           <li><a href="#pedidos">📦 Pedidos</a></li>
           <li><a href="#usuarios">👤 Usuarios</a></li>

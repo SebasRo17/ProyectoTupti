@@ -5,12 +5,12 @@ class ProductoImagen extends Model {}
 
 ProductoImagen.init({
   IdImagen: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.INTEGER(11),
     primaryKey: true,
     autoIncrement: true
   },
   IdProducto: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.INTEGER(11),
     allowNull: false,
     references: {
       model: 'producto',

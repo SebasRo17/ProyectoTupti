@@ -115,6 +115,44 @@ router.put('/:id', ProductController.updateProduct);
  */
 router.delete('/:id', ProductController.deleteProduct);
 
+/**
+ * @swagger
+ * /products:
+ *   get:
+ *     summary: Obtener productos con filtros opcionales
+ *     parameters:
+ *       - name: Nombre
+ *         in: query
+ *         description: Nombre del producto (opcional)
+ *         required: false
+ *         schema:
+ *           type: string
+ *       - name: PrecioMin
+ *         in: query
+ *         description: Precio mínimo (opcional)
+ *         required: false
+ *         schema:
+ *           type: number
+ *       - name: PrecioMax
+ *         in: query
+ *         description: Precio máximo (opcional)
+ *         required: false
+ *         schema:
+ *           type: number
+ *       - name: IdTipoProducto
+ *         in: query
+ *         description: ID del tipo de producto (opcional)
+ *         required: false
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Lista de productos (todos o filtrados)
+ *       500:
+ *         description: Error del servidor
+ */
+router.get('/', (req, res) => ProductController.getProducts(req, res));
+
 module.exports = router;
 
 
