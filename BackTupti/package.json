@@ -12,7 +12,6 @@
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "express-session": "^1.18.1",
-    "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.11.4",
     "passport": "^0.7.0",
     "passport-facebook": "^3.0.0",
@@ -22,6 +21,8 @@
     "swagger-ui-express": "^4.6.3"
   },
   "devDependencies": {
+    "jest": "^29.7.0",
+    "jsonwebtoken": "^9.0.2",
     "nodemon": "^2.0.22",
     "standard": "^17.1.2"
   },
