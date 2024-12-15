@@ -5,8 +5,9 @@ class TipoProducto extends Model {}
 
 TipoProducto.init({
   IdTipoProducto: {
-    type: DataTypes.INTEGER,
-    primaryKey: true
+    type: DataTypes.INTEGER(11),
+    primaryKey: true,
+    autoIncrement: true
   },
   detalle: {
     type: DataTypes.STRING(50),
