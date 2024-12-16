@@ -3,11 +3,13 @@
 
 @media screen and (min-width: 1441px){
     .categoria-container {
-        max-width: 1200px;
-        margin-top: -12%;
+        max-width: 100%;
+        margin-top: -15%;
         margin-left: 20;
         margin-right: auto;
-        margin-bottom: 20%;
+      }
+      .productos-grid{
+        margin-top: 0%;
       }
     
       .filter {
@@ -22,7 +24,7 @@
       margin-left: 20;
       margin-right: auto;
       gap: 5px;
-      margin-top: -15%;
+      margin-top: 0%;
     }
   
     .productos-grid {
@@ -31,9 +33,6 @@
       gap: 5px;
     }
   
-    .filter {
-      width: 250px;
-    }
 }
 /* Tablets (768px - 1023px) */
 @media (min-width: 768px) and (max-width: 1023px) {
@@ -51,14 +50,6 @@
         margin-bottom: 0%;
       }
     
-      .filter {
-        position: relative;
-        margin-top: -40%;
-        width: 40%;
-        margin-left: -5%;
-        padding: 10px;
-        box-shadow: none;
-      }
 }
 
 /* Móvil (< 768px) */
@@ -80,17 +71,6 @@
         font-size: 14px;
       }
     
-      .filter {
-        position: static;
-        width: 100%;
-        margin: 10px 0;
-        padding: 10px;
-      }
-    
-      .filtro-busqueda a {
-        font-size: 14px;
-        margin-bottom: 5px;
-      }
 }
 
 /* Ajustes de orientación para dispositivos móviles */
@@ -104,13 +84,6 @@
         gap: 5px;
       }
     
-      .filter {
-        padding: 5px;
-      }
-    
-      .producto-nombre {
-        font-size: 12px;
-      }
 }
 
 @media screen and (max-width: 767px) {
@@ -135,19 +108,6 @@
       .producto-nombre {
         font-size: 14px;
       }
-    
-      .filter {
-        margin-top: -80%;
-        position: static;
-        width: 100%;
-        margin: 10px 0;
-        padding: 10px;
-      }
-    
-      .filtro-busqueda a {
-        font-size: 14px;
-        margin-bottom: 5px;
-      }
 }
 
 @media screen and (max-width: 390px) {
@@ -169,12 +129,6 @@
         font-size: 10px;
       }
     
-      .filter {
-        padding: 5px;
-        margin: 5px 0;
-        margin-top: 25%;
-        margin-bottom: 0;
-      }
 }
 
 @media screen and (max-width: 768px) {

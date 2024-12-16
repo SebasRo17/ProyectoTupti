@@ -9,7 +9,7 @@
     position: fixed;
     top: 0;
     left: 250px;
-    width: 87%;
+    width: 93%;
     margin-left: -4.5%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 1000;
@@ -121,3 +121,46 @@
     font-weight: bold;
   }
   
+  /* Large screens (1441px+) */
+@media screen and (min-width: 1441px) {
+  .header-admin {
+    padding: 1.5rem 4rem;
+    width: 100%;
+  }
+
+  .logo-container img {
+    height: 50px;
+  }
+
+  .nav-links {
+    gap: 3rem;
+  }
+
+  .profile-icon {
+    height: 45px;
+    width: 45px;
+    font-size: 20px;
+  }
+}
+
+/* Medium screens (1024px-1440px) */
+@media screen and (min-width: 1024px) and (max-width: 1440px) {
+  .header-admin {
+    padding: 1rem 3rem;
+    width: 80%;
+  }
+
+  .logo-container img {
+    height: 45px;
+  }
+
+  .nav-links {
+    gap: 2.5rem;
+  }
+
+  .profile-icon {
+    height: 40px;
+    width: 40px;
+    font-size: 18px;
+  }
+}

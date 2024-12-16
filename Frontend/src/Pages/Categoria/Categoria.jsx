@@ -136,6 +136,7 @@ function Categoria() {
       />
          <CategoriesBar categoryData={categoryData} />
          <div className="categoria-container">
+
             <h1 className="categoria-titulo">Productos de la Categoría</h1>
             <div className="productos-grid">
                {productos.map((producto) => {
@@ -165,6 +166,7 @@ function Categoria() {
                   );
                })}
             </div>
+
          </div>
 
          {selectedProduct && (
@@ -282,8 +284,12 @@ function Categoria() {
             </div>
          )}
 
-         <Filtros />
-         <Footer />
+
+          {/* Aquí va el componente de Footer */}
+          <Footer />
+                   {/* Aquí va el componente de Filtros
+         <Filtros /> */}
+
       </div>
    );
 }
