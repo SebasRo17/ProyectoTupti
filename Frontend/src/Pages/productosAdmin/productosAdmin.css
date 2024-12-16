@@ -270,8 +270,8 @@ header {
   display: flex;
   justify-content: flex-end; /* Alinea el filtro a la derecha */
   margin-top: 20px;
-  transform: translateY(300px);
-  margin-right: -240px;
+  transform: translateY(670px);
+  margin-right: -245px;
 }
 
 /* Estilo para el filtro */

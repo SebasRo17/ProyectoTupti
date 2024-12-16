@@ -3,144 +3,154 @@ import './nuevoProductoAdmin.css';
 import { useNavigate } from 'react-router-dom';
 import HeaderAdmin from '../../Components/headerAdmin/headerAdmin.jsx';
 import BarraLateralAdmin from '../../Components/barraLateralAdmin/barraLateralAdmin.jsx';
-
-
-
+import './responsivenuevoProdAdmin.css';
 
 const NuevoProducto = () => {
-  const [nombreProducto, setNombreProducto] = useState('');
-  const [marca, setMarca] = useState('');
-  const [categoria, setCategoria] = useState('');
-  const [precioRegular, setPrecioRegular] = useState('');
-  const [precioVenta, setPrecioVenta] = useState('');
-  const [cronograma, setCronograma] = useState('');
-  const [stockEstado, setStockEstado] = useState('');
-  const [sku, setSku] = useState('');
-  const [cantidadEnStock, setCantidadEnStock] = useState('');
-  const [unidad, setUnidad] = useState('');
-  const [descripcion, setDescripcion] = useState('');
+  const [formData, setFormData] = useState({
+    nombre: '',
+    marca: '',
+    categoria: '',
+    precioVenta: '',
+    stock: '',
+    cantidadStock: '',
+    descripcion: '',
+    id: '', 
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Aquí puedes manejar el envío de los datos del producto
-    console.log('Producto publicado');
+    // Aquí puedes agregar la lógica para enviar el formulario
+    console.log('Formulario enviado:', formData);
   };
 
   return (
-    <div className="nuevo-producto-container">
-      <h2>Nuevo Producto</h2>
+    <div className="nuevo-producto-wrapper">
+      <HeaderAdmin />
+      <BarraLateralAdmin />
+      <h2> NUEVO PRODUCTO </h2>
       <form onSubmit={handleSubmit}>
-        <div className="imagenes-producto">
-          <button className="image-button">Escoger Imagen</button>
-          <button className="image-button">Escoger Imagen</button>
-          <button className="image-button">Escoger Imagen</button>
+        <div className="imagenes-producto-container">
+          <button type="button" className="image-selector-button">Escoger Imagen</button>
+          <button type="button" className="image-selector-button">Escoger Imagen</button>
+          <button type="button" className="image-selector-button">Escoger Imagen</button>
         </div>
 
-        <div className="form-group">
-          <label>Nombre del Producto</label>
-          <input
-            type="text"
-            value={nombreProducto}
-            onChange={(e) => setNombreProducto(e.target.value)}
-            placeholder="Ej. Sport Smart Watch"
-          />
+        <div className="form-row-container">
+          <div className="input-field-container">
+            <label>Nombre del Producto</label>
+            <input
+              type="text"
+              name="nombre"
+              value={formData.nombre}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="input-field-container">
+            <label>Marca</label>
+            <input
+              type="text"
+              name="marca"
+              value={formData.marca}
+              onChange={handleChange}
+              required
+            />
+          </div>
         </div>
 
-        <div className="form-group">
-          <label>Marca</label>
-          <input
-            type="text"
-            value={marca}
-            onChange={(e) => setMarca(e.target.value)}
-          />
+        <div className="form-row-container">
+          <div className="input-field-container">
+            <label>Categoría</label>
+            <select
+              name="categoria"
+              value={formData.categoria}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Seleccione una categoría</option>
+              <option value="Electrónico">Electrónico</option>
+              <option value="Ropa">Ropa</option>
+              {/* Agrega más opciones según sea necesario */}
+            </select>
+          </div>
+
+          <div className="input-field-container">
+            <label>Precio de Venta</label>
+            <input
+              type="number"
+              name="precioVenta"
+              value={formData.precioVenta}
+              onChange={handleChange}
+              required
+            />
+          </div>
         </div>
 
-        <div className="form-group">
-          <label>Categoría</label>
-          <input
-            type="text"
-            value={categoria}
-            onChange={(e) => setCategoria(e.target.value)}
-          />
+        <div className="form-row-container">
+          <div className="input-field-container">
+            <label>Stock en Estado</label>
+            <select
+              name="stock"
+              value={formData.stock}
+              onChange={handleChange}
+              required
+            >
+              <option value="En-Stock">En Stock</option>
+              <option value="Sin-Stock">Sin Stock</option>
+            </select>
+          </div>
+
+          <div className="input-field-container">
+            <label>Cantidad en Stock</label>
+            <input
+              type="number"
+              name="cantidadStock"
+              value={formData.cantidadStock}
+              onChange={handleChange}
+              required
+            />
+          </div>
         </div>
 
-        <div className="form-group">
-          <label>Precio Regular</label>
-          <input
-            type="number"
-            value={precioRegular}
-            onChange={(e) => setPrecioRegular(e.target.value)}
-          />
+        <div className="form-row-container">
+          <div className="input-field-container">
+            <label>ID</label>
+            <input
+              type="text"
+              name="id"
+              value={formData.id}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="input-field-container">
+            <label>Descripción</label>
+            <textarea
+              name="descripcion"
+              value={formData.descripcion}
+              onChange={handleChange}
+              required
+            />
+          </div>
         </div>
 
-        <div className="form-group">
-          <label>Precio de Venta</label>
-          <input
-            type="number"
-            value={precioVenta}
-            onChange={(e) => setPrecioVenta(e.target.value)}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Cronograma</label>
-          <input
-            type="date"
-            value={cronograma}
-            onChange={(e) => setCronograma(e.target.value)}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Stock en Estado</label>
-          <select
-            value={stockEstado}
-            onChange={(e) => setStockEstado(e.target.value)}
-          >
-            <option value="En Stock">En Stock</option>
-            <option value="Agotado">Agotado</option>
-          </select>
-        </div>
-
-        <div className="form-group">
-          <label>SKU</label>
-          <input
-            type="text"
-            value={sku}
-            onChange={(e) => setSku(e.target.value)}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Cantidad en Stock</label>
-          <input
-            type="number"
-            value={cantidadEnStock}
-            onChange={(e) => setCantidadEnStock(e.target.value)}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Unidad</label>
-          <input
-            type="text"
-            value={unidad}
-            onChange={(e) => setUnidad(e.target.value)}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Descripción</label>
-          <textarea
-            value={descripcion}
-            onChange={(e) => setDescripcion(e.target.value)}
-            placeholder="Descripción del producto..."
-          />
-        </div>
-
-        <div className="form-buttons">
-          <button className="guardar-borrador">Guardar Borrador</button>
-          <button type="submit" className="publicar-producto">Publicar Producto</button>
+        <div className="form-action-buttons">
+          <button type="button" className="save-draft-button">
+            Guardar Borrador
+          </button>
+          <button type="submit" className="publish-product-button">
+            Publicar Producto
+          </button>
         </div>
       </form>
     </div>

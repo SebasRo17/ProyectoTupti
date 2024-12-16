@@ -1,4 +1,5 @@
 import React ,  { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import HeaderAdmin from '../../Components/headerAdmin/headerAdmin.jsx';
 import BarraLateralAdmin from '../../Components/barraLateralAdmin/barraLateralAdmin.jsx';
@@ -125,9 +126,9 @@ const ProductosAdmin = () => {
                     </div>
                     <div className="action-buttons">
                         <button className="export-button">Exportar</button>
-                    
+                        <Link to="/NuevoProducto">
                         <button className="new-product-button">Nuevo Producto</button>
-                        
+                        </Link>
                         
                     </div>
                 </header>
