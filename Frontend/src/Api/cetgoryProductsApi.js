@@ -1,8 +1,8 @@
-const API_URL = 'http://localhost:3000/api';
+import { API_BASE } from '../config/config';
 
 export const getCategoryProducts = async (categoryId) => {
   try {
-    const response = await fetch(`${API_URL}/cProducts/${categoryId}`);
+    const response = await fetch(`${API_BASE}/cProducts/${categoryId}`);
     if (!response.ok) {
       throw new Error('Error al obtener los productos de la categoría');
     }

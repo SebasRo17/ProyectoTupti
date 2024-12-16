@@ -255,6 +255,7 @@ header .search-input {
       justify-content: space-between;
       padding: 0px 16px;
       height: 56px;
+      width: 100%;
     }
     .logo {
       order: 1;

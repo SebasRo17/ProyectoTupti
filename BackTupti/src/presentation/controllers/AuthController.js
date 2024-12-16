@@ -1,12 +1,14 @@
+require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const User = require('./../../domain/models/User');
 const AuthService = require('../../aplication/services/AuthService');
+const redirectURL = process.env.NODE_ENV === 'production' ? process.env.PROD_URL : process.env.DEV_URL;
 
 const AuthController = {
   // Ruta para iniciar sesión con Google
   googleLogin: (req, res, next) => {
-    const redirectUrl = req.query.redirect || 'http://localhost:5173/';
+    const redirectUrl = req.query.redirect || `${redirectURL}`;
     passport.authenticate('google', {
       scope: ['profile', 'email'],
       state: redirectUrl
@@ -15,7 +17,7 @@ const AuthController = {
 
   // Ruta de callback de Google
   googleCallback: (req, res) => {
-    const redirectUrl = req.query.state || 'http://localhost:5173/';
+    const redirectUrl = req.query.state || `${redirectURL}`;
 
     console.log('Datos de req.user:', req.user);
 
@@ -35,7 +37,7 @@ const AuthController = {
 
   // Ruta para iniciar sesión con Facebook
   facebookLogin: (req, res, next) => {
-    const redirectUrl = req.query.redirect || 'http://localhost:5173/';
+    const redirectUrl = req.query.redirect || `${redirectURL}`;
     passport.authenticate('facebook', {
       scope: ['email'],
       state: redirectUrl
@@ -44,7 +46,7 @@ const AuthController = {
 
   // Ruta de callback de Facebook
   facebookCallback: (req, res) => {
-    const redirectUrl = req.query.state || 'http://localhost:5173/';
+    const redirectUrl = req.query.state || `${redirectURL}`;
 
     console.log('Datos de req.user:', req.user);
     
