@@ -290,4 +290,50 @@ header .search-input {
     .header-icons {
       display: none;
     }
+    /*CARRITO*/
+.cart-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  justify-content: flex-end; /* Alinea el carrito al lado derecho */
+}
+
+.cart-container {
+  background: white;
+  width: 30%; 
+  height: 100%;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+  position: relative;
+  
+}
+
+.close-cart-button {
+  position: absolute;
+  top: 0%;
+  left: 0%; 
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index:1000;
+  color:rgb(98, 136, 104);
+}
+
+/* carrito pantalla principal*/
+.icons-cart-counter {
+  background-color: #3fd781;
+  color: white;
+  font-size: 70%;
+  font-weight: bold;
+  border-radius: 50%;
+  padding: 5px 11px;
+  margin-left: 7px;
+  display: inline-block;
+  transform: translateY(-3px);
+}
   }

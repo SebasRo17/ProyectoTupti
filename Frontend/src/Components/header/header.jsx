@@ -3,12 +3,37 @@ import { Link } from 'react-router-dom';
 import './header.css';
 import { productos } from '../../data/productos';
 import TuptiPage from '../../Pages/pantallaPrincipal/pantallaPrincipal';
+import CarritoCompras from '../../Components/CarritoCompras/CarritoCompras.jsx';
 
-const Header = ({ toggleCart }) => {
+const Header = ({ toggleCart, isCartOpen}) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+
+  const [productos, setProductos] = useState([
+    { id: 1, nombre: "peras", precio: 10.5, cantidad: 1, imagen: "https://via.placeholder.com/150" },
+    { id: 2, nombre: "Manzanas", precio: 20.0, cantidad: 2, imagen: "https://via.placeholder.com/150" },
+    { id: 3, nombre: "Uvas", precio: 5.5, cantidad: 5, imagen: "https://via.placeholder.com/150" },
+    { id: 4, nombre: "Chocolate", precio: 2.0, cantidad: 2, imagen: "https://via.placeholder.com/150" },
+    { id: 5, nombre: "Arroz", precio: 6.0, cantidad: 2, imagen: "https://via.placeholder.com/150" },
+    { id: 6, nombre: "Azucar", precio: 1.0, cantidad: 3, imagen: "https://via.placeholder.com/150" },
+  ]);
+
+// Lógica del carrito
+const eliminarProducto = (productoId) => {
+  setProductos(productos.filter((producto) => producto.id !== productoId));
+};
+
+const actualizarCantidad = (id, cantidad) => {
+  setProductos(
+    productos.map((producto) =>
+      producto.id === id
+        ? { ...producto, cantidad: Math.max(1, producto.cantidad + cantidad) }
+        : producto
+    )
+  );
+};
 
   const handleSearch = (e) => {
     const value = e.target.value;
@@ -34,6 +59,7 @@ const Header = ({ toggleCart }) => {
   return (
     <>
       <div className="debug-overlay" /> {/* Temporal para depuración */}
+      
       <header className="header" style={{ position: 'fixed', zIndex: 1000 }}>
         {/* Logo */}
         <div className="logo">
@@ -47,6 +73,7 @@ const Header = ({ toggleCart }) => {
         </button>
       </Link>
         </div>
+        
 
         {/* Barra de búsqueda */}
         <div className="search-bar">
@@ -128,6 +155,21 @@ const Header = ({ toggleCart }) => {
           </button>
         </div>
       </header>
+      {/* Renderizar el carrito si está abierto */}
+      {isCartOpen && (
+        <div className="cart-overlay">
+          <div className="cart-container">
+            <button className="close-cart-button" onClick={toggleCart}>
+              ✖ 
+            </button>
+            <CarritoCompras 
+            productos={productos}
+            eliminarProducto={eliminarProducto}
+            actualizarCantidad={actualizarCantidad}
+          />
+          </div>
+        </div>
+        )}
     </>
   );
 };

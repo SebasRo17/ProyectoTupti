@@ -8,6 +8,9 @@ import Footer from "../../Components/footer/footer.jsx";
 import { createCalificacion, getCalificaciones } from '../../Api/calificacionApi';
 import "./Categoria.css";
 import "./ResponsiveCategoria.css";
+import Filtros from "../../Components/Filtros/Filtros.jsx";
+
+
 
 function Categoria() {
    const [productos, setProductos] = useState([]);
@@ -21,6 +24,11 @@ function Categoria() {
    const [reseñas, setReseñas] = useState([]);
    const [mensajeExito, setMensajeExito] = useState('');
    const { id } = useParams();
+   const [isCartOpen, setIsCartOpen] = useState(false); 
+
+   const toggleCart = () => {
+      setIsCartOpen(!isCartOpen);
+   };
 
    // Preparar los datos de categorías
    const categoryData = categoryNames.map((name, i) => ({
@@ -122,7 +130,10 @@ function Categoria() {
 
    return (
       <div className="categoria-page">
-         <Header />
+         <Header 
+        toggleCart={toggleCart} 
+        isCartOpen={isCartOpen}
+      />
          <CategoriesBar categoryData={categoryData} />
          <div className="categoria-container">
             <h1 className="categoria-titulo">Productos de la Categoría</h1>
@@ -271,13 +282,7 @@ function Categoria() {
             </div>
          )}
 
-         <div className="filter">
-            <h3>Filtro de Búsqueda</h3>
-            <div className="filtro-busqueda">
-               <a href="#">Cupones</a>
-               <a href="#">Promociones</a>
-            </div>
-         </div>
+         <Filtros />
          <Footer />
       </div>
    );

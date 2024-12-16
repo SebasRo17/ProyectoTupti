@@ -10,6 +10,8 @@ import RecuperarContrasena from './recuperarContrasena/recuperarContrasena';
 import CarritoCompras from '../Components/CarritoCompras/CarritoCompras.jsx';
 import ProductosAdmin from './productosAdmin/productosAdmin.jsx'; // Asegúrate de importar el componente
 import AuthGuard from '../Components/AuthGuard/AuthGuard';
+import NuevoProducto from './nuevoProductoAdmin/nuevoProductoAdmin.jsx';
+
 
 function App() {
   return (
@@ -39,6 +41,13 @@ function App() {
           element={
             <AuthGuard>
               <ProductosAdmin />
+            </AuthGuard>
+          } 
+        />
+         <Route path="/NuevoProducto" 
+          element={
+            <AuthGuard>
+              <NuevoProducto />
             </AuthGuard>
           } 
         />

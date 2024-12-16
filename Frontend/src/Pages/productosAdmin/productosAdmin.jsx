@@ -1,9 +1,14 @@
 import React ,  { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import HeaderAdmin from '../../Components/headerAdmin/headerAdmin.jsx';
 import BarraLateralAdmin from '../../Components/barraLateralAdmin/barraLateralAdmin.jsx';
 import EditarProductos from '../../Components/editarProductos/editarProductos.jsx'
 import './productosAdmin.css';
+import Filtros from "../../Components/Filtros/Filtros.jsx";
+import './responsiveproductosAdmin.css';
+import NuevoProducto from "../nuevoProductoAdmin/nuevoProductoAdmin.jsx";
+
 
 const ProductosAdmin = () => {
     const navigate = useNavigate();
@@ -121,7 +126,10 @@ const ProductosAdmin = () => {
                     </div>
                     <div className="action-buttons">
                         <button className="export-button">Exportar</button>
+                        <Link to="/NuevoProducto">
                         <button className="new-product-button">Nuevo Producto</button>
+                        </Link>
+                        
                     </div>
                 </header>
                 <main className="product-grid">
@@ -161,8 +169,13 @@ const ProductosAdmin = () => {
                         </div>
                     ))}
                 </main>
+                <div className="filters-container">
+                    <div className="filtros-clase">
+                <Filtros />
             </div>
         </div>
+        </div>
+    </div>
     );
 };
 
