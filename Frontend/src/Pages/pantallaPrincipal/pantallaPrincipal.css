@@ -14,7 +14,7 @@ body {
   position: relative; /* Asegurar que es el contenedor principal */
   min-height: 100vh;
   background-color: #f4f5f4; /* Añadir color de fondo base */
-  overflow-y: hidden; /* Prevenir doble scroll */
+
   background-image: none;
 }
 
@@ -24,8 +24,8 @@ body {
   position: relative;
   overflow-x: hidden;
   padding-bottom: 50px; /* Espacio para el footer */
-  background-color: #f4f5f4;
   overflow-y: auto; /* Permitir scroll solo en el contenedor */
+  background-color: #f4f5f4;
   background-image: none;
 }
 
