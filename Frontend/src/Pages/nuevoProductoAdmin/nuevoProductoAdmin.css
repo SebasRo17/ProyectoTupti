@@ -1,0 +1,75 @@
+.nuevo-producto-container {
+    background-color: #1c1f2d;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 900px;
+    margin: 50px auto;
+    color: #fff;
+  }
+  
+  h2 {
+    color: #e9c0ff;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #4f4f6f;
+    background-color: #2f3646;
+    color: #fff;
+  }
+  
+  textarea {
+    height: 120px;
+  }
+  
+  button {
+    padding: 12px 20px;
+    font-size: 14px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  button:hover {
+    opacity: 0.8;
+  }
+  
+  .image-button {
+    background-color: #4f4f6f;
+    margin-right: 10px;
+  }
+  
+  .form-buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .guardar-borrador {
+    background-color: #4f4f6f;
+  }
+  
+  .publicar-producto {
+    background-color: #6a56f1;
+  }
+  

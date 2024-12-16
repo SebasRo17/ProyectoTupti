@@ -11,6 +11,7 @@ import "./ResponsiveCategoria.css";
 import Filtros from "../../Components/Filtros/Filtros.jsx";
 
 
+
 function Categoria() {
    const [productos, setProductos] = useState([]);
    const [loading, setLoading] = useState(true);
@@ -23,6 +24,11 @@ function Categoria() {
    const [reseñas, setReseñas] = useState([]);
    const [mensajeExito, setMensajeExito] = useState('');
    const { id } = useParams();
+   const [isCartOpen, setIsCartOpen] = useState(false); 
+
+   const toggleCart = () => {
+      setIsCartOpen(!isCartOpen);
+   };
 
    // Preparar los datos de categorías
    const categoryData = categoryNames.map((name, i) => ({
@@ -124,7 +130,10 @@ function Categoria() {
 
    return (
       <div className="categoria-page">
-         <Header />
+         <Header 
+        toggleCart={toggleCart} 
+        isCartOpen={isCartOpen}
+      />
          <CategoriesBar categoryData={categoryData} />
          <div className="categoria-container">
             <h1 className="categoria-titulo">Productos de la Categoría</h1>

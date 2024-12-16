@@ -4,6 +4,9 @@ import HeaderAdmin from '../../Components/headerAdmin/headerAdmin.jsx';
 import BarraLateralAdmin from '../../Components/barraLateralAdmin/barraLateralAdmin.jsx';
 import './productosAdmin.css';
 import Filtros from "../../Components/Filtros/Filtros.jsx";
+import './responsiveproductosAdmin.css';
+import NuevoProducto from "../nuevoProductoAdmin/nuevoProductoAdmin.jsx";
+
 
 const ProductosAdmin = () => {
     const navigate = useNavigate();
@@ -49,7 +52,10 @@ const ProductosAdmin = () => {
                     </div>
                     <div className="action-buttons">
                         <button className="export-button">Exportar</button>
+                    
                         <button className="new-product-button">Nuevo Producto</button>
+                        
+                        
                     </div>
                 </header>
                 <main className="product-grid">
@@ -83,10 +89,13 @@ const ProductosAdmin = () => {
                         </div>
                     ))}
                 </main>
+                <div className="filters-container">
+                    <div className="filtros-clase">
                 <Filtros />
-                //aqui debo de poner el codigo para qe se vea al lado derecho
             </div>
         </div>
+        </div>
+    </div>
     );
 };
 

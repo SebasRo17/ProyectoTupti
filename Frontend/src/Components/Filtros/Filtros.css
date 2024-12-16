@@ -2,18 +2,29 @@
     padding: 1rem;
     background-color: #1f804c; /* Fondo verde oscuro */
     color: #e5ffe5; /* Texto claro en tono verde */
-    border-radius: 8px;
+    border-radius: 10px;
     width: 200px;
-    transform:translateY(-1200px);
+    transform:translateY(-1000px);
     margin-left: 15px;
+    
     font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
+    
   }
   
   .filtro-container h3{
     margin-bottom: 1rem;
-    color: #ffffff; /* Verde brillante */
+    color: #ffffff;
     font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
     margin-left: 20%;
+
+  }
+  .filtro-container h4{
+    margin-bottom: 1rem;
+    color: #161515;
+    font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
+    margin-left: -3%;
+    transform: translateY(20px);
+    font-weight: bold; /* Puedes hacerlo negrita si lo deseas */
 
   }
   
@@ -21,15 +32,17 @@
     margin-bottom: 0.5rem;
   }
   
-  label {
-    font-size: 0.9rem;
-    color: #a7f3d0;
-    font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
-  }
+  /* Cambiar color de los labels dentro del contenedor del filtro */
+.filtro-container label {
+  color: #f3f6f8; /* Cambia este color al que desees, por ejemplo, un azul */
+  font-size: 1rem; /* Ajusta el tamaño de la fuente */
+  transition: color 0.3s ease; /* Efecto de transición al cambiar de color */
+}
   
   input[type="checkbox"],
   input[type="radio"] {
-    margin-right: 0.5rem;
+    margin-left: 35%;
+    transform: translateY(22px);
     accent-color: #4ade80; /* Personalización del color del input */
   }
   
@@ -37,3 +50,42 @@
   input[type="radio"]:hover {
     filter: brightness(1.2); /* Efecto de brillo al pasar el ratón */
   }
+  /* Estilo para cada grupo de opciones dentro del filtro */
+.filtro-precios, .filtro-descuentos {
+  margin-bottom: 0.5rem; /* Añadimos un margen más amplio */
+  padding: 1rem; /* Padding para separarlo más */
+  background-color: #2a7c53; /* Fondo verde claro */
+  border-radius: 10px;
+  border: 2px solid #4ade80; /* Borde verde */
+}
+
+/* Estilo para un input al estar seleccionado (con el foco) */
+input[type="radio"]:checked,
+input[type="checkbox"]:checked {
+  background-color: #4ade80; /* Verde claro al estar seleccionado */
+  border-color: #4ade80; /* Cambia el borde del input */
+}
+
+/* Botón hamburguesa */
+.menu-hamburguesa {
+  display: flex;
+  justify-content: flex-start;
+  padding: 0.5rem;
+}
+
+.boton-hamburguesa {
+  background-color: #1f804c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.boton-hamburguesa:hover {
+  background-color: #146c38;
+}
+
+
+

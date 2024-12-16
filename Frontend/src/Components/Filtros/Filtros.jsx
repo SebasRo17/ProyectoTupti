@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Filtros.css";
+import "./responsiveFiltros.css";
 
 const Filtro = ({ onFilterChange }) => {
   const [selectedCategories, setSelectedCategories] = useState([]);

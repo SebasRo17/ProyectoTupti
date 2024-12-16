@@ -9,7 +9,6 @@ import './responsivePPrincipal.css'
 import Login from '../Login/Login.jsx';
 import Categoria from '../Categoria/Categoria.jsx';
 import { getBestSellers } from '../../Api/bestSellApi';
-import CarritoCompras from '../../Components/CarritoCompras/CarritoCompras.jsx';
 import Footer from '../../Components/footer/footer.jsx';
 import CategoriesBar from '../../Components/categoriesBar/categoriesBar.jsx';
 import Header from '../../Components/header/header.jsx';
@@ -25,7 +24,10 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
   const [isTokenActive, setIsTokenActive] = useState(false);
   const navigate = useNavigate();
 
-  
+  const toggleCart = () => {
+    setIsCartOpen(!isCartOpen);
+  };
+
   useEffect(() => {
     // Verifica el token al cargar el componente
     const token = localStorage.getItem('jwtToken');
@@ -50,38 +52,8 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
     navigate('/');
   };
 
-  const [productos, setProductos] = useState([
-    { id: 1, nombre: "Manzana", precio: 10.5, cantidad: 1, imagen: "https://via.placeholder.com/150" },
-    { id: 2, nombre: "Chocolate", precio: 20.0, cantidad: 2, imagen: "https://via.placeholder.com/150" },
-    { id: 3, nombre: "Producto 3", precio: 5.5, cantidad: 5, imagen: "https://via.placeholder.com/150" },
-    { id: 4, nombre: "Producto 4", precio: 2.0, cantidad: 2, imagen: "https://via.placeholder.com/150" },
-    { id: 5, nombre: "Producto 5", precio: 6.0, cantidad: 2, imagen: "https://via.placeholder.com/150" },
-    { id: 6, nombre: "Producto 6", precio: 1.0, cantidad: 3, imagen: "https://via.placeholder.com/150" },
-  ]);
-
-
-
-  // Función para eliminar un producto del carrito
-  const eliminarProducto = (productoId) => {
-    const productosActualizados = productos.filter(producto => producto.id !== productoId);
-    setProductos(productosActualizados);
-  };
-  
-  const actualizarCantidad = (id, cantidad) => {
-    setProductos(
-      productos.map((producto) =>
-        producto.id === id
-          ? { ...producto, cantidad: Math.max(1, producto.cantidad + cantidad) }
-          : producto
-      )
-    );
-  };
-  
   
 
-  const toggleCart = () => {
-    setIsCartOpen(!isCartOpen);
-  };
 
   useEffect(() => {
     const fetchBestSellers = async () => {
@@ -261,28 +233,13 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
         toggleCart={toggleCart} 
         isTokenActive={isTokenActive}
         handleLogout={handleLogout}
+        isCartOpen={isCartOpen}
       />
       
       {/* Categories Bar */}
     <CategoriesBar />
-    
-      {/* Renderizar el carrito si está abierto */}
-      {isCartOpen && (
-        <div className="cart-overlay">
-          <div className="cart-container">
-            <button className="close-cart-button" onClick={toggleCart}>
-              ✖ 
-            </button>
-            <CarritoCompras 
-            productos={productos}
-            eliminarProducto={eliminarProducto}
-            actualizarCantidad={actualizarCantidad}
-          />
-          </div>
-        </div>
-      )}
-
-
+  
+ 
 
       {/* Carousel */}
       <div className="slider-container">
