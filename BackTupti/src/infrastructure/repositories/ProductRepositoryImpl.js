@@ -114,6 +114,14 @@ class ProductRepositoryImpl {
           throw error;
         }
       }
+      async buscarPorId(id) {
+        try {
+          return await Product.findByPk(id);
+        } catch (error) {
+          console.error('Error al buscar producto por ID:', error);
+          throw error;
+        }
+      }
 }
 
 module.exports = new ProductRepositoryImpl();
