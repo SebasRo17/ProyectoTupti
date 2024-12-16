@@ -325,9 +325,8 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
         <h2>Productos Destacados</h2>
         {renderProductCarousel()}
       </div>
-      
-      {/* Footer */}
-      <Footer />
+    {/* Footer */}
+    <Footer />
     </div>
   );
 };
