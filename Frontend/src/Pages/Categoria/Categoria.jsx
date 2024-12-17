@@ -287,8 +287,7 @@ function Categoria() {
 
           {/* Aquí va el componente de Footer */}
           <Footer />
-                   {/* Aquí va el componente de Filtros
-         <Filtros /> */}
+          <Filtros /> 
 
       </div>
    );

@@ -3,9 +3,9 @@
 
 @media screen and (min-width: 1441px){
     .categoria-container {
-        max-width: 100%;
-        margin-top: -15%;
-        margin-left: 20;
+        max-width: 80%;
+        margin-top: -10%;
+        margin-left: 250px;
         margin-right: auto;
       }
       .productos-grid{
