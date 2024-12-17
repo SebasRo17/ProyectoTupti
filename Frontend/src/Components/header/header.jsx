@@ -36,30 +36,6 @@ const Header = ({ toggleCart, isCartOpen}) => {
     }
   }, []);
 
-  useEffect(() => {
-    const fetchCarrito = async () => {
-      if (idUsuario) {
-        try {
-          const carritoData = await getCarritoByUsuario(idUsuario);
-          console.log('Carrito completo:', carritoData);
-          console.log('Detalles del carrito:', carritoData.detalles);
-          // Actualizar el estado de productos con los datos obtenidos
-          setProductos(carritoData.detalles.map(detalle => ({
-            id: detalle.IdProducto,
-            nombre: detalle.Producto.Nombre,
-            precio: parseFloat(detalle.PrecioUnitario),
-            cantidad: detalle.Cantidad,
-            imagen: detalle.Producto.ImagenUrl
-          })));
-        } catch (error) {
-          console.error('Error al cargar el carrito:', error);
-        }
-      }
-    };
-
-    fetchCarrito();
-  }, [idUsuario]);
-
 // Lógica del carrito
 const eliminarProducto = (productoId) => {
   setProductos(productos.filter((producto) => producto.id !== productoId));
