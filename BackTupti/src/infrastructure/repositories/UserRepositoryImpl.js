@@ -1,4 +1,5 @@
 const User = require('../../domain/models/User');
+const bcrypt = require('bcrypt');
 
 class UserRepositoryImpl {
   async findAll() {
@@ -66,6 +67,19 @@ class UserRepositoryImpl {
       return null;
     } catch (error) {
       console.error('Error al buscar usuario por email:', error);
+      throw error;
+    }
+  }
+  async updatePassword(userId, newPassword) {
+    try {
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      await User.update(
+        { Contrasenia: hashedPassword },
+        { where: { IdUsuario: userId } }
+      );
+      return true;
+    } catch (error) {
+      console.error('Error actualizando contraseña:', error);
       throw error;
     }
   }

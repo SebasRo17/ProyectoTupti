@@ -1,4 +1,5 @@
 const UserRepository = require('../../infrastructure/repositories/UserRepositoryImpl');
+const EmailService = require('./EmailService');
 const User = require('../../domain/models/User')
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
@@ -89,6 +90,29 @@ class UserService {
 
     } catch (error) {
       console.error('Error en el servicio de login:', error);
+      throw error;
+    }
+  }
+  async requestPasswordReset(email) {
+    try {
+      const user = await UserRepository.findByEmail(email);
+      
+      if (!user) {
+        throw new Error('No existe usuario con ese email');
+      }
+
+      // Generar contraseña temporal aleatoria
+      const temporaryPassword = crypto.randomBytes(4).toString('hex');
+
+      // Actualizar contraseña en la base de datos
+      await UserRepository.updatePassword(user.IdUsuario, temporaryPassword);
+
+      // Enviar email con la nueva contraseña
+      await EmailService.sendTemporaryPassword(email, temporaryPassword);
+
+      return true;
+    } catch (error) {
+      console.error('Error en recuperación de contraseña:', error);
       throw error;
     }
   }

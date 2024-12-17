@@ -128,6 +128,28 @@ async login(req, res) {
     });
   }
 }
+async requestPasswordReset(req, res) {
+  try {
+    const { email } = req.body;
+    
+    if (!email) {
+      return res.status(400).json({ 
+        message: 'El email es requerido' 
+      });
+    }
+
+    await UserService.requestPasswordReset(email);
+    
+    res.json({ 
+      message: 'Si el email existe en nuestra base de datos, recibirás una nueva contraseña temporal' 
+    });
+  } catch (error) {
+    console.error('Error en controlador:', error);
+    res.status(500).json({ 
+      message: 'Error al procesar la solicitud' 
+    });
+  }
+}
 }
 
 module.exports = new UserController();

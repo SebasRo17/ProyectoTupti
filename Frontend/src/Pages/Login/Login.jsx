@@ -19,6 +19,9 @@ function Login() {
   const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
+  const apiUrl = import.meta.env.MODE === 'development' 
+  ? import.meta.env.VITE_API_URL_DEVELOPMENT 
+  : import.meta.env.VITE_API_URL_PRODUCTION;
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -32,12 +35,12 @@ function Login() {
   useEffect(() => {
     const handleMessage = (event) => {
       console.log('Mensaje recibido:', event);
-  
-      if (event.origin !== 'http://localhost:3000') {
+
+      if (event.origin !== apiUrl) {
         console.warn('Origen no autorizado', event.origin);
         return;
       }
-  
+
       if (event.data && event.data.token) {
         try {
           console.log('Token recibido:', event.data.token);
@@ -45,33 +48,29 @@ function Login() {
           // Decodifica el token
           const payload = jwtDecode(event.data.token); 
           console.log('Payload decodificado:', payload);
-  
+
           // Verifica que la estructura de 'payload' sea la que esperas
           console.log('isAdmin en el payload:', payload.isAdmin);
-  
+
           // Almacena el token
           localStorage.setItem('jwtToken', event.data.token);
-          if (payload.isAdmin) {
-            console.log('Redirigiendo a /admin');
-            localStorage.setItem('jwtToken', event.data.token);
-            navigate('/admin');
-          } else {
-            console.log('Redirigiendo a /');
-            localStorage.setItem('jwtToken', event.data.token);
-            navigate('/');
-          }
+
+          // Redirigir al usuario a la página anterior o a la ruta por defecto
+          const from = location.state?.from || (payload.isAdmin ? '/admin' : '/');
+          console.log('Redirigiendo a:', from); // Agregar un console.log para depurar
+          navigate(from);
         } catch (error) {
           console.error('Error procesando el token:', error);
         }
       }
     };
-  
+
     window.addEventListener('message', handleMessage);
-  
+
     return () => {
       window.removeEventListener('message', handleMessage);
     };
-  }, [navigate]);
+  }, [navigate, location, apiUrl]);
   
   
   const handleFacebookLogin = () => {
