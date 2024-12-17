@@ -58,8 +58,6 @@ const actualizarCantidad = (id, cantidad) => {
 
   return (
     <>
-      <div className="debug-overlay" /> {/* Temporal para depuración */}
-      
       <header className="header" style={{ position: 'fixed', zIndex: 1000 }}>
         {/* Logo */}
         <div className="logo">
