@@ -1,15 +1,17 @@
+require('dotenv').config();
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
-const jwt = require('jsonwebtoken');
 const UserService = require('../aplication/services/UserService');
+const AuthService = require('../aplication/services/AuthService');
 
 module.exports = function configurePassport() {
   // Configurar estrategia de Google
+  const callbackURL = process.env.NODE_ENV === 'production' ? process.env.PROD_URL : process.env.DEV_URL;
   passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/callback",
+    callbackURL: `${callbackURL}/auth/google/callback`,
     passReqToCallback: true
   }, async (req, accessToken, refreshToken, profile, done) => {
     try {
@@ -20,12 +22,12 @@ module.exports = function configurePassport() {
         user = await UserService.createUser({
           Email: profile.emails[0].value,
           Contrasenia: 'google-auth', 
-          CodigoUs: `GOOGLE-${Date.now()}` 
+          CodigoUs: `GOOGLE-${Date.now()}`,
+          IdRol: 2 // Rol por defecto para usuarios de Google
         });
       }
 
-      // Generar un token JWT
-      const token = jwt.sign({ id: user.IdUsuario, email: user.Email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+      const token = AuthService.generateToken(user);
       console.log('Token generado:', token);
 
       return done(null, { user, token });
@@ -38,7 +40,7 @@ module.exports = function configurePassport() {
   passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: "http://localhost:3000/auth/facebook/callback",
+    callbackURL: `${callbackURL}/auth/facebook/callback`,
     profileFields: ['id', 'emails', 'name']
   }, async (accessToken, refreshToken, profile, done) => {
     try {
@@ -51,12 +53,12 @@ module.exports = function configurePassport() {
           Contrasenia: 'facebook-auth', 
           CodigoUs: `FACEBOOK-${Date.now()}`,
           FacebookId: profile.id,
-          Nombre: `${profile.name.givenName} ${profile.name.familyName}`
+          Nombre: `${profile.name.givenName} ${profile.name.familyName}`,
+          IdRol: 2 // Rol por defecto para usuarios de Facebook
         });
       }
 
-      // Generar un token JWT
-      const token = jwt.sign({ id: user.IdUsuario, email: user.Email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+      const token = AuthService.generateToken(user);
       console.log('Token generado:', token);
 
       return done(null, { user, token });

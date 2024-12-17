@@ -1,7 +1,8 @@
+require('dotenv').config();
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const jwt = require('jsonwebtoken');
 const UserService = require('./UserService');
+const AuthService = require('./AuthService');
 const User = require('../../domain/models/User');
 
 class GoogleAuthService {
@@ -10,10 +11,12 @@ class GoogleAuthService {
   }
 
   initializePassport() {
+    const callbackURL = process.env.NODE_ENV === 'production' ? process.env.PROD_URL : process.env.DEV_URL;
+
     passport.use(new GoogleStrategy({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/auth/google/callback",
+      callbackURL: `${callbackURL}/auth/google/callback`,
       passReqToCallback: true
     }, async (req, accessToken, refreshToken, profile, done) => {
       try {
@@ -24,12 +27,12 @@ class GoogleAuthService {
           user = await UserService.createUser({
             Email: profile.emails[0].value,
             Contrasenia: 'google-auth', 
-            CodigoUs: `GOOGLE-${Date.now()}` 
+            CodigoUs: `GOOGLE-${Date.now()}`,
+            IdRol: 2 // Rol por defecto para usuarios de Google
           });
         }
 
-        // Generar un token JWT
-        const token = jwt.sign({ id: user.IdUsuario, email: user.Email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = AuthService.generateToken(user);
         console.log('Token generado:', token);
 
         return done(null, { user, token });

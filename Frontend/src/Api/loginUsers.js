@@ -1,6 +1,5 @@
 import axios from 'axios';
-
-const API_URL = 'https://proyectotupti.onrender.com';
+import { API_URL } from '../config/config';
 
 export const loginUser = async (email, password) => {
   try {
@@ -8,6 +7,17 @@ export const loginUser = async (email, password) => {
       email,
       password
     });
+    
+    // Almacenar datos del usuario según la opción de "mantener sesión"
+    const storeData = (data) => {
+      const storage = localStorage;
+      storage.setItem('user', JSON.stringify(data));
+    };
+
+    if (response.data.success) {
+      storeData(response.data.user);
+    }
+
     return response.data;
   } catch (error) {
     throw error.response?.data || { message: 'Error de conexión' };

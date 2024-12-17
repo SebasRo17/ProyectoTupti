@@ -1,0 +1,716 @@
+
+/*Desktop (1920px - 1950px) */
+@media screen and (min-width: 1920px) and (max-width: 1950px) {
+    .login-container {
+      padding: 0 -30%;
+    }
+    .login-card {
+      max-width: 40%;
+    }
+    .login-card h1 {
+      font-size: 4vw;
+    }
+    .login-button {
+      padding: 1% 30%;
+      margin-left: 15%;
+    }
+    .social-buttons {
+      margin-left: 26%;
+    }
+  }
+/*Desktop (1801px - 1919px) */
+@media screen and (min-width: 1801px) and (max-width: 1919px) {
+    .login-container {
+      padding: 0 -30%;
+    }
+    .login-card {
+      max-width: 40%;
+    }
+    .login-card h1 {
+      font-size: 4vw;
+    }
+    .login-button {
+      padding: 1% 30%;
+      margin-left: 15%;
+    }
+    .social-buttons {
+      margin-left: 25%;
+    }
+  }
+  
+/* Desktop (1650px - 1800px) */
+@media screen and (min-width: 1650px) and (max-width: 1800px) {
+    .login-container {
+      padding: 0 -30%;
+    }
+    .login-card {
+      max-width: 40%;
+    }
+    .login-card h1 {
+      font-size: 4vw;
+    }
+    .login-button {
+      padding: 1% 30%;
+      margin-left: 15%;
+    }
+    .social-buttons {
+      margin-left: 23%;
+    }
+  }
+  
+
+/* Desktop (1441px - 1650px) */
+@media screen and (min-width: 1440px) and (max-width: 1649px) {
+    .login-container {
+      padding: 0 -30%;
+    }
+    .login-card {
+      max-width: 40%;
+    }
+    .login-card h1 {
+      font-size: 4vw;
+    }
+    .login-button {
+      padding: 1% 30%;
+      margin-left: 15%;
+    }
+    .social-buttons {
+      margin-left: 18%;
+    }
+  }
+  /* Laptops (1024px - 1439px) */
+@media (min-width: 1024px) and (max-width: 1439px) {
+    .login-container {
+      padding: 50 10%;
+    }
+    .login-card {
+      max-width: 50%;
+    }
+    .login-card h1 {
+      font-size: 5vw;
+    }
+    .login-button {
+      padding: 1% 30%;
+      margin-left: 12%;
+    }
+    .social-buttons {
+      margin-left: 13%;
+    }
+    .forgot-password {
+      margin-top: 2rem;
+      transform: translateY(-100%);
+      font-size: 1.5rem;
+    }
+  }
+  
+  /* Tablets (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .login-container {
+      padding: 0 20%;
+    }
+    .login-card {
+      max-width: 100%;
+      padding: -0%;
+      border-radius: 60px;
+      max-height: 80vh;
+      margin-top: -5%;
+    }
+    .login-card h1 {
+      font-size: 6vw;
+    }
+    .login-button {
+      padding: 2% 30%;
+      border-radius: 50px;
+      margin-left: 10%;
+    }
+    .forgot-password {
+      transform: translateX(0) translateY(-185%);
+    }
+    .social-buttons {
+      margin-left: 15%;
+    }
+    .login-form {
+      display: block;
+      text-align: left;
+      font-size: 1px;
+      margin-left: 5%;
+      margin-right: 5%;
+      color: #555;
+      margin-bottom: 10px;
+    }
+    .register-link {
+      margin-top: 10%;
+      text-align: center;
+      font-size: 0.9rem;
+      word-wrap: break-word;
+    }
+  }
+  
+  /* Responsivo para pantallas entre 425px y 767px */
+@media (min-width: 425px) and (max-width: 767px) {
+    .login-container {
+      padding: 0 5%;
+    }
+    .login-card {
+      max-width: 100%;
+      padding: 10px;
+      border-radius: 60px;
+    }
+  
+    .login-card h1 {
+      font-size: 2rem;
+    }
+    .login-form {
+      display: block;
+      text-align: left;
+      font-size: 1px;
+      margin-left: 5%;
+      margin-right: 5%;
+      color: #555;
+      margin-bottom: 10px;
+    }
+    
+    .form-group input {
+      font-size: 1rem;
+      padding: 8px;
+    }
+  
+    .login-button {
+      padding: 2% 30%;
+      border-radius: 50px;
+      margin-left: 10%;
+    }
+  
+    .register-link {
+      font-size: 0.8rem;
+      margin-top: 12px;
+    }
+  
+    .register-link a {
+      font-size: 0.8rem;
+    }
+  
+    .forgot-password {
+      transform: translateX(0) translateY(-275%);
+      margin-top:70px;
+    }
+    .social-buttons {
+      margin-left: 5%;
+    }
+    .back-login-circle {
+      width: 30px;
+      height: 30px;
+    }
+  }
+  
+  /* Pantallas entre 424px y 375px */
+@media (max-width: 424px) and (min-width: 375px) {
+    .login-container {
+      padding: 5% 8%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      height: auto;
+      overflow-y: auto;
+    }
+  
+    .login-card {
+      width: 100%;
+      max-width: 90%;
+      min-height: auto;
+      padding: 15px;
+      margin-top: 10px;
+      border-radius: 15px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 60px;
+    }
+  
+    .login-card h1 {
+      font-size: 7vw;
+      margin-bottom: 12%;
+      text-align: center;
+      transform: translateY(30%);
+    }
+  
+    .login-button {
+      padding: 3% 30%;
+      font-size: 14px;
+      width: auto;
+      text-align: center;
+      margin-top: 20px;
+      margin-left: 30px;
+    }
+  
+    .forgot-password {
+      font-size: 0.9rem;
+      margin-top: 12px;
+      text-align: center;
+      transform: translateY(-50%);
+    }
+  
+    .forgot-password a {
+      font-size: 0.9rem;
+    }
+  
+    .social-buttons {
+      margin-left: -5%;
+    }
+  
+    .login-facebook {
+      margin-right: 15px;
+      margin-left: 145px;
+    }
+  
+    .login-error-message {
+      margin-bottom: 10px;
+      font-size: 12px;
+      text-align: center;
+      margin-left: 0;
+    }
+  
+    .back-login-circle {
+      width: 25px;
+      height: 25px;
+      margin-top: -10px;
+      margin-left: -10px;
+    }
+  
+    .form-group {
+      margin-bottom: 15px;
+    }
+  }
+  
+  /* Pantallas entre 374px y 320px */
+  @media (max-width: 374px) and (min-width: 320px) {
+    .login-container {
+      padding: 5% 0%;
+      display: flex;
+      overflow-y: auto;
+    }
+  
+    .login-card {
+      width: 100%;
+      max-width: 90%;
+      min-height: auto;
+      padding: 20px;
+      margin-top: 10px;
+      border-radius: 15px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 60px;
+    }
+  
+    .login-card h1 {
+      font-size: 10vw;
+      margin-bottom: 10%;
+      text-align: center;
+      transform: translateY(-10%);
+    }
+  
+    .login-button {
+      padding: 3% 30%;
+      font-size: 14px;
+      width: auto;
+      text-align: center;
+      margin-top: 20px;
+    }
+  
+    .forgot-password {
+      font-size: 0.8rem;
+      margin-top: 15px;
+      text-align: center;
+      transform: translateY(-50%);
+      margin-right: -90px;
+    }
+  
+    .forgot-password a {
+      font-size: 0.9rem;
+      color: #4CAF50;
+      transform: translateY(10%);
+    }
+  
+    .social-buttons {
+      margin-left: -8%;
+    }
+  
+    .login-error-message {
+      margin-bottom: 5px;
+      font-size: 10px;
+      text-align: center;
+      margin-right: 20px;
+    }
+  
+    .back-login-circle {
+      width: 35px;
+      height: 35px;
+      margin-top: 25px;
+    }
+  
+    .form-group {
+      margin-bottom: 20px;
+    }
+  
+    .back-login-circle {
+      width: 25px;
+      height: 25px;
+    }
+  
+    .login-back-button {
+      position: absolute;
+      top: -5px;
+      left: 25px;
+    }
+  
+    .login-facebook {
+      margin-right: 30px;
+      margin-left: 150px;
+    }
+  }
+
+/* Pantallas entre 412 */
+@media (max-width: 412px){
+  .login-container {
+    padding: 5% 0%;
+    display: flex;
+    overflow-y: auto;
+  }
+
+  .login-card {
+    width: 100%;
+    max-width: 90%;
+    min-height: auto;
+    padding: 20px;
+    margin-top: 15px;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 60px;
+  }
+
+  .login-card h1 {
+    font-size: 10vw;
+    margin-bottom: 10%;
+    text-align: center;
+    transform: translateY(-0%);
+  }
+
+  .login-button {
+    padding: 3% 30%;
+    font-size: 17px;
+    width: auto;
+    text-align: center;
+    margin-top: 20px;
+
+  }
+
+  .forgot-password {
+    font-size: 0.8rem;
+    margin-top: 15px;
+    text-align: center;
+    transform: translateY(-50%);
+    margin-right: -150px;
+  }
+
+  .forgot-password a {
+    font-size: 0.9rem;
+    color: #4CAF50;
+    transform: translateY(10%);
+  }
+
+  .social-buttons {
+    margin-left: 6%;
+  }
+
+  .login-error-message {
+    margin-bottom: 5px;
+    font-size: 10px;
+    text-align: center;
+    margin-right: 20px;
+  }
+
+  .back-login-circle {
+    width: 40px;
+    height: 40px;
+    margin-top: 25px;
+    margin-left: 10px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .back-login-circle {
+    width: 25px;
+    height: 25px;
+  }
+
+  .login-back-button {
+    position: absolute;
+    top: -5px;
+    left: 25px;
+  }
+
+  .login-facebook {
+    margin-right: 30px;
+    margin-left: 150px;
+  }
+}
+
+/* Pantallas entre 344 */
+@media (max-width: 344px){
+  .login-container {
+    padding: 5% 0%;
+    display: flex;
+    overflow-y: auto;
+  }
+
+  .login-card {
+    width: 100%;
+    max-width: 90%;
+    min-height: auto;
+    padding: 20px;
+    margin-top: 15px;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 60px;
+  }
+
+  .login-card h1 {
+    font-size: 10vw;
+    margin-bottom: 10%;
+    text-align: center;
+    transform: translateY(-0%);
+  }
+
+  .login-button {
+    padding: 3% 30%;
+    font-size: 17px;
+    width: auto;
+    text-align: center;
+    margin-top: 20px;
+
+  }
+
+  .forgot-password {
+    font-size: 0.8rem;
+    margin-top: 15px;
+    text-align: center;
+    transform: translateY(-50%);
+    margin-right: -150px;
+  }
+
+  .forgot-password a {
+    font-size: 0.9rem;
+    color: #4CAF50;
+    transform: translateY(10%);
+  }
+
+  .social-buttons {
+    margin-left: 6%;
+  }
+
+  .login-error-message {
+    margin-bottom: 5px;
+    font-size: 10px;
+    text-align: center;
+    margin-right: 20px;
+  }
+
+  .back-login-circle {
+    width: 40px;
+    height: 40px;
+    margin-top: 25px;
+    margin-left: 10px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .back-login-circle {
+    width: 25px;
+    height: 25px;
+  }
+
+  .login-back-button {
+    position: absolute;
+    top: -5px;
+    left: 25px;
+  }
+
+  .login-facebook {
+    margin-right: 30px;
+    margin-left: 150px;
+  }
+}
+
+
+/* Pantallas entre 360 */
+@media (max-width: 360px){
+  .login-container {
+    padding: 5% 0%;
+    display: flex;
+    overflow-y: auto;
+  }
+
+  .login-card {
+    width: 100%;
+    max-width: 90%;
+    min-height: auto;
+    padding: 20px;
+    margin-top: 10px;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 60px;
+  }
+
+  .login-card h1 {
+    font-size: 10vw;
+    margin-bottom: 10%;
+    text-align: center;
+    transform: translateY(-10%);
+  }
+
+  .login-button {
+    padding: 3% 30%;
+    font-size: 14px;
+    width: auto;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .forgot-password {
+    font-size: 0.8rem;
+    margin-top: 15px;
+    text-align: center;
+    transform: translateY(-50%);
+    margin-right: -90px;
+  }
+
+  .forgot-password a {
+    font-size: 0.9rem;
+    color: #4CAF50;
+    transform: translateY(10%);
+  }
+
+  .social-buttons {
+    margin-left: -0%;
+  }
+
+  .login-error-message {
+    margin-bottom: 5px;
+    font-size: 10px;
+    text-align: center;
+    margin-right: 20px;
+  }
+
+  .back-login-circle {
+    width: 35px;
+    height: 35px;
+    margin-top: 25px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .back-login-circle {
+    width: 25px;
+    height: 25px;
+  }
+
+  .login-back-button {
+    position: absolute;
+    top: -5px;
+    left: 25px;
+  }
+
+  .login-facebook {
+    margin-right: 30px;
+    margin-left: 150px;
+  }
+}
+
+/* Pantallas entre 320 */
+@media (max-width: 320px){
+  .login-container {
+    padding: 5% 0%;
+    display: flex;
+    overflow-y: auto;
+  }
+
+  .login-card {
+    width: 100%;
+    max-width: 90%;
+    min-height: auto;
+    padding: 20px;
+    margin-top: 10px;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 60px;
+  }
+
+  .login-card h1 {
+    font-size: 10vw;
+    margin-bottom: 10%;
+    text-align: center;
+    transform: translateY(-10%);
+  }
+
+  .login-button {
+    padding: 3% 30%;
+    font-size: 14px;
+    width: auto;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .forgot-password {
+    font-size: 0.8rem;
+    margin-top: 15px;
+    text-align: center;
+    transform: translateY(-50%);
+    margin-right: -90px;
+  }
+
+  .forgot-password a {
+    font-size: 0.9rem;
+    color: #4CAF50;
+    transform: translateY(10%);
+  }
+
+  .social-buttons {
+    margin-left: -6%;
+  }
+
+  .login-error-message {
+    margin-bottom: 5px;
+    font-size: 10px;
+    text-align: center;
+    margin-right: 20px;
+  }
+
+  .back-login-circle {
+    width: 35px;
+    height: 35px;
+    margin-top: 25px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .back-login-circle {
+    width: 25px;
+    height: 25px;
+  }
+
+  .login-back-button {
+    position: absolute;
+    top: -5px;
+    left: 25px;
+  }
+
+  .login-facebook {
+    margin-right: 30px;
+    margin-left: 150px;
+  }
+}

@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc"; // Ícono de Google
 import { FaFacebookF } from "react-icons/fa"; // Ícono de Facebook
 import { HiEye, HiEyeOff } from "react-icons/hi"; // Iconos de ojo
 import { HiArrowLeft } from "react-icons/hi";
 import "./Login.css";
+import { loginUser } from '../../Api/loginUsers';
+import "./responsiveLogin.css";
+import jwtDecode from 'jwt-decode';
 
 
 function Login() {
@@ -14,10 +17,8 @@ function Login() {
   const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
-
-  const handleCheckboxChange = (e) => {
-    setStayLoggedIn(e.target.checked);
-  };
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -26,6 +27,79 @@ function Login() {
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+  };
+
+  useEffect(() => {
+    const handleMessage = (event) => {
+      console.log('Mensaje recibido:', event);
+  
+      if (event.origin !== import.meta.env.VITE_API_URL) {
+        console.warn('Origen no autorizado', event.origin);
+        return;
+      }
+  
+      if (event.data && event.data.token) {
+        try {
+          console.log('Token recibido:', event.data.token);
+          
+          // Decodifica el token
+          const payload = jwtDecode(event.data.token); 
+          console.log('Payload decodificado:', payload);
+  
+          // Verifica que la estructura de 'payload' sea la que esperas
+          console.log('isAdmin en el payload:', payload.isAdmin);
+  
+          // Almacena el token
+          localStorage.setItem('jwtToken', event.data.token);
+          if (payload.isAdmin) {
+            console.log('Redirigiendo a /admin');
+            localStorage.setItem('jwtToken', event.data.token);
+            navigate('/admin');
+          } else {
+            console.log('Redirigiendo a /');
+            localStorage.setItem('jwtToken', event.data.token);
+            navigate('/');
+          }
+        } catch (error) {
+          console.error('Error procesando el token:', error);
+        }
+      }
+    };
+  
+    window.addEventListener('message', handleMessage);
+  
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, [navigate]);
+  
+  
+  const handleFacebookLogin = () => {
+    const facebookAuthUrl = `${import.meta.env.VITE_API_URL}/auth/facebook`;
+    const width = 600;
+    const height = 600;
+    const left = (window.innerWidth - width) / 2;
+    const top = (window.innerHeight - height) / 2;
+  
+    window.open(
+      facebookAuthUrl, 
+      'Facebook Login', 
+      `width=${width},height=${height},top=${top},left=${left}`
+    );
+  };
+  
+  const handleGoogleLogin = () => {
+    const googleAuthUrl = `${import.meta.env.VITE_API_URL}/auth/google`;
+    const width = 600;
+    const height = 600;
+    const left = (window.innerWidth - width) / 2;
+    const top = (window.innerHeight - height) / 2;
+  
+    window.open(
+      googleAuthUrl, 
+      'Google Login', 
+      `width=${width},height=${height},top=${top},left=${left}`
+    );
   };
 
   const handleEmailChange = (e) => {
@@ -46,6 +120,24 @@ function Login() {
       setPasswordError("La contraseña debe tener al menos 6 caracteres.");
     } else {
       setPasswordError("");
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await loginUser(email, password);
+      
+      if (response.success) {
+        localStorage.setItem('jwtToken', response.token);
+        const { isAdmin } = response.user;
+        console.log("token",response.token);
+        // Redirigir al usuario a la página anterior o a la ruta por defecto
+        const from = location.state?.from || (isAdmin ? '/admin' : '/');
+        navigate(from);
+      }
+    } catch (error) {
+      setPasswordError(error.message || 'Error al iniciar sesión');
     }
   };
 
@@ -73,7 +165,7 @@ function Login() {
         </div>
 
         <h1>LOGIN</h1>
-        <form className="login-form">
+        <form className="login-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Usuario</label>
             <div className="input-container">
@@ -127,14 +219,7 @@ function Login() {
           </div>
 
           <div className="form-group">
-            <label>
-              <input
-                type="checkbox"
-                checked={stayLoggedIn}
-                onChange={handleCheckboxChange}
-              />
-              Mantener sesión iniciada
-            </label>
+            
           </div>
 
           <div className="forgot-password">
@@ -153,10 +238,10 @@ function Login() {
         <div className="social-login">
           <p>Regístrate con</p>
           <div className="social-buttons">
-            <button className="login-facebook">
+            <button className="login-facebook" onClick={handleFacebookLogin}>
               <FaFacebookF />
             </button>
-            <button className="login-google">
+            <button className="login-google" onClick={handleGoogleLogin}>
               <FcGoogle />
             </button>
           </div>

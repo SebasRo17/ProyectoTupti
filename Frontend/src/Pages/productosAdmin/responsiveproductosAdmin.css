@@ -1,0 +1,158 @@
+
+/* ============================= */
+/*Responsive solo filtro */
+/* Desktop (2500px - 2560px) */
+/* ============================= */
+@media screen and (min-width: 2500px) and (max-width: 2560px) {
+    .filtros-clase {
+      width: 300px;
+      transform: translateY(350px);
+      margin-right: -850px;
+
+    }
+  }
+/* ============================= */
+/* Desktop (2001px - 2500px) */
+/* ============================= */
+@media screen and (min-width: 2001px) and (max-width: 2500px) {
+    .filtros-clase {
+      width: 0px;
+      transform: translateY(350px);
+      margin-right: -400px;
+
+    }
+  }
+/* ============================= */
+/* Desktop (1951px - 2000px) */
+/* ============================= */
+@media screen and (min-width: 1951px) and (max-width: 2000px) {
+    .filtros-clase {
+      width: 0px;
+      transform:translateY(350px)
+    }
+}
+
+/* ============================= */
+/* Desktop (1920px - 1950px) */
+/* ============================= */
+@media screen and (min-width: 1920px) and (max-width: 1950px) {
+    .filtros-clase {
+      width:0px;
+      margin-right: -120px;
+      transform: translateY(380px);
+    }
+}
+  
+/* ============================= */
+  /* Desktop (1801px - 1919px) */
+  /* ============================= */
+  @media screen and (min-width: 1801px) and (max-width: 1919px) {
+    .filtros-clase {
+      width: 0px;
+      transform: translateY(350px);
+    }
+}
+  
+/* ============================= */
+  /* Desktop (1650px - 1800px) */
+  /* ============================= */
+  @media screen and (min-width: 1650px) and (max-width: 1800px) {
+    .filtros-clase {
+      width: 110px;
+      transform: translateY(300px);
+    }
+}
+  
+/* ============================= */
+  /* Desktop (1441px - 1650px) */
+  /* ============================= */
+  @media screen and (min-width: 1440px) and (max-width: 1650px) {
+    .filtros-clase {
+      width: 220px;
+      transform: translateY(-200px);
+      margin-right: 60px;
+    }
+}
+  
+/* ============================= */
+  /* Laptops (1024px - 1439px) */
+  /* ============================= */
+  @media screen and (min-width: 1024px) and (max-width: 1439px) {
+    .filters-container {
+      justify-content: center; /* Centrar el filtro */
+    }
+  
+    .filtros-clase {
+      width: 0px;
+      margin-right: -550px;
+      transform: translateY(-100px);
+    }
+}
+  
+/* ============================= */
+  /* Tablets (768px - 1023px) */
+  /* ============================= */
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    .filters-container {
+      justify-content: center; /* Centrar el filtro */
+      margin-left: 500px;
+      margin-top: 20px;
+    }
+  
+    .filtros-clase {
+      width: 90%; /* Ancho casi completo */
+      padding: 15px;
+    }
+}
+  
+/* ========================================== */
+  /* Responsivo para pantallas entre 425px y 767px */
+  /* ========================================== */
+  @media screen and (min-width: 425px) and (max-width: 767px) {
+    .filters-container {
+      justify-content: center; /* Centrar el filtro */
+      margin-left: 550px;
+      transform: translateY(600px);
+
+    }
+  
+    .filtros-clase {
+      width: 95%; /* Ancho casi completo */
+      padding: 10px;
+    }
+  
+}
+  
+/* ======================================== */
+  /* Pantallas entre 424px y 375px */
+  /* ======================================== */
+  @media screen and (min-width: 375px) and (max-width: 424px) {
+    .filters-container {
+      justify-content: center;
+      transform: translateY(650px);
+      margin-left: 600px;
+    }
+  
+    .filtros-clase {
+      width: 100%; /* Ocupa todo el ancho */
+      padding: 8px;
+    }
+  
+}
+  
+/* ======================================== */
+  /* Pantallas entre 374px y 320px */
+  /* ======================================== */
+  @media screen and (max-width: 374px) {
+    .filters-container {
+      justify-content: center;
+      transform: translateY(600px);
+      margin-left: 570px;
+    }
+  
+    .filtros-clase {
+      width: 100%; /* Ancho completo */
+      padding: 5px;
+    }
+}  
+

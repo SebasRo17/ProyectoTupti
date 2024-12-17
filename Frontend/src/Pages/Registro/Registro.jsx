@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import "./Registro.css";
-import Login from '../Login/Login.jsx';
 import { FcGoogle } from "react-icons/fc"; // Ícono de Google
 import { FaFacebookF } from "react-icons/fa"; // Ícono de Facebook
 import { HiEye, HiEyeOff } from "react-icons/hi"; // Iconos de ojo
 import ReCAPTCHA from "react-google-recaptcha";
+import "./responsiveRegistro.css";
 
 
 
@@ -18,6 +18,22 @@ function Registro() {
   const [passwordError, setPasswordError] = useState("");
   const [captchaVerified, setCaptchaVerified] = useState(false);
 
+  useEffect(() => {
+    const handleMessage = (event) => {
+      if (event.origin === import.meta.env.VITE_API_URL && event.data.token) {
+        console.log('Token JWT:', event.data.token);
+        // Guardar el token en el almacenamiento local
+        localStorage.setItem('jwtToken', event.data.token);
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, []);
+
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
@@ -27,6 +43,37 @@ function Registro() {
     return emailRegex.test(email);
   };
 
+  const handleFacebookLogin = () => {
+    const facebookAuthUrl = `${import.meta.env.VITE_API_URL}/auth/facebook`;
+    const width = 600;
+    const height = 600;
+    const left = (window.innerWidth - width) / 2;
+    const top = (window.innerHeight - height) / 2;
+
+    const newWindow = window.open(facebookAuthUrl, 'Facebook Login', `width=${width},height=${height},top=${top},left=${left}`);
+    const checkWindowClosed = setInterval(() => {
+      if (newWindow.closed) {
+        clearInterval(checkWindowClosed);
+        window.location.reload(); // Recargar la página principal después de cerrar la ventana emergente
+      }
+    }, 1000);
+  };
+  const handleGoogleLogin = () => {
+    const googleAuthUrl = `${import.meta.env.VITE_API_URL}/auth/google`;
+    const width = 600;
+    const height = 600;
+    const left = (window.innerWidth - width) / 2;
+    const top = (window.innerHeight - height) / 2;
+
+    const newWindow = window.open(googleAuthUrl, 'Google Login', `width=${width},height=${height},top=${top},left=${left}`);
+
+    const checkWindowClosed = setInterval(() => {
+      if (newWindow.closed) {
+        clearInterval(checkWindowClosed);
+        window.location.reload(); // Recargar la página principal después de cerrar la ventana emergente
+      }
+    }, 1000);
+  };
   const handleEmailChange = (e) => {
     const value = e.target.value;
     setEmail(value);
@@ -54,16 +101,28 @@ function Registro() {
     }
   };
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     if (!captchaVerified) {
       alert("Por favor, verifica el reCAPTCHA antes de registrarte.");
       return;
     }
-    console.log("Usuario registrado:", { email, password, confirmPassword });
-    setEmail("");
-    setPassword("");
-    setConfirmPassword("");
-    setCaptchaVerified(false);
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      console.log("Usuario registrado:", { email, password, confirmPassword });
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+      setCaptchaVerified(false);
+    } catch (error) {
+      console.error('Error durante el registro:', error);
+    }
   };
 
   const handleCaptchaChange = (value) => {
@@ -188,10 +247,10 @@ function Registro() {
           <div className="registro-social-text">
             <p>Regístrate con</p>
             <div className="registro-social-buttons">
-              <button className="registro-facebook">
+              <button className="registro-facebook" onClick={handleFacebookLogin}>
                 <FaFacebookF />
               </button>
-              <button className="registro-google">
+              <button className="registro-google" onClick={handleGoogleLogin}>
                 <FcGoogle />
               </button>
             </div>

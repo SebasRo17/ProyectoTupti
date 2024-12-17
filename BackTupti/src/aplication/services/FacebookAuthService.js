@@ -1,14 +1,16 @@
+require('dotenv').config();
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const AuthService = require('../services/AuthService');
 const User = require('../../domain/models/User'); // Asegúrate de importar el modelo User
 
 function configurePassport() {
+  const callbackURL = process.env.NODE_ENV === 'production' ? process.env.PROD_URL : process.env.DEV_URL;
   // Estrategia de Facebook
   passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: "http://localhost:3000/auth/facebook/callback",
+    callbackURL: `${callbackURL}/auth/facebook/callback`,
     profileFields: ['id', 'displayName', 'emails']
   },
   async (accessToken, refreshToken, profile, done) => {

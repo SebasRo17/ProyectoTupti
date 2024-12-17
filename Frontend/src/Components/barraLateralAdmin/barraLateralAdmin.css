@@ -1,0 +1,49 @@
+.barra-lateral-admin {
+    background-color: #15683b;
+    color: #fff;
+    height: 100%;
+    width: 190px;
+    padding: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    margin-left: 0%;
+    align-items: flex-start;
+    font-family:  Comfortaa, Georgia, 'Times New Roman', Times, serif;;
+  }
+  
+  .barra-lateral-logo {
+    margin-top: 1%
+    
+  }
+  .barra-lateral-logo img {
+    width: 80%;
+    margin-bottom: 20px;
+  }
+  
+  .barra-lateral-nav ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+  }
+  
+  .barra-lateral-nav li {
+    margin: 20px 0;
+  }
+  
+  .barra-lateral-nav a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+    display: block;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .barra-lateral-nav a:hover {
+    background-color: #2c3e50;
+  }
+  

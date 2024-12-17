@@ -1,100 +1,87 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { categoryNames, categoryIcons } from '../../data/categoryData.js';
+import AliceCarousel from "react-alice-carousel";
+import "react-alice-carousel/lib/alice-carousel.css";
+import { Link, useNavigate } from 'react-router-dom';
+import { categoryNames, categoryIcons, categoryIds } from '../../data/categoryData.js';
 import { promoImg } from '../../data/promoData.js';
 import './pantallaPrincipal.css';
 import './responsivePPrincipal.css'
 import Login from '../Login/Login.jsx';
 import Categoria from '../Categoria/Categoria.jsx';
 import { getBestSellers } from '../../Api/bestSellApi';
+import CarritoCompras from '../../Components/CarritoCompras/CarritoCompras.jsx';
+import Footer from '../../Components/footer/footer.jsx';
+import CategoriesBar from '../../Components/categoriesBar/categoriesBar.jsx';
+import Header from '../../Components/header/header.jsx';
+import jwtDecode from 'jwt-decode';
 
-const CategoriesBar = ({ categoryData }) => {
-  const scrollRef = useRef(null);
-  const [showLeftButton, setShowLeftButton] = useState(false);
-  const [showRightButton, setShowRightButton] = useState(false);
-
-
-  const handleScroll = () => {
-    if (scrollRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-      setShowLeftButton(scrollLeft > 0);
-      setShowRightButton(scrollLeft < scrollWidth - clientWidth);
-    }
-  };
-
-  useEffect(() => {
-    const scrollElement = scrollRef.current;
-    if (scrollElement) {
-      scrollElement.addEventListener('scroll', handleScroll);
-      handleScroll();
-    }
-    return () => {
-      if (scrollElement) {
-        scrollElement.removeEventListener('scroll', handleScroll);
-      }
-    };
-  }, []);
-
-  const scrollLeft = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: -200, behavior: 'smooth' });
-    }
-  };
-
-  const scrollRight = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: 200, behavior: 'smooth' });
-    }
-  };
-
-  // Ensure categoryData is always an array
-  const safeCategoryData = Array.isArray(categoryData) ? categoryData : [];
-
-  return (
-    <div className="categories-container">
-      {showLeftButton && (
-        <button 
-          className="category-nav-button left" 
-          onClick={scrollLeft}
-          aria-label="Scroll left"
-        >
-          ❮
-        </button>
-      )}
-      
-      <div className="categories-bar" ref={scrollRef}>
-        {safeCategoryData.map((category, index) => (
-          <Link to={'/Categoria'} key={category.id || index} className="category-item">
-          <div key={category.id || index} className="category-item">
-            <img 
-              src={category.icon} 
-              alt={category.label || `Category ${index + 1}`} 
-              className="category-icon" 
-            />
-            <div>{category.label || `Category ${index + 1}`}</div>
-          </div>
-          </Link>
-        ))}
-      </div>
-
-      {showRightButton && (
-        <button 
-          className="category-nav-button right" 
-          onClick={scrollRight}
-          aria-label="Scroll right"
-        >
-          ❯
-        </button>
-      )}
-    </div>
-  );
-};
 
 const TuptiPage = ({ carouselImages, categoryImages }) => {
   const [productCarouselImages, setProductCarouselImages] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isTokenActive, setIsTokenActive] = useState(false);
+  const navigate = useNavigate();
+
+  
+  useEffect(() => {
+    // Verifica el token al cargar el componente
+    const token = localStorage.getItem('jwtToken');
+    if (token) {
+      try {
+        const payload = jwtDecode(token);
+        const currentTime = Date.now() / 1000;
+        setIsTokenActive(payload.exp > currentTime);
+        if (payload.exp <= currentTime) {
+          localStorage.removeItem('jwtToken'); // Elimina token expirado
+        }
+      } catch (error) {
+        console.error('Error decodificando el token:', error);
+        localStorage.removeItem('jwtToken'); // Limpia token corrupto
+      }
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('jwtToken');
+    setIsTokenActive(false);
+    navigate('/');
+  };
+
+  const [productos, setProductos] = useState([
+    { id: 1, nombre: "Manzana", precio: 10.5, cantidad: 1, imagen: "https://via.placeholder.com/150" },
+    { id: 2, nombre: "Chocolate", precio: 20.0, cantidad: 2, imagen: "https://via.placeholder.com/150" },
+    { id: 3, nombre: "Producto 3", precio: 5.5, cantidad: 5, imagen: "https://via.placeholder.com/150" },
+    { id: 4, nombre: "Producto 4", precio: 2.0, cantidad: 2, imagen: "https://via.placeholder.com/150" },
+    { id: 5, nombre: "Producto 5", precio: 6.0, cantidad: 2, imagen: "https://via.placeholder.com/150" },
+    { id: 6, nombre: "Producto 6", precio: 1.0, cantidad: 3, imagen: "https://via.placeholder.com/150" },
+  ]);
+
+
+
+  // Función para eliminar un producto del carrito
+  const eliminarProducto = (productoId) => {
+    const productosActualizados = productos.filter(producto => producto.id !== productoId);
+    setProductos(productosActualizados);
+  };
+  
+  const actualizarCantidad = (id, cantidad) => {
+    setProductos(
+      productos.map((producto) =>
+        producto.id === id
+          ? { ...producto, cantidad: Math.max(1, producto.cantidad + cantidad) }
+          : producto
+      )
+    );
+  };
+  
+  
+
+  const toggleCart = () => {
+    setIsCartOpen(!isCartOpen);
+  };
 
   useEffect(() => {
     const fetchBestSellers = async () => {
@@ -133,7 +120,7 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
   }));  
 
   const defaultCategoryImages = categoryNames.map((name, i) => ({
-    id: i,
+    id: i + 1, // Modificado para empezar en 1 en lugar de 0
     icon: categoryIcons[name],
     label: name,
   }));
@@ -222,8 +209,15 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
 
     return (
       <div className="product-carousel-container">
-        <div className="product-list" ref={(el) => (sectionRefs.current[0] = el)}>
-          {productCarouselImages.map((product) => (
+        <AliceCarousel
+          autoPlay
+          autoPlayInterval={5000} // Aumentado a 5 segundos
+          animationDuration={1500} // Duración de la animación más lenta
+          infinite={false} // Desactivar el modo infinito
+          disableDotsControls={false} // Mostrar los puntos de navegación
+          disableButtonsControls={true}
+          mouseTracking={true}
+          items={productCarouselImages.map((product) => (
             <div key={product.id} className="product-item">
               <img
                 src={product.imageUrl}
@@ -239,103 +233,54 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
               <p className="product-price">{product.price}</p>
             </div>
           ))}
-        </div>
-        <button className="section-button left" onClick={() => scrollSectionLeft(0)}>❮</button>
-        <button className="section-button right" onClick={() => scrollSectionRight(0)}>❯</button>
+          responsive={{
+            0: { 
+              items: 2,
+              itemsFit: 'contain' // Asegura que los items se ajusten correctamente
+            },
+            600: { 
+              items: 3,
+              itemsFit: 'contain'
+            },
+            1024: { 
+              items: 5,
+              itemsFit: 'contain'
+            }
+          }}
+          paddingLeft={10} // Añadir padding
+          paddingRight={10} // Añadir padding
+        />
       </div>
     );
   };
+  
 
   return (
     <div className="tupti-container" id="inicio">
-      {/* Header */}
-      <header className="header">
-        <div className="logo">
-          <img 
-            src="https://res.cloudinary.com/dd7etqrf2/image/upload/v1732717569/tupti_3_r82cww.svg " 
-            alt="TUPTI" 
-            className='logo-imagen'
-          />
-        </div>
-        <div className="search-bar">
-          <input 
-            type="text" 
-            placeholder="Buscar productos..." 
-            className="search-input"
-          />
-          <button className="search-icon" aria-label="Buscar">🔍</button>
-        </div>
-        <button 
-          className="hamburger-menu" 
-          onClick={() => setIsMobileMenuOpen(true)}
-          aria-label="Menú"
-        >
-          ☰
-        </button>
-        
-        {/* Menú móvil actualizado */}
-        <div className={`mobile-nav ${isMobileMenuOpen ? 'active' : ''}`}>
-          <button 
-            className="mobile-nav-close"
-            onClick={() => setIsMobileMenuOpen(false)}
-            aria-label="Cerrar menú"
-          >
-            ×
-          </button>
-          <nav className="mobile-nav-items">
-            <button onClick={() => setIsMobileMenuOpen(false)}>
-              <span>📍</span>
-              Dirección
-            </button>
-            <Link to="/Login" onClick={() => setIsMobileMenuOpen(false)}>
-              <button>
-                <span>👤</span>
-                Inicia Sesión
-              </button>
-            </Link>
-            <button onClick={() => setIsMobileMenuOpen(false)}>
-              <span>🛒</span>
-              Carrito
-            </button>
-          </nav>
-        </div>
-
-        <div className="header-icons">
-          <button>📍 Dirección </button>
-          <Link to="/Login">
-            <button>👤 Inicia Sesión</button>
-          </Link>
-          <button>🛒 Carrito</button>
-        </div>
-      </header>
-
-      {/* Categories Bar - Using the new component */}
-      <CategoriesBar categoryData={categoryData} />
+      <Header 
+        toggleCart={toggleCart} 
+        isTokenActive={isTokenActive}
+        handleLogout={handleLogout}
+      />
       
-      <div>
-        <img
-          src="https://res.cloudinary.com/dd7etqrf2/image/upload/v1732711339/tupti_1_wt0zve.svg"
-          alt="LOGO TUPTI"
-          className="fixed-image"
-        />
-      </div>
-
-      {/* Vertical Menu */}
-      <div className="image-menu">
-        <h3>Menú</h3>
-        <div className="menu-links">
-          <a href="#">Cupones</a>
-          <a href="#">Promociones</a>
+      {/* Categories Bar */}
+    <CategoriesBar />
+    
+      {/* Renderizar el carrito si está abierto */}
+      {isCartOpen && (
+        <div className="cart-overlay">
+          <div className="cart-container">
+            <button className="close-cart-button" onClick={toggleCart}>
+              ✖ 
+            </button>
+            <CarritoCompras 
+            productos={productos}
+            eliminarProducto={eliminarProducto}
+            actualizarCantidad={actualizarCantidad}
+          />
+          </div>
         </div>
-        <h3>Categorias</h3>
-        <div className="menu-links">
-          <a href="#">Ofertas</a>
-          <a href="#">Lacteos</a>
-          <a href="#">Dulces</a>
-          <a href="#">Carbohidratos</a>
-          <a href="#">Gluten Free</a>
-        </div>
-      </div>
+      )}
 
       {/* Carousel */}
       <div className="slider-container">
@@ -366,62 +311,20 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
         </div>
       </div>
 
+      {/* Botones de promoción */}
+      <div className="promo-buttons-container">
+        <button className="promo-button button-1"></button>
+        <button className="promo-button button-2"></button>
+        <button className="promo-button button-3"></button>
+      </div>
+
       {/* Nuevo carrusel de productos */}
       <div className="main-content">
         <h2>Productos Destacados</h2>
         {renderProductCarousel()}
       </div>
-      
-      {/* Footer */}
-      <footer className="footer">
-        <div className="footer-container">
-          <div className="footer-column" id="contacto">
-            <h4>TUPTI</h4>
-            <p>Quito - Ecuador</p>
-            <p>(+593) 998 616 470</p>
-            <p>support@tupti.com</p>
-          </div>
-
-          <div className="footer-column" id="categoria">
-            <h4>Top Categorías</h4>
-            <ul>
-              <li>Electrónicos</li>
-              <li>Accesorios</li>
-              <li>Hogar</li>
-              <li>Ropa</li>
-            </ul>
-          </div>
-
-          <div className="footer-column" id="enlace">
-            <h4>Enlaces Rápidos</h4>
-            <ul>
-              <li><a href="#inicio">Inicio</a></li>
-              <li><a href="#">Política de Privacidad</a></li>
-              <li><a href="#">Términos de Uso</a></li>
-              <li><a href="#">Ayuda</a></li>
-              <li><a href="#contactanos">Contáctanos</a></li>
-            </ul>
-          </div>
-
-          <div className="footer-column" id="botones">
-            <h4>Encuéntranos</h4>
-            <div className="app-buttons">
-              <button>Google Play</button>
-              <button>App Store</button>
-            </div>
-          </div>
-
-          <div className="footer-column" id="etiqueta">
-            <h4>Etiquetas Populares</h4>
-            <div className="tag-container">
-              <span className="tag">Tech</span>
-              <span className="tag">Moda</span>
-              <span className="tag">Gaming</span>
-              <span className="tag">Ofertas</span>
-            </div>
-          </div>
-        </div>
-      </footer>
+    {/* Footer */}
+    <Footer />
     </div>
   );
 };
