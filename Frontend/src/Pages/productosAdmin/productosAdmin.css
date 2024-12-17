@@ -272,9 +272,11 @@ header {
 .filters-container {
   display: flex;
   justify-content: flex-end; /* Alinea el filtro a la derecha */
-  margin-top: 20px;
-  transform: translateY(-890px);
+  margin-top: 0px;
+  transform: translateY(-870px);
   margin-right: -250px;
+  width: 45%;
+  margin-left: 78%;
 }
 
 /* Estilo para el filtro */

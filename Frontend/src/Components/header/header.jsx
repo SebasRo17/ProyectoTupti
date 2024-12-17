@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './header.css';
-import { productos } from '../../data/productos';
+import { productos as productosLista } from '../../data/productos';
 import TuptiPage from '../../Pages/pantallaPrincipal/pantallaPrincipal';
 import CarritoCompras from '../../Components/CarritoCompras/CarritoCompras.jsx';
 import { searchProducts } from '../../Api/searchProduts.js';
@@ -14,7 +14,7 @@ const Header = ({ toggleCart, isCartOpen}) => {
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const navigate = useNavigate();
-  const [productos, setProductos] = useState([]);
+  const [productosCarrito, setProductosCarrito] = useState([]);
   const [idUsuario, setIdUsuario] = useState(null);
 
   useEffect(() => {
@@ -36,14 +36,38 @@ const Header = ({ toggleCart, isCartOpen}) => {
     }
   }, []);
 
+  useEffect(() => {
+    const fetchCarrito = async () => {
+      if (idUsuario) {
+        try {
+          const carritoData = await getCarritoByUsuario(idUsuario);
+          console.log('Carrito completo:', carritoData);
+          console.log('Detalles del carrito:', carritoData.detalles);
+          // Actualizar el estado de productos con los datos obtenidos
+          setProductosCarrito(carritoData.detalles.map(detalle => ({
+            id: detalle.IdProducto,
+            nombre: detalle.Producto.Nombre,
+            precio: parseFloat(detalle.PrecioUnitario),
+            cantidad: detalle.Cantidad,
+            imagen: detalle.Producto.ImagenUrl
+          })));
+        } catch (error) {
+          console.error('Error al cargar el carrito:', error);
+        }
+      }
+    };
+
+    fetchCarrito();
+  }, [idUsuario]);
+
 // Lógica del carrito
 const eliminarProducto = (productoId) => {
-  setProductos(productos.filter((producto) => producto.id !== productoId));
+  setProductosCarrito(productosCarrito.filter((producto) => producto.id !== productoId));
 };
 
 const actualizarCantidad = (id, cantidad) => {
-  setProductos(
-    productos.map((producto) =>
+  setProductosCarrito(
+    productosCarrito.map((producto) =>
       producto.id === id
         ? { ...producto, cantidad: Math.max(1, producto.cantidad + cantidad) }
         : producto
@@ -56,7 +80,7 @@ const actualizarCantidad = (id, cantidad) => {
     setSearchTerm(value);
 
     if (value.length > 0) {
-      const filteredProducts = productos.filter(product =>
+      const filteredProducts = productosLista.filter(product =>
         product.toLowerCase().includes(value.toLowerCase())
       );
       setSuggestions(filteredProducts);
@@ -70,10 +94,6 @@ const actualizarCantidad = (id, cantidad) => {
   const handleSuggestionClick = (suggestion) => {
     setSearchTerm(suggestion);
     setShowSuggestions(false);
-  };
-
-  const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
   };
 
   const handleSearchSubmit = async (event) => {
@@ -117,7 +137,7 @@ const actualizarCantidad = (id, cantidad) => {
             placeholder="Buscar productos..."
             className="search-input"
             value={searchTerm}
-            onChange={handleSearchChange}
+            onChange={handleSearch}
             onKeyDown={handleSearchSubmit}
             onFocus={() => setShowSuggestions(true)}
           />
@@ -198,7 +218,7 @@ const actualizarCantidad = (id, cantidad) => {
               ✖ 
             </button>
             <CarritoCompras 
-            productos={productos}
+            productos={productosCarrito}
             eliminarProducto={eliminarProducto}
             actualizarCantidad={actualizarCantidad}
           />
