@@ -70,49 +70,49 @@ class ProductRepositoryImpl {
         }
     }
     async findAll(filters = {}) {
-        try {
-          const whereCondition = {};
+      try {
+        const whereCondition = {};
     
-          // Filtro por nombre (coincidencia parcial, opcional)
-          if (filters.Nombre) {
-            whereCondition.Nombre = { [Op.like]: `%${filters.Nombre}%` };
-          }
-    
-          // Filtro por rango de precio (opcional)
-          if (filters.PrecioMin !== undefined && filters.PrecioMax !== undefined) {
-            whereCondition.Precio = {
-              [Op.between]: [filters.PrecioMin, filters.PrecioMax]
-            };
-          }
-    
-          // Filtro por tipo de producto (opcional)
-          if (filters.IdTipoProducto) {
-            whereCondition.IdTipoProducto = filters.IdTipoProducto;
-          }
-    
-          const productos = await Product.findAll({
-            // Solo aplicar where si hay condiciones
-            ...(Object.keys(whereCondition).length > 0 ? { where: whereCondition } : {}),
-            attributes: ['IdProducto', 'Nombre', 'Precio'],
-            include: [
-              {
-                model: TipoProducto,
-                as: 'TipoProducto',
-                attributes: ['detalle']
-              },
-              {
-                model: ProductoImagen,
-                as: 'Imagenes',
-                attributes: ['ImagenUrl']
-              }
-            ]
-          });
-    
-          return productos;
-        } catch (error) {
-          console.error('Error al obtener productos:', error);
-          throw error;
+        // Filtro por nombre (coincidencia parcial, opcional)
+        if (filters.Nombre) {
+          whereCondition.Nombre = { [Op.like]: `%${filters.Nombre}%` };
         }
+    
+        // Filtro por rango de precio (opcional)
+        if (filters.PrecioMin !== undefined && filters.PrecioMax !== undefined) {
+          whereCondition.Precio = {
+            [Op.between]: [filters.PrecioMin, filters.PrecioMax]
+          };
+        }
+    
+        // Filtro por tipo de producto (opcional)
+        if (filters.IdTipoProducto) {
+          whereCondition.IdTipoProducto = filters.IdTipoProducto;
+        }
+    
+        const productos = await Product.findAll({
+          // Solo aplicar where si hay condiciones
+          ...(Object.keys(whereCondition).length > 0 ? { where: whereCondition } : {}),
+          attributes: ['IdProducto', 'Nombre', 'Precio', 'IdTipoProducto'], // Incluir IdTipoProducto
+          include: [
+            {
+              model: TipoProducto,
+              as: 'TipoProducto',
+              attributes: ['detalle']
+            },
+            {
+              model: ProductoImagen,
+              as: 'Imagenes',
+              attributes: ['ImagenUrl']
+            }
+          ]
+        });
+    
+        return productos;
+      } catch (error) {
+        console.error('Error al obtener productos:', error);
+        throw error;
+      }
       }
       async buscarPorId(id) {
         try {

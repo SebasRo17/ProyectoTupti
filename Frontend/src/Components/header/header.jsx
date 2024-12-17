@@ -1,24 +1,64 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './header.css';
 import { productos } from '../../data/productos';
 import TuptiPage from '../../Pages/pantallaPrincipal/pantallaPrincipal';
 import CarritoCompras from '../../Components/CarritoCompras/CarritoCompras.jsx';
+import { searchProducts } from '../../Api/searchProduts.js';
+import { getCarritoByUsuario } from '../../Api/carritoApi.js';
+import jwtDecode from 'jwt-decode';
 
 const Header = ({ toggleCart, isCartOpen}) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const navigate = useNavigate();
+  const [productos, setProductos] = useState([]);
+  const [idUsuario, setIdUsuario] = useState(null);
 
-  const [productos, setProductos] = useState([
-    { id: 1, nombre: "peras", precio: 10.5, cantidad: 1, imagen: "https://via.placeholder.com/150" },
-    { id: 2, nombre: "Manzanas", precio: 20.0, cantidad: 2, imagen: "https://via.placeholder.com/150" },
-    { id: 3, nombre: "Uvas", precio: 5.5, cantidad: 5, imagen: "https://via.placeholder.com/150" },
-    { id: 4, nombre: "Chocolate", precio: 2.0, cantidad: 2, imagen: "https://via.placeholder.com/150" },
-    { id: 5, nombre: "Arroz", precio: 6.0, cantidad: 2, imagen: "https://via.placeholder.com/150" },
-    { id: 6, nombre: "Azucar", precio: 1.0, cantidad: 3, imagen: "https://via.placeholder.com/150" },
-  ]);
+  useEffect(() => {
+    // Verifica el token al cargar el componente
+    const token = localStorage.getItem('jwtToken');
+    if (token) {
+      try {
+        const payload = jwtDecode(token);
+        console.log('Token descifrado:', payload); // Agregar console.log para mostrar el token descifrado
+        const currentTime = Date.now() / 1000;
+        setIdUsuario(payload.user.IdUsuario); // Guardar idUsuario en el estado
+        if (payload.exp <= currentTime) {
+          localStorage.removeItem('jwtToken'); // Elimina token expirado
+        }
+      } catch (error) {
+        console.error('Error decodificando el token:', error);
+        localStorage.removeItem('jwtToken'); // Limpia token corrupto
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    const fetchCarrito = async () => {
+      if (idUsuario) {
+        try {
+          const carritoData = await getCarritoByUsuario(idUsuario);
+          console.log('Carrito completo:', carritoData);
+          console.log('Detalles del carrito:', carritoData.detalles);
+          // Actualizar el estado de productos con los datos obtenidos
+          setProductos(carritoData.detalles.map(detalle => ({
+            id: detalle.IdProducto,
+            nombre: detalle.Producto.Nombre,
+            precio: parseFloat(detalle.PrecioUnitario),
+            cantidad: detalle.Cantidad,
+            imagen: detalle.Producto.ImagenUrl
+          })));
+        } catch (error) {
+          console.error('Error al cargar el carrito:', error);
+        }
+      }
+    };
+
+    fetchCarrito();
+  }, [idUsuario]);
 
 // Lógica del carrito
 const eliminarProducto = (productoId) => {
@@ -56,6 +96,26 @@ const actualizarCantidad = (id, cantidad) => {
     setShowSuggestions(false);
   };
 
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSearchSubmit = async (event) => {
+    if (event.key === 'Enter') {
+      try {
+        const products = await searchProducts(searchTerm);
+        console.log('Productos filtrados:', products);
+        if (products.length > 0) {
+          const idTipoProducto = products[0].IdTipoProducto;
+          navigate(`/categoria/${idTipoProducto}`, { state: { products } }); // Redirige y pasa los productos como estado
+        } else {
+          console.log('No se encontraron productos.');
+        }
+      } catch (error) {
+        console.error('Error al buscar productos:', error);
+      }
+    }
+  };
   return (
     <>
       <header className="header" style={{ position: 'fixed', zIndex: 1000 }}>
@@ -76,14 +136,15 @@ const actualizarCantidad = (id, cantidad) => {
         {/* Barra de búsqueda */}
         <div className="search-bar">
           <div className="search-container">
-            <input 
-              type="text" 
-              placeholder="Buscar productos..." 
-              className="search-input"
-              value={searchTerm}
-              onChange={handleSearch}
-              onFocus={() => setShowSuggestions(true)}
-            />
+          <input
+            type="text"
+            placeholder="Buscar productos..."
+            className="search-input"
+            value={searchTerm}
+            onChange={handleSearchChange}
+            onKeyDown={handleSearchSubmit}
+            onFocus={() => setShowSuggestions(true)}
+          />
             {showSuggestions && suggestions.length > 0 && (
               <ul className="suggestions-list">
                 {suggestions.map((suggestion, index) => (

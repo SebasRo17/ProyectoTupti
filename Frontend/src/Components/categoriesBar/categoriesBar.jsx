@@ -39,7 +39,7 @@ const CategoriesBar = ({ categoryData }) => {
 
   // Si no se proporciona categoryData, usar los datos predeterminados
   const defaultCategoryImages = categoryNames.map((name, i) => ({
-    id: i,
+    id: i + 1, // Asegurarse de que los IDs comiencen desde 1
     icon: categoryIcons[name],
     label: name,
   }));
@@ -59,7 +59,7 @@ const CategoriesBar = ({ categoryData }) => {
       )}
 
       <div className="categories-bar" ref={scrollRef}>
-      {safeCategoryData.map((category) => (
+        {safeCategoryData.map((category) => (
           <Link to={`/Categoria/${category.id}`} key={category.id} className="category-item">
             <img src={category.icon} alt={category.label} className="category-icon" />
             <div>{category.label}</div>

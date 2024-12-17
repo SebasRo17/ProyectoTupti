@@ -131,7 +131,7 @@ function Login() {
       if (response.success) {
         localStorage.setItem('jwtToken', response.token);
         const { isAdmin } = response.user;
-        
+        console.log("token",response.token);
         // Redirigir al usuario a la página anterior o a la ruta por defecto
         const from = location.state?.from || (isAdmin ? '/admin' : '/');
         navigate(from);
