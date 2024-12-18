@@ -90,5 +90,4 @@ router.post('/login', (req, res) => UserController.login(req, res));
 router.get('/', (req, res) => UserController.getUsers(req, res));
 router.post('/', (req, res) => UserController.createUser(req, res));
 router.put('/:id', (req, res) => UserController.updateUser(req, res));
-
 module.exports = router;
