@@ -1,0 +1,155 @@
+/* Estilos generales de la página */
+.pagina-pago {
+  display: flex;
+  flex-direction: column;
+  background-color: #f9f4e8; /* Color de fondo general */
+  font-family: Arial, sans-serif;
+  min-height: 95vh;
+}
+
+.contenedor-pago {
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: #fdf8ea; /* Fondo del contenedor principal */
+  padding: 2rem 3rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+.metodo-pago-titulo {
+  text-align: left;
+  margin-bottom: 1.5rem;
+  color: #000;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.paypal-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.paypal-logo {
+  height: 30px;
+}
+
+/* Medio de Pago */
+.metodo-pago {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.metodo-pago h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.logo-metodo {
+  height: 100px;
+  margin: 1rem auto;
+}
+
+/* Información de pago */
+.informacion-pago h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+}
+
+table td {
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #ddd;
+  font-size: 1rem;
+}
+
+table td:last-child {
+  text-align: right;
+}
+
+table tr:last-child td {
+  font-weight: bold;
+}
+
+/* Campos del formulario */
+.campos-formulario {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.campos-formulario input,
+.campos-formulario select {
+  padding: 0.8rem;
+  border: 1px solid #c1c1c1;
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: #fff;
+  color: #333;
+}
+
+/* Checkbox y enlace */
+.aceptar-terminos {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.aceptar-terminos label {
+  font-size: 0.9rem;
+}
+
+.aceptar-terminos a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.aceptar-terminos a:hover {
+  text-decoration: underline;
+}
+
+/* Botones */
+.boton-pagar,
+.boton-salir {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.boton-pagar button,
+.boton-salir button {
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.boton-pagar button {
+  background-color: #007bff;
+  color: white;
+}
+
+.boton-pagar button:hover {
+  background-color: #0056b3;
+}
+
+.boton-salir button {
+  background-color: #333;
+  color: white;
+}
+
+.boton-salir button:hover {
+  background-color: #000;
+}

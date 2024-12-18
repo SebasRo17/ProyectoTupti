@@ -1,0 +1,73 @@
+
+/* Estilo base del header */
+.header-pagos {
+    background-color: #1e7b3d; /* Color verde */
+    height: 100px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    width: 100vw; 
+    position: fixed; 
+    top: 0; 
+    left: 0;
+    z-index: 9999; 
+  }
+  
+  /* Estilo de la imagen del logo */
+  .logoPago-imagen {
+    height: 80px; 
+    width: auto; 
+    object-fit: contain; 
+    background-color: transparent;
+  }
+  
+  /* RESPONSIVE */
+  
+  /* Desktop (1441px and above) */
+  @media (min-width: 1441px) {
+    .header-pagos {
+      height: 90px; /* Header más alto */
+    }
+  
+    .logoPago-imagen {
+      height: 130px;
+      width: 200px;
+    }
+  }
+  
+  /* Laptops (1024px - 1440px) */
+  @media (min-width: 1024px) and (max-width: 1440px) {
+    .header-pagos {
+      height: 130px;
+    }
+  
+    .logoPago-imagen {
+      height: 110px;
+      width: 220px;
+    }
+  }
+  
+  /* Tablets (768px - 1023px) */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .header-pagos {
+      height: 100px; /* Reducir altura */
+    }
+  
+    .logoPago-imagen {
+      height: 50px;
+      width: 180px;
+    }
+  }
+  
+  /* Móvil (< 768px) */
+  @media (max-width: 767px) {
+    .header-pagos {
+      height: 60px; /* Altura menor */
+    }
+  
+    .logoPago-imagen {
+      height: 50px;
+      width: 100px; /* Logo más pequeño */
+    }
+  }
+  

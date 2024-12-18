@@ -6,6 +6,7 @@ import "./responsiveCarrito.css";
 import { getCarritoByUsuario } from '../../Api/carritoApi.js';
 import jwtDecode from 'jwt-decode';
 
+
 const CarritoCompras = () => {
   const [productos, setProductos] = useState([]);
   const [idUsuario, setIdUsuario] = useState(null); // Definir el estado para idUsuario
@@ -158,9 +159,9 @@ const CarritoCompras = () => {
                 ).toFixed(2)}
               </span>
             </p>
-            <button className="boton-continuar">
-              PAGAR
-            </button>
+            <Link to="/MetodoPago">
+        <button className="boton-continuar">PAGAR</button>
+      </Link>
           </div>
         )}
       </div>
