@@ -1,6 +1,8 @@
 const Carrito = require('../../domain/models/Carrito');
 const CarritoDetalle = require('../../domain/models/CarritoDetalle');
 const Producto = require('../../domain/models/Producto');
+const ProductoImagen = require('../../domain/models/ProductoImagen');
+const { Op } = require('sequelize'); 
 
 class CarritoRepositoryImpl {
   async buscarCarritoActivoPorUsuario(idUsuario) {
@@ -70,20 +72,42 @@ class CarritoRepositoryImpl {
         where: { 
           IdCarrito: carrito.IdCarrito,
           Cantidad: {
-            [require('sequelize').Op.gt]: 0 // Greater Than 0
+            [Op.gt]: 0 // Greater Than 0
           }
         },
         include: [
           {
             model: Producto,
-            as: 'Producto'
+            as: 'Producto',
+            include: [
+              {
+                model: ProductoImagen,
+                as: 'Imagenes',
+                limit: 1 // Limitar a solo una imagen
+              }
+            ]
           }
         ]
       });
 
+      // Procesar los resultados para incluir solo la primera imagen como campo extra
+      const detallesConPrimeraImagen = carritoDetalles.map(detalle => {
+        const producto = detalle.Producto;
+        const primeraImagen = producto.Imagenes.length > 0 ? producto.Imagenes[0].ImagenUrl : null;
+        const productoData = producto.toJSON();
+        delete productoData.Imagenes; // Eliminar el array de imágenes
+        return {
+          ...detalle.toJSON(),
+          Producto: {
+            ...productoData,
+            ImagenUrl: primeraImagen // Incluir la primera imagen como campo extra
+          }
+        };
+      });
+
       return {
         carrito,
-        detalles: carritoDetalles
+        detalles: detallesConPrimeraImagen
       };
     } catch (error) {
       console.error('Error al obtener carrito:', error);

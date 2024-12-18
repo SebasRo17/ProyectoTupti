@@ -1,6 +1,5 @@
 import axios from 'axios';
-
-const API_URL = 'http://localhost:3000';
+import { API_URL } from '../config/config';
 
 export const getProtectedData = async () => {
   const token = localStorage.getItem('jwtToken');

@@ -52,6 +52,7 @@ header .logo-imagen {
 }
 
 header .search-input {
+  color: black;
   border: none;
   background: none;
   padding: 10px;
@@ -151,6 +152,7 @@ header .search-input {
 .search-container {
   position: relative;
   width: 100%;
+  z-index: 1001; /* Aumentamos el z-index para que esté por encima de otros elementos */
 }
 
 .suggestions-list {
@@ -164,20 +166,13 @@ header .search-input {
   margin-top: 5px;
   padding: 0;
   list-style: none;
-  max-height: 200px;
+  max-height: 300px;
   overflow-y: auto;
-  z-index: 1000;
+  z-index: 1001; /* Aseguramos que esté por encima de otros elementos */
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.suggestions-list li {
-  padding: 8px 12px;
-  cursor: pointer;
-  color: #333;
-}
-
-.suggestions-list li:hover {
-  background-color: #f0f0f0;
+  position: fixed; /* Cambiamos a fixed para mantener la posición */
+  width: calc(100% - 40px); /* Ajustamos el ancho considerando el padding */
+  max-width: 600px; /* Mantener el mismo ancho máximo que la barra de búsqueda */
 }
 
 /* Estilos del carrito */
@@ -255,6 +250,7 @@ header .search-input {
       justify-content: space-between;
       padding: 0px 16px;
       height: 56px;
+      width: 100%;
     }
     .logo {
       order: 1;

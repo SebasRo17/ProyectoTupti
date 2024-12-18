@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { getCategoryProducts } from "../../Api/cetgoryProductsApi";
 import { categoryNames, categoryIcons } from '../../data/categoryData';
 import CategoriesBar from '../../Components/categoriesBar/categoriesBar';
@@ -9,8 +9,8 @@ import { createCalificacion, getCalificaciones } from '../../Api/calificacionApi
 import "./Categoria.css";
 import "./ResponsiveCategoria.css";
 import Filtros from "../../Components/Filtros/Filtros.jsx";
-
-
+import { addToCart } from '../../Api/carritoApi.js';
+import jwtDecode from 'jwt-decode';
 
 function Categoria() {
    const [productos, setProductos] = useState([]);
@@ -23,25 +23,74 @@ function Categoria() {
    const [reseñaError, setReseñaError] = useState('');
    const [reseñas, setReseñas] = useState([]);
    const [mensajeExito, setMensajeExito] = useState('');
+   const [idUsuario, setIdUsuario] = useState(null);
    const { id } = useParams();
+   const location = useLocation();
    const [isCartOpen, setIsCartOpen] = useState(false); 
 
    const toggleCart = () => {
       setIsCartOpen(!isCartOpen);
    };
 
+   useEffect(() => {
+      // Verifica el token al cargar el componente
+      const token = localStorage.getItem('jwtToken');
+      if (token) {
+        try {
+          const payload = jwtDecode(token);
+          console.log('Token descifrado:', payload); // Agregar console.log para mostrar el token descifrado
+          const currentTime = Date.now() / 1000;
+          setIdUsuario(payload.user.IdUsuario); // Guardar idUsuario en el estado
+          if (payload.exp <= currentTime) {
+            localStorage.removeItem('jwtToken'); // Elimina token expirado
+          }
+        } catch (error) {
+          console.error('Error decodificando el token:', error);
+          localStorage.removeItem('jwtToken'); // Limpia token corrupto
+        }
+      }
+    }, []);
    // Preparar los datos de categorías
    const categoryData = categoryNames.map((name, i) => ({
-     id: i + 1, // Ya está correcto, empieza desde 1
+     id: i + 1,
      icon: categoryIcons[name],
      label: name,
    })); 
 
+   // Función para manejar imágenes de manera uniforme
+   const procesarImagenes = (producto) => {
+      // Si las imágenes son un string separado por comas
+      if (typeof producto.Imagenes === 'string') {
+         return producto.Imagenes.split(',');
+      }
+      
+      // Si es un array de objetos de imagen
+      if (Array.isArray(producto.Imagenes)) {
+         return producto.Imagenes.map(img => 
+            img.ImagenUrl || img.imagen || 'URL_IMAGEN_DEFAULT'
+         );
+      }
+      
+      // Si no hay imágenes
+      return ['URL_IMAGEN_DEFAULT'];
+   };
+
    useEffect(() => {
       const fetchProducts = async () => {
          try {
-            const data = await getCategoryProducts(id);
-            setProductos(data);
+            // Revisar si hay productos filtrados en el estado de location
+            const filteredProducts = location.state?.products || [];
+            
+            if (filteredProducts.length > 0) {
+               // Si hay productos filtrados, usarlos
+               setProductos(filteredProducts);
+            } else if (id && id !== "0") {
+               // Si no hay productos filtrados, buscar por categoría
+               const data = await getCategoryProducts(id);
+               setProductos(data);
+            } else {
+               setError("No se encontraron productos");
+            }
          } catch (err) {
             setError(err.message);
          } finally {
@@ -50,7 +99,7 @@ function Categoria() {
       };
 
       fetchProducts();
-   }, [id]);
+   }, [id, location.state]);
 
    useEffect(() => {
       if (selectedProduct) {
@@ -60,13 +109,13 @@ function Categoria() {
 
    const cargarReseñas = async () => {
       try {
-         console.log('Cargando reseñas para producto:', selectedProduct.IdProducto); // Debug
+         console.log('Cargando reseñas para producto:', selectedProduct.IdProducto);
          const data = await getCalificaciones(selectedProduct.IdProducto);
-         console.log('Reseñas recibidas:', data); // Debug
+         console.log('Reseñas recibidas:', data);
          setReseñas(data || []);
       } catch (error) {
          console.error('Error al cargar reseñas:', error);
-         setReseñas([]); // En caso de error, establecer un array vacío
+         setReseñas([]); 
       }
    };
 
@@ -86,17 +135,26 @@ function Categoria() {
       setCalificacion(valor);
    };
    
-   const handleAgregarCarrito = () => {
-      // Aquí va la lógica para agregar al carrito
-      console.log('Agregando al carrito:', {
-         producto: selectedProduct,
-         cantidad: cantidad
-      });
-   };
-   
+   const handleAgregarCarrito = async () => {
+      try {
+        const productData = {
+          idUsuario: idUsuario, // Usar el idUsuario del estado
+          idProducto: selectedProduct.IdProducto,
+          cantidad: cantidad
+        };
+  
+        const result = await addToCart(productData);
+        // Manejar respuesta exitosa
+        console.log('Producto agregado al carrito:', result);
+      } catch (error) {
+        // Manejar error
+        console.error('Error al agregar al carrito:', error);
+      }
+    };
+  
    const handleEnviarResena = async () => {
       setReseñaError('');
-      setMensajeExito(''); // Limpiar mensaje de éxito anterior
+      setMensajeExito('');
       
       if (!calificacion) {
          setReseñaError('Debes seleccionar una calificación');
@@ -106,7 +164,7 @@ function Categoria() {
       try {
          await createCalificacion({
             idProducto: selectedProduct.IdProducto,
-            idUsuario: 1, // Aquí deberías usar el ID del usuario actual
+            idUsuario: 1,
             comentario: resena.trim() || null,
             puntuacion: calificacion
          });
@@ -116,7 +174,6 @@ function Categoria() {
          setResena('');
          setMensajeExito('¡Reseña enviada exitosamente!');
          
-         // Ocultar el mensaje de éxito después de 3 segundos
          setTimeout(() => {
             setMensajeExito('');
          }, 3000);
@@ -131,16 +188,16 @@ function Categoria() {
    return (
       <div className="categoria-page">
          <Header 
-        toggleCart={toggleCart} 
-        isCartOpen={isCartOpen}
-      />
+            toggleCart={toggleCart} 
+            isCartOpen={isCartOpen}
+         />
          <CategoriesBar categoryData={categoryData} />
          <div className="categoria-container">
             <h1 className="categoria-titulo">Productos de la Categoría</h1>
             <div className="productos-grid">
                {productos.map((producto) => {
-                  // Asegurarnos de que Imagenes sea un array
-                  const imagenes = producto.Imagenes ? producto.Imagenes.split(',') : [];
+                  // Procesar imágenes de manera uniforme
+                  const imagenes = procesarImagenes(producto);
                   const primeraImagen = imagenes[0] || 'URL_IMAGEN_DEFAULT';
 
                   return (
@@ -151,14 +208,14 @@ function Categoria() {
                      >
                         <img
                            src={primeraImagen}
-                           alt={producto.Producto}
+                           alt={producto.Nombre || producto.Producto}
                            className="producto-imagen"
                            onError={(e) => {
                               e.target.src = 'URL_IMAGEN_DEFAULT';
                            }}
                         />
                         <div className="producto-info">
-                           <h3>{producto.Producto}</h3>
+                           <h3>{producto.Nombre || producto.Producto}</h3>
                            <p className="producto-precio">${producto.Precio}</p>
                         </div>
                      </div>
@@ -173,21 +230,23 @@ function Categoria() {
                   <button className="modal-close" onClick={closeModal}>&times;</button>
                   <div className="modal-product">
                      <div className="modal-images">
-                        {selectedProduct.Imagenes.split(',').map((imagen, index) => (
+                        {procesarImagenes(selectedProduct).map((imagen, index) => (
                            <img 
                               key={index}
                               src={imagen}
-                              alt={`${selectedProduct.Producto} - imagen ${index + 1}`}
+                              alt={`${selectedProduct.Nombre || selectedProduct.Producto} - imagen ${index + 1}`}
                               className="modal-image"
+                              onError={(e) => {
+                                 e.target.src = 'URL_IMAGEN_DEFAULT';
+                              }}
                            />
                         ))}
                      </div>
                      <div className="modal-info">
-                        <h2>{selectedProduct.Nombre}</h2>
+                        <h2>{selectedProduct.Nombre || selectedProduct.Producto}</h2>
                         <p className="modal-precio">${selectedProduct.Precio}</p>
                         <p className="modal-descripcion">{selectedProduct.Descripcion}</p>
                         
-                        {/* Selector de cantidad y botón de carrito */}
                         <div className="cantidad-container">
                            <label htmlFor="cantidad">Cantidad:</label>
                            <input 
@@ -205,7 +264,6 @@ function Categoria() {
                            Agregar al Carrito
                         </button>
 
-                        {/* Sección de reseñas */}
                         <div className="resenas-container">
                            <h3>Deja tu reseña</h3>
                            {mensajeExito && <p className="mensaje-exito">{mensajeExito}</p>}
@@ -237,7 +295,6 @@ function Categoria() {
                               </button>
                            </form>
 
-                           {/* Sección única de reseñas */}
                            <div className="resenas-seccion">
                               <h3>Reseñas del Producto</h3>
                               {reseñas.length > 0 ? (
@@ -282,8 +339,8 @@ function Categoria() {
             </div>
          )}
 
-         <Filtros />
-         <Footer />
+          <Footer />
+          <Filtros /> 
       </div>
    );
 }

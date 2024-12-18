@@ -5,6 +5,7 @@ body {
 
 .PantallaProductos {
   display: flex;
+  margin-top: 5%;
   min-height: 100vh;
 }
 
@@ -16,9 +17,11 @@ body {
 .productos-container {
   flex-grow: 1;
   padding: 20px;
-  width: calc(100% - 250px); 
+  height: 100px;
+  width: calc(80% - 250px); 
   margin-top: 0%;
   margin-left: 15%;
+  z-index: 999;
 }
 .productos-container .h1{
   margin-top: -10%;
@@ -269,9 +272,11 @@ header {
 .filters-container {
   display: flex;
   justify-content: flex-end; /* Alinea el filtro a la derecha */
-  margin-top: 20px;
-  transform: translateY(670px);
-  margin-right: -245px;
+  margin-top: 0px;
+  transform: translateY(-870px);
+  margin-right: -250px;
+  width: 45%;
+  margin-left: 78%;
 }
 
 /* Estilo para el filtro */

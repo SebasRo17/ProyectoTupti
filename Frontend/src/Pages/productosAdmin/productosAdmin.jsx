@@ -169,11 +169,11 @@ const ProductosAdmin = () => {
                         </div>
                     ))}
                 </main>
-                <div className="filters-container">
+                    <div className="filters-container">
                     <div className="filtros-clase">
                 <Filtros />
             </div>
-        </div>
+        </div> 
         </div>
     </div>
     );

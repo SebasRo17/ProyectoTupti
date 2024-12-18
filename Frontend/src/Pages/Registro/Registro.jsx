@@ -20,7 +20,7 @@ function Registro() {
 
   useEffect(() => {
     const handleMessage = (event) => {
-      if (event.origin === 'http://localhost:5173' && event.data.token) {
+      if (event.origin === import.meta.env.VITE_API_URL && event.data.token) {
         console.log('Token JWT:', event.data.token);
         // Guardar el token en el almacenamiento local
         localStorage.setItem('jwtToken', event.data.token);
@@ -44,7 +44,7 @@ function Registro() {
   };
 
   const handleFacebookLogin = () => {
-    const facebookAuthUrl = 'http://localhost:3000/auth/facebook';
+    const facebookAuthUrl = `${import.meta.env.VITE_API_URL}/auth/facebook`;
     const width = 600;
     const height = 600;
     const left = (window.innerWidth - width) / 2;
@@ -59,7 +59,7 @@ function Registro() {
     }, 1000);
   };
   const handleGoogleLogin = () => {
-    const googleAuthUrl = 'http://localhost:3000/auth/google';
+    const googleAuthUrl = `${import.meta.env.VITE_API_URL}/auth/google`;
     const width = 600;
     const height = 600;
     const left = (window.innerWidth - width) / 2;
@@ -101,16 +101,28 @@ function Registro() {
     }
   };
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     if (!captchaVerified) {
       alert("Por favor, verifica el reCAPTCHA antes de registrarte.");
       return;
     }
-    console.log("Usuario registrado:", { email, password, confirmPassword });
-    setEmail("");
-    setPassword("");
-    setConfirmPassword("");
-    setCaptchaVerified(false);
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      console.log("Usuario registrado:", { email, password, confirmPassword });
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+      setCaptchaVerified(false);
+    } catch (error) {
+      console.error('Error durante el registro:', error);
+    }
   };
 
   const handleCaptchaChange = (value) => {

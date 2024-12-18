@@ -37,6 +37,7 @@ function Login() {
       console.log('Mensaje recibido:', event);
 
       if (event.origin !== apiUrl) {
+
         console.warn('Origen no autorizado', event.origin);
         return;
       }
@@ -74,7 +75,7 @@ function Login() {
   
   
   const handleFacebookLogin = () => {
-    const facebookAuthUrl = 'http://localhost:3000/auth/facebook';
+    const facebookAuthUrl = `${import.meta.env.VITE_API_URL}/auth/facebook`;
     const width = 600;
     const height = 600;
     const left = (window.innerWidth - width) / 2;
@@ -88,7 +89,7 @@ function Login() {
   };
   
   const handleGoogleLogin = () => {
-    const googleAuthUrl = 'http://localhost:3000/auth/google';
+    const googleAuthUrl = `${import.meta.env.VITE_API_URL}/auth/google`;
     const width = 600;
     const height = 600;
     const left = (window.innerWidth - width) / 2;
@@ -130,7 +131,7 @@ function Login() {
       if (response.success) {
         localStorage.setItem('jwtToken', response.token);
         const { isAdmin } = response.user;
-        
+        console.log("token",response.token);
         // Redirigir al usuario a la página anterior o a la ruta por defecto
         const from = location.state?.from || (isAdmin ? '/admin' : '/');
         navigate(from);

@@ -4,11 +4,9 @@
     color: #e5ffe5; /* Texto claro en tono verde */
     border-radius: 10px;
     width: 200px;
-    transform:translateY(-1000px);
+    transform:translateY(470px);
     margin-left: 15px;
-    
     font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
-    
   }
   
   .filtro-container h3{
@@ -66,26 +64,7 @@ input[type="checkbox"]:checked {
   border-color: #4ade80; /* Cambia el borde del input */
 }
 
-/* Botón hamburguesa */
-.menu-hamburguesa {
-  display: flex;
-  justify-content: flex-start;
-  padding: 0.5rem;
-}
 
-.boton-hamburguesa {
-  background-color: #1f804c;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-.boton-hamburguesa:hover {
-  background-color: #146c38;
-}
 
 
 
