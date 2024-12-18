@@ -90,28 +90,4 @@ router.post('/login', (req, res) => UserController.login(req, res));
 router.get('/', (req, res) => UserController.getUsers(req, res));
 router.post('/', (req, res) => UserController.createUser(req, res));
 router.put('/:id', (req, res) => UserController.updateUser(req, res));
-/**
- * @swagger
- * /users/reset-password:
- *   post:
- *     summary: Solicitar nueva contraseña
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               email:
- *                 type: string
- *                 format: email
- *     responses:
- *       200:
- *         description: Solicitud procesada exitosamente
- *       400:
- *         description: Email no proporcionado
- *       500:
- *         description: Error del servidor
- */
-router.post('/reset-password', (req, res) => UserController.requestPasswordReset(req, res));
 module.exports = router;
