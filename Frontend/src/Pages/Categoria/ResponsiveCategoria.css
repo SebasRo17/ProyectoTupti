@@ -3,9 +3,10 @@
 
 @media screen and (min-width: 1441px){
     .categoria-container {
-        max-width: 80%;
-        margin-top: -10%;
-        margin-left: 250px;
+        max-width: 1200px;
+        margin-top: 5%;
+        margin-left: 20;
+
         margin-right: auto;
       }
       .productos-grid{
