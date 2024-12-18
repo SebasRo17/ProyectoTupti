@@ -104,6 +104,7 @@ const actualizarCantidad = (id, cantidad) => {
         if (products.length > 0) {
           const idTipoProducto = products[0].IdTipoProducto;
           navigate(`/categoria/${idTipoProducto}`, { state: { products } }); // Redirige y pasa los productos como estado
+          setSearchTerm('');
         } else {
           console.log('No se encontraron productos.');
         }
@@ -141,7 +142,7 @@ const actualizarCantidad = (id, cantidad) => {
             onKeyDown={handleSearchSubmit}
             onFocus={() => setShowSuggestions(true)}
           />
-            {showSuggestions && suggestions.length > 0 && (
+            {showSuggestions && suggestions.length > 0 && searchTerm && (
               <ul className="suggestions-list">
                 {suggestions.map((suggestion, index) => (
                   <li 
@@ -207,6 +208,11 @@ const actualizarCantidad = (id, cantidad) => {
           </Link>
           <button className="header-cart-button" onClick={toggleCart}>
             🛒 Carrito
+            {productosCarrito.length > 0 && (
+              <span className="cart-count">
+                {productosCarrito.length}
+              </span>
+            )}
           </button>
         </div>
       </header>
