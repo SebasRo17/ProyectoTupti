@@ -57,7 +57,7 @@ const MetodoPago = () => {
                 className="paypal-logo1"
               />
             </div>
-            <h3>Información de pago</h3>
+            <h4>Información de pago</h4>
             <table>
               <tbody>
                 <tr>
@@ -90,8 +90,9 @@ const MetodoPago = () => {
 
           {/* Formulario de información */}
           <div className="formulario-pago">
-            <h3>Completa la información</h3>
+            
             <form>
+            <h3>Completa la información</h3>
               <input type="text" placeholder="Nombre del titular" />
               <input type="text" placeholder="Tipo de identificación" />
               <input type="text" placeholder="Número de identificación" />
