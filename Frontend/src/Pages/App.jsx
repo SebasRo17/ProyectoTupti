@@ -11,6 +11,7 @@ import CarritoCompras from '../Components/CarritoCompras/CarritoCompras.jsx';
 import ProductosAdmin from './productosAdmin/productosAdmin.jsx'; // Asegúrate de importar el componente
 import AuthGuard from '../Components/AuthGuard/AuthGuard';
 import NuevoProducto from './nuevoProductoAdmin/nuevoProductoAdmin.jsx';
+import Direccion from './Direccion/Direccion.jsx';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/Categoria/:id" element={<Categoria />} />
         <Route path="/olvido-contrasena" element={<OlvidoContrasena />} />
+        <Route path="/Direccion" element={<Direccion />} />
         <Route path="/admin" 
           element={
             <AuthGuard>

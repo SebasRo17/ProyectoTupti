@@ -4,6 +4,7 @@ import './header.css';
 import { productos as productosLista } from '../../data/productos';
 import TuptiPage from '../../Pages/pantallaPrincipal/pantallaPrincipal';
 import CarritoCompras from '../../Components/CarritoCompras/CarritoCompras.jsx';
+import Direccion from '../../Pages/Direccion/direccion.jsx';
 import { searchProducts } from '../../Api/searchProduts.js';
 import { getCarritoByUsuario } from '../../Api/carritoApi.js';
 import jwtDecode from 'jwt-decode';
@@ -199,7 +200,9 @@ const actualizarCantidad = (id, cantidad) => {
 
         {/* Iconos del header */}
         <div className="header-icons">
-          <button className="icon-button">📍 Dirección</button>
+          <Link to="/Direccion">
+            <button className="icon-button">📍 Dirección</button>
+          </Link>
           <Link to="/Login">
             <button className="btnLogin">Inicia Sesión</button>
           </Link>
