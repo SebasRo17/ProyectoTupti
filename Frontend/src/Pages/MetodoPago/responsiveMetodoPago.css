@@ -1,1022 +1,742 @@
-/* Responsive para pantallas menores de 320px */
+/* Para pantallas menores de 320px */
 @media (max-width: 320px) {
-    .metodos-pago {
-        padding-top: 100px;
-        padding: 10px;
-    }
-    .contenedor-pago {
-      padding: 10px;
-      max-width: 100%;
-      margin-top: 90px;
-    
-    }
-    h2 {
-      font-size: 20px;
-      margin-top: 20px;
-      
-    }
-    h3 {
-        font-size: 20px;
-        margin-top: 20px;
-        margin-bottom: 50px; 
-        
-      }
+  .pagina-metodo-pago {
+    padding: 10px;
+    margin-left: 10%;
+    max-width: 90%;
 
-    .formulario-pago h4 { 
-        font-size: 19px;
-        margin-top: 20px;
-        margin-bottom: 50px;
-         
-      }
-    
-    form button.boton-azul {
-        width: 100%;
-        height: 56px;
-        font-size: 15px;
-        cursor: pointer;
-        margin-top: 30px;
-        
-    }
-    body {
-        padding-bottom: 0px;
-        padding: -20px;
-      }
-    
-}
-  
-/* Responsive para pantallas de 321px a 350px */
-  @media (min-width: 321px) and (max-width: 349px) {
-    .metodos-pago {
-        padding-top: 100px;
-        padding: 10px;
-    }
-    .contenedor-pago {
-      padding: 12px;
-      max-width: 100%;
-      transform: translateY(-60px);
-    }
-    
-    form button.boton-azul {
-        width: 100%;
-        height: 56px;
-        font-size: 15px;
-        cursor: pointer;
-        margin-top: 20px;
-        margin-top: 30px;
+  }
 
-    }
-    h2 {
-        font-size: 20px;
-        margin-top: 20px;
-        
-      }
-      h3 {
-          font-size: 20px;
-          margin-top: 20px;
-          margin-bottom: 50px; 
-          
-        }
-  
-      .formulario-pago h4 { 
-          font-size: 19px;
-          margin-top: 20px;
-          margin-bottom: 50px;
-           
-        }
-        body {
-            padding-bottom: 0px; /* Ajusta según la altura de tu footer */
-          }
-}
-  
-/* Responsive para pantallas de 351px a 374px */
-  @media (min-width: 351px) and (max-width: 376px) {
-    .metodos-pago {
-        padding-top: 100px;
-        padding: 10px;
-        
-    }
-    .contenedor-pago {
-      padding: 14px;
-      max-width: 100%;
-      transform: translateY(-60px);
-    }
-    h2 {
-      font-size: 24px;
-    }
-   
-    form button.boton-azul {
-        width: 100%;
-        height: 60px;
-        font-size: 15px;
-        cursor: pointer;
-        margin-top: 20px;
-    }
-    
-    h3 {
-        font-size: 20px;
-        margin-top: 20px;
-        margin-bottom: 50px;
-        
-    }
+  .pago-container {
+    padding: 15px;
+    max-width: 90%;
+  }
 
-    .formulario-pago h4 { 
-        font-size: 19px;
-        margin-top: 20px;
-        margin-bottom: 50px;
-        
-    }
-   
-      
-      /* Añadir espacio en el cuerpo para que el contenido no quede cubierto por el footer */
-      body {
-        padding-bottom: 0px; /* Ajusta según la altura de tu footer */
-      
-    }
-}
-  
-/* Responsive para pantallas de 376px a 389px */
-  @media (min-width: 376px) and (max-width: 389px) {
-    .metodos-pago {
-      padding-top: 120px;
-      padding: 23px;
-    }
-    .contenedor-pago {
-      padding: 15px;
-      max-width: 100%;
-      transform: translateY(-70px);
-      margin-left: 20px;
-      
-    }
-    h2 {
-      font-size: 25px;
-      
-    }
-    
-    h3 {
-      font-size: 20px;
-      margin-bottom: 50px;
-    }
-    
-    .formulario-pago h4 { 
-        font-size: 19px;
-        margin-top: 20px;
-        margin-bottom: 50px;
-          
-    }
+  .paypal-logo {
+    width: 100px;
+  }
 
-    form button.boton-azul {
-      height: 70px;
-      margin-top: 20px;
-    }
-   
-}
-  
-/* Responsive para pantallas de 391px a 425px */
-  @media (min-width: 390px) and (max-width: 424px) {
-    .metodos-pago {
-      padding-top: 120px;
-      padding: 25px;
-    }
-    .contenedor-pago {
-      padding: 16px;
-      max-width: 100%;
-      transform: translateY(-50px);
-    }
-    h2 {
-      font-size: 26px;
-      margin-bottom: 50px;
-      
-    }
-    
-    h3 {
-      font-size: 26px;
-      margin-bottom: 50px;
-    }
-  
-      
-      .formulario-pago h4 { 
-          font-size: 26px;
-          margin-top: 20px;
-          margin-bottom: 50px;
-            
-      }
-  
-    form button.boton-azul {
-      height: 70px;
-      margin-bottom: 50px;
-      margin-top: 20px;
-    }
-}
-  
-/* Responsive para pantallas de 426px a 500px */
-  @media (min-width: 425px) and (max-width: 500px) {
-    .metodos-pago {
-      padding-top: 120px;
-      padding: 40px;
-    }
-    .contenedor-pago {
-      padding: 0px;
-      max-width: 100%;
-    }
-    h2 {
-      font-size: 28px;
-    }
+  .informacion-pago {
+    flex-direction: column;
+  }
 
-    h3 {
-      font-size: 28px;
-      margin-bottom: 50px;
-    }
-    .formulario-pago h4 { 
-        font-size: 26px;
-        margin-top: 20px;
-        margin-bottom: 50px;
-          
-    }
-    
-    form button.boton-azul {
-      height: 70px;
-    }
+  .formulario-pago,
+  .informacion-tabla {
+    max-width: 100%;
+    padding: 10px;
+  }
+
+  .boton-salir {
+    margin-left: 0;
+  }
 }
-  
-/* Responsive para pantallas de 501px a 600px */
- @media (min-width: 501px) and (max-width: 600px) {
-    .metodos-pago {
-      padding-top: 140px;
-    }
-    .contenedor-pago {
-      padding: 20px;
-      max-width: 100%;
-    }
-    h2 {
-      font-size: 30px;
-    }
-    .paypal {
-      flex-direction: row;
-      justify-content: space-between;
-    }
-    .paypal-logo {
-      width: 70px;
-      margin-right: 15px;
-    }
-    .informacion-pago {
-      display: block;
-    }
-    h3 {
-      font-size: 30px;
-    }
-    form {
-      grid-template-columns: 1fr 1fr;
-    }
-    form input {
-      padding: 14px;
-    }
-    form button.boton-azul {
-      height: 75px;
-    }
+
+/* Pantallas de 321px a 350px */
+@media (min-width: 321px) and (max-width: 350px) {
+  .paypal-logo {
+    width: 120px;
+  }
+
+  .pago-container {
+    padding: 20px;
+  }
+
+  .informacion-tabla {
+    padding: 15px;
+  }
 }
-  
-/* Responsive para pantallas de 601px a 700px */
-  @media (min-width: 601px) and (max-width: 700px) {
-    .metodos-pago {
-      padding-top: 150px;
-    }
-    .contenedor-pago {
-      padding: 22px;
-      max-width: 100%;
-    }
-    h2 {
-      font-size: 32px;
-    }
-    .paypal {
-      flex-direction: row;
-      justify-content: space-between;
-    }
-    .paypal-logo {
-      width: 75px;
-      margin-right: 20px;
-    }
-    .informacion-pago {
-      display: block;
-    }
-    h3 {
-      font-size: 32px;
-    }
-    form {
-      grid-template-columns: 1fr 1fr;
-    }
-    form input {
-      padding: 15px;
-    }
-    form button.boton-azul {
-      height: 80px;
-    }
+
+/* Pantallas de 351px a 375px */
+@media (min-width: 351px) and (max-width: 375px) {
+  .pagina-metodo-pago {
+    padding: 15px;
+  }
+
+  .paypal-logo {
+    width: 140px;
+  }
+
+  .formulario-pago form input,
+  .formulario-pago form select {
+    padding: 8px;
+  }
 }
-  
-/* Responsive para pantallas de 701px a 750px */
+
+/* Pantallas de 376px a 390px */
+@media (min-width: 376px) and (max-width: 390px) {
+  .pago-container {
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .paypal-logo {
+    width: 150px;
+  }
+
+  .boton-salir {
+    margin-top: 10px;
+  }
+}
+
+/* Pantallas de 391px a 425px */
+@media (min-width: 391px) and (max-width: 425px) {
+  .formulario-pago {
+    flex: 1;
+    max-width: 100%;
+  }
+
+  .informacion-tabla {
+    flex: 1;
+    max-width: 100%;
+  }
+
+  .boton-azul,
+  .boton-salir {
+    width: 100%;
+  }
+}
+
+/* Pantallas de 426px a 500px */
+@media (min-width: 426px) and (max-width: 500px) {
+  .pagina-metodo-pago {
+    padding: 20px;
+    margin-left: 10%;
+  }
+
+  .formulario-pago form input,
+  .formulario-pago form select {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+
+/* Pantallas de 501px a 600px */
+@media (min-width: 501px) and (max-width: 600px) {
+  .pago-container {
+    padding: 25px;
+  }
+
+  .informacion-tabla {
+    padding: 20px;
+  }
+
+  .formulario-pago form input,
+  .formulario-pago form select {
+    font-size: 15px;
+  }
+}
+
+/* Pantallas de 601px a 700px */
+@media (min-width: 601px) and (max-width: 700px) {
+  .pago-container {
+    max-width: 90%;
+  }
+
+  .paypal-logo {
+    width: 160px;
+  }
+
+  .boton-salir {
+    font-size: 18px;
+    padding: 12px 35px;
+  }
+}
+/* Pantallas de 701px a 750px */
 @media (min-width: 701px) and (max-width: 750px) {
-    .metodos-pago {
-      padding-top: 160px;
-    }
-    .contenedor-pago {
-      padding: 24px;
-      max-width: 100%;
-    }
-    h2 {
-      font-size: 34px;
-    }
-    .paypal {
-      flex-direction: row;
-      justify-content: space-between;
-    }
-    .paypal-logo {
-      width: 80px;
-      margin-right: 25px;
-    }
-    .informacion-pago {
-      display: block;
-    }
-    h3 {
-      font-size: 34px;
-    }
-    form {
-      grid-template-columns: 1fr 1fr;
-    }
-    form input {
-      padding: 16px;
-    }
-    form button.boton-azul {
-      height: 85px;
-    }
+  .pagina-metodo-pago {
+    padding: 25px;
+  }
+
+  .paypal-logo {
+    width: 170px;
+  }
+
+  .informacion-pago {
+    gap: 15px;
+  }
+
+  .boton-salir {
+    font-size: 18px;
+    padding: 12px 30px;
+  }
 }
-  
-/* Responsive para pantallas de 751px a 768px */
+
+/* Pantallas de 751px a 768px */
 @media (min-width: 751px) and (max-width: 768px) {
-    .metodos-pago {
-      padding-top: 100px;
-      padding: 210px;
-      
-    }
-    .contenedor-pago {
-      padding:10px;
-      width: 100%;
-    }
-    h2 {
-      font-size: 36px;
-    }
-    .paypal {
-      flex-direction: row;
-      justify-content: space-between;
-    }
-    .paypal-logo {
-      width: 85px;
-      margin-right: 30px;
-    }
-    .informacion-pago {
-      display: block;
-    }
-    h3 {
-      font-size: 36px;
-    }
-    form {
-      grid-template-columns: 1fr 1fr;
-    }
-    form input {
-      padding: 17px;
-    }
-    form button.boton-azul {
-      height: 90px;
-    }
+  .pago-container {
+    padding: 30px;
+  }
+
+  .informacion-tabla,
+  .formulario-pago {
+    max-width: 48%;
+  }
+
+  .paypal-logo {
+    width: 180px;
+  }
 }
-  
-/* Responsive para pantallas de 769px a 825px */
+
+/* Pantallas de 769px a 825px */
 @media (min-width: 769px) and (max-width: 825px) {
-    .metodos-pago {
-      padding-top: 180px;
-    }
-    .contenedor-pago {
-      padding: 28px;
-      max-width: 100%;
-    }
-    h2 {
-      font-size: 38px;
-    }
-    .paypal {
-      flex-direction: row;
-      justify-content: space-between;
-    }
-    .paypal-logo {
-      width: 90px;
-      margin-right: 35px;
-    }
-    .informacion-pago {
-      display: block;
-    }
-    h3 {
-      font-size: 38px;
-    }
-    form {
-      grid-template-columns: 1fr 1fr;
-    }
-    form input {
-      padding: 18px;
-    }
-    form button.boton-azul {
-      height: 95px;
-    }
+  .pago-container {
+    margin: 0 auto;
+    padding: 35px;
+    max-width: 90%;
+  }
+
+  .informacion-tabla {
+    padding: 25px;
+  }
+
+  .formulario-pago form input,
+  .formulario-pago form select {
+    font-size: 16px;
+  }
 }
-  
-/* Responsive para pantallas de 826px a 875px */@media (min-width: 826px) and (max-width: 875px) {
-    .metodos-pago {
-      padding-top: 190px;
-    }
-    .contenedor-pago {
-      padding: 30px;
-      max-width: 100%;
-    }
-    h2 {
-      font-size: 40px;
-    }
-    .paypal {
-      flex-direction: row;
-      justify-content: space-between;
-    }
-    .paypal-logo {
-      width: 100px;
-      margin-right: 40px;
-    }
-    .informacion-pago {
-      display: block;
-    }
-    h3 {
-      font-size: 40px;
-    }
-    form {
-      grid-template-columns: 1fr 1fr;
-    }
-    form input {
-      padding: 19px;
-    }
-    form button.boton-azul {
-      height: 100px;
-    }
+
+/* Pantallas de 826px a 875px */
+@media (min-width: 826px) and (max-width: 875px) {
+  .pagina-metodo-pago {
+    margin-left: 5%;
+  }
+
+  .paypal-logo {
+    width: 200px;
+  }
+
+  .informacion-tabla {
+    padding: 30px;
+  }
+
+  .boton-azul {
+    font-size: 18px;
+  }
 }
-  
-/* Responsive para pantallas de 876px a 925px */
+
+/* Pantallas de 876px a 925px */
 @media (min-width: 876px) and (max-width: 925px) {
-    .metodos-pago {
-      padding-top: 200px;
-    }
-    .contenedor-pago {
-      padding: 32px;
-      max-width: 100%;
-    }
-    h2 {
-      font-size: 42px;
-    }
-    .paypal {
-      flex-direction: row;
-      justify-content: space-between;
-    }
-    .paypal-logo {
-      width: 105px;
-      margin-right: 45px;
-    }
-    .informacion-pago {
-      display: block;
-    }
-    h3 {
-      font-size: 42px;
-    }
-    form {
-      grid-template-columns: 1fr 1fr;
-    }
-    form input {
-      padding: 20px;
-    }
-    form button.boton-azul {
-      height: 105px;
-    }
+  .pago-container {
+    padding: 40px;
+    max-width: 85%;
+  }
+
+  .formulario-pago form input,
+  .formulario-pago form select {
+    font-size: 17px;
+    padding: 12px;
+  }
+
+  .boton-salir {
+    padding: 14px 40px;
+    font-size: 18px;
+  }
 }
-  
-/* Responsive para pantallas de 926px a 990px */
+
+/* Pantallas de 926px a 990px */
 @media (min-width: 926px) and (max-width: 990px) {
-    .metodos-pago {
-      padding-top: 210px;
-    }
-    .contenedor-pago {
-      padding: 34px;
-      max-width: 100%;
-    }
-    h2 {
-      font-size: 44px;
-    }
-    .paypal {
-      flex-direction: row;
-      justify-content: space-between;
-    }
-    .paypal-logo {
-      width: 110px;
-      margin-right: 50px;
-    }
-    .informacion-pago {
-      display: block;
-    }
-    h3 {
-      font-size: 44px;
-    }
-    form {
-      grid-template-columns: 1fr 1fr;
-    }
-    form input {
-      padding: 21px;
-    }
-    form button.boton-azul {
-      height: 110px;
-    }
+  .paypal-logo {
+    width: 220px;
+  }
+
+  .informacion-pago {
+    gap: 25px;
+  }
+
+  .formulario-pago {
+    max-width: 50%;
+  }
+
+  .informacion-tabla {
+    max-width: 50%;
+  }
 }
-  
-/* Responsive para pantallas de 991px a 1022px */
+
+/* Pantallas de 991px a 1022px */
 @media (min-width: 991px) and (max-width: 1022px) {
-    .metodos-pago {
-      padding-top: 220px;
-    }
-    .contenedor-pago {
-      padding: 36px;
-      max-width: 100%;
-    }
-    h2 {
-      font-size: 46px;
-    }
-    .paypal {
-      flex-direction: row;
-      justify-content: space-between;
-    }
-    .paypal-logo {
-      width: 115px;
-      margin-right: 55px;
-    }
-    .informacion-pago {
-      display: block;
-    }
-    h3 {
-      font-size: 46px;
-    }
-    form {
-      grid-template-columns: 1fr 1fr;
-    }
-    form input {
-      padding: 22px;
-    }
-    form button.boton-azul {
-      height: 115px;
-    }
+  .pago-container {
+    padding: 45px;
+    max-width: 80%;
+  }
+
+  .paypal-logo {
+    width: 230px;
+  }
+
+  .formulario-pago form input,
+  .formulario-pago form select {
+    font-size: 18px;
+  }
+
+  .boton-azul {
+    font-size: 20px;
+  }
 }
-  
-/* Responsive para pantallas de 1223px */
+
+/* Pantalla específica de 1223px */
 @media (min-width: 1223px) and (max-width: 1223px) {
-    .metodos-pago {
-      padding-top: 230px;
-    }
-    .contenedor-pago {
-      padding: 38px;
-      max-width: 100%;
-    }
-    h2 {
-      font-size: 48px;
-    }
-    .paypal {
-      flex-direction: row;
-      justify-content: space-between;
-    }
-    .paypal-logo {
-      width: 120px;
-      margin-right: 60px;
-    }
-    .informacion-pago {
-      display: block;
-    }
-    h3 {
-      font-size: 48px;
-    }
-    form {
-      grid-template-columns: 1fr 1fr;
-    }
-    form input {
-      padding: 23px;
-    }
-    form button.boton-azul {
-      height: 120px;
-    }
+  .pago-container {
+    padding: 50px;
+    max-width: 75%;
+  }
+
+  .paypal-logo {
+    width: 250px;
+  }
+
+  .informacion-tabla {
+    padding: 40px;
+  }
+
+  .formulario-pago {
+    padding: 40px;
+  }
+
+  .boton-salir {
+    padding: 15px 50px;
+    font-size: 20px;
+  }
 }
-  
-/* Responsive para pantallas de 1224px a 1287px */
+/* Pantallas de 1224px a 1287px */
 @media (min-width: 1224px) and (max-width: 1287px) {
-    .metodos-pago {
-      padding-top: 240px;
-    }
-    .contenedor-pago {
-      padding: 40px;
-      max-width: 100%;
-    }
-    h2 {
-      font-size: 50px;
-    }
-    .paypal {
-      flex-direction: row;
-      justify-content: space-between;
-    }
-    .paypal-logo {
-      width: 125px;
-      margin-right: 65px;
-    }
-    .informacion-pago {
-      display: block;
-    }
-    h3 {
-      font-size: 50px;
-    }
-    form {
-      grid-template-columns: 1fr 1fr;
-    }
-    form input {
-      padding: 24px;
-    }
-    form button.boton-azul {
-      height: 125px;
-    }
+  .pago-container {
+    max-width: 70%;
+    padding: 50px;
+  }
+
+  .paypal-logo {
+    width: 260px;
+  }
+
+  .informacion-tabla {
+    padding: 30px;
+  }
+
+  .formulario-pago {
+    padding: 30px;
+  }
+
+  .boton-azul {
+    font-size: 22px;
+  }
 }
-  
-/* Responsive para pantallas de 1288px a 1322px */
+
+/* Pantallas de 1288px a 1322px */
 @media (min-width: 1288px) and (max-width: 1322px) {
-    .metodos-pago {
-      padding-top: 250px;
-    }
-    .contenedor-pago {
-      padding: 42px;
-      max-width: 100%;
-    }
-    h2 {
-      font-size: 52px;
-    }
-    .paypal {
-      flex-direction: row;
-      justify-content: space-between;
-    }
-    .paypal-logo {
-      width: 130px;
-      margin-right: 70px;
-    }
-    .informacion-pago {
-      display: block;
-    }
-    h3 {
-      font-size: 52px;
-    }
-    form {
-      grid-template-columns: 1fr 1fr;
-    }
-    form input {
-      padding: 25px;
-    }
-    form button.boton-azul {
-      height: 130px;
-    }
+  .pago-container {
+    max-width: 68%;
+    padding: 55px;
+  }
+
+  .paypal-logo {
+    width: 270px;
+  }
+
+  .boton-salir {
+    padding: 15px 45px;
+    font-size: 20px;
+  }
 }
-  
-/* Responsive para pantallas de 1324px a 1365px */
+
+/* Pantallas de 1324px a 1365px */
 @media (min-width: 1324px) and (max-width: 1365px) {
-    .metodos-pago {
-      padding-top: 260px;
-    }
-    .contenedor-pago {
-      padding: 44px;
-      max-width: 100%;
-    }
-    h2 {
-      font-size: 54px;
-    }
-    .paypal {
-      flex-direction: row;
-      justify-content: space-between;
-    }
-    .paypal-logo {
-      width: 135px;
-      margin-right: 75px;
-    }
-    .informacion-pago {
-      display: block;
-    }
-    h3 {
-      font-size: 54px;
-    }
-    form {
-      grid-template-columns: 1fr 1fr;
-    }
-    form input {
-      padding: 26px;
-    }
-    form button.boton-azul {
-      height: 135px;
-    }
+  .pago-container {
+    max-width: 65%;
+    padding: 60px;
+  }
+
+  .paypal-logo {
+    width: 280px;
+  }
+
+  .informacion-tabla {
+    padding: 35px;
+  }
+
+  .formulario-pago form input,
+  .formulario-pago form select {
+    font-size: 20px;
+  }
 }
 
-  
-/* 1366px único */
-@media (max-width: 1366px) {
-    body {
-      font-size: 0px;
-    }
-    .contenedor-pago {
-      width: 90%;
-      padding: 26px;
-    }
-    .formulario-pago form {
-      grid-template-columns: 1fr; /* Una sola columna */
-    }
+/* Pantalla específica de 1366px */
+@media (min-width: 1366px) and (max-width: 1366px) {
+  .pago-container {
+    max-width: 60%;
+    padding: 65px;
   }
-  
-  /* 1367px a 1401px */
-  @media (min-width: 1367px) and (max-width: 1401px) {
-    body {
-      font-size: 15px;
-    }
-    .contenedor-pago {
-      width: 85%;
-      padding: 25px;
-    }
-    .formulario-pago form {
-      grid-template-columns: 1fr 1fr; /* Dos columnas */
-    }
-  }
-  
-  /* 1402px a 1440px */
-  @media (min-width: 1402px) and (max-width: 1440px) {
-    body {
-      font-size: 16px;
-    }
-    .contenedor-pago {
-      width: 80%;
-      padding: 30px;
-    }
-    .formulario-pago form {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-  
-  /* 1366px único */
-@media (max-width: 1366px) {
-    .metodos-pago {
-        padding-top: 100px;
-        padding: 450px;
-    }
-    .contenedor-pago {
-      padding: 10px;
-      max-width: 100%;
-      margin-top: 90px;
-    
-    }
-    h2 {
-      font-size: 20px;
-      margin-top: 20px;
-      
-    }
-    h3 {
-        font-size: 20px;
-        margin-top: 20px;
-        margin-bottom: 50px; 
-        
-      }
 
-    .formulario-pago h4 { 
-        font-size: 19px;
-        margin-top: 20px;
-        margin-bottom: 50px;
-         
-      }
-    
-    form button.boton-azul {
-        width: 100%;
-        height: 56px;
-        font-size: 15px;
-        cursor: pointer;
-        margin-top: 30px;
-        
-    }
-    body {
-        padding-bottom: 0px;
-        padding: -20px;
-      }
+  .paypal-logo {
+    width: 300px;
   }
-  
-  /* 1367px a 1401px */
-  @media (min-width: 1367px) and (max-width: 1401px) {
-    body {
-      font-size: 15px;
-    }
-    .contenedor-pago {
-      width: 85%;
-      padding: 25px;
-    }
-    .formulario-pago form {
-      grid-template-columns: 1fr 1fr; /* Dos columnas */
-    }
-  }
-  
-  /* 1402px a 1440px */
-  @media (min-width: 1402px) and (max-width: 1440px) {
-    body {
-      font-size: 16px;
-    }
-    .contenedor-pago {
-      width: 80%;
-      padding: 30px;
-    }
-    .formulario-pago form {
-      grid-template-columns: 1fr 1fr;
-    }
-}
-  
 
-/* 1366px único */
-@media (max-width: 1366px) {
-    body {
-      font-size: 14px;
-    }
-    .contenedor-pago {
-      width: 90%;
-      padding: 20px;
-    }
-    .formulario-pago form {
-      grid-template-columns: 1fr; /* Una sola columna */
-    }
+  .boton-azul {
+    font-size: 24px;
+  }
+
+  .boton-salir {
+    padding: 20px 50px;
+    font-size: 22px;
+  }
 }
-  
-/* 1367px a 1401px */
+
+/* Pantallas de 1367px a 1401px */
 @media (min-width: 1367px) and (max-width: 1401px) {
-    body {
-      font-size: 15px;
-    }
-    .contenedor-pago {
-      width: 85%;
-      padding: 25px;
-    }
-    .formulario-pago form {
-      grid-template-columns: 1fr 1fr; /* Dos columnas */
-    }
+  .pago-container {
+    max-width: 58%;
+    padding: 70px;
+  }
+
+  .paypal-logo {
+    width: 310px;
+  }
+
+  .informacion-tabla {
+    padding: 40px;
+  }
+
+  .formulario-pago {
+    padding: 40px;
+  }
 }
-  
-/* 1402px a 1440px */
+
+/* Pantallas de 1402px a 1440px */
 @media (min-width: 1402px) and (max-width: 1440px) {
-    body {
-      font-size: 16px;
-    }
-    .contenedor-pago {
-      width: 80%;
-      padding: 30px;
-    }
-    .formulario-pago form {
-      grid-template-columns: 1fr 1fr;
-    }
+  .pago-container {
+    max-width: 90%;
+    padding: 75px;
+    transform: translateX(-65px);
+  }
+  .pagina-metodo-pago {
+    padding: 10px;
+    margin-left: 10%;
+    max-width: 90%;
+    
+  }
+
+  .paypal-logo {
+    width: 320px;
+  }
+
+  .boton-azul {
+    font-size: 26px;
+  }
 }
-  
-/* 1441px a 1488px */
+
+/* Pantallas de 1441px a 1488px */
 @media (min-width: 1441px) and (max-width: 1488px) {
-    body {
-      font-size: 17px;
-    }
-    .contenedor-pago {
-      width: 75%;
-      padding: 35px;
-    }
-    .formulario-pago form {
-      grid-template-columns: 1fr 1fr;
-    }
+  .pago-container {
+    max-width: 100%;
+    padding: 50px;
+    transform: translateX(-65px);
+    margin-top: -100px;
+  }
+  .pagina-metodo-pago {
+    padding: 10px;
+    margin-left: 10%;
+    max-width: 90%;
+    
+  }
+
+  .paypal-logo {
+    width: 330px;
+  }
+
+  .boton-salir {
+    font-size: 24px;
+    padding: 25px 55px;
+  }
 }
-  
-/* 1489px a 1587px */
+
+/* Pantallas de 1489px a 1587px */
 @media (min-width: 1489px) and (max-width: 1587px) {
-    body {
-      font-size: 18px;
-    }
-    .contenedor-pago {
-      width: 70%;
-      padding: 40px;
-    }
-    .formulario-pago form {
-      grid-template-columns: 1fr 1fr;
-    }
+  .pago-container {
+    max-width: 100%;
+    padding: 50px;
+    transform: translateX(-65px);
+    margin-top: -50px;
+  }
+
+  .pagina-metodo-pago {
+    padding: 10px;
+    margin-left: 10%;
+    max-width: 90%;
+    
+  }
+
+  .paypal-logo {
+    width: 350px;
+  }
+
+  .informacion-tabla {
+    padding: 50px;
+  }
+
+  .formulario-pago {
+    padding: 50px;
+  }
+
+  .boton-azul {
+    font-size: 28px;
+  }
+  .boton-salir {
+    display: block;
+    margin: 40px auto 0;
+    padding: 20px 90px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 13px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 110px;
+    margin-top: 5px;
+  }
 }
-  
-/* 1588px a 1642px */
+
+/* Pantallas de 1588px a 1642px */
 @media (min-width: 1588px) and (max-width: 1642px) {
-    body {
-      font-size: 19px;
-    }
-    .contenedor-pago {
-      width: 65%;
-      padding: 45px;
-    }
-    .formulario-pago form {
-      grid-template-columns: 1fr 1fr;
-    }
+  .pago-container {
+    max-width: 100%;
+    padding: 50px;
+    transform: translateX(-65px);
+    margin-top: -100px;
+  }
+  .pagina-metodo-pago {
+    padding: 10px;
+    margin-left: 10%;
+    max-width: 90%;
+    
+  }
+
+  .paypal-logo {
+    width: 360px;
+  }
+
+  .informacion-tabla {
+    padding: 55px;
+  }
+
+  .boton-salir {
+    font-size: 26px;
+    padding: 30px 60px;
+  }
+  .boton-salir {
+    margin: 40px auto 0;
+    padding: 20px 90px;
+    font-size: 16px;
+    margin-left: 110px;
+    margin-top: 100px;
+  }
 }
-  
-/* 1643px a 1700px */
+/* Pantallas de 1643px a 1700px */
 @media (min-width: 1643px) and (max-width: 1700px) {
-    body {
-      font-size: 20px;
-    }
-    .contenedor-pago {
-      width: 60%;
-      padding: 50px;
-    }
-    .formulario-pago form {
-      grid-template-columns: 1fr 1fr;
-    }
+  .pago-container {
+    max-width: 100%;
+    padding: 50px;
+    transform: translateX(-65px);
+    margin-top: -100px;
+  }
+  .pagina-metodo-pago {
+    padding: 10px;
+    margin-left: 10%;
+    max-width: 90%;
+    
+  }
+  .informacion-tabla, .formulario-pago {
+    max-width: 42%;
+  }
+  .boton-salir {
+    margin: 40px auto 0;
+    padding: 20px 90px;
+    font-size: 16px;
+    margin-left: 110px;
+    margin-top: 100px;
+  }
 }
-  
-/* 1701px a 1763px */
+
+/* Pantallas de 1701px a 1763px */
 @media (min-width: 1701px) and (max-width: 1763px) {
-    body {
-      font-size: 21px;
-    }
-    .contenedor-pago {
-      width: 55%;
-      padding: 55px;
-    }
-    .formulario-pago form {
-      grid-template-columns: 1fr 1fr;
-    }
+  .pago-container {
+    max-width: 100%;
+    padding: 50px;
+    transform: translateX(-65px);
+    margin-top: -150px;
+  }
+  .pagina-metodo-pago {
+    padding: 10px;
+    margin-left: 9%;
+    max-width: 90%;
+    
+  }
+  .informacion-tabla, .formulario-pago {
+    max-width: 43%;
+  }
+  .boton-salir {
+    margin: 40px auto 0;
+    padding: 20px 90px;
+    font-size: 16px;
+    margin-left: 160px;
+    margin-top: 100px;
+  }
 }
-  
-/* 1764px a 1831px */
+
+/* Pantallas de 1764px a 1831px */
 @media (min-width: 1764px) and (max-width: 1831px) {
-    body {
-      font-size: 22px;
-    }
-    .contenedor-pago {
-      width: 50%;
-      padding: 60px;
-    }
-    .formulario-pago form {
-      grid-template-columns: 1fr 1fr;
-    }
+ .pago-container {
+    max-width: 100%;
+    padding: 50px;
+    transform: translateX(-65px);
+    margin-top: -150px;
+  }
+  .pagina-metodo-pago {
+    padding: 10px;
+    margin-left: 9%;
+    max-width: 90%;
+    
+  }
+  .informacion-tabla, .formulario-pago {
+    max-width: 44%;
+  }
+  .boton-salir {
+    margin: 40px auto 0;
+    padding: 20px 90px;
+    font-size: 16px;
+    margin-left: 160px;
+    margin-top: 100px;
+  }
 }
-  
-/* 1832px a 1903px */
+
+/* Pantallas de 1832px a 1903px */
 @media (min-width: 1832px) and (max-width: 1903px) {
-    body {
-      font-size: 23px;
-    }
-    .contenedor-pago {
-      width: 45%;
-      padding: 65px;
-    }
-    .formulario-pago form {
-      grid-template-columns: 1fr 1fr;
-    }
+  .pago-container {
+    max-width: 100%;
+    padding: 50px;
+    transform: translateX(-20px);
+    margin-top: -150px;
+  }
+  .pagina-metodo-pago {
+    padding: 10px;
+    margin-left: 9%;
+    max-width: 90%;
+    
+  }
+  .informacion-tabla, .formulario-pago {
+    max-width: 44%;
+  }
+  .boton-salir {
+    margin: 40px auto 0;
+    padding: 20px 90px;
+    font-size: 16px;
+    margin-left: 150px;
+    margin-top: 100px;
+  }
 }
-  
-  /* 1904px a 1919px */
-  @media (min-width: 1904px) and (max-width: 1919px) {
-    body {
-      font-size: 24px;
-    }
-    .contenedor-pago {
-      width: 40%;
-      padding: 70px;
-    }
-    .formulario-pago form {
-      grid-template-columns: 1fr 1fr;
-    }
+
+/* Pantallas de 1904px a 1919px */
+@media (min-width: 1903px) and (max-width: 1919px) {
+  .pago-container {
+    max-width: 100%;
+    padding: 50px;
+    margin-top: -140px;
+  }
+  .pagina-metodo-pago {
+    padding: 10px;
+    margin-left: 9%;
+    max-width: 90%;
+    
+  }
+  .informacion-tabla, .formulario-pago {
+    max-width: 44%;
+  }
+  .boton-salir {
+    margin: 40px auto 0;
+    padding: 20px 90px;
+    font-size: 16px;
+    margin-left: 160px;
+    margin-top: 100px;
+  }
 }
-  
-  
-/* 1921px a 2560px */
-  @media (min-width: 1921px) and (max-width: 2560px) {
-    body {
-      font-size: 26px;
-    }
-    .contenedor-pago {
-      width: 30%;
-      padding: 80px;
-    }
-    .formulario-pago form {
-      grid-template-columns: 1fr 1fr;
-    }
+
+/* Pantalla de 1920px (único) */
+@media (min-width: 1919px) and (max-width: 1920px) {
+  .pago-container {
+    max-width: 100%;
+    padding: 60px;
+    margin-top: -100px;
+    
+    
+  }
+  .pagina-metodo-pago {
+    padding: 10px;
+    margin-left: 9%;
+    max-width: 90%;
+    
+  }
+  .informacion-tabla, .formulario-pago {
+    max-width: 44%;
+  }
+  .boton-salir {
+    margin: 40px auto 0;
+    padding: 20px 90px;
+    font-size: 16px;
+    margin-left: 160px;
+    margin-top: 50px;
+  }
+
 }
+
+/* Pantallas de 1921px a 2560px */
+@media (min-width: 1921px) and (max-width: 2560px) {
+  .pago-container {
+    max-width: 100%;
+    padding: 60px;
+    margin-top: -140px;
+    transform: translateX(300px);
+  }
+  .pagina-metodo-pago {
+    padding: 10px;
+    margin-left: 9%;
+    max-width: 90%;
   
-/* 2561px en adelante */
-  @media (min-width: 2561px) {
-    body {
-      font-size: 27px;
-    }
-    .contenedor-pago {
-      width: 25%;
-      padding: 85px;
-    }
-    .formulario-pago form {
-      grid-template-columns: 1fr 1fr;
-    }
+  }
+  
+  .informacion-tabla, .formulario-pago {
+    max-width: 44%;
+  }
+  .boton-salir {
+    margin: 40px auto 0;
+    padding: 20px 90px;
+    font-size: 16px;
+    margin-left: 160px;
+    margin-top: 100px;
+  }
 }
+
+/* Pantallas de 2561px en adelante */
+@media (min-width: 2560px) {
+  .pago-container {
+    max-width: 100%;
+    padding: 60px;
+    margin-top: -140px;
+    transform: translateX(300px);
+  }
+  .pagina-metodo-pago {
+    padding: 10px;
+    margin-left: 9%;
+    max-width: 90%;
   
+  }
+  
+  .informacion-tabla, .formulario-pago {
+    max-width: 44%;
+  }
+  .boton-salir {
+    margin: 40px auto 0;
+    padding: 20px 90px;
+    font-size: 16px;
+    margin-left: 160px;
+    margin-top: 100px;
+  }
+}
+

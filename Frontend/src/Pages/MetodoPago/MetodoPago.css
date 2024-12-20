@@ -1,155 +1,175 @@
-/* Estilos generales de la página */
-.pagina-pago {
+.pagina-metodo-pago {
   display: flex;
   flex-direction: column;
-  background-color: #f9f4e8; /* Color de fondo general */
-  font-family: Arial, sans-serif;
-  min-height: 95vh;
+  gap: 100px;
+  padding: 5%;
+  margin-left: 13%;
+  width: 100%;
+  
 }
 
-.contenedor-pago {
-  max-width: 900px;
+.header-container {
+  margin-bottom: 10px;
+  
+}
+
+.pago-container {
+  max-width: 1200px;
   margin: 0 auto;
-  background-color: #fdf8ea; /* Fondo del contenedor principal */
-  padding: 2rem 3rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  background-color: #fff;
   border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+
+  
 }
 
-.metodo-pago-titulo {
-  text-align: left;
-  margin-bottom: 1.5rem;
-  color: #000;
-  font-weight: bold;
-  font-size: 1.5rem;
+.pago-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
+  background-color: #4d944f;
+  
 }
 
-.paypal-container {
+.paypal {
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 2rem;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  background-color: #c3cac4;
 }
 
 .paypal-logo {
-  height: 30px;
+  width: 150px;
+  height: auto;
 }
 
-/* Medio de Pago */
-.metodo-pago {
+
+.paypal-logo1{
+  width: 200px;
+  height: auto;
+  margin-bottom: 30px;
+}
+
+.informacion-pago {
   display: flex;
-  flex-direction: column;
-  text-align: center;
-  margin-bottom: 2rem;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-top: 35px;
 }
 
-.metodo-pago h3 {
-  font-size: 1.2rem;
-  font-weight: bold;
+.formulario-pago {
+  flex: 5;
+  max-width: 45%;
 }
 
-.logo-metodo {
-  height: 100px;
-  margin: 1rem auto;
+.formulario-pago h3 {
+  margin-bottom: 10px;
 }
 
-/* Información de pago */
-.informacion-pago h3 {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
+.formulario-pago form input,
+.formulario-pago form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 13px;
+  box-sizing: border-box;
+}
+
+.formulario-pago form input:focus,
+.formulario-pago form select:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.formulario-pago form label {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.formulario-pago form a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.formulario-pago form a:hover {
+  text-decoration: underline;
+}
+
+.boton-azul {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.boton-azul:hover {
+  background-color: #0056b3;
+}
+
+.informacion-tabla {
+  flex: 1;
+  max-width: 45%;
+  background-color: #f9f9f9;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.informacion-tabla h3 {
+  margin-bottom: 10px;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 2rem;
 }
 
 table td {
-  padding: 0.5rem 1rem;
+  padding: 10px;
   border-bottom: 1px solid #ddd;
-  font-size: 1rem;
 }
 
 table td:last-child {
   text-align: right;
 }
 
-table tr:last-child td {
-  font-weight: bold;
-}
-
-/* Campos del formulario */
-.campos-formulario {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.campos-formulario input,
-.campos-formulario select {
-  padding: 0.8rem;
-  border: 1px solid #c1c1c1;
-  border-radius: 4px;
-  font-size: 1rem;
-  background-color: #fff;
-  color: #333;
-}
-
-/* Checkbox y enlace */
-.aceptar-terminos {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.aceptar-terminos label {
-  font-size: 0.9rem;
-}
-
-.aceptar-terminos a {
-  color: #007bff;
-  text-decoration: none;
-}
-
-.aceptar-terminos a:hover {
-  text-decoration: underline;
-}
-
-/* Botones */
-.boton-pagar,
 .boton-salir {
-  text-align: center;
-  margin: 1rem 0;
-}
-
-.boton-pagar button,
-.boton-salir button {
-  padding: 0.8rem 2rem;
-  font-size: 1rem;
-  font-weight: bold;
+  display: block;
+  margin: 40px auto 0;
+  padding: 10px 30px;
+  background-color: #ff4d4d;
+  color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 13px;
   cursor: pointer;
+  font-size: 16px;
+  margin-left: 110px;
+  margin-top: 5px;
 }
 
-.boton-pagar button {
-  background-color: #007bff;
-  color: white;
+.boton-salir:hover {
+  background-color: #d32f2f;
 }
 
-.boton-pagar button:hover {
-  background-color: #0056b3;
-}
 
-.boton-salir button {
-  background-color: #333;
-  color: white;
-}
 
-.boton-salir button:hover {
-  background-color: #000;
-}
+
+
+

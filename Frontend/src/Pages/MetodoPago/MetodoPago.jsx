@@ -3,42 +3,46 @@ import { Link, useNavigate } from 'react-router-dom';
 import "./MetodoPago.css";
 import Footer from '../../Components/footer/footer.jsx';
 import HeaderPagos from '../../Components/headerPago/headerPago.jsx';
-/*import './responsiveMetodoPago.css';*/
-
+import './responsiveMetodoPago.css';
 
 const MetodoPago = () => {
   return (
-    <div className="pagina-pago">
-      {/* Header */}
-      <HeaderPagos />
+    <div className="pagina-metodo-pago">
+      {/* Contenedor del Header */}
+      <div className="header-container">
+        <HeaderPagos />
+      </div>
 
-      {/* Contenedor Principal */}
-      <div className="contenedor-pago">
-        <div className="metodo-pago-titulo">
-          <h2>Escoge tu medio de pago</h2>
-        </div>
+      {/* Contenedor principal para el método de pago */}
+      <div className="pago-container">
+        <h2>Escoge tu medio de pago</h2>
 
-        {/* Sección de PayPal */}
-        <div className="paypal-container">
+        {/* Botón PayPal */}
+        <div className="paypal">
           <img
-            src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_37x23.jpg"
-            alt="PayPal"
+            src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg"
+            alt="Logo de PayPal"
             className="paypal-logo"
           />
+          <span></span>
         </div>
 
-        {/* Formulario */}
-        <div className="formulario-pago">
-          <div className="metodo-pago">
-            <h3>Medio de pago</h3>
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg"
-              alt="Logo PayPal"
-              className="logo-metodo"
-            />
-          </div>
 
-          <div className="informacion-pago">
+        {/* Información de Pago */}
+        <div className="informacion-pago">
+        
+          {/* Tabla de información (Izquierda) */}
+          <div className="informacion-tabla">
+          <h3>Metodo de pago </h3>
+          <div className="paypal-1">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg"
+            
+            className="paypal-logo1"
+          />
+          
+           </div>
+          
             <h3>Información de pago</h3>
             <table>
               <tbody>
@@ -70,39 +74,35 @@ const MetodoPago = () => {
             </table>
           </div>
 
-          {/* Campos del Formulario */}
-          <div className="campos-formulario">
-            <input type="text" placeholder="Nombre del titular" />
-            <input type="text" placeholder="Tipo de identificación" />
-            <input type="text" placeholder="Número de identificación" />
-            <input type="text" placeholder="Número de teléfono" />
-            <input type="email" placeholder="Correo electrónico" />
-            <select>
-              <option>Selecciona tu banco</option>
-              <option>Banco 1</option>
-              <option>Banco 2</option>
-            </select>
-          </div>
-
-          {/* Términos y Botón */}
-          <div className="aceptar-terminos">
-            <input type="checkbox" id="terminos" />
-            <label htmlFor="terminos">
-              Acepto haber leído los{" "}
-              <a href="/">términos y condiciones y políticas de privacidad</a>
-            </label>
-          </div>
-          <div className="boton-pagar">
-            <button>Ir a plataforma de pago</button>
-          </div>
-          <div className="boton-salir">
-            <button>SALIR</button>
+          {/* Formulario de información (Derecha) */}
+          <div className="formulario-pago">
+            <h3>Completa la información</h3>
+            <form>
+              <input type="text" placeholder="Nombre del titular" />
+              <input type="text" placeholder="Tipo de identificación" />
+              <input type="text" placeholder="Número de identificación" />
+              <input type="text" placeholder="Número de teléfono" />
+              <input type="email" placeholder="Correo electrónico" />
+              <select>
+                <option value="">Selecciona tu banco</option>
+                <option value="banco1">Banco 1</option>
+                <option value="banco2">Banco 2</option>
+              </select>
+              <label>
+                <input type="checkbox" /> Acepto haber leído los{" "}
+                <a href="#">términos y condiciones</a> y la{" "}
+                <a href="#">política de privacidad</a>
+              </label>
+              <button className="boton-azul">Ir a plataforma de pago</button>
+            </form>
           </div>
         </div>
-      </div>
 
-      {/* Footer */}
-      <Footer />
+        {/* Botón de Salida */}
+        <Link to="/">
+          <button className="boton-salir">SALIR</button>
+        </Link>
+      </div>
     </div>
   );
 };

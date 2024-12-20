@@ -4,7 +4,7 @@ import "./CarritoCompras.css";
 import "./responsiveCarrito.css";
 import { getCarritoByUsuario, addToCart } from '../../Api/carritoApi.js'; // Asegúrate de importar addToCart
 import jwtDecode from 'jwt-decode';
-
+import { Link } from 'react-router-dom';
 
 const CarritoCompras = () => {
   const [productos, setProductos] = useState([]);
