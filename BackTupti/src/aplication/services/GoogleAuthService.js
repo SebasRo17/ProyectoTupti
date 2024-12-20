@@ -11,7 +11,7 @@ class GoogleAuthService {
   }
 
   initializePassport() {
-    const callbackURL = process.env.NODE_ENV === 'production' ? process.env.PROD_URL : process.env.DEV_URL;
+    const callbackURL = process.env.NODE_ENV === 'production' ? process.env.PROD_URL : process.env.DEV_URL1;
 
     passport.use(new GoogleStrategy({
       clientID: process.env.GOOGLE_CLIENT_ID,
@@ -24,11 +24,14 @@ class GoogleAuthService {
         let user = await userRepository.findByEmail(profile.emails[0].value);
 
         if (!user) {
+          const nombre = profile.displayName || profile.name?.givenName || profile.name?.familyName || 'Usuario Google';
+          console.log('Nombre obtenido de Google:', nombre);
           user = await UserService.createUser({
             Email: profile.emails[0].value,
             Contrasenia: 'google-auth', 
             CodigoUs: `GOOGLE-${Date.now()}`,
-            IdRol: 2 // Rol por defecto para usuarios de Google
+            IdRol: 2,// Rol por defecto para usuarios de Google
+            Nombre: nombre
           });
         }
 

@@ -13,19 +13,30 @@ class UserService {
     }
   }
 
-  async createUser({ Email, Contrasenia }) {
+  async createUser({ Email, Contrasenia, Nombre }) {
     try {
+      console.log('Datos recibidos en createUser:', { Email, Contrasenia, Nombre });
+  
       const hashedPassword = await bcrypt.hash(Contrasenia, 10);
-      const user = await User.create({ Email, Contrasenia: hashedPassword });
+      const user = await User.create({
+        Email,
+        Contrasenia: hashedPassword,
+        Nombre,
+        IdRol: 2,
+        Activo: true
+      });
+  
       const CodigoUs = `US${String(user.IdUsuario).padStart(3, '0')}`;
       user.CodigoUs = CodigoUs;
       await user.save();
-
+  
       return user;
     } catch (error) {
+      console.error('Error al crear usuario:', error);
       throw error;
     }
   }
+  
   async updateUser(userId, userData) {
     try {
       if (userData.Contrasenia) {
