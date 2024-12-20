@@ -1,11 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import "./MetodoPago.css";
-import Footer from '../../Components/footer/footer.jsx';
 import HeaderPagos from '../../Components/headerPago/headerPago.jsx';
 import './responsiveMetodoPago.css';
 
+
+
 const MetodoPago = () => {
+  const [mostrarConfirmacion, setMostrarConfirmacion] = useState(false);
+
+  // Función para abrir el modal de confirmación
+  const abrirConfirmacion = () => {
+    setMostrarConfirmacion(true);
+  };
+
+  // Función para cerrar el modal de confirmación
+  const cerrarConfirmacion = () => {
+    setMostrarConfirmacion(false);
+  };
+
+  // Función para confirmar la compra
+  const confirmarCompra = () => {
+    setMostrarConfirmacion(false);
+    alert("¡Compra confirmada! Redirigiendo a la plataforma de pago...");
+    // Aquí puedes añadir la lógica para redirigir o procesar el pago
+  };
+
   return (
     <div className="pagina-metodo-pago">
       {/* Contenedor del Header */}
@@ -27,22 +47,16 @@ const MetodoPago = () => {
           <span></span>
         </div>
 
-
         {/* Información de Pago */}
         <div className="informacion-pago">
-        
-          {/* Tabla de información (Izquierda) */}
           <div className="informacion-tabla">
-          <h3>Metodo de pago </h3>
-          <div className="paypal-1">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg"
-            
-            className="paypal-logo1"
-          />
-          
-           </div>
-          
+            <h3>Método de pago</h3>
+            <div className="paypal-1">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg"
+                className="paypal-logo1"
+              />
+            </div>
             <h3>Información de pago</h3>
             <table>
               <tbody>
@@ -74,7 +88,7 @@ const MetodoPago = () => {
             </table>
           </div>
 
-          {/* Formulario de información (Derecha) */}
+          {/* Formulario de información */}
           <div className="formulario-pago">
             <h3>Completa la información</h3>
             <form>
@@ -93,7 +107,13 @@ const MetodoPago = () => {
                 <a href="#">términos y condiciones</a> y la{" "}
                 <a href="#">política de privacidad</a>
               </label>
-              <button className="boton-azul">Ir a plataforma de pago</button>
+              <button
+                type="button"
+                className="boton-azul"
+                onClick={abrirConfirmacion}
+              >
+                Ir a plataforma de pago
+              </button>
             </form>
           </div>
         </div>
@@ -103,6 +123,19 @@ const MetodoPago = () => {
           <button className="boton-salir">SALIR</button>
         </Link>
       </div>
+
+      {/* Pantalla emergente de confirmación */}
+      {mostrarConfirmacion && (
+        <div className="modal-confirmacion">
+          <div className="modal-content">
+            <h3>¿Estás seguro de querer realizar la compra?</h3>
+            <div className="modal-buttons">
+              <button onClick={confirmarCompra}>Sí</button>
+              <button onClick={cerrarConfirmacion}>No</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
