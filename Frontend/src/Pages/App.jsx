@@ -11,6 +11,7 @@ import CarritoCompras from '../Components/CarritoCompras/CarritoCompras.jsx';
 import ProductosAdmin from './productosAdmin/productosAdmin.jsx'; // Asegúrate de importar el componente
 import AuthGuard from '../Components/AuthGuard/AuthGuard';
 import NuevoProducto from './nuevoProductoAdmin/nuevoProductoAdmin.jsx';
+import MetodoPago from './MetodoPago/MetodoPago.jsx';
 
 
 function App() {
@@ -48,6 +49,13 @@ function App() {
           element={
             <AuthGuard>
               <NuevoProducto />
+            </AuthGuard>
+          } 
+        />
+                 <Route path="/MetodoPago" 
+          element={
+            <AuthGuard>
+              <MetodoPago />
             </AuthGuard>
           } 
         />
