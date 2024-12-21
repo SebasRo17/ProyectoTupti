@@ -62,7 +62,8 @@
   /* Móvil (< 768px) */
   @media (max-width: 767px) {
     .header-pagos {
-      height: 60px; /* Altura menor */
+      height: 70px; /* Altura menor */
+    width: 100%;
     }
   
     .logoPago-imagen {

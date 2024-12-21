@@ -1,3 +1,4 @@
+
 .pagina-metodo-pago {
   display: flex;
   flex-direction: column;
@@ -7,6 +8,7 @@
   width: 100%;
   
 }
+
 
 .header-container {
   margin-bottom: 10px;
@@ -62,7 +64,7 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: 20px;
-  margin-top: 30px;
+  margin-top: 90px;
 }
 
 .informacion-pago h3 {
@@ -152,6 +154,8 @@
   padding: 40px;
   border-radius: 15px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transform: translateY(-50px);
+ 
 }
 
 .informacion-tabla h3 {
@@ -161,6 +165,8 @@
 table {
   width: 100%;
   border-collapse: collapse;
+  
+  
 }
 
 table td {
