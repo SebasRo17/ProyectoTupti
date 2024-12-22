@@ -15,7 +15,6 @@ import Direccion from './Direccion/direccion.jsx';
 import MetodoPago from './MetodoPago/MetodoPago.jsx';
 
 
-
 function App() {
   return (
     <div>
