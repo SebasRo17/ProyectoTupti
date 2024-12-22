@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const User = require('./../../domain/models/User');
 const AuthService = require('../../aplication/services/AuthService');
-const redirectURL = process.env.NODE_ENV === 'production' ? process.env.PROD_URL : process.env.DEV_URL;
+const redirectURL = process.env.NODE_ENV === 'production' ? process.env.PROD_URL : process.env.DEV_URL1;
 
 const AuthController = {
   // Ruta para iniciar sesión con Google
@@ -19,12 +19,9 @@ const AuthController = {
   googleCallback: (req, res) => {
     const redirectUrl = req.query.state || `${redirectURL}`;
 
-    console.log('Datos de req.user:', req.user);
-
     // Usar el usuario del objeto req.user
     const userData = req.user.user;
     const token = AuthService.generateToken(userData);
-    console.log('Token generado en callback:', token);
 
     const script = `
       <script>
@@ -48,12 +45,9 @@ const AuthController = {
   facebookCallback: (req, res) => {
     const redirectUrl = req.query.state || `${redirectURL}`;
 
-    console.log('Datos de req.user:', req.user);
-    
     // Usar el usuario del objeto req.user
     const userData = req.user.user;
     const token = AuthService.generateToken(userData);
-    console.log('Token generado en callback:', token);
 
     const script = `
       <script>
