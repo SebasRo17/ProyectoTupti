@@ -62,7 +62,7 @@
 
   .boton-azul {
     font-size: 14px;
-    padding: 8px;
+    padding: 6px;
   }
 
   .informacion-tabla {
@@ -85,6 +85,26 @@
     font-size: 14px;
     margin: 20px auto 0;
   }
+  .checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: -200px;
+  margin-top: -40px;
+}
+
+.checkbox-input {
+  width: 16px;
+  height: 16px;
+  margin-right: 10px;
+}
+
+.checkbox-text {
+  font-size: 14px;
+  color: #333;
+  margin-top: 50px;
+  margin-left: -60px;
+}
 }
 /* Pantallas de 321px a 389px */
 @media (min-width: 321px) and (max-width: 389px) {
@@ -173,6 +193,26 @@ table td {
   font-size: 14px;
   margin: 20px auto 0;
 }
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: -200px;
+  margin-top: -40px;
+}
+
+.checkbox-input {
+  width: 16px;
+  height: 16px;
+  margin-right: 10px;
+}
+
+.checkbox-text {
+  font-size: 14px;
+  color: #333;
+  margin-top: 50px;
+  margin-left: -60px;
+}
 } 
 /* Pantallas de 390px a 391px */
 @media (min-width: 390px) and (max-width: 391px) {
@@ -180,8 +220,8 @@ table td {
   .pagina-metodo-pago {
     gap: 60px;
     padding: 2%;
-    margin-left: 0;
-    width: 100%;
+    margin-left: 10px;
+    width: 105%;
   }
   
   .header-container {
@@ -239,6 +279,7 @@ table td {
   .boton-azul {
     font-size: 14px;
     padding: 8px;
+    margin-top: 20px;
   }
   
   .informacion-tabla {
@@ -261,10 +302,37 @@ table td {
     font-size: 14px;
     margin: 20px auto 0;
   }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -200px;
+    margin-top: -40px;
+  }
+  
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -500px;
+    margin-top: 10px;
+  }
+  
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    margin-right: -200px;
+  }
+  
+  .checkbox-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 30px;
+  }
   } 
 
-/* Pantallas de 392px a 413px */
-@media (min-width: 392px) and (max-width: 413px) {
+/* Pantallas de 391px a 413px */
+@media (min-width: 391px) and (max-width: 413px) {
   .pagina-metodo-pago {
     gap: 60px;
     padding: 2%;
@@ -349,6 +417,25 @@ table td {
     padding: 8px 20px;
     font-size: 14px;
     margin: 20px auto 0;
+  }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -500px;
+    margin-top: 10px;
+  }
+  
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    margin-right: -200px;
+  }
+  
+  .checkbox-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 30px;
   }
 }
 
@@ -440,6 +527,25 @@ table td {
     font-size: 14px;
     margin: 20px auto 0;
   }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -500px;
+    margin-top: 10px;
+  }
+  
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    margin-right: -200px;
+  }
+  
+  .checkbox-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 30px;
+  }
 }
 
 /* Pantallas de 429px a 431px */
@@ -449,7 +555,7 @@ table td {
     padding: 2%;
     margin-left: 0;
     width: 100%;
-    margin-top: 20px;
+    margin-top: -20px;
   }
 
   .header-container {
@@ -528,6 +634,25 @@ table td {
     padding: 8px 20px;
     font-size: 14px;
     margin: 20px auto 0;
+  }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -500px;
+    margin-top: 10px;
+  }
+  
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    margin-right: -200px;
+  }
+  
+  .checkbox-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 30px;
   }
 }
 
@@ -618,10 +743,29 @@ table td {
     font-size: 14px;
     margin: 20px auto 0;
   }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -500px;
+    margin-top: 10px;
+  }
+  
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    margin-right: -200px;
+  }
+  
+  .checkbox-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 30px;
+  }
 }
 
-/* Pantallas de 539px a 541px */
-@media (min-width: 539px) and (max-width: 541px) {
+/* Pantallas de 538px a 541px */
+@media (min-width: 538px) and (max-width: 541px) {
   .pagina-metodo-pago {
     gap: 60px;
     padding: 2%;
@@ -636,7 +780,7 @@ table td {
   .pago-container {
     padding: 10px;
     margin: 0 5px;
-    margin-top: 50px;
+    margin-top: -0px;
   }
 
   .pago-container h2 {
@@ -708,9 +852,28 @@ table td {
     font-size: 14px;
     margin: 20px auto 0;
   }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -500px;
+    margin-top: 10px;
+  }
+  
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    margin-right: -200px;
+  }
+  
+  .checkbox-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 30px;
+  }
 }
-/* Pantallas de 542px a 700px */
-@media (min-width: 542px) and (max-width: 700px) {
+/* Pantallas de 541px a 700px */
+@media (min-width: 541px) and (max-width: 700px) {
   .pagina-metodo-pago {
     gap: 60px;
     padding: 2%;
@@ -795,13 +958,35 @@ table td {
     font-size: 14px;
     margin: 20px auto 0;
   }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -1000px;
+    margin-top: 10px;
+  }
+  
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    margin-right: -500px;
+  }
+  
+  .checkbox-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 30px;
+  }
 }
-/* Pantallas de 701px a 770px */
-@media (min-width: 701px) and (max-width: 770px) {
+/* Pantallas de 700px a 770px */
+@media (min-width: 700px) and (max-width: 770px) {
   .pago-container {
     width: 105%;
     padding: 75px;
-    transform: translateX(-60px);
+    margin-left: -50px;
+    transform: translateY(-70px);
+
+    
   }
   .pagina-metodo-pago {
     padding: 10px;
@@ -837,6 +1022,25 @@ table td {
     padding: 25px 55px;
     transform: translateY(-30px);
     transform: translateX(-50px);
+  }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -200px;
+    margin-top: 10px;
+  }
+  
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    margin-right: -50px;
+  }
+  
+  .checkbox-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 30px;
   }
 
 }
@@ -884,6 +1088,26 @@ table td {
     transform: translateY(-30px);
     transform: translateX(-50px);
   }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -200px;
+    margin-top: 10px;
+  }
+  
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    margin-right: -50px;
+  }
+  
+  .checkbox-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 30px;
+  }
+  
 }
 
 /* Pantallas de 825px a 875px */
@@ -927,6 +1151,25 @@ table td {
     padding: 25px 55px;
     transform: translateY(-30px);
     transform: translateX(-50px);
+  }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -200px;
+    margin-top: 10px;
+  }
+  
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    margin-right: -50px;
+  }
+  
+  .checkbox-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 30px;
   }
 }
 
@@ -973,6 +1216,25 @@ table td {
     transform: translateY(-30px);
     transform: translateX(-50px);
   }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -200px;
+    margin-top: 10px;
+  }
+  
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    margin-right: -50px;
+  }
+  
+  .checkbox-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 30px;
+  }
 }
 
 /* Pantallas de 925px a 990px */
@@ -1017,6 +1279,25 @@ table td {
     transform: translateY(-30px);
     transform: translateX(-50px);
   }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -300px;
+    margin-top: 10px;
+  }
+  
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    margin-right: -100px;
+  }
+  
+  .checkbox-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 30px;
+  }
 }
 
 /* Pantallas de 990px a 1024px */
@@ -1057,15 +1338,34 @@ table td {
   
   .boton-salir {
     font-size: 15px;
-    padding: 25px 55px;
-    transform: translateY(-30px);
-    transform: translateX(-50px);
+    padding: 15px 60px;
+    margin-left: 70px;
+    transform: translateY(-80px);
+  }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -350px;
+    margin-top: 10px;
+  }
+  
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    margin-right: -110px;
+  }
+  
+  .checkbox-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 20px;
   }
 }
 
 
-/* Pantallas de 1225px a 1287px */
-@media (min-width: 1225px) and (max-width: 1287px) {
+/* Pantallas de 1224px a 1287px */
+@media (min-width: 1224px) and (max-width: 1287px) {
   .pago-container {
     max-width: 110%;
     padding: 75px;
@@ -1106,11 +1406,31 @@ table td {
     transform: translateY(-30px);
     transform: translateX(-50px);
   }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -700px;
+    margin-top: 10px;
+  
+  }
+  
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    margin-right: -310px;
+  }
+  
+  .checkbox-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 40px;
+  }
 }
 
 
-/* Pantallas de 1288px a 1322px */
-@media (min-width: 1288px) and (max-width: 1323px) {
+/* Pantallas de 1287px a 1322px */
+@media (min-width: 1287px) and (max-width: 1323px) {
   .pago-container {
     max-width: 110%;
     padding: 75px;
@@ -1141,21 +1461,43 @@ table td {
   }
   .boton-azul {
     font-size: 15px;
-    margin-top: 20px;
+    margin-top: 40px;
    
   }
   
   .boton-salir {
     font-size: 15px;
     padding: 25px 55px;
-    transform: translateY(-30px);
-    transform: translateX(-50px);
+    transform: translateY(-70px);
+    margin-left: 100px;
   }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -700px;
+    margin-top: 10px;
+  
+  }
+  
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    margin-right: -310px;
+  }
+  
+  .checkbox-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 20px;
+    transform: translateY(20px);
+  }
+  
 }
 
 
-/* Pantallas de 1324px a 1365px */
-@media (min-width: 1324px) and (max-width: 1365px) {
+/* Pantallas de 1323px a 1365px */
+@media (min-width: 1323px) and (max-width: 1365px) {
   .pago-container {
     max-width: 110%;
     padding: 75px;
@@ -1186,20 +1528,41 @@ table td {
   }
   .boton-azul {
     font-size: 15px;
-    margin-top: 20px;
+    margin-top: 40px;
    
   }
   
   .boton-salir {
     font-size: 15px;
     padding: 25px 55px;
-    transform: translateY(-30px);
-    transform: translateX(-50px);
+    transform: translateY(-70px);
+    margin-left: 120px;
+  }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -700px;
+    margin-top: 10px;
+  
+  }
+  
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    margin-right: -310px;
+  }
+  
+  .checkbox-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 20px;
+    transform: translateY(20px);
   }
 }
 
-/* Pantallas de 1368px a 1401px */
-@media (min-width: 1368px) and (max-width: 1401px) {
+/* Pantallas de 1365px a 1401px */
+@media (min-width: 1365px) and (max-width: 1401px) {
   .pago-container {
     max-width: 90%;
     padding: 75px;
@@ -1218,18 +1581,40 @@ table td {
 
   .boton-azul {
     font-size: 26px;
+    margin-top: 40px;
   }
   .boton-salir {
     font-size: 24px;
-    padding: 25px 55px;
-    transform: translateY(-50px);
+    padding: 20px 55px;
+    transform: translateY(-70px);
+    margin-left: 100px;
   }
-
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -700px;
+    margin-top: 10px;
+  
+  }
+  
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    margin-right: -310px;
+  }
+  
+  .checkbox-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 20px;
+    transform: translateY(20px);
+  }
 
 }
 
-/* Pantallas de 1402px a 1440px */
-@media (min-width: 1402px) and (max-width: 1440px) {
+/* Pantallas de 1401px a 1440px */
+@media (min-width: 1401px) and (max-width: 1440px) {
   .pago-container {
     max-width: 90%;
     padding: 75px;
@@ -1249,11 +1634,34 @@ table td {
 
   .boton-azul {
     font-size: 26px;
+    margin-top: 40px;
   }
   .boton-salir {
     font-size: 24px;
-    padding: 25px 55px;
-    transform: translateY(-50px);
+    padding: 20px 55px;
+    transform: translateY(-90px);
+    margin-left: 100px;
+  }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -700px;
+    margin-top: 10px;
+  
+  }
+  
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    margin-right: -310px;
+  }
+  
+  .checkbox-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 20px;
+    transform: translateY(20px);
   }
 }
 
@@ -1275,62 +1683,43 @@ table td {
   .paypal-logo {
     width: 330px;
   }
+  
+  .boton-azul {
+    font-size: 26px;
+    margin-top: 40px;
+  }
 
   .boton-salir {
     font-size: 24px;
-    padding: 25px 55px;
-    transform: translateX(40px);
+    padding: 20px 55px;
+    margin-left: 120px;
+    transform: translateY(-120px);
+  }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -1200px;
+    margin-top: 10px;
+  
+  }
+  
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    margin-right: -610px;
+  }
+  
+  .checkbox-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 20px;
+    transform: translateY(20px);
   }
 }
 
 /* Pantallas de 1489px a 1587px */
-@media (min-width: 1489px) and (max-width: 1587px) {
-  .pago-container {
-    max-width: 100%;
-    padding: 50px;
-    transform: translateX(-65px);
-    margin-top: -50px;
-  }
-
-  .pagina-metodo-pago {
-    padding: 10px;
-    margin-left: 10%;
-    max-width: 90%;
-    
-  }
-
-  .paypal-logo {
-    width: 350px;
-  }
-
-  .informacion-tabla {
-    padding: 50px;
-  }
-
-  .formulario-pago {
-    padding: 50px;
-  }
-
-  .boton-azul {
-    font-size: 28px;
-  }
-  .boton-salir {
-    display: block;
-    margin: 40px auto 0;
-    padding: 20px 90px;
-    background-color: #ff4d4d;
-    color: white;
-    border: none;
-    border-radius: 13px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-left: 110px;
-    margin-top: 5px;
-  }
-}
-
-/* Pantallas de 1588px a 1642px */
-@media (min-width: 1588px) and (max-width: 1642px) {
+@media (min-width: 1488px) and (max-width: 1587px) {
   .pago-container {
     max-width: 100%;
     padding: 50px;
@@ -1345,23 +1734,93 @@ table td {
   }
 
   .paypal-logo {
-    width: 360px;
+    width: 330px;
   }
-
-  .informacion-tabla {
-    padding: 55px;
-  }
-
-  .boton-salir {
+  
+  .boton-azul {
     font-size: 26px;
-    padding: 30px 60px;
+    margin-top: 40px;
   }
+
   .boton-salir {
-    margin: 40px auto 0;
-    padding: 20px 90px;
-    font-size: 16px;
-    margin-left: 110px;
-    margin-top: 100px;
+    font-size: 24px;
+    padding: 20px 55px;
+    margin-left: 120px;
+    transform: translateY(-120px);
+  }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -1200px;
+    margin-top: 10px;
+  
+  }
+  
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    margin-right: -610px;
+  }
+  
+  .checkbox-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 20px;
+    transform: translateY(20px);
+  }
+}
+
+/* Pantallas de 1588px a 1642px */
+@media (min-width: 1588px) and (max-width: 1642px) {
+   .pago-container {
+    max-width: 100%;
+    padding: 50px;
+    transform: translateX(-65px);
+    margin-top: -100px;
+  }
+  .pagina-metodo-pago {
+    padding: 10px;
+    margin-left: 10%;
+    max-width: 90%;
+    
+  }
+
+  .paypal-logo {
+    width: 330px;
+  }
+  
+  .boton-azul {
+    font-size: 26px;
+    margin-top: 40px;
+  }
+
+  .boton-salir {
+    font-size: 24px;
+    padding: 20px 55px;
+    margin-left: 120px;
+    transform: translateY(-120px);
+  }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -1200px;
+    margin-top: 10px;
+  
+  }
+  
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    margin-right: -610px;
+  }
+  
+  .checkbox-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 20px;
+    transform: translateY(20px);
   }
 }
 /* Pantallas de 1643px a 1700px */
@@ -1378,15 +1837,42 @@ table td {
     max-width: 90%;
     
   }
-  .informacion-tabla, .formulario-pago {
-    max-width: 42%;
+
+  .paypal-logo {
+    width: 330px;
   }
+  
+  .boton-azul {
+    font-size: 26px;
+    margin-top: 40px;
+  }
+
   .boton-salir {
-    margin: 40px auto 0;
-    padding: 20px 90px;
-    font-size: 16px;
-    margin-left: 110px;
-    margin-top: 100px;
+    font-size: 24px;
+    padding: 20px 55px;
+    margin-left: 120px;
+    transform: translateY(-120px);
+  }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -1200px;
+    margin-top: 10px;
+  
+  }
+  
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    margin-right: -610px;
+  }
+  
+  .checkbox-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 20px;
+    transform: translateY(20px);
   }
 }
 
@@ -1396,49 +1882,103 @@ table td {
     max-width: 100%;
     padding: 50px;
     transform: translateX(-65px);
-    margin-top: -150px;
+    margin-top: -100px;
   }
   .pagina-metodo-pago {
     padding: 10px;
-    margin-left: 9%;
+    margin-left: 10%;
     max-width: 90%;
     
   }
-  .informacion-tabla, .formulario-pago {
-    max-width: 43%;
+
+  .paypal-logo {
+    width: 330px;
   }
+  
+  .boton-azul {
+    font-size: 26px;
+    margin-top: 40px;
+  }
+
   .boton-salir {
-    margin: 40px auto 0;
-    padding: 20px 90px;
-    font-size: 16px;
-    margin-left: 160px;
-    margin-top: 100px;
+    font-size: 24px;
+    padding: 20px 55px;
+    margin-left: 170px;
+    transform: translateY(-100px);
+  }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -2300px;
+    margin-top: 10px;
+  
+  }
+  
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    margin-right: -1300px;
+  }
+  
+  .checkbox-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 20px;
+    transform: translateY(20px);
   }
 }
 
 /* Pantallas de 1764px a 1831px */
 @media (min-width: 1764px) and (max-width: 1831px) {
- .pago-container {
+  .pago-container {
     max-width: 100%;
     padding: 50px;
     transform: translateX(-65px);
-    margin-top: -150px;
+    margin-top: -100px;
   }
   .pagina-metodo-pago {
     padding: 10px;
-    margin-left: 9%;
+    margin-left: 10%;
     max-width: 90%;
     
   }
-  .informacion-tabla, .formulario-pago {
-    max-width: 44%;
+
+  .paypal-logo {
+    width: 330px;
   }
+  
+  .boton-azul {
+    font-size: 26px;
+    margin-top: 40px;
+  }
+
   .boton-salir {
-    margin: 40px auto 0;
-    padding: 20px 90px;
-    font-size: 16px;
-    margin-left: 160px;
-    margin-top: 100px;
+    font-size: 24px;
+    padding: 20px 55px;
+    margin-left: 170px;
+    transform: translateY(-120px);
+  }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -2200px;
+    margin-top: 10px;
+  
+  }
+  
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    margin-right: -1200px;
+  }
+  
+  .checkbox-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 20px;
+    transform: translateY(20px);
   }
 }
 
@@ -1459,12 +1999,38 @@ table td {
   .informacion-tabla, .formulario-pago {
     max-width: 44%;
   }
+  .boton-azul {
+    font-size: 26px;
+    margin-top: 40px;
+  }
+
   .boton-salir {
     margin: 40px auto 0;
     padding: 20px 90px;
     font-size: 16px;
     margin-left: 150px;
     margin-top: 100px;
+  }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -2000px;
+    margin-top: 10px;
+  
+  }
+  
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    margin-right: -1110px;
+  }
+  
+  .checkbox-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 20px;
+    transform: translateY(20px);
   }
 }
 
@@ -1474,6 +2040,7 @@ table td {
     max-width: 100%;
     padding: 50px;
     margin-top: -140px;
+    margin-left: 70px;
   }
   .pagina-metodo-pago {
     padding: 10px;
@@ -1490,6 +2057,31 @@ table td {
     font-size: 16px;
     margin-left: 160px;
     margin-top: 100px;
+  }
+  .boton-azul {
+    font-size: 26px;
+    margin-top: 40px;
+  }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -2300px;
+    margin-top: 10px;
+  
+  }
+  
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    margin-right: -1310px;
+  }
+  
+  .checkbox-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 20px;
+    transform: translateY(20px);
   }
 }
 
@@ -1518,24 +2110,49 @@ table td {
     margin-left: 160px;
     margin-top: 50px;
   }
+  .boton-azul {
+    font-size: 26px;
+    margin-top: 40px;
+  }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -1200px;
+    margin-top: 10px;
+  }
+  
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    margin-right: -610px;
+  }
+  
+  .checkbox-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 20px;
+    transform: translateY(20px);
+  }
 
 }
 
-/* Pantallas de 1921px a 2560px */
-@media (min-width: 1921px) and (max-width: 2560px) {
+/* Pantalla de 1920px (único) */
+@media (min-width: 1921px) and (max-width: 2559px) {
   .pago-container {
     max-width: 100%;
     padding: 60px;
-    margin-top: -140px;
-    transform: translateX(300px);
+    margin-top: -100px;
+    margin-left: 70px;
+    
+    
   }
   .pagina-metodo-pago {
     padding: 10px;
     margin-left: 9%;
     max-width: 90%;
-  
+    
   }
-  
   .informacion-tabla, .formulario-pago {
     max-width: 44%;
   }
@@ -1544,9 +2161,35 @@ table td {
     padding: 20px 90px;
     font-size: 16px;
     margin-left: 160px;
-    margin-top: 100px;
+    margin-top: 50px;
   }
+  .boton-azul {
+    font-size: 26px;
+    margin-top: 40px;
+  }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -1200px;
+    margin-top: 10px;
+  }
+  
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    margin-right: -610px;
+  }
+  
+  .checkbox-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 20px;
+    transform: translateY(20px);
+  }
+
 }
+
 
 /* Pantallas de 2560px en adelante */
 @media (min-width: 2560px) {
@@ -1572,6 +2215,30 @@ table td {
     font-size: 16px;
     margin-left: 160px;
     margin-top: 100px;
+  }
+  .boton-azul {
+    font-size: 26px;
+    margin-top: 40px;
+  }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -2130px;
+    margin-top: 10px;
+  
+  }
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+    margin-right: -1210px;
+  }
+  
+  .checkbox-text {
+    font-size: 14px;
+    color: #333;
+    margin-top: 20px;
+    transform: translateY(20px);
   }
 }
 

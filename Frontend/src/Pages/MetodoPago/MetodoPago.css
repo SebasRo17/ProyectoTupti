@@ -11,7 +11,7 @@
 
 
 .header-container {
-  margin-bottom: 10px;
+  margin-bottom: 120px;
   
 }
 
@@ -181,15 +181,16 @@ table td:last-child {
 .boton-salir {
   display: block;
   margin: 40px auto 0;
-  padding: 10px 30px;
+  padding: 10px 40px;
   background-color: #ff4d4d;
   color: white;
   border: none;
-  border-radius: 13px;
+  border-radius: 15px;
   cursor: pointer;
   font-size: 16px;
-  margin-left: 110px;
+  margin-left: 100px;
   margin-top: 5px;
+  
 }
 
 .boton-salir:hover {
@@ -238,6 +239,57 @@ table td:last-child {
   background: #f44336;
   color: white;
 }
+/* Estilos para el contenedor de las condiciones */
+.condiciones-container {
+  display: flex;
+  align-items: flex-start; /* Alinear checkbox con el inicio del texto */
+  gap: 10px; /* Espacio entre checkbox y texto */
+  margin-top: 15px; /* Separación del resto de los campos */
+  font-size: 14px; /* Tamaño de fuente legible */
+  line-height: 1.5; /* Espaciado entre líneas para mejor legibilidad */
+  color: #333; /* Color de texto */
+}
+
+/* Ajustes específicos para el texto */
+.condiciones-container label {
+  cursor: pointer; /* Cambiar cursor al pasar por el texto */
+  display: inline-block;
+}
+
+/*  checkbox */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: -950px;
+  margin-top: 10px;
+}
+
+.checkbox-input {
+  width: 16px;
+  height: 16px;
+  margin-right: -460px;
+}
+
+.checkbox-text {
+  font-size: 14px;
+  color: #333;
+  margin-top: 30px;
+}
+
+.terms-link,
+.privacy-link {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.terms-link:hover,
+.privacy-link:hover {
+  text-decoration: underline;
+}
+
+
+
 
 
 

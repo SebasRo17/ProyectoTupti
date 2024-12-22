@@ -103,11 +103,14 @@ const MetodoPago = () => {
                 <option value="banco1">Banco 1</option>
                 <option value="banco2">Banco 2</option>
               </select>
-              <label>
-                <input type="checkbox" /> Acepto haber leído los{" "}
-                <a href="#">términos y condiciones</a> y la{" "}
-                <a href="#">política de privacidad</a>
-              </label>
+              <label className="checkbox-label">
+  <input type="checkbox" className="checkbox-input" /> 
+  <span className="checkbox-text">
+    Acepto haber leído los{" "}
+    <a href="#" className="terms-link">términos y condiciones</a> y la{" "}
+    <a href="#" className="privacy-link">política de privacidad</a>
+  </span>
+</label>
               <button
                 type="button"
                 className="boton-azul"
