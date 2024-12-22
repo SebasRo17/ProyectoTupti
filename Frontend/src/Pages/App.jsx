@@ -11,7 +11,7 @@ import CarritoCompras from '../Components/CarritoCompras/CarritoCompras.jsx';
 import ProductosAdmin from './productosAdmin/productosAdmin.jsx'; // Asegúrate de importar el componente
 import AuthGuard from '../Components/AuthGuard/AuthGuard';
 import NuevoProducto from './nuevoProductoAdmin/nuevoProductoAdmin.jsx';
-
+import PDFModelo from '../Components/PDFModelo/pdf.jsx'; // Importa el componente PDFModelo
 
 function App() {
   return (
@@ -51,6 +51,7 @@ function App() {
             </AuthGuard>
           } 
         />
+        <Route path="/pdf/:id" element={<PDFModelo />} /> {/* Nueva ruta para el PDF con ID */}
       </Routes>
     </div>
   );
