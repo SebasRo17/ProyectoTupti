@@ -4,6 +4,7 @@ import "./CarritoCompras.css";
 import "./responsiveCarrito.css";
 import { getCarritoByUsuario, addToCart } from '../../Api/carritoApi.js'; // Asegúrate de importar addToCart
 import jwtDecode from 'jwt-decode';
+import { Link } from 'react-router-dom';
 
 const CarritoCompras = () => {
   const [productos, setProductos] = useState([]);
@@ -201,9 +202,9 @@ const CarritoCompras = () => {
                 ).toFixed(2)}
               </span>
             </p>
-            <button className="boton-continuar">
-              PAGAR
-            </button>
+            <Link to="/MetodoPago">
+        <button className="boton-continuar">PAGAR</button>
+      </Link>
           </div>
         )}
       </div>
