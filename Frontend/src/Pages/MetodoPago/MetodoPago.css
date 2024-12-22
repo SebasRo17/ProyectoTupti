@@ -1,0 +1,297 @@
+
+.pagina-metodo-pago {
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+  padding: 5%;
+  margin-left: 13%;
+  width: 100%;
+  
+}
+
+
+.header-container {
+  margin-bottom: 120px;
+  
+}
+
+.pago-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+
+  
+}
+
+.pago-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
+  background-color: #4d944f;
+  
+}
+
+.paypal {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  background-color: #c3cac4;
+}
+
+.paypal-logo {
+  width: 150px;
+  height: auto;
+}
+
+
+.paypal-logo1{
+  width: 200px;
+  height: auto;
+  margin-bottom: 30px;
+}
+
+.informacion-pago {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-top: 90px;
+}
+
+.informacion-pago h3 {
+  margin-bottom: 10px;
+  color:#151615;
+  font-weight: bold;
+  transform: translateY(-20px);
+  
+}
+.informacion-pago h4 {
+  margin-bottom: 10px;
+  color:#151615;
+  font-weight: bold;
+  transform: translateY(0px);
+  
+}
+
+.formulario-pago {
+  flex: 5;
+  max-width: 45%;
+  transform: translateY(-50px);
+  
+  
+}
+
+.formulario-pago h3 {
+  margin-bottom: 10px;
+  transform: translateY(0px);
+  font-weight: bold;
+}
+
+.formulario-pago form input,
+.formulario-pago form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 13px;
+  box-sizing: border-box;
+  margin-top: 20px;
+  
+}
+
+.formulario-pago form input:focus,
+.formulario-pago form select:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.formulario-pago form label {
+  display: flex;
+  align-items: center;
+  gap: 0px;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.formulario-pago form a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.formulario-pago form a:hover {
+  text-decoration: underline;
+}
+
+.boton-azul {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.boton-azul:hover {
+  background-color: #0056b3;
+}
+
+.informacion-tabla {
+  flex: 1;
+  max-width: 45%;
+  background-color: #f9f9f9;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transform: translateY(-50px);
+ 
+}
+
+.informacion-tabla h3 {
+  margin-bottom: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  
+  
+}
+
+table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+table td:last-child {
+  text-align: right;
+}
+
+.boton-salir {
+  display: block;
+  margin: 40px auto 0;
+  padding: 10px 40px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 100px;
+  margin-top: 5px;
+  
+}
+
+.boton-salir:hover {
+  background-color: #d32f2f;
+}
+
+/*pantalla emergente */
+.modal-confirmacion {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: -40px;
+}
+
+.modal-buttons button {
+  margin: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transform: translateX(-150px);
+}
+
+.modal-buttons button:first-child {
+  background: #4caf50;
+  color: white;
+}
+
+.modal-buttons button:last-child {
+  background: #f44336;
+  color: white;
+}
+/* Estilos para el contenedor de las condiciones */
+.condiciones-container {
+  display: flex;
+  align-items: flex-start; /* Alinear checkbox con el inicio del texto */
+  gap: 10px; /* Espacio entre checkbox y texto */
+  margin-top: 15px; /* Separación del resto de los campos */
+  font-size: 14px; /* Tamaño de fuente legible */
+  line-height: 1.5; /* Espaciado entre líneas para mejor legibilidad */
+  color: #333; /* Color de texto */
+}
+
+/* Ajustes específicos para el texto */
+.condiciones-container label {
+  cursor: pointer; /* Cambiar cursor al pasar por el texto */
+  display: inline-block;
+}
+
+/*  checkbox */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: -950px;
+  margin-top: 10px;
+}
+
+.checkbox-input {
+  width: 16px;
+  height: 16px;
+  margin-right: -460px;
+}
+
+.checkbox-text {
+  font-size: 14px;
+  color: #333;
+  margin-top: 30px;
+}
+
+.terms-link,
+.privacy-link {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.terms-link:hover,
+.privacy-link:hover {
+  text-decoration: underline;
+}
+
+
+
+
+
+
+
+

@@ -19,11 +19,13 @@ module.exports = function configurePassport() {
       let user = await userRepository.findByEmail(profile.emails[0].value);
 
       if (!user) {
+        const nombre = profile.displayName || profile.name?.givenName || profile.name?.familyName || 'Usuario Google';
         user = await UserService.createUser({
           Email: profile.emails[0].value,
           Contrasenia: 'google-auth', 
           CodigoUs: `GOOGLE-${Date.now()}`,
-          IdRol: 2 // Rol por defecto para usuarios de Google
+          IdRol: 2, // Rol por defecto para usuarios de Google
+          Nombre: nombre
         });
       }
 
