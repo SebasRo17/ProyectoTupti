@@ -14,6 +14,7 @@ import NuevoProducto from './nuevoProductoAdmin/nuevoProductoAdmin.jsx';
 import Direccion from './Direccion/direccion.jsx';
 import MetodoPago from './MetodoPago/MetodoPago.jsx';
 
+import PDFModelo from '../Components/PDFModelo/pdf.jsx'; // Importa el componente PDFModelo
 
 function App() {
   return (
@@ -61,6 +62,7 @@ function App() {
             </AuthGuard>
           } 
         />
+        <Route path="/pdf/:id" element={<PDFModelo />} /> {/* Nueva ruta para el PDF con ID */}
       </Routes>
     </div>
   );
