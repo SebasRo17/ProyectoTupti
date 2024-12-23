@@ -1,0 +1,48 @@
+.direcciones-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: 2%;
+  }
+  
+  .direcciones-list {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+  }
+  
+  .direccion-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .direccion-detalles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    padding: 10px 0;
+  }
+  
+  .direccion-detalles p {
+    margin: 5px 0;
+    padding: 5px;
+  }
+  
+  @media (max-width: 768px) {
+    .direccion-detalles {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  h2 {
+    color: #333;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+  }

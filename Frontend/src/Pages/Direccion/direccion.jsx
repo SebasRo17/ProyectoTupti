@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Header from '../../Components/header/header';
 import Footer from '../../Components/footer/footer';
+import GoogleMaps from '../../Api/googleMaps.jsx';
 import './direccion.css';
 
 const Direccion = () => {
@@ -9,7 +10,9 @@ const Direccion = () => {
     numeracion: '',
     calleSecundaria: '',
     ciudad: '',
-    provincia: ''
+    provincia: '',
+    barrio: '',
+    pais: ''
   });
   const [showModal, setShowModal] = useState(false);
   const [locationName, setLocationName] = useState('');
@@ -21,7 +24,11 @@ const Direccion = () => {
       [name]: value
     }));
   };
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
+  const toggleCart = () => {
+    setIsCartOpen(!isCartOpen);
+  };
   const handleSaveLocation = () => {
     console.log('Saving location:', { direccion, name: locationName });
     setShowModal(false);
@@ -30,7 +37,7 @@ const Direccion = () => {
 
   return (
     <div className="page-container">
-      <Header />
+      <Header toggleCart={toggleCart} isCartOpen={isCartOpen} />
       <div className="direccion-container">
         <div className="form-container">
           <div className="form-group">
@@ -52,11 +59,20 @@ const Direccion = () => {
             />
           </div>
           <div className="form-group">
-            <label>Calle secundaria:</label>
+            <label>Calle Secundaria:</label>
             <input
               type="text"
-              name="calleSecundaria"
+              name="callesSecundaria"
               value={direccion.calleSecundaria}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Vecindario:</label>
+            <input
+              type="text"
+              name="barrio"
+              value={direccion.barrio}
               onChange={handleChange}
             />
           </div>
@@ -78,6 +94,15 @@ const Direccion = () => {
               onChange={handleChange}
             />
           </div>
+          <div className="form-group">
+            <label>País:</label>
+            <input
+              type="text"
+              name="Pais"
+              value={direccion.pais}
+              onChange={handleChange}
+            />
+          </div>
           <div className="button-container">
             <button className="btn-agregar" onClick={() => setShowModal(true)}>
               Agregar Dirección
@@ -92,8 +117,7 @@ const Direccion = () => {
         </div>
 
         <div className="map-container">
-          {/* Add your map component here */}
-          <div className="map-placeholder">Mapa aquí</div>
+        <GoogleMaps onAddressChange={(newAddress) => setDireccion(prev => ({ ...prev, ...newAddress }))} />
         </div>
       </div>
 

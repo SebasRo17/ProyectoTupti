@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import "./MetodoPago.css";
 import HeaderPagos from '../../Components/headerPago/headerPago.jsx';
+
 import './responsiveMetodoPago.css';
 
 
@@ -140,6 +141,7 @@ const MetodoPago = () => {
           </div>
         </div>
       )}
+      
     </div>
   );
 };
