@@ -6,6 +6,7 @@ import TuptiPage from '../../Pages/pantallaPrincipal/pantallaPrincipal';
 import CarritoCompras from '../../Components/CarritoCompras/CarritoCompras.jsx';
 import Direccion from '../../Pages/Direccion/direccion.jsx';
 import DireccionesGuardadas from '../../Components/Direcciones/direcciones.jsx';
+import Usuario from '../Usuario/usuario.jsx';
 import { searchProducts } from '../../Api/searchProduts.js';
 import { getCarritoByUsuario } from '../../Api/carritoApi.js';
 import jwtDecode from 'jwt-decode';
@@ -211,7 +212,7 @@ const actualizarCantidad = (id, cantidad) => {
             </button>
             {isDropdownOpen && (
               <div className="user-dropdown">
-                <Link to="/perfil" className="dropdown-item">
+                <Link to="/Usuario" className="dropdown-item">
                   <ul><span>👤</span> Mi Perfil</ul>
                 </Link>
                 <Link to="/DireccionesGuardadas" className="dropdown-item">
@@ -271,9 +272,9 @@ const actualizarCantidad = (id, cantidad) => {
                 </button>
                 {isDropdownOpen && (
                   <div className="user-dropdown">
-                    {/*<Link to="/" className="dropdown-item">*/}
+                    <Link to="/Usuario" className="dropdown-item">
                       <span>👤</span> Mi Perfil
-                    {/*</Link>*/}
+                    </Link>
                     <Link to="/DireccionesGuardadas" className="dropdown-item">
                       <span>📍</span> Mis Direcciones
                     </Link>
