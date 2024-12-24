@@ -7,6 +7,8 @@ import CarritoCompras from '../../Components/CarritoCompras/CarritoCompras.jsx';
 import Direccion from '../../Pages/Direccion/direccion.jsx';
 import DireccionesGuardadas from '../../Components/Direcciones/direcciones.jsx';
 import Usuario from '../Usuario/usuario.jsx';
+import Configuraciones from '../ConfiguracionesUsuario/configuraciones.jsx';
+import Facturas from '../Facturas/facturas.jsx';
 import { searchProducts } from '../../Api/searchProduts.js';
 import { getCarritoByUsuario } from '../../Api/carritoApi.js';
 import jwtDecode from 'jwt-decode';
@@ -218,8 +220,11 @@ const actualizarCantidad = (id, cantidad) => {
                 <Link to="/DireccionesGuardadas" className="dropdown-item">
                   <ul><span>📍</span> Mis Direcciones</ul>
                 </Link>
-                <Link to="/configuracion" className="dropdown-item">
+                <Link to="/Configuraciones" className="dropdown-item">
                   <ul><span>⚙️</span> Configuración</ul>
+                </Link>
+                <Link to="/Facturas" className="dropdown-item">
+                  <ul><span>📄</span> Facturas</ul>
                 </Link>
                 <button 
                   onClick={() => {
@@ -278,9 +283,12 @@ const actualizarCantidad = (id, cantidad) => {
                     <Link to="/DireccionesGuardadas" className="dropdown-item">
                       <span>📍</span> Mis Direcciones
                     </Link>
-                    {/*<Link to="/configuracion" className="dropdown-item">*/}
+                    <Link to="/Configuraciones" className="dropdown-item">
                       <span>⚙️</span> Configuración
-                    {/*</Link>*/}
+                    </Link>
+                    <Link to="/Facturas" className="dropdown-item">
+                      <ul><span>📄</span> Facturas</ul>
+                    </Link>
                     <button 
                       onClick={() => {
                         localStorage.removeItem('jwtToken');
