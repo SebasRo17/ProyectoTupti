@@ -7,7 +7,31 @@ import './responsiveMetodoPago.css';
 
 
 const MetodoPago = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [mostrarConfirmacion, setMostrarConfirmacion] = useState(false);
+
+  const handlePayment = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch('/api/create-paypal-order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          total: '3000.00'
+        }),
+      });
+      
+      const order = await response.json();
+      window.location.href = `https://www.sandbox.paypal.com/checkoutnow?token=${order.id}`;
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al procesar el pago');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   // Función para abrir el modal de confirmación
   const abrirConfirmacion = () => {
@@ -23,6 +47,7 @@ const MetodoPago = () => {
   const confirmarCompra = () => {
     setMostrarConfirmacion(false);
     alert("¡Compra confirmada! Redirigiendo a la plataforma de pago...");
+    handlePayment();
     // Aquí puedes añadir la lógica para redirigir o procesar el pago
   };
 
@@ -111,13 +136,14 @@ const MetodoPago = () => {
     <a href="#" className="privacy-link">política de privacidad</a>
   </span>
 </label>
-              <button
-                type="button"
-                className="boton-azul"
-                onClick={abrirConfirmacion}
-              >
-                Ir a plataforma de pago
-              </button>
+        <button
+              type="button"
+              className="boton-azul"
+              onClick={abrirConfirmacion}
+              disabled={isLoading}
+            >
+              {isLoading ? 'Procesando...' : 'Ir a plataforma de pago'}
+            </button>
             </form>
           </div>
         </div>
