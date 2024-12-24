@@ -140,6 +140,7 @@ const MetodoPago = () => {
           </div>
         </div>
       )}
+      
     </div>
   );
 };

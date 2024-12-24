@@ -10,6 +10,14 @@ export default defineConfig({
         drop_console: true,
         drop_debugger: true
       }
+    },
+    rollupOptions: {
+      external: ['@react-google-maps/api'],
+      output: {
+        globals: {
+          '@react-google-maps/api': 'google'
+        }
+      }
     }
   }
 })

@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './header.css';
 import { productos as productosLista } from '../../data/productos';
 import TuptiPage from '../../Pages/pantallaPrincipal/pantallaPrincipal';
 import CarritoCompras from '../../Components/CarritoCompras/CarritoCompras.jsx';
 import Direccion from '../../Pages/Direccion/direccion.jsx';
+import DireccionesGuardadas from '../../Components/Direcciones/direcciones.jsx';
+import Usuario from '../Usuario/usuario.jsx';
 import { searchProducts } from '../../Api/searchProduts.js';
 import { getCarritoByUsuario } from '../../Api/carritoApi.js';
 import jwtDecode from 'jwt-decode';
@@ -17,6 +19,9 @@ const Header = ({ toggleCart, isCartOpen}) => {
   const navigate = useNavigate();
   const [productosCarrito, setProductosCarrito] = useState([]);
   const [idUsuario, setIdUsuario] = useState(null);
+  const [user, setUser] = useState(null); // Nuevo estado para el usuario
+  const dropdownRef = useRef(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
     // Verifica el token al cargar el componente
@@ -24,15 +29,20 @@ const Header = ({ toggleCart, isCartOpen}) => {
     if (token) {
       try {
         const payload = jwtDecode(token);
-        console.log('Token descifrado:', payload); // Agregar console.log para mostrar el token descifrado
+        console.log('Token descifrado:', payload);
         const currentTime = Date.now() / 1000;
-        setIdUsuario(payload.user.IdUsuario); // Guardar idUsuario en el estado
+        setIdUsuario(payload.user.IdUsuario);
+        // Agregar esta línea para guardar el nombre del usuario
+        setUser({
+          nombre: payload.user.Nombre|| payload.user.Email,
+          isAdmin: payload.isAdmin
+        });
         if (payload.exp <= currentTime) {
-          localStorage.removeItem('jwtToken'); // Elimina token expirado
+          localStorage.removeItem('jwtToken');
         }
       } catch (error) {
         console.error('Error decodificando el token:', error);
-        localStorage.removeItem('jwtToken'); // Limpia token corrupto
+        localStorage.removeItem('jwtToken');
       }
     }
   }, []);
@@ -66,6 +76,16 @@ const eliminarProducto = (productoId) => {
   setProductosCarrito(productosCarrito.filter((producto) => producto.id !== productoId));
 };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 const actualizarCantidad = (id, cantidad) => {
   setProductosCarrito(
     productosCarrito.map((producto) =>
@@ -182,12 +202,50 @@ const actualizarCantidad = (id, cantidad) => {
               <span>📍</span>
               Dirección
             </button>
-            <Link to="/Login" onClick={() => setIsMobileMenuOpen(false)}>
-              <button>
-                <span>👤</span>
-                Inicia Sesión
-              </button>
+            {user ? (
+          <div className="user-menu" ref={dropdownRef}>
+            <button 
+              className="user-button"
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            >
+              👤 {user.nombre}
+            </button>
+            {isDropdownOpen && (
+              <div className="user-dropdown">
+                <Link to="/Usuario" className="dropdown-item">
+                  <ul><span>👤</span> Mi Perfil</ul>
+                </Link>
+                <Link to="/DireccionesGuardadas" className="dropdown-item">
+                  <ul><span>📍</span> Mis Direcciones</ul>
+                </Link>
+                <Link to="/configuracion" className="dropdown-item">
+                  <ul><span>⚙️</span> Configuración</ul>
+                </Link>
+                <button 
+                  onClick={() => {
+                    localStorage.removeItem('jwtToken');
+                    setUser(null);
+                    setIdUsuario(null);
+                    setIsDropdownOpen(false);
+                    navigate('/');
+                  }}
+                  className="dropdown-item logout"
+                >
+                  <span>🚪</span> Cerrar Sesión
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <>
+            <Link to="/Login">
+              <button className="btnLogin">Inicia Sesión</button>
             </Link>
+            <Link to="/registro">
+              <button className="btnRegister">Regístrate</button>
+            </Link>
+          </>
+        )}
             <button onClick={() => { 
               toggleCart(); 
               setIsMobileMenuOpen(false); 
@@ -203,12 +261,51 @@ const actualizarCantidad = (id, cantidad) => {
           <Link to="/Direccion">
             <button className="icon-button">📍 Dirección</button>
           </Link>
-          <Link to="/Login">
-            <button className="btnLogin">Inicia Sesión</button>
-          </Link>
-          <Link to="/registro">
-            <button className="btnRegister">Regístrate</button>
-          </Link>
+  
+          {user ? (
+          <div className="user-menu" ref={dropdownRef}>
+                <button 
+                  className="user-button"
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                >
+                  👤 {user.nombre}
+                </button>
+                {isDropdownOpen && (
+                  <div className="user-dropdown">
+                    <Link to="/Usuario" className="dropdown-item">
+                      <span>👤</span> Mi Perfil
+                    </Link>
+                    <Link to="/DireccionesGuardadas" className="dropdown-item">
+                      <span>📍</span> Mis Direcciones
+                    </Link>
+                    {/*<Link to="/configuracion" className="dropdown-item">*/}
+                      <span>⚙️</span> Configuración
+                    {/*</Link>*/}
+                    <button 
+                      onClick={() => {
+                        localStorage.removeItem('jwtToken');
+                        setUser(null);
+                        setIdUsuario(null);
+                        setIsDropdownOpen(false);
+                        {/*navigate('/');*/}
+                      }}
+                      className="dropdown-item logout"
+                    >
+                      <span>🚪</span> Cerrar Sesión
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <>
+                <Link to="/Login">
+                  <button className="btnLogin">Inicia Sesión</button>
+                </Link>
+                <Link to="/registro">
+                  <button className="btnRegister">Regístrate</button>
+                </Link>
+              </>
+            )}
           <button className="header-cart-button" onClick={toggleCart}>
             🛒 Carrito
             {productosCarrito.length > 0 && (
