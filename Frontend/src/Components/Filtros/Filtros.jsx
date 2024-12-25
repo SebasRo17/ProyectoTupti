@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import "./Filtros.css";
 
 
+
 const Filtro = ({ onFilterChange }) => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [priceRange, setPriceRange] = useState([0, 9999]);
   const [selectedDiscount, setSelectedDiscount] = useState(null);
+  const [isFiltroVisible, setIsFiltroVisible] = useState(false); // Estado para controlar visibilidad del filtro
 
   const categorias = ["Electrónicos", "Ropa", "Bebidas", "Carnes"];
   const precios = [
@@ -34,42 +36,56 @@ const Filtro = ({ onFilterChange }) => {
     onFilterChange({ categories: selectedCategories, priceRange, selectedDiscount: discount });
   };
 
-  return (
-    <div className="filtro-container">
-      <h3>FILTRO</h3>
+  const toggleFiltroVisibility = () => {
+    setIsFiltroVisible(!isFiltroVisible);
+  };
 
-      {/* Precio */}
-      <div className="filtro-precios">
-        <h4>Precio</h4>
-        {precios.map((precio, index) => (
-          <div key={index} className="filtro-radio">
-            <label>
-              <input
-                type="radio"
-                name="priceRange"
-                onChange={() => handlePriceRangeChange(precio.range)}
-              />
-              {precio.label}
-            </label>
-          </div>
-        ))}
+  return (
+    <div>
+      {/* Botón Menú Hamburguesa */}
+      <div className="menu-hamburguesa-container">
+        <button className="menu-hamburguesa" onClick={toggleFiltroVisibility}>
+          ☰
+        </button>
       </div>
 
-      {/* Descuentos */}
-      <div className="filtro-descuentos">
-        <h4>Descuentos</h4>
-        {descuentos.map((descuento, index) => (
-          <div key={index} className="filtro-radio">
-            <label>
-              <input
-                type="radio"
-                name="discount"
-                onChange={() => handleDiscountChange(descuento)}
-              />
-              {descuento}
-            </label>
-          </div>
-        ))}
+      {/* Contenedor del Filtro */}
+      <div className={`filtro-container ${isFiltroVisible ? "visible" : "hidden"}`}>
+        <h3>FILTRO</h3>
+
+        {/* Precio */}
+        <div className="filtro-precios">
+          <h4>Precio</h4>
+          {precios.map((precio, index) => (
+            <div key={index} className="filtro-radio">
+              <label>
+                <input
+                  type="radio"
+                  name="priceRange"
+                  onChange={() => handlePriceRangeChange(precio.range)}
+                />
+                {precio.label}
+              </label>
+            </div>
+          ))}
+        </div>
+
+        {/* Descuentos */}
+        <div className="filtro-descuentos">
+          <h4>Descuentos</h4>
+          {descuentos.map((descuento, index) => (
+            <div key={index} className="filtro-radio">
+              <label>
+                <input
+                  type="radio"
+                  name="discount"
+                  onChange={() => handleDiscountChange(descuento)}
+                />
+                {descuento}
+              </label>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

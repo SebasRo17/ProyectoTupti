@@ -376,7 +376,6 @@ table td {
   .informacion-pago h4 {
     font-size: 14px;
   }
-
   .formulario-pago {
     max-width: 100%;
     transform: translateY(0);
@@ -2189,7 +2188,6 @@ table td {
   }
 
 }
-
 
 /* Pantallas de 2560px en adelante */
 @media (min-width: 2560px) {

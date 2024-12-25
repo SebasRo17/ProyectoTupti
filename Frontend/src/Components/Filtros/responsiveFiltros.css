@@ -1,155 +1,169 @@
 
-/* Desktop (1951 - 2561px) */
-@media (min-width: 1951px) and (max-width: 2561px) {
+
+/* Pantallas de 875px a 925px */
+@media (min-width: 875px) and (max-width: 925px) {
+    .filtro-container {
+        width: 45%;
+        margin: 0 auto;
+        transform: translateY(140px);
+    }
+}
+
+/* Pantallas de 925px a 990px */
+@media (min-width: 925px) and (max-width: 990px) {
+    .filtro-container {
+        width: 40%;
+        margin: 0 auto;
+        transform: translateY(150px);
+    }
+}
+
+/* Pantallas de 990px a 1024px */
+@media (min-width: 990px) and (max-width: 1024px) {
+    .filtro-container {
+        width: 35%;
+        margin: 0 auto;
+        transform: translateY(160px);
+    }
+}
+
+/* Pantallas de 1224px a 1287px */
+@media (min-width: 1224px) and (max-width: 1287px) {
+    .filtro-container {
+        width: 30%;
+        margin: 0 auto;
+        transform: translateY(170px);
+    }
+}
+
+/* Pantallas de 1287px a 1322px */
+@media (min-width: 1287px) and (max-width: 1322px) {
+    .filtro-container {
+        width: 30%;
+        margin: 0 auto;
+        transform: translateY(180px);
+    }
+}
+
+/* Pantallas de 1323px a 1365px */
+@media (min-width: 1323px) and (max-width: 1365px) {
+    .filtro-container {
+        width: 28%;
+        margin: 0 auto;
+        transform: translateY(190px);
+    }
+}
+
+/* Pantallas de 1365px a 1401px */
+@media (min-width: 1365px) and (max-width: 1401px) {
+    .filtro-container {
+        width: 27%;
+        margin: 0 auto;
+        transform: translateY(200px);
+    }
+}
+
+/* Pantallas de 1401px a 1440px */
+@media (min-width: 1401px) and (max-width: 1440px) {
+    .filtro-container {
+        width: 50%;
+        margin: 0 auto;
+        transform: translateY(260px);
+    }
+}
+
+/* Pantallas de 1441px a 1488px */
+@media (min-width: 1441px) and (max-width: 1488px) {
+    .filtro-container {
+        width: 24%;
+        margin: 0 auto;
+        transform: translateY(220px);
+    }
+}
+
+/* Pantallas de 1489px a 1587px */
+@media (min-width: 1489px) and (max-width: 1587px) {
+    .filtro-container {
+        width: 22%;
+        margin: 0 auto;
+        transform: translateY(230px);
+    }
+}
+
+/* Pantallas de 1588px a 1642px */
+@media (min-width: 1588px) and (max-width: 1642px) {
+    .filtro-container {
+        width: 21%;
+        margin: 0 auto;
+        transform: translateY(240px);
+    }
+}
+
+/* Pantallas de 1643px a 1700px */
+@media (min-width: 1643px) and (max-width: 1700px) {
+    .filtro-container {
+        width: 20%;
+        margin: 0 auto;
+        transform: translateY(250px);
+    }
+}
+
+/* Pantallas de 1701px a 1763px */
+@media (min-width: 1701px) and (max-width: 1763px) {
+    .filtro-container {
+        width: 18%;
+        margin: 0 auto;
+        transform: translateY(260px);
+    }
+}
+
+/* Pantallas de 1764px a 1831px */
+@media (min-width: 1764px) and (max-width: 1831px) {
+    .filtro-container {
+        width: 17%;
+        margin: 0 auto;
+        transform: translateY(270px);
+    }
+}
+
+/* Pantallas de 1832px a 1903px */
+@media (min-width: 1832px) and (max-width: 1903px) {
+    .filtro-container {
+        width: 16%;
+        margin: 0 auto;
+        transform: translateY(280px);
+    }
+}
+
+/* Pantallas de 1903px a 1919px */
+@media (min-width: 1903px) and (max-width: 1919px) {
+    .filtro-container {
+        width: 15%;
+        margin: 0 auto;
+        transform: translateY(290px);
+    }
+}
+
+/* Pantalla de 1920px (único) */
+@media (min-width: 1919px) and (max-width: 1920px) {
+    .filtro-container {
+        width: 14%;
+        margin: 0 auto;
+        transform: translateY(300px);
+    }
+}
+
+/* Pantallas mayores de 1921px a 2559px */
+@media (min-width: 1921px) and (max-width: 2570px) {
     .filtro-container {
         padding: 1rem;
-        width: 200px;
-        transform: translateY(-1300px);
-        margin-left: 40px;  
-      }
-
-      .filtro-precios, .filtro-descuentos {
-        margin-bottom: 3rem; /* Añadimos un margen más amplio */
-        padding: 1rem; /* Padding para separarlo más */
-      }
-      
-      .filtro-container h3{
-        margin-bottom: 1rem;
-        color: #ffffff;
-        font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
-        margin-left: 20%;
-    } 
-}   
-
-/* Desktop (1920px - 1950px) */
-@media (min-width: 1920px) and (max-width: 1950px) {
-    .filtro-container {
-        padding: 1rem;
-        width: 200px;
-        transform: translateY(-1300px);
-        margin-left: 40px;  
-      }
-
-      .filtro-precios, .filtro-descuentos {
-        margin-bottom: 3rem; /* Añadimos un margen más amplio */
-        padding: 1rem; /* Padding para separarlo más */
-      }
-      
-      .filtro-container h3{
-        margin-bottom: 1rem;
-        color: #ffffff;
-        font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
-        margin-left: 20%;
-    } 
-}   
-
-/* Desktop (1801px - 1919px) */
-@media (min-width: 1801px) and (max-width: 1919px) {
-    .filtro-container {
-        width: 230px;
-        margin-left: 40px;
-        transform:translateY(-1300px);
-    }
-
-    .filtro-container h3 {
-        margin-left: 23%;
-    }
-}
-
-/* Desktop (1650px - 1800px) */
-@media (min-width: 1651px) and (max-width: 1799px) {
-    .filtro-container {
-        width: 220px;
-        margin-left: 40px;
-        transform:translateY(-1250px);
-    }
-
-    .filtro-container h3 {
-        margin-left: 22%;
-    }
-}
-
-/* Desktop (1441px - 1650px) */
-@media (min-width: 1441px) and (max-width: 1650px) {
-    .filtro-container {
-        width: 200px;
-        margin-left: 20px;
-        transform:translateY(-1120px);
-    }
-
-    .filtro-container h3 {
-        margin-left: 20%;
-    }
-}
-
-/* Laptops (1024px - 1439px) */
-@media (min-width: 1024px) and (max-width: 1440px) {
-    .filtro-container {
-        width: 200px;
-        margin-left: 20px;
-        transform:translateY(-770px);
-    }
-
-    .filtro-container h3 {
-        margin-left: 15%;
-    }
-}
-
-/* Tablets (768px - 1023px) */
-@media (min-width: 768px) and (max-width: 1023px) {
-    .filtro-container {
-        width: 200px;
-        margin-left: 40px;
-        transform: translateY(-850px);
-    }
-
-    .filtro-container h3 {
-        margin-left: 10%;
-    }
-}
-
-/* Pantallas entre 425px y 767px */
-@media (min-width: 425px) and (max-width: 767px) {
-    .filtro-container {
-        width: 200px;
-        margin-left: 20px;
-        transform:translateY(-1470px);
-    }
-
-    .filtro-container h3 {
-        margin-left: 8%;
-    }
-}
-
-/* Pantallas entre 424px y 375px */
-@media (min-width: 375px) and (max-width: 424px) {
-    .filtro-container {
-        padding: 0.5rem;
+        background-color: #1f804c; /* Fondo verde oscuro */
+        color: #e5ffe5; /* Texto claro en tono verde */
         border-radius: 10px;
         width: 200px;
-        transform:translateY(-1540px);
+        transform:translateY(-700px);
         margin-left: 15px;
+        
       }
-
-    .filtro-container h3 {
-        margin-left: 20%;
-    }  
 }
-
-/* Pantallas entre 374px y 320px */
-@media (min-width: 320px) and (max-width: 374px) {
-    .filtro-container {
-    padding: 1rem;
-    border-radius: 10px;
-    width: 200px;
-    transform:translateY(-1470px);
-    margin-left: 15px;
-    
-  }
-
-}
-
-
-
-
 

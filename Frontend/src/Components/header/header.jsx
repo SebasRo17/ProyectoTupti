@@ -209,7 +209,7 @@ const actualizarCantidad = (id, cantidad) => {
           <Link to="/registro">
             <button className="btnRegister">Regístrate</button>
           </Link>
-          <button className="header-cart-button" onClick={toggleCart}>
+          <button className="header-cart-button" onClick={toggleCart }>
             🛒 Carrito
             {productosCarrito.length > 0 && (
               <span className="cart-count">

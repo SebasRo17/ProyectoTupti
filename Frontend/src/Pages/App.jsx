@@ -18,6 +18,7 @@ import MetodoPago from './MetodoPago/MetodoPago.jsx';
 function App() {
   return (
     <div>
+       
       <Routes>
         <Route path="/" element={<TuptiPage />} />
         <Route path="/registro" element={<Registro />} />
