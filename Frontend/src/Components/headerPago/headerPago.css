@@ -2,7 +2,7 @@
 /* Estilo base del header */
 .header-pagos {
     background-color: #1e7b3d; /* Color verde */
-    height: 100px; 
+    height: 150px; 
     display: flex; 
     justify-content: center; 
     align-items: center; 

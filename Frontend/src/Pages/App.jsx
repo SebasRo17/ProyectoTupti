@@ -13,7 +13,9 @@ import AuthGuard from '../Components/AuthGuard/AuthGuard';
 import NuevoProducto from './nuevoProductoAdmin/nuevoProductoAdmin.jsx';
 import Direccion from './Direccion/direccion.jsx';
 import MetodoPago from './MetodoPago/MetodoPago.jsx';
-
+import DireccionesGuardadas from '../Components/Direcciones/direcciones.jsx';
+import PDFModelo from '../Components/PDFModelo/pdf.jsx'; // Importa el componente PDFModelo
+import Usuario from '../Components/Usuario/usuario.jsx';
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
         <Route path="/Categoria/:id" element={<Categoria />} />
         <Route path="/olvido-contrasena" element={<OlvidoContrasena />} />
         <Route path="/Direccion" element={<Direccion />} />
+        <Route path="/DireccionesGuardadas" element={<DireccionesGuardadas />} />
+        <Route path="/Usuario" element={<Usuario />} />
         <Route path="/admin" 
           element={
             <AuthGuard>
@@ -62,6 +66,7 @@ function App() {
             </AuthGuard>
           } 
         />
+        <Route path="/pdf/:id" element={<PDFModelo />} /> {/* Nueva ruta para el PDF con ID */}
       </Routes>
     </div>
   );
