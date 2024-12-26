@@ -22,6 +22,7 @@ import Facturas from '../Components/Facturas/facturas.jsx';
 function App() {
   return (
     <div>
+       
       <Routes>
         <Route path="/" element={<TuptiPage />} />
         <Route path="/registro" element={<Registro />} />

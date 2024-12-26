@@ -1,4 +1,23 @@
 
+/*Desktop (1950px - 2560px) */
+@media screen and (min-width: 1951px) and (max-width: 2560px) {
+  .login-container {
+    padding: 0 -30%;
+  }
+  .login-card {
+    max-width: 40%;
+  }
+  .login-card h1 {
+    font-size: 4vw;
+  }
+  .login-button {
+    padding: 1% 30%;
+    margin-left: 15%;
+  }
+  .social-buttons {
+    margin-left: 33%;
+  }
+}
 /*Desktop (1920px - 1950px) */
 @media screen and (min-width: 1920px) and (max-width: 1950px) {
     .login-container {
@@ -145,9 +164,177 @@
       word-wrap: break-word;
     }
   }
-  
   /* Responsivo para pantallas entre 425px y 767px */
-@media (min-width: 425px) and (max-width: 767px) {
+@media (min-width: 714px) and (max-width: 767px) {
+  .login-container {
+    padding: 0 5%;
+  }
+  .login-card {
+    max-width: 100%;
+    padding: 10px;
+    border-radius: 60px;
+  }
+
+  .login-card h1 {
+    font-size: 2rem;
+  }
+  .login-form {
+    display: block;
+    text-align: left;
+    font-size: 1px;
+    margin-left: 5%;
+    margin-right: 5%;
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  .form-group input {
+    font-size: 1rem;
+    padding: 8px;
+  }
+
+  .login-button {
+    padding: 2% 30%;
+    border-radius: 50px;
+    margin-left: 10%;
+  }
+
+  .register-link {
+    font-size: 0.8rem;
+    margin-top: 12px;
+  }
+
+  .register-link a {
+    font-size: 0.8rem;
+  }
+
+  .forgot-password {
+    transform: translateX(0) translateY(-275%);
+    margin-top:70px;
+  }
+  .social-buttons {
+    margin-left: 5%;
+  }
+  .back-login-circle {
+    width: 30px;
+    height: 30px;
+  }
+}
+  /* Responsivo para pantallas entre 601px y 713px */
+@media (min-width: 601px) and (max-width: 713px) {
+  .login-container {
+    padding: 0 5%;
+  }
+  .login-card {
+    max-width: 100%;
+    padding: 10px;
+    border-radius: 60px;
+  }
+
+  .login-card h1 {
+    font-size: 2rem;
+  }
+  .login-form {
+    display: block;
+    text-align: left;
+    font-size: 1px;
+    margin-left: 5%;
+    margin-right: 5%;
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  .form-group input {
+    font-size: 1rem;
+    padding: 8px;
+  }
+
+  .login-button {
+    padding: 2% 30%;
+    border-radius: 50px;
+    margin-left: 10%;
+  }
+
+  .register-link {
+    font-size: 0.8rem;
+    margin-top: 12px;
+  }
+
+  .register-link a {
+    font-size: 0.8rem;
+  }
+
+  .forgot-password {
+    transform: translateX(0) translateY(-275%);
+    margin-top:70px;
+  }
+  .social-buttons {
+    margin-left: 23%;
+  }
+  .back-login-circle {
+    width: 40px;
+    height: 40px;
+
+  }
+}
+  /* Responsivo para pantallas entre 501px y 601px */
+@media (min-width: 501px) and (max-width: 601px) {
+  .login-container {
+    padding: 0 5%;
+  }
+  .login-card {
+    max-width: 100%;
+    padding: 10px;
+    border-radius: 60px;
+  }
+
+  .login-card h1 {
+    font-size: 2rem;
+  }
+  .login-form {
+    display: block;
+    text-align: left;
+    font-size: 1px;
+    margin-left: 5%;
+    margin-right: 5%;
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  .form-group input {
+    font-size: 1rem;
+    padding: 8px;
+  }
+
+  .login-button {
+    padding: 2% 30%;
+    border-radius: 50px;
+    margin-left: 10%;
+  }
+
+  .register-link {
+    font-size: 0.8rem;
+    margin-top: 12px;
+  }
+
+  .register-link a {
+    font-size: 0.8rem;
+  }
+
+  .forgot-password {
+    transform: translateX(0) translateY(-275%);
+    margin-top:70px;
+  }
+  .social-buttons {
+    margin-left: 5%;
+  }
+  .back-login-circle {
+    width: 30px;
+    height: 30px;
+  }
+}
+  /* Responsivo para pantallas entre 425px y 500px */
+@media (min-width: 425px) and (max-width: 500px) {
     .login-container {
       padding: 0 5%;
     }
@@ -269,8 +456,8 @@
     }
   
     .back-login-circle {
-      width: 25px;
-      height: 25px;
+      width: 40px;
+      height: 40px;
       margin-top: -10px;
       margin-left: -10px;
     }
@@ -427,8 +614,8 @@
   }
 
   .back-login-circle {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 5%;
     margin-top: 25px;
     margin-left: 10px;
   }
