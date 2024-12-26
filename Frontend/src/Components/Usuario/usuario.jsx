@@ -6,6 +6,10 @@ import { FaEye, FaEyeSlash, FaUser } from 'react-icons/fa';
 import './usuario.css';
 
 const Usuario = () => {
+         const [isCartOpen, setIsCartOpen] = useState(false);
+        const toggleCart = () => {
+            setIsCartOpen(!isCartOpen);
+          };
   const [showPassword, setShowPassword] = useState(false);
   const [userData, setUserData] = useState({
     name: 'John Doe',
@@ -20,7 +24,7 @@ const Usuario = () => {
 
   return (
     <div className="user-profile-container">
-      <Header />
+      <Header toggleCart={toggleCart} isCartOpen={isCartOpen} />
       
       <main className="user-profile-content">
         <div className="profile-card">

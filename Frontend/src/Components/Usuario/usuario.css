@@ -1,7 +1,8 @@
 .user-profile-container {
-    margin-top: -23%;
+    margin-top: -10%;
   display: flex;
   flex-direction: column;
+  background-color: whitesmoke;
 }
 
 .user-profile-content {
@@ -66,4 +67,10 @@
 
 .toggle-password:hover {
   color: #333;
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1440px) {
+    .user-profile-container {
+        margin-top: -10%;
+    }
 }
