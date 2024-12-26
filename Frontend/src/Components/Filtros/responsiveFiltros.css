@@ -1,169 +1,956 @@
-
-
-/* Pantallas de 875px a 925px */
-@media (min-width: 875px) and (max-width: 925px) {
-    .filtro-container {
-        width: 45%;
-        margin: 0 auto;
-        transform: translateY(140px);
+/* Responsive */
+/* Para pantallas menores de 320px */
+@media screen and (max-width: 320px) {
+    .menu-hamburguesa-container {
+      display: block;
+      position: fixed;
+      top: 10px;
+      right: 280px;
+      z-index: 1000;
+      transform: translateY(70px);
     }
-}
-
-/* Pantallas de 925px a 990px */
-@media (min-width: 925px) and (max-width: 990px) {
-    .filtro-container {
-        width: 40%;
-        margin: 0 auto;
-        transform: translateY(150px);
+  }
+  /* Pantallas de 321px a 335px */
+  @media (min-width: 321px) and (max-width: 335px) {
+    .menu-hamburguesa-container {
+      display: block;
+      position: fixed;
+      top: 10px;
+      right: 270px;
+      z-index: 1000;
+      transform: translateY(70px);
     }
-}
-
-/* Pantallas de 990px a 1024px */
-@media (min-width: 990px) and (max-width: 1024px) {
-    .filtro-container {
-        width: 35%;
-        margin: 0 auto;
-        transform: translateY(160px);
+    
+  }
+  /* Pantallas de 321px a 330px */
+  @media (min-width: 335px) and (max-width: 340px) {
+    .menu-hamburguesa-container {
+      display: block;
+      position: fixed;
+      top: 10px;
+      right: 280px;
+      z-index: 1000;
+      transform: translateY(70px);
     }
-}
-
-/* Pantallas de 1224px a 1287px */
-@media (min-width: 1224px) and (max-width: 1287px) {
-    .filtro-container {
-        width: 30%;
-        margin: 0 auto;
-        transform: translateY(170px);
+    
+  }
+  /* Pantallas de 341px a 350px */
+  @media (min-width: 341px) and (max-width: 350px) {
+    .menu-hamburguesa-container {
+      display: block;
+      position: fixed;
+      top: 10px;
+      right: 290px;
+      z-index: 1000;
+      transform: translateY(70px);
     }
-}
-
-/* Pantallas de 1287px a 1322px */
-@media (min-width: 1287px) and (max-width: 1322px) {
-    .filtro-container {
-        width: 30%;
-        margin: 0 auto;
-        transform: translateY(180px);
+    
+  }
+  /* Pantallas de 350px a 360px */
+  @media (min-width: 350px) and (max-width: 360px) {
+    .menu-hamburguesa-container {
+      display: block;
+      position: fixed;
+      top: 10px;
+      right: 300px;
+      z-index: 1000;
+      transform: translateY(70px);
     }
-}
-
-/* Pantallas de 1323px a 1365px */
-@media (min-width: 1323px) and (max-width: 1365px) {
-    .filtro-container {
-        width: 28%;
-        margin: 0 auto;
-        transform: translateY(190px);
+    
+  }
+  /* Pantallas de 350px a 360px */
+  @media (min-width: 361px) and (max-width: 370px) {
+    .menu-hamburguesa-container {
+      display: block;
+      position: fixed;
+      top: 10px;
+      right: 310px;
+      z-index: 1000;
+      transform: translateY(70px);
     }
-}
-
-/* Pantallas de 1365px a 1401px */
-@media (min-width: 1365px) and (max-width: 1401px) {
-    .filtro-container {
-        width: 27%;
-        margin: 0 auto;
-        transform: translateY(200px);
+    
+  }
+  /* Pantallas de 350px a 360px */
+  @media (min-width: 370px) and (max-width: 376px) {
+    .menu-hamburguesa-container {
+      display: block;
+      position: fixed;
+      top: 10px;
+      right: 320px;
+      z-index: 1000;
+      transform: translateY(70px);
     }
-}
-
-/* Pantallas de 1401px a 1440px */
-@media (min-width: 1401px) and (max-width: 1440px) {
-    .filtro-container {
-        width: 50%;
-        margin: 0 auto;
-        transform: translateY(260px);
+    
+  }
+  /* Pantallas de 350px a 360px */
+  @media (min-width: 377px) and (max-width: 390px) {
+    .menu-hamburguesa-container {
+      display: block;
+      position: fixed;
+      top: 10px;
+      right: 330px;
+      z-index: 1000;
+      transform: translateY(70px);
     }
-}
-
-/* Pantallas de 1441px a 1488px */
-@media (min-width: 1441px) and (max-width: 1488px) {
-    .filtro-container {
-        width: 24%;
-        margin: 0 auto;
-        transform: translateY(220px);
+    
+  }
+  /* Pantallas de 350px a 360px */
+  @media (min-width: 390px) and (max-width: 405px) {
+    .menu-hamburguesa-container {
+      display: block;
+      position: fixed;
+      top: 10px;
+      right: 340px;
+      z-index: 1000;
+      transform: translateY(70px);
     }
-}
-
-/* Pantallas de 1489px a 1587px */
-@media (min-width: 1489px) and (max-width: 1587px) {
-    .filtro-container {
-        width: 22%;
-        margin: 0 auto;
-        transform: translateY(230px);
+    
+  }
+  
+  /* Pantallas de 350px a 360px */
+  @media (min-width: 405px) and (max-width: 415px) {
+    .menu-hamburguesa-container {
+      display: block;
+      position: fixed;
+      top: 10px;
+      right: 350px;
+      z-index: 1000;
+      transform: translateY(70px);
     }
-}
-
-/* Pantallas de 1588px a 1642px */
-@media (min-width: 1588px) and (max-width: 1642px) {
-    .filtro-container {
-        width: 21%;
-        margin: 0 auto;
-        transform: translateY(240px);
+    
+  }
+  /* Pantallas de 350px a 360px */
+  @media (min-width: 414px) and (max-width: 425px) {
+    .menu-hamburguesa-container {
+      display: block;
+      position: fixed;
+      top: 10px;
+      right: 360px;
+      z-index: 1000;
+      transform: translateY(70px);
     }
-}
-
-/* Pantallas de 1643px a 1700px */
-@media (min-width: 1643px) and (max-width: 1700px) {
-    .filtro-container {
-        width: 20%;
-        margin: 0 auto;
-        transform: translateY(250px);
+    
+  }
+  
+  /* Pantallas de 350px a 360px */
+  @media (min-width: 425px) and (max-width: 450px) {
+    .menu-hamburguesa-container {
+      display: block;
+      position: fixed;
+      top: 10px;
+      right: 380px;
+      z-index: 1000;
+      transform: translateY(70px);
     }
-}
-
-/* Pantallas de 1701px a 1763px */
-@media (min-width: 1701px) and (max-width: 1763px) {
-    .filtro-container {
-        width: 18%;
-        margin: 0 auto;
-        transform: translateY(260px);
+    
+  }
+  /* Pantallas de 350px a 360px */
+  @media (min-width: 450px) and (max-width: 470px) {
+    .menu-hamburguesa-container {
+      display: block;
+      position: fixed;
+      top: 10px;
+      right: 400px;
+      z-index: 1000;
+      transform: translateY(70px);
     }
-}
-
-/* Pantallas de 1764px a 1831px */
-@media (min-width: 1764px) and (max-width: 1831px) {
-    .filtro-container {
-        width: 17%;
-        margin: 0 auto;
-        transform: translateY(270px);
+    
+  }
+  /* Pantallas de 350px a 360px */
+  @media (min-width: 470px) and (max-width: 500px) {
+    .menu-hamburguesa-container {
+      display: block;
+      position: fixed;
+      top: 10px;
+      right: 430px;
+      z-index: 1000;
+      transform: translateY(70px);
     }
-}
-
-/* Pantallas de 1832px a 1903px */
-@media (min-width: 1832px) and (max-width: 1903px) {
-    .filtro-container {
-        width: 16%;
-        margin: 0 auto;
-        transform: translateY(280px);
+    
+  }
+  
+  /* Pantallas de 350px a 360px */
+  @media (min-width: 501px) and (max-width: 520px) {
+    .menu-hamburguesa-container {
+      display: block;
+      position: fixed;
+      top: 10px;
+      right: 450px;
+      z-index: 1000;
+      transform: translateY(70px);
     }
-}
-
-/* Pantallas de 1903px a 1919px */
-@media (min-width: 1903px) and (max-width: 1919px) {
-    .filtro-container {
-        width: 15%;
-        margin: 0 auto;
-        transform: translateY(290px);
+  }
+  
+  /* Pantallas de 350px a 360px */
+  @media (min-width: 521px) and (max-width: 535px) {
+    .menu-hamburguesa-container {
+      display: block;
+      position: fixed;
+      top: 10px;
+      right: 470px;
+      z-index: 1000;
+      transform: translateY(70px);
     }
-}
-
-/* Pantalla de 1920px (único) */
-@media (min-width: 1919px) and (max-width: 1920px) {
-    .filtro-container {
-        width: 14%;
-        margin: 0 auto;
-        transform: translateY(300px);
+    
+  }
+  /* Pantallas de 350px a 360px */
+  @media (min-width: 535px) and (max-width: 550px) {
+    .menu-hamburguesa-container {
+      display: block;
+      position: fixed;
+      top: 10px;
+      right: 490px;
+      z-index: 1000;
+      transform: translateY(70px);
     }
-}
-
-/* Pantallas mayores de 1921px a 2559px */
-@media (min-width: 1921px) and (max-width: 2570px) {
+    
+  }
+  
+  /* Pantallas de 350px a 360px */
+  @media (min-width: 551px) and (max-width: 570px) {
+    .menu-hamburguesa-container {
+      display: block;
+      position: fixed;
+      top: 10px;
+      right: 500px;
+      z-index: 1000;
+      transform: translateY(70px);
+    }
+    
+  }
+  
+  /* Pantallas de 350px a 360px */
+  @media (min-width: 570px) and (max-width: 600px) {
+    .menu-hamburguesa-container {
+      display: block;
+      position: fixed;
+      top: 10px;
+      right: 530px;
+      z-index: 1000;
+      transform: translateY(70px);
+    }
+    
+  }
+  /* Pantallas de 350px a 360px */
+  @media (min-width: 601px) and (max-width: 650px) {
+    .menu-hamburguesa-container {
+      display: block;
+      position: fixed;
+      top: 10px;
+      right: 560px;
+      z-index: 1000;
+      transform: translateY(70px);
+    }
+    
+  }
+  /* Pantallas de 350px a 360px */
+  @media (min-width: 651px) and (max-width: 700px) {
+    .menu-hamburguesa-container {
+      display: block;
+      position: fixed;
+      top: 10px;
+      right: 610px;
+      z-index: 1000;
+      transform: translateY(70px);
+    }
+    
+  }
+  
+  /* Pantallas de 500px o más: mostrar el filtro y ocultar el menú hamburguesa */
+  @media (min-width: 700px) and (max-width: 750px) {
+    .menu-hamburguesa-container {
+      display: none; /* Ocultar el menú hamburguesa */
+    }
+  
     .filtro-container {
-        padding: 1rem;
-        background-color: #1f804c; /* Fondo verde oscuro */
-        color: #e5ffe5; /* Texto claro en tono verde */
-        border-radius: 10px;
-        width: 200px;
-        transform:translateY(-700px);
-        margin-left: 15px;
-        
-      }
-}
-
+    display: block; /* Mostrar el filtro */
+    width: auto; /* Ajusta el ancho para ocupar su espacio natural */
+    transform: none; /* Elimina transformaciones */
+    margin-left: 0; /* Ajusta el margen según sea necesario */
+    margin-top: 140px; /* Asegúrate de que el margen superior sea consistente */
+    transform: translateX(-470px);
+    }
+  }
+  /* Pantallas de 500px o más: mostrar el filtro y ocultar el menú hamburguesa */
+  @media (min-width: 751px) and (max-width: 767px) {
+    .menu-hamburguesa-container {
+      display: none; /* Ocultar el menú hamburguesa */
+    }
+  
+    .filtro-container {
+    display: block; /* Mostrar el filtro */
+    width: auto; /* Ajusta el ancho para ocupar su espacio natural */
+    transform: none; /* Elimina transformaciones */
+    margin-left: 0; /* Ajusta el margen según sea necesario */
+    margin-top: 140px; /* Asegúrate de que el margen superior sea consistente */
+    transform: translateX(-520px);
+    }
+  }
+  /* Pantallas de 500px o más: mostrar el filtro y ocultar el menú hamburguesa */
+  @media (min-width: 767px) and (max-width: 770px) {
+    .menu-hamburguesa-container {
+      display: none; /* Ocultar el menú hamburguesa */
+    }
+  
+    .filtro-container {
+    display: block; /* Mostrar el filtro */
+    width: auto; /* Ajusta el ancho para ocupar su espacio natural */
+    transform: none; /* Elimina transformaciones */
+    margin-left: 0; /* Ajusta el margen según sea necesario */
+    margin-top: 140px; /* Asegúrate de que el margen superior sea consistente */
+    transform: translateX(-870px);
+    }
+  }
+  
+  @media (min-width: 770px) and (max-width: 825px) {
+    .menu-hamburguesa-container {
+      display: none; /* Ocultar el menú hamburguesa */
+    }
+  
+    .filtro-container {
+    display: block; /* Mostrar el filtro */
+    width: auto; /* Ajusta el ancho para ocupar su espacio natural */
+    transform: none; /* Elimina transformaciones */
+    margin-left: 0; /* Ajusta el margen según sea necesario */
+    margin-top: 140px; /* Asegúrate de que el margen superior sea consistente */
+    transform: translateX(-870px);
+    }
+  } 
+  
+  /* Pantallas de 825px a 875px */
+  @media (min-width: 825px) and (max-width: 875px) {
+    .menu-hamburguesa-container {
+      display: none; /* Ocultar el menú hamburguesa */
+    }
+  
+    .filtro-container {
+    display: block; /* Mostrar el filtro */
+    width: auto; /* Ajusta el ancho para ocupar su espacio natural */
+    transform: none; /* Elimina transformaciones */
+    margin-left: 0; /* Ajusta el margen según sea necesario */
+    margin-top: 140px; /* Asegúrate de que el margen superior sea consistente */
+    transform: translateX(-950px);
+    }
+  } 
+  
+  /* Pantallas de 875px a 925px */
+  @media (min-width: 875px) and (max-width: 925px) {
+    .menu-hamburguesa-container {
+      display: none; /* Ocultar el menú hamburguesa */
+    }
+  
+    .filtro-container {
+    display: block; /* Mostrar el filtro */
+    width: auto; /* Ajusta el ancho para ocupar su espacio natural */
+    transform: none; /* Elimina transformaciones */
+    margin-left: 0; /* Ajusta el margen según sea necesario */
+    margin-top: 140px; /* Asegúrate de que el margen superior sea consistente */
+    transform: translateX(-1005px);
+    }
+  } 
+  
+  /* Pantallas de 925px a 990px */
+  @media (min-width: 925px) and (max-width: 990px) {
+    .menu-hamburguesa-container {
+      display: none; /* Ocultar el menú hamburguesa */
+    }
+  
+    .filtro-container {
+    display: block; /* Mostrar el filtro */
+    width: auto; /* Ajusta el ancho para ocupar su espacio natural */
+    transform: none; /* Elimina transformaciones */
+    margin-left: 0; /* Ajusta el margen según sea necesario */
+    margin-top: 140px; /* Asegúrate de que el margen superior sea consistente */
+    transform: translateX(-1100px);
+    }
+  } 
+  
+  /* Pantallas de 990px a 1024px */
+  @media (min-width: 990px) and (max-width: 1023px) {
+    .menu-hamburguesa-container {
+      display: none; /* Ocultar el menú hamburguesa */
+    }
+  
+    .filtro-container {
+    display: block; /* Mostrar el filtro */
+    width: auto; /* Ajusta el ancho para ocupar su espacio natural */
+    transform: none; /* Elimina transformaciones */
+    margin-left: 0; /* Ajusta el margen según sea necesario */
+    margin-top: 140px; /* Asegúrate de que el margen superior sea consistente */
+    transform: translateX(-1200px);
+    }
+  } 
+  
+  /* Para pantallas 1023px */
+  @media (min-width: 1023px)  {
+    .filtro-container {
+      display: block; 
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 15px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(-1000px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  
+  /* Para pantallas entre 1023px y 1224px */
+  @media (min-width: 1024px) and (max-width: 1080px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 15px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(-1350px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  
+  /* Para pantallas entre 1023px y 1224px */
+  @media (min-width: 1080px) and (max-width: 1131px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 15px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(-1230px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  
+  /* Para pantallas entre 1023px y 1224px */
+  @media (min-width: 1131px) and (max-width: 1180px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 15px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(-1220px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  
+  /* Para pantallas entre 1023px y 1224px */
+  @media (min-width: 1180px) and (max-width: 1196px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 15px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(-1200px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  
+  /* Para pantallas entre 1023px y 1224px */
+  @media (min-width: 1197px) and (max-width: 1200px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 15px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(-1190px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  /* Para pantallas entre 1023px y 1224px */
+  @media (min-width: 1200px) and (max-width: 1225px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 15px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(-900px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  
+  /* Pantallas de 1224px a 1287px */
+  @media (min-width: 1225px) and (max-width: 1251px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 15px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(-900px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  
+  /* Pantallas de 1224px a 1287px */
+  @media (min-width: 1251px) and (max-width: 1271px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 15px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(-870px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  
+  /* Pantallas de 1224px a 1287px */
+  @media (min-width: 1271px) and (max-width: 1310px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 15px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(-820px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  
+  /* Pantallas de 1224px a 1287px */
+  @media (min-width: 1310px) and (max-width: 1400px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 15px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(-810px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  
+  
+  /* Pantallas de 1224px a 1287px */
+  @media (min-width: 1400px) and (max-width: 1440px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 15px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(-790px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  /* Pantallas de 1224px a 1287px */
+  @media (min-width: 1441px) and (max-width: 1480px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 15px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(-250px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  /* Pantallas de 1224px a 1287px */
+  @media (min-width: 1480px) and (max-width: 1535px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 20px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(-190px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  
+  /* Pantallas de 1224px a 1287px */
+  @media (min-width: 1535px) and (max-width: 1560px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 20px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(-140px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  /* Pantallas de 1224px a 1287px */
+  @media (min-width: 1560px) and (max-width: 1600px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 20px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(-105px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  
+  /* Pantallas de 1224px a 1287px */
+  @media (min-width: 1600px) and (max-width: 1651px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 20px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(-65px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  
+  /* Pantallas de 1224px a 1287px */
+  @media (min-width: 1651px) and (max-width: 1700px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 20px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(-20px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  
+  /* Pantallas de 1224px a 1287px */
+  @media (min-width: 1700px) and (max-width: 1750px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 20px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(130px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  /* Pantallas de 1224px a 1287px */
+  @media (min-width: 1750px) and (max-width: 1800px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 20px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(180px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  
+  /* Pantallas de 1224px a 1287px */
+  @media (min-width: 1800px) and (max-width: 1850px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 20px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(220px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  
+  /* Pantallas de 1224px a 1287px */
+  @media (min-width: 1850px) and (max-width: 1900px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 20px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(270px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  
+  /* Pantallas de 1224px a 1287px */
+  @media (min-width: 1900px) and (max-width: 1950px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 20px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(320px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  
+  /* Pantallas de 1224px a 1287px */
+  @media (min-width: 1950px) and (max-width: 2000px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 20px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(370px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  
+  
+  /* Pantallas de 1224px a 1287px */
+  @media (min-width: 2000px) and (max-width: 2060px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 25px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(420px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  
+  
+  /* Pantallas de 1224px a 1287px */
+  @media (min-width: 2060px) and (max-width: 2115px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 25px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(460px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  
+  /* Pantallas de 1224px a 1287px */
+  @media (min-width: 2115px) and (max-width: 2200px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 25px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(530px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  
+  /* Pantallas de 1224px a 1287px */
+  @media (min-width: 2200px) and (max-width: 2300px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 25px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(560px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  
+  /* Pantallas de 1224px a 1287px */
+  @media (min-width: 2300px) and (max-width: 2400px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 25px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(700px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  
+  
+  /* Pantallas de 1224px a 1287px */
+  @media (min-width: 2400px) and (max-width: 2500px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 25px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(800px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  
+  /* Pantallas de 1224px a 1287px */
+  @media (min-width: 2500px) and (max-width: 2560px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 25px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(850px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
+  
+  @media (min-width: 2560px) {
+    .filtro-container {
+      display: block; /* Muestra el filtro en este rango de pantallas */
+      position: relative; /* Ajusta posición si es necesario */
+      margin-left: 25px;
+      width: 200px; /* Ajusta el ancho según tu diseño */
+      transform: none; /* Elimina transformaciones innecesarias */
+      top: auto;
+      right: auto;
+      transform: translateY(900px);
+    }
+  
+    .menu-hamburguesa-container {
+      display: none; /* Oculta el menú hamburguesa en este rango */
+    }
+  }
