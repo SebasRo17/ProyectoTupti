@@ -2,6 +2,7 @@ const UserRepository = require('../../infrastructure/repositories/UserRepository
 const User = require('../../domain/models/User')
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
+const AuthService = require('../../aplication/services/AuthService');
 
 class UserService {
   async getAllUsers() {
@@ -48,6 +49,7 @@ class UserService {
       throw error;
     }
   }
+
   async login(email, password) {
     try {
       const user = await UserRepository.findByEmail(email);
@@ -55,7 +57,6 @@ class UserService {
         throw new Error('Credenciales inválidas');
       }
 
-      // Debug de contraseñas
       const md5Hash = crypto.createHash('md5').update(password).digest('hex');
       
       console.log('========= Debug de contraseñas =========');
@@ -64,7 +65,6 @@ class UserService {
       console.log('3. Password en BD:', user.Contrasenia);
       console.log('4. Longitud password BD:', user.Contrasenia.length);
       
-      // Intentar comparación con ambos métodos
       const isValidBcrypt = await bcrypt.compare(password, user.Contrasenia);
       const isValidMD5 = md5Hash === user.Contrasenia;
       
@@ -72,30 +72,29 @@ class UserService {
       console.log('6. ¿Válido con MD5?:', isValidMD5);
       console.log('=====================================');
 
-      // Si ninguna validación funciona
       if (!isValidBcrypt && !isValidMD5) {
         throw new Error('Credenciales inválidas');
       }
 
-      // Validación de roles
-      const userRole = {
-        isAdmin: user.IdRol === 1,
-        isClient: user.IdRol === 2,
-        roleName: user.IdRol === 1 ? 'Administrador' : 'Cliente'
-      };
-
-      // Verificar que el rol sea válido
       if (![1, 2].includes(user.IdRol)) {
         throw new Error('Rol de usuario no válido');
       }
 
-      // Retornar usuario con información de rol
-      return {
+      const userData = {
         IdUsuario: user.IdUsuario,
+        Nombre: user.Nombre,
         Email: user.Email,
         CodigoUs: user.CodigoUs,
         IdRol: user.IdRol,
-        ...userRole
+        isAdmin: user.IdRol === 1,
+        roleName: user.IdRol === 1 ? 'Administrador' : 'Cliente'
+      };
+
+      const token = AuthService.generateToken(userData);
+
+      return {
+        user: userData,
+        token
       };
 
     } catch (error) {

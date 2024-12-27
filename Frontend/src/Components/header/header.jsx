@@ -41,7 +41,6 @@ const Header = ({ toggleCart, isCartOpen}) => {
           localStorage.removeItem('jwtToken');
         }
       } catch (error) {
-        console.error('Error decodificando el token:', error);
         localStorage.removeItem('jwtToken');
       }
     }
