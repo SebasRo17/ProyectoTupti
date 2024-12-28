@@ -284,3 +284,17 @@ header {
   width: 250px; /* Ajusta el ancho del filtro */
   padding: 20px;
 }
+
+/* Estilos para el menú hamburguesa */
+.menu-hamburguesa {
+  background-color: #1f804c;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 0.5rem;
+  border-radius: 5px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transform: translateX(350px);
+  margin-top: -80px;
+}
+
