@@ -127,22 +127,16 @@ function Login() {
     e.preventDefault();
     try {
       const response = await loginUser(email, password);
-      console.log('Login response:', response);
       
-      if (response.token) {
+      if (response.success) {
         localStorage.setItem('jwtToken', response.token);
-        localStorage.setItem('userData', JSON.stringify(response.user));
-        
-        const isAdmin = response.user.IdRol === 1;
-        console.log('Is admin:', isAdmin);
-        
+        const { isAdmin } = response.user;
+        console.log("token",response.token);
+        // Redirigir al usuario a la página anterior o a la ruta por defecto
         const from = location.state?.from || (isAdmin ? '/admin' : '/');
         navigate(from);
-      } else {
-        setPasswordError('Error en la respuesta del servidor');
       }
     } catch (error) {
-      console.error('Login error:', error);
       setPasswordError(error.message || 'Error al iniciar sesión');
     }
   };

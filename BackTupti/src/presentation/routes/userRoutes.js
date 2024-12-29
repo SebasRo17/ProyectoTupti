@@ -62,7 +62,7 @@ const router = express.Router();
  *         description: Usuario no encontrado
  *       500:
  *         description: Error del servidor
- * /users/login:
+ /users/login:
  *   post:
  *     summary: Iniciar sesión con email y contraseña
  *     requestBody:
@@ -79,30 +79,8 @@ const router = express.Router();
  *     responses:
  *       200:
  *         description: Inicio de sesión exitoso
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 user:
- *                   type: object
- *                   properties:
- *                     IdUsuario:
- *                       type: integer
- *                     Nombre:
- *                       type: string
- *                     Email:
- *                       type: string
- *                     CodigoUs:
- *                       type: string
- *                     IdRol:
- *                       type: integer
- *                     isAdmin:
- *                       type: boolean
- *                     roleName:
- *                       type: string
- *                 token:
- *                   type: string
+ *       400:
+ *         description: Datos inválidos
  *       401:
  *         description: Credenciales incorrectas
  *       500:

@@ -18,15 +18,9 @@ Pedido.init({
     allowNull: false
   },
   Estado: {
-    type: DataTypes.TINYINT,
-    allowNull: false,
-    defaultValue: 0, // Valor por defecto como definido en la tabla
-    comment: 'Define el estado del pedido:\n0: Espera\n1: Reembolsado\n2: Entregado'
-  },
-  IdCarrito: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    unique: true // Define la restricción UNIQUE
+    type: DataTypes.BOOLEAN,
+    allowNull: true,
+    comment: 'Define el estado del pedido\n\n\n\n4: Entegado\n\n7: Reembolsado\n9: En espera'
   }
 }, {
   sequelize,

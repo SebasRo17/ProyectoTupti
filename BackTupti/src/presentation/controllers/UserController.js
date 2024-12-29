@@ -66,63 +66,68 @@ class UserController {
     }
   }
 
-    async login(req, res) {
-      try {
-        // Validate JSON format
-        if (!req.is('application/json')) {
-          return res.status(400).json({
-            success: false,
-            message: 'Content-Type debe ser application/json'
-          });
-        }
-  
-        const { email, password } = req.body;
-  
-        if (!email || !password) {
-          return res.status(400).json({
-            success: false,
-            message: 'Email y contraseña son requeridos'
-          });
-        }
-  
-        const result = await UserService.login(email, password);
-  
-        return res.status(200).json({
-          success: true,
-          user: result.user,
-          token: result.token
-        });
-  
-      } catch (error) {
-        console.error('Error en el login:', error);
-  
-        if (error instanceof SyntaxError) {
-          return res.status(400).json({
-            success: false,
-            message: 'JSON inválido en el body de la petición'
-          });
-        }
-  
-        if (error.message === 'Credenciales inválidas') {
-          return res.status(401).json({
-            success: false,
-            message: 'Credenciales inválidas'
-          });
-        }
-  
-        if (error.message === 'Rol de usuario no válido') {
-          return res.status(403).json({
-            success: false,
-            message: 'Rol de usuario no válido'
-          });
-        }
-  
-        res.status(500).json({
-          success: false,
-          message: 'Error en el servidor'
-        });
-      }
+async login(req, res) {
+  try {
+    const { email, password } = req.body;
+
+    // Validación de campos requeridos
+    if (!email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: 'Email y contraseña son requeridos'
+      });
     }
+
+    // Autenticación de usuario
+    const user = await UserService.login(email, password);
+
+    // Estructuración de datos del usuario para el token
+    const userPayload = {
+      IdUsuario: user.IdUsuario,
+      Email: user.Email,
+      CodigoUs: user.CodigoUs,
+      rol: user.IdRol === 1 ? 'Administrador' : 'Cliente',
+      isAdmin: user.IdRol === 1,
+      isClient: user.IdRol === 2
+    };
+
+    // Generación del token JWT
+    const token = jwt.sign(
+      { user: userPayload }, // Datos a incluir en el token
+      process.env.JWT_SECRET, // Clave secreta
+      { expiresIn: '1h' } // Tiempo de expiración
+    );
+
+    // Respuesta con token y datos del usuario
+    return res.status(200).json({
+      success: true,
+      user: userPayload,
+      token
+    });
+
+  } catch (error) {
+    console.error('Error en el login:', error);
+
+    if (error.message === 'Credenciales inválidas') {
+      return res.status(401).json({
+        success: false,
+        message: 'Credenciales inválidas'
+      });
+    }
+
+    if (error.message === 'Rol de usuario no válido') {
+      return res.status(403).json({
+        success: false,
+        message: 'Rol de usuario no válido'
+      });
+    }
+
+    res.status(500).json({
+      success: false,
+      message: 'Error en el servidor'
+    });
   }
-  
-  module.exports = new UserController();
+}
+}
+
+module.exports = new UserController();
