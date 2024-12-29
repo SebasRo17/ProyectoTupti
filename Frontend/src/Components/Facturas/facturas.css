@@ -53,6 +53,18 @@
   background-color: #f7fafc;
 }
 
+@media (min-width: 1441px) {
+  .app-wrapper{
+    min-height: 100vh;
+  }
+  .facturas-container{
+    margin-top: 5%
+  }
+  .facturas-section h2{
+    margin-left: 0%;
+  }
+}
+
 @media (max-width: 768px) {
   .facturas-container {
     padding: 1rem;

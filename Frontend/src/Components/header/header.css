@@ -308,15 +308,15 @@ header .search-input {
     }
   }
   
-  /* Tablets (768px - 1023px) */
-  @media (min-width: 768px) and (max-width: 1023px) {
+/* Tablets (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
     .header {
-      flex-wrap: wrap;
       justify-content: center;
+      width: 100vw;
     }
     .search-bar {
       order: 2;
-      width: 100%;
+      width: 30%;
       justify-content: center;
       margin: 10px 0;
     }
@@ -332,7 +332,6 @@ header .search-input {
       justify-content: space-between;
       padding: 0px 16px;
       height: 56px;
-      width: 100%;
     }
     .logo {
       order: 1;
