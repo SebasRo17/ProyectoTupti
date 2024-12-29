@@ -29,13 +29,10 @@ class AuthService {
 
   static generateToken(user) {
     return jwt.sign({ 
-        IdUsuario: user.IdUsuario,
-        Nombre: user.Nombre,
-        Email: user.Email,
-        CodigoUs: user.CodigoUs,
-        IdRol: user.IdRol,
-        isAdmin: user.IdRol === 1,
-        roleName: user.IdRol === 1 ? 'Administrador' : 'Cliente'
+      id: user.IdUsuario, 
+      email: user.Email,
+      isAdmin: user.IdRol === 1,
+      idRol: user.IdRol
     }, process.env.JWT_SECRET, { expiresIn: '1h' });
   }
 
