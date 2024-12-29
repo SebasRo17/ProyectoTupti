@@ -69,6 +69,11 @@
   color: #333;
 }
 
+@media (min-width: 1441px) {
+  .user-profile-container{
+    margin-top: -22%
+  }
+}
 @media screen and (min-width: 1024px) and (max-width: 1440px) {
     .user-profile-container {
         margin-top: -10%;

@@ -124,6 +124,15 @@
     transform: translateY(1px);
   }
   
+@media (min-width: 1441px) {
+  .user-profile-section h2 {
+    margin-left: 0%;
+  }
+  .password-section h2 {
+    margin-left: 0%;
+  }
+}
+  
   @media (max-width: 768px) {
     .settings-container {
       padding: 1rem;
