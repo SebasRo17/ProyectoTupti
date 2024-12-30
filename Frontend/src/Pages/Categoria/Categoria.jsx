@@ -11,6 +11,7 @@ import "./ResponsiveCategoria.css";
 import Filtros from "../../Components/Filtros/Filtros.jsx";
 import { addToCart } from '../../Api/carritoApi.js';
 import jwtDecode from 'jwt-decode';
+import LoadingSpinner from '../../Components/LoadingSpinner/LoadingSpinner';
 
 function Categoria() {
    const [productos, setProductos] = useState([]);
@@ -182,7 +183,7 @@ function Categoria() {
       }
    };
 
-   if (loading) return <div>Cargando...</div>;
+   if (loading) return <LoadingSpinner />;
    if (error) return <div>Error: {error}</div>;
 
    return (

@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import axios from 'axios';
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import { Link, useNavigate } from 'react-router-dom';
@@ -42,6 +43,8 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
         localStorage.removeItem('jwtToken'); // Limpia token corrupto
       }
     }
+
+    axios.get('https://proyectotupti.onrender.com/api-docs/')
   }, []);
 
   const handleLogout = () => {

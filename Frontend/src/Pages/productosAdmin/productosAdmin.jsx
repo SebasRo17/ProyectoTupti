@@ -1,4 +1,4 @@
-import React ,  { useState } from 'react';
+import React ,  { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import HeaderAdmin from '../../Components/headerAdmin/headerAdmin.jsx';
@@ -8,7 +8,7 @@ import './productosAdmin.css';
 import Filtros from "../../Components/Filtros/Filtros.jsx";
 import './responsiveproductosAdmin.css';
 import NuevoProducto from "../nuevoProductoAdmin/nuevoProductoAdmin.jsx";
-
+import { productosApi } from '../../Api/productosApi';
 
 const ProductosAdmin = () => {
     const navigate = useNavigate();
@@ -17,23 +17,35 @@ const ProductosAdmin = () => {
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
+    const [productos, setProductos] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
+    useEffect(() => {
+        fetchProductos();
+    }, []);
 
-    const productos = [
-        { id: 1, name: "Yogur Natural", details: "Yogur de soya", price: "$2.49", image: "/images/yogur-natural.png" },
-        { id: 2, name: "Leche Descremada", details: "Leche de 1% de grasa", price: "$1.20", image: "/images/leche-descremada.png" },
-        { id: 3, name: "Yogur de Sabores", details: "Yogur de frutas", price: "$1.50", image: "/images/yogur-sabores.png" },
-        { id: 4, name: "Queso Fresco", details: "Queso de 200g", price: "$3.50", image: "/images/queso-fresco.png" },
-        { id: 5, name: "Mantequilla", details: "Mantequilla de 200g", price: "$2.59", image: "/images/mantequilla.png" },
-    ];
-
-
-    const handleDelete = (productId) => {
-        // Implementar lógica de eliminación
-        console.log(`Eliminando producto ${productId}`);
+    const fetchProductos = async () => {
+        try {
+            const data = await productosApi.getAllProducts();
+            setProductos(data);
+            setLoading(false);
+        } catch (error) {
+            setError('Error al cargar los productos');
+            setLoading(false);
+        }
     };
-    
-      const handleSearch = (e) => {
+
+    const handleDelete = async (productId) => {
+        try {
+            await productosApi.deleteProduct(productId);
+            fetchProductos(); // Recargar la lista después de eliminar
+        } catch (error) {
+            console.error('Error al eliminar el producto:', error);
+        }
+    };
+
+    const handleSearch = (e) => {
         const value = e.target.value;
         setSearchTerm(value);
       
@@ -133,41 +145,41 @@ const ProductosAdmin = () => {
                     </div>
                 </header>
                 <main className="product-grid">
-                    {productos.map((product) => (
-                        <div className="product-card" key={product.id}>
-                            <img 
-                                src={product.image} 
-                                alt={product.name} 
-                                className="product-image" 
-                                onError={(e) => {
-                                    e.target.src = '/images/placeholder.png'; // Imagen de respaldo
-                                }}
-                            />
-                            <h3 className="product-title">{product.name}</h3>
-                            <p className="product-details">{product.details}</p>
-                            <p className="product-price">{product.price}</p>
-                            <div className="card-buttons">
-                                <button 
-                                    className="editar-button"
-                                    onClick={handleOpenModal}
-                                >
-                                    Editar
-                                </button>
-                                {isEditModalOpen && (
-                                    <EditarProductos 
-                                        onClose={handleCloseModal}
-                                        productos={productos}
-                                    />
-                                )}
-                                <button 
-                                    className="delete-button"
-                                    onClick={() => handleDelete(product.id)}
-                                >
-                                    Eliminar
-                                </button>
+                    {loading ? (
+                        <p>Cargando productos...</p>
+                    ) : error ? (
+                        <p>{error}</p>
+                    ) : (
+                        productos.map((product) => (
+                            <div className="product-card" key={product.IdProducto}>
+                                <img 
+                                    src={product.ImagenUrl || '/images/placeholder.png'} 
+                                    alt={product.Nombre} 
+                                    className="product-image" 
+                                    onError={(e) => {
+                                        e.target.src = '/images/placeholder.png';
+                                    }}
+                                />
+                                <h3 className="product-title">{product.Nombre}</h3>
+                                <p className="product-details">{product.Descripcion}</p>
+                                <p className="product-price">${product.Precio}</p>
+                                <div className="card-buttons">
+                                    <button 
+                                        className="editar-button"
+                                        onClick={handleOpenModal}
+                                    >
+                                        Editar
+                                    </button>
+                                    <button 
+                                        className="delete-button"
+                                        onClick={() => handleDelete(product.IdProducto)}
+                                    >
+                                        Eliminar
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))
+                    )}
                 </main>
                     <div className="filters-container">
                     <div className="filtros-clase">
