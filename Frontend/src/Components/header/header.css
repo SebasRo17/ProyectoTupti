@@ -206,7 +206,7 @@ header .search-input {
 }
 
 .user-button {
-  background: #4CAF50;
+  background: transparent;
   color: white;
   padding: 8px 16px;
   border: none;
@@ -229,7 +229,7 @@ header .search-input {
 }
 
 .user-button {
-  background: #4CAF50;
+  background: transparent;
   color: white;
   padding: 8px 16px;
   border: none;
