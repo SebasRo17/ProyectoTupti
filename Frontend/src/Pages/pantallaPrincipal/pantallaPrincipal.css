@@ -12,8 +12,9 @@ body {
   padding: 0;
   padding-top: 100px; /* Compensar la altura del header fijo */
   position: relative; /* Asegurar que es el contenedor principal */
-  height: 100vh;
+  min-height: 100vh;
   background-color: #f4f5f4; /* Añadir color de fondo base */
+
   background-image: none;
 }
 

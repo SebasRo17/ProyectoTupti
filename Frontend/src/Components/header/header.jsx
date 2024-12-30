@@ -203,10 +203,10 @@ const actualizarCantidad = (id, cantidad) => {
             ×
           </button>
           <nav className="mobile-nav-items">
-            <button onClick={() => setIsMobileMenuOpen(false)}>
-              <span>📍</span>
-              Dirección
-            </button>
+          <Link to="/Direccion" onClick={() => setIsMobileMenuOpen(false)}>
+            <button className="icon-button">📍 Dirección</button>
+                </Link>
+
             {user ? (
               <div className="user-menu" ref={dropdownRef}>
                 <button 
@@ -218,16 +218,16 @@ const actualizarCantidad = (id, cantidad) => {
                 {isDropdownOpen && (
                   <div className="user-dropdown">
                     <Link to="/Usuario" className="dropdown-item" onClick={() => { setIsMobileMenuOpen(false); setIsDropdownOpen(false); }}>
-                      <ul><span>👤</span> Mi Perfil</ul>
+                      <span>👤</span> Mi Perfil
                     </Link>
                     <Link to="/DireccionesGuardadas" className="dropdown-item" onClick={() => { setIsMobileMenuOpen(false); setIsDropdownOpen(false); }}>
-                      <ul><span>📍</span> Mis Direcciones</ul>
+                      <span>📍</span> Mis Direcciones
                     </Link>
                     <Link to="/Configuraciones" className="dropdown-item" onClick={() => { setIsMobileMenuOpen(false); setIsDropdownOpen(false); }}>
-                      <ul><span>⚙️</span> Configuración</ul>
+                      <span>⚙️</span> Configuración
                     </Link>
                     <Link to="/Facturas" className="dropdown-item" onClick={() => { setIsMobileMenuOpen(false); setIsDropdownOpen(false); }}>
-                      <ul><span>📄</span> Facturas</ul>
+                      <span>📄</span> Facturas
                     </Link>
                     <button 
                       onClick={() => {
@@ -291,7 +291,7 @@ const actualizarCantidad = (id, cantidad) => {
                       <span>⚙️</span> Configuración
                     </Link>
                     <Link to="/Facturas" className="dropdown-item">
-                      <ul><span>📄</span> Facturas</ul>
+                      <span>📄</span> Facturas
                     </Link>
                     <button 
                       onClick={() => {
@@ -299,7 +299,7 @@ const actualizarCantidad = (id, cantidad) => {
                         setUser(null);
                         setIdUsuario(null);
                         setIsDropdownOpen(false);
-                        {/*navigate('/');*/}
+                        navigate('/');
                       }}
                       className="dropdown-item logout"
                     >
