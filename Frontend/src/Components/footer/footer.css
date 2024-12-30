@@ -117,7 +117,7 @@
   /* Footer - Tablets (768px - 1023px) */
   @media (min-width: 768px) and (max-width: 1023px) {
     .footer{
-        width: 120%;
+        width: 150%;
         margin-left: 0%;
       }
 

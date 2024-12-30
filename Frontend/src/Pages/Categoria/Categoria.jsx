@@ -340,6 +340,7 @@ function Categoria() {
          )}
 
           <Footer />
+
           <Filtros /> 
       </div>
    );
