@@ -5,10 +5,6 @@
   .slider-container {
     margin-top: 120px; /* Ajustado */
   }
-  .tupti-container {
-    min-height: 100vh;
-    background-attachment: fixed; /* Mantener el fondo fijo */
-  }
   .slider-container{
     margin-left: 15%;
     max-width: 70%;
@@ -53,6 +49,7 @@
 @media screen and (min-width: 1024px) and (max-width: 1440px) {
   .tupti-container{
     max-height: 150%;
+    width: 100vw;
   }
   .slider-container {
     margin-top: 120px; /* Ajustado */
