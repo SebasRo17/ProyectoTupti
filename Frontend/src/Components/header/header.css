@@ -399,24 +399,29 @@ header .search-input {
       padding: 0px 16px;
       height: 56px;
     }
+    header .logo-imagen {
+      width: 120px;
+    }
     .logo {
       order: 1;
+      width: 50%;
     }
     .logo-imagen {
-      width: 80px;
+      width: 10px;
       margin-right: auto;
     }
     .search-bar {
       order: 2;
       width: auto;
       margin: 0;
+      height: 30px;
     }
     .search-bar input {
       display: none;
     }
     .search-bar button {
-      width: 40px;
-      height: 40px;
+      width: 8%;
+      height: 8%;
       padding: 0;
       display: flex;
       align-items: center;

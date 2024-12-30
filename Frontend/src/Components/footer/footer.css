@@ -4,7 +4,7 @@
     color: #fff;
     padding: 30px 20px;
     margin-top: 175px;
-    max-width: 100vw;
+    width: 100vw;
     position: relative;
     font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
     margin-left: auto;
@@ -102,7 +102,7 @@
   /* Footer - Laptops (1024px - 1440px) */
   @media screen and (min-width: 1024px) and (max-width: 1440px) {
     .footer{
-        width:100vw;
+        width:120%;
         margin-left: 0%;
         margin-top: 0%;
         margin-bottom: -50%;
@@ -117,10 +117,10 @@
   /* Footer - Tablets (768px - 1023px) */
   @media (min-width: 768px) and (max-width: 1023px) {
     .footer{
-        width: 100vw;
+        width: 150%;
         margin-left: 0%;
-        margin-top: 35%;
       }
+
     }
   
   /* Footer - Móvil (< 768px) */
