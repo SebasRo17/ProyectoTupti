@@ -3,21 +3,18 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
+  server: {
+    compress: true, // Habilita la compresión Gzip/Brotli
+  },
   build: {
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+        compact: true,
+        minifyInternalExports: true
       }
     },
-    rollupOptions: {
-      external: ['@react-google-maps/api'],
-      output: {
-        globals: {
-          '@react-google-maps/api': 'google'
-        }
-      }
-    }
+    minify: 'terser', // Usa Terser para minificación
+    brotliSize: true // Habilita reportes de tamaño Brotli
   }
 })

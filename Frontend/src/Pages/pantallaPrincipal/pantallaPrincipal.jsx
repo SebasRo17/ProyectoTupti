@@ -316,9 +316,21 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
 
       {/* Botones de promoción */}
       <div className="promo-buttons-container">
-        <button className="promo-button button-1"></button>
-        <button className="promo-button button-2"></button>
-        <button className="promo-button button-3"></button>
+        <button className="promo-button button-1" 
+        aria-label='Promocioón 1'
+        role='button'
+        tabIndex="0"
+        ></button>
+        <button className="promo-button button-2"
+        aria-label='Promocioón 2'
+        role='button'
+        tabIndex="0"
+        ></button>
+        <button className="promo-button button-3"
+        aria-label='Promocioón 3'
+        role='button'
+        tabIndex="0"
+        ></button>
       </div>
 
       {/* Nuevo carrusel de productos */}

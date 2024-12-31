@@ -144,7 +144,7 @@ const actualizarCantidad = (id, cantidad) => {
         <Link to="/">
         <button className='btnLogo'>
           <img 
-            src="https://res.cloudinary.com/dd7etqrf2/image/upload/v1734134733/tupti_4_i0nwzz.png" 
+            src="https://res.cloudinary.com/dd7etqrf2/image/upload/v1735594095/tupti_4_i0nwzz.webp" 
             alt="TUPTI" 
             className="logo-imagen" 
           />

@@ -45,6 +45,7 @@
     cursor: pointer;
     transition: transform 0.2s;
     padding: 0 5px;
+    color: #006400;
 }
 
 .category-icon {
