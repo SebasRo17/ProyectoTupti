@@ -50,16 +50,15 @@ class PaymentService {
       }
     }
   
-    async createOrder(idPedido) {
+    async createOrder(idPedido, monto) {
         try {
           const pedidoActivo = await this.validarPedidoActivo(idPedido);
           if (!pedidoActivo) {
             throw new Error('El pedido no está activo o no existe');
           }
       
-          const total = await this.calcularTotalPedido(idPedido);
-          if (!total || total <= 0) {
-            throw new Error('El pedido no tiene un monto válido');
+          if (!monto || monto <= 0) {
+            throw new Error('El monto proporcionado no es válido');
           }
       
           const request = new paypal.orders.OrdersCreateRequest();
@@ -69,7 +68,7 @@ class PaymentService {
             purchase_units: [{
               amount: {
                 currency_code: 'USD',
-                value: total.toString()
+                value: monto.toString()
               }
             }],
             application_context: {
@@ -77,12 +76,11 @@ class PaymentService {
               cancel_url: `http://localhost:3000/api/payment/cancel`  // URL de redirección despues del pago cancelado
             }
           });
-      
           const order = await this.client.execute(request);
           
           await PaymentRepository.create({
             IdOrdenPaypal: order.result.id,
-            Monto: total,
+            Monto: monto,
             IdPedido: idPedido
           });
       
@@ -90,7 +88,7 @@ class PaymentService {
       
           return {
             orderId: order.result.id,
-            total: total,
+            total: monto,
             approveUrl // URL para redireccionar al usuario
           };
         } catch (error) {

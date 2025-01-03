@@ -18,6 +18,7 @@ const productsRoutes = require('./presentation/routes/productRoutes'); // Correg
 const calificacionRoutes = require('./presentation/routes/calificacionRoutes');
 const carritoRoutes = require('./presentation/routes/carritoRoutes');
 const paymentRoutes = require('./presentation/routes/paymentRoutes');
+const pedidoRoutes = require('./presentation/routes/pedidoRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -88,6 +89,7 @@ app.use('/apiImg', productRoutes); // Esta línea ya configura la ruta correctam
 app.use('/api', calificacionRoutes);
 app.use('/carrito', carritoRoutes);
 app.use('/api/payments', paymentRoutes);
+app.use('/pedidos', pedidoRoutes);
 
 // Sincronizar con la base de datos y iniciar el servidor
 sequelize.sync()

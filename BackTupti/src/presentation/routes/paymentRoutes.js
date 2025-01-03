@@ -1,4 +1,3 @@
-// paymentRoutes.js
 const express = require('express');
 const router = express.Router();
 const PaymentController = require('../controllers/paymentController');
@@ -18,9 +17,15 @@ const PaymentController = require('../controllers/paymentController');
  *             properties:
  *               idPedido:
  *                 type: integer
+ *               monto:
+ *                 type: number
  *     responses:
  *       200:
  *         description: Orden de pago creada exitosamente
+ *       400:
+ *         description: Error en la solicitud
+ *       500:
+ *         description: Error del servidor
  */
 router.post('/create', (req, res) => PaymentController.createPaymentOrder(req, res));
 
@@ -39,6 +44,10 @@ router.post('/create', (req, res) => PaymentController.createPaymentOrder(req, r
  *     responses:
  *       200:
  *         description: Pago capturado exitosamente
+ *       404:
+ *         description: Orden no encontrada
+ *       500:
+ *         description: Error del servidor
  */
 router.post('/capture/:orderId', (req, res) => PaymentController.capturePayment(req, res));
 
