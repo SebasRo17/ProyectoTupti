@@ -11,16 +11,34 @@ Pedido.init({
   },
   IdUsuario: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: false,
+    references: {
+      model: 'usuario',
+      key: 'IdUsuario'
+    }
   },
   Direccion_IdDireccion: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: false,
+    references: {
+      model: 'direccion',
+      key: 'IdDireccion'
+    }
   },
   Estado: {
-    type: DataTypes.BOOLEAN,
+    type: DataTypes.TINYINT,
     allowNull: true,
-    comment: 'Define el estado del pedido\n\n\n\n4: Entegado\n\n7: Reembolsado\n9: En espera'
+    defaultValue: 0,
+    comment: 'Define el estado del pedido:\r\n0: Espera\r\n1: Reembolsado\r\n2: Entregado'
+  },
+  IdCarrito: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    unique: true,
+    references: {
+      model: 'carrito',
+      key: 'IdCarrito'
+    }
   }
 }, {
   sequelize,
