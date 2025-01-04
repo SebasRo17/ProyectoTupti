@@ -49,6 +49,26 @@ class PedidoService {
       throw error;
     }
   }
+  async getPedidoByCarrito(idCarrito) {
+    try {
+      const pedido = await PedidoRepository.findByCarritoId(idCarrito);
+      
+      if (!pedido) {
+        throw new Error('Pedido no encontrado para este carrito');
+      }
+
+      return {
+        idPedido: pedido.IdPedido,
+        idUsuario: pedido.IdUsuario,
+        idDireccion: pedido.Direccion_IdDireccion,
+        estado: pedido.Estado,
+        idCarrito: pedido.IdCarrito
+      };
+    } catch (error) {
+      console.error('Error en el servicio de pedidos:', error);
+      throw error;
+    }
+  }
 }
 
 module.exports = new PedidoService();

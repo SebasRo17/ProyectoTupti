@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router(); // Definir router
+const router = express.Router();
 const PedidoController = require('../controllers/PedidoController');
 
 /**
@@ -23,4 +23,27 @@ const PedidoController = require('../controllers/PedidoController');
  *         description: Error del servidor
  */
 router.get('/:idPedido/detalles', (req, res) => PedidoController.getPedidoDetails(req, res));
-module.exports = router; 
+
+/**
+ * @swagger
+ * /pedidos/carrito/{idCarrito}:
+ *   get:
+ *     summary: Obtener pedido por ID de carrito
+ *     parameters:
+ *       - in: path
+ *         name: idCarrito
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID del carrito
+ *     responses:
+ *       200:
+ *         description: Pedido encontrado
+ *       404:
+ *         description: No existe pedido para este carrito
+ *       500:
+ *         description: Error del servidor
+ */
+router.get('/carrito/:idCarrito', (req, res) => PedidoController.getPedidoByCarrito(req, res));
+
+module.exports = router;
