@@ -53,17 +53,6 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
     navigate('/');
   };
 
-  const [productos, setProductos] = useState([
-    { id: 1, nombre: "Manzana", precio: 10.5, cantidad: 1, imagen: "https://via.placeholder.com/150" },
-    { id: 2, nombre: "Chocolate", precio: 20.0, cantidad: 2, imagen: "https://via.placeholder.com/150" },
-    { id: 3, nombre: "Producto 3", precio: 5.5, cantidad: 5, imagen: "https://via.placeholder.com/150" },
-    { id: 4, nombre: "Producto 4", precio: 2.0, cantidad: 2, imagen: "https://via.placeholder.com/150" },
-    { id: 5, nombre: "Producto 5", precio: 6.0, cantidad: 2, imagen: "https://via.placeholder.com/150" },
-    { id: 6, nombre: "Producto 6", precio: 1.0, cantidad: 3, imagen: "https://via.placeholder.com/150" },
-  ]);
-
-
-
   // Función para eliminar un producto del carrito
   const eliminarProducto = (productoId) => {
     const productosActualizados = productos.filter(producto => producto.id !== productoId);
