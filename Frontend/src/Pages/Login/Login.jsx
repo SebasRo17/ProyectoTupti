@@ -8,6 +8,7 @@ import "./Login.css";
 import { loginUser } from '../../Api/loginUsers';
 import "./responsiveLogin.css";
 import jwtDecode from 'jwt-decode';
+import UpdateNameModal from '../../Components/UpdateNameModal/UpdateNameModal'; // Importar el modal
 
 
 function Login() {
@@ -17,6 +18,8 @@ function Login() {
   const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [showUpdateNameModal, setShowUpdateNameModal] = useState(false);
+  const [userId, setUserId] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
   const apiUrl = import.meta.env.MODE === 'development' 
@@ -130,11 +133,14 @@ function Login() {
       
       if (response.success) {
         localStorage.setItem('jwtToken', response.token);
-        const { isAdmin } = response.user;
-        console.log("token",response.token);
-        // Redirigir al usuario a la página anterior o a la ruta por defecto
-        const from = location.state?.from || (isAdmin ? '/admin' : '/');
-        navigate(from);
+        const { isAdmin, hasName, IdUsuario } = response.user;
+        setUserId(IdUsuario);
+        if (!hasName) {
+          setShowUpdateNameModal(true);
+        } else {
+          const from = location.state?.from || (isAdmin ? '/admin' : '/');
+          navigate(from);
+        }
       }
     } catch (error) {
       setPasswordError(error.message || 'Error al iniciar sesión');
@@ -252,6 +258,7 @@ function Login() {
           <Link to="/Registro" className="signup-text">Regístrate</Link>
         </div>
       </div>
+      {showUpdateNameModal && <UpdateNameModal userId={userId} onClose={() => setShowUpdateNameModal(false)} />}
     </div>
   );
 }
