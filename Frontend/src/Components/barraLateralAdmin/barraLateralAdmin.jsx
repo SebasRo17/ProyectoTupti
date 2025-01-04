@@ -1,10 +1,18 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './barraLateralAdmin.css';
+import { useNavigate } from 'react-router-dom';
 import PantallaAdmin from '../../Pages/pantallaAdmin/pantallaAdmin';
 //import ProductosAdmin from '../../Pages/productosAdmin/productosAdmin';
 
 const BarraLateralAdmin = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('jwtToken');
+    localStorage.removeItem('idUsuario');
+    navigate('/');
+  };
   return (
     <div className="barra-lateral-admin">
       <div className="barra-lateral-logo">
@@ -22,10 +30,19 @@ const BarraLateralAdmin = () => {
            <li>
            <Link to="/ProductosAdmin">🛒 Productos</Link>
           </li>
-          <li><a href="#categorias">📂 Categorías</a></li>
-          <li><a href="#pedidos">📦 Pedidos</a></li>
+          <li><Link to="/DescuentosAdmin">💰 Descuentos</Link></li>
+          <li><Link to="/PedidosAdmin">📦 Pedidos</Link></li>
           <li><a href="#usuarios">👤 Usuarios</a></li>
           <li><a href="#configuracion">⚙️ Configuración</a></li>
+          
+          <li>
+            <button 
+              onClick={handleLogout}
+              className="logout-button"
+            >
+              🚪 Cerrar Sesión
+            </button>
+          </li>
         </ul>
       </nav>
     </div>

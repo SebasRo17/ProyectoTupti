@@ -17,6 +17,8 @@ import DireccionesGuardadas from '../Components/Direcciones/direcciones.jsx';
 import PDFModelo from '../Components/PDFModelo/pdf.jsx'; // Importa el componente PDFModelo
 import Configuraciones from '../Components/ConfiguracionesUsuario/configuraciones.jsx';
 import Facturas from '../Components/Facturas/facturas.jsx';
+import PedidosAdmin from './pedidosAdmin/pedidosAdmin.jsx';
+import DescuentosAdmin from './descuentosAdmin/descuentosAdmin.jsx';
 
 function App() {
   return (
@@ -36,6 +38,20 @@ function App() {
           element={
             <AuthGuard>
               <PantallaAdmin />
+            </AuthGuard>
+          } 
+        />
+        <Route path="/PedidosAdmin" 
+          element={
+            <AuthGuard>
+              <PedidosAdmin />
+            </AuthGuard>
+          } 
+        />
+        <Route path="/DescuentosAdmin" 
+          element={
+            <AuthGuard>
+              <DescuentosAdmin />
             </AuthGuard>
           } 
         />
