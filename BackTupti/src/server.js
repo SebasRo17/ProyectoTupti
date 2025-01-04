@@ -18,7 +18,7 @@ const productsRoutes = require('./presentation/routes/productRoutes'); // Correg
 const calificacionRoutes = require('./presentation/routes/calificacionRoutes');
 const carritoRoutes = require('./presentation/routes/carritoRoutes');
 const paymentRoutes = require('./presentation/routes/paymentRoutes');
-const pedidoRoutes = require('./presentation/routes/pedidoRoutes');
+const pedidoRoutes = require('./presentation/routes/PedidoRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;

@@ -29,7 +29,6 @@ function Categoria() {
    const [isCartOpen, setIsCartOpen] = useState(false); 
    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
-
    const toggleCart = () => {
       setIsCartOpen(!isCartOpen);
    };
@@ -106,6 +105,7 @@ function Categoria() {
    useEffect(() => {
       if (selectedProduct) {
          cargarReseñas();
+         setCantidad(1); // Restablecer la cantidad a 1 cuando se selecciona un nuevo producto
       }
    }, [selectedProduct]);
 
@@ -269,7 +269,7 @@ function Categoria() {
                               id="cantidad" 
                               min="1" 
                               max="99"
-                              defaultValue="1"
+                              value={cantidad} // Usar el estado cantidad como valor
                               className="cantidad-input"
                               onChange={handleCantidadChange}
                            />
