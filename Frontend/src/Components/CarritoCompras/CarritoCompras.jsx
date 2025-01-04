@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { FaTrash } from 'react-icons/fa'; // Importar el ícono de la basura
 import "./CarritoCompras.css";
 import "./responsiveCarrito.css";
-import { getCarritoByUsuario, addToCart } from '../../Api/carritoApi.js'; // Asegúrate de importar addToCart
+import { getCarritoByUsuario, addToCart } from '../../Api/carritoApi.js';
 import jwtDecode from 'jwt-decode';
 import { Link } from 'react-router-dom';
 
 const CarritoCompras = () => {
   const [productos, setProductos] = useState([]);
   const [idUsuario, setIdUsuario] = useState(null); // Definir el estado para idUsuario
+  const [idCarrito, setIdCarrito] = useState(null); // Definir el estado para idCarrito
   const [isLoading, setIsLoading] = useState(false); // Estado para manejar la carga
 
   useEffect(() => {
@@ -46,6 +47,7 @@ const CarritoCompras = () => {
             cantidad: detalle.Cantidad,
             imagen: detalle.Producto.ImagenUrl
           })));
+          setIdCarrito(carritoData.carrito.IdCarrito); // Guardar el ID del carrito en el estado
         } catch (error) {
           console.error('Error al cargar el carrito:', error);
         } finally {
@@ -202,9 +204,11 @@ const CarritoCompras = () => {
                 ).toFixed(2)}
               </span>
             </p>
-            <Link to="/MetodoPago">
-        <button className="boton-continuar">PAGAR</button>
-      </Link>
+            <Link to={`/MetodoPago`} state={{ idCarrito: idCarrito }}>
+              <button className="boton-continuar" disabled={!idCarrito}>
+                PAGAR
+              </button>
+            </Link>
           </div>
         )}
       </div>

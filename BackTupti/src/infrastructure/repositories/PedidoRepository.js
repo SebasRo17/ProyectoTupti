@@ -31,6 +31,31 @@ class PedidoRepository {
       throw error;
     }
   }
+
+  async findByCarritoId(idCarrito) {
+    try {
+      const query = `
+        SELECT 
+          IdPedido,
+          IdUsuario,
+          Direccion_IdDireccion,
+          Estado,
+          IdCarrito
+        FROM pedido
+        WHERE IdCarrito = :idCarrito
+      `;
+
+      const result = await sequelize.query(query, {
+        replacements: { idCarrito },
+        type: sequelize.QueryTypes.SELECT
+      });
+
+      return result[0]; // Devolvemos el primer resultado ya que IdCarrito es UNIQUE
+    } catch (error) {
+      console.error('Error en el repositorio al buscar pedido por carrito:', error);
+      throw error;
+    }
+  }
 }
 
 module.exports = new PedidoRepository();
