@@ -8,6 +8,7 @@ import './productosAdmin.css';
 import Filtros from "../../Components/Filtros/Filtros.jsx";
 import './responsiveproductosAdmin.css';
 import NuevoProducto from "../nuevoProductoAdmin/nuevoProductoAdmin.jsx";
+import FiltroAdmin from '../../Components/filtroAdmin/filtroAdmin.jsx';
 
 
 const ProductosAdmin = () => {
@@ -83,55 +84,7 @@ const ProductosAdmin = () => {
             <BarraLateralAdmin />
             <div className="productos-container">
                 <h1>Productos</h1>
-                <header className="productos-header">
-                    <div className="search-container">
-                        <div className="search-input-container">
-                        <input 
-                        type="text" 
-                        placeholder="Buscar productos..." 
-                        className="search-input"
-                        value={searchTerm}
-                        onChange={handleSearch}
-                        onFocus={() => setShowSuggestions(true)}
-                        />
-                        {showSuggestions && suggestions.length > 0 && (
-                        <ul className="suggestions-list">
-                            {suggestions.map((product) => (
-                            <li 
-                                key={product.id} 
-                                onClick={() => handleSuggestionClick(product)}
-                                className="suggestion-item"
-                            >
-                                <img src={product.image} alt={product.name} className="suggestion-image" />
-                                <div className="suggestion-details">
-                                <span>{product.name}</span>
-                                <span className="suggestion-price">{product.price}</span>
-                                </div>
-                            </li>
-                            ))}
-                        </ul>
-                        )}
-                        <button className="search-button1">Buscar</button>
-                        </div>
-                        <select className="dropdown">
-                            <option>Stock</option>
-                            <option>Sin stock</option>
-                        </select>
-                        <select className="dropdown">
-                            <option>Categoría</option>
-                            <option>Consolas</option>
-                            <option>Electrónicos</option>
-                        </select>
-                        <button className="filter-button">Filtrar</button>
-                    </div>
-                    <div className="action-buttons">
-                        <button className="export-button">Exportar</button>
-                        <Link to="/NuevoProducto">
-                        <button className="new-product-button">Nuevo Producto</button>
-                        </Link>
-                        
-                    </div>
-                </header>
+            <FiltroAdmin showNewProduct={true} />
                 <main className="product-grid">
                     {productos.map((product) => (
                         <div className="product-card" key={product.id}>
