@@ -6,7 +6,6 @@ import TuptiPage from '../../Pages/pantallaPrincipal/pantallaPrincipal';
 import CarritoCompras from '../../Components/CarritoCompras/CarritoCompras.jsx';
 import Direccion from '../../Pages/Direccion/direccion.jsx';
 import DireccionesGuardadas from '../../Components/Direcciones/direcciones.jsx';
-import Usuario from '../Usuario/usuario.jsx';
 import Configuraciones from '../ConfiguracionesUsuario/configuraciones.jsx';
 import Facturas from '../Facturas/facturas.jsx';
 import { searchProducts } from '../../Api/searchProduts.js';
@@ -24,6 +23,7 @@ const Header = ({ toggleCart, isCartOpen}) => {
   const [user, setUser] = useState(null); // Nuevo estado para el usuario
   const dropdownRef = useRef(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobileDropdownOpen, setIsMobileDropdownOpen] = useState(false);
 
   useEffect(() => {
     // Verifica el token al cargar el componente
@@ -207,45 +207,41 @@ const actualizarCantidad = (id, cantidad) => {
             <button className="icon-button">📍 Dirección</button>
                 </Link>
 
-            {user ? (
-              <div className="user-menu" ref={dropdownRef}>
-                <button 
-                  className="user-button"
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                >
-                  👤 {user.nombre}
-                </button>
-                {isDropdownOpen && (
-                  <div className="user-dropdown">
-                    <Link to="/Usuario" className="dropdown-item" onClick={() => { setIsMobileMenuOpen(false); setIsDropdownOpen(false); }}>
-                      <span>👤</span> Mi Perfil
-                    </Link>
-                    <Link to="/DireccionesGuardadas" className="dropdown-item" onClick={() => { setIsMobileMenuOpen(false); setIsDropdownOpen(false); }}>
-                      <span>📍</span> Mis Direcciones
-                    </Link>
-                    <Link to="/Configuraciones" className="dropdown-item" onClick={() => { setIsMobileMenuOpen(false); setIsDropdownOpen(false); }}>
-                      <span>⚙️</span> Configuración
-                    </Link>
-                    <Link to="/Facturas" className="dropdown-item" onClick={() => { setIsMobileMenuOpen(false); setIsDropdownOpen(false); }}>
-                      <span>📄</span> Facturas
-                    </Link>
+                {user ? (
+                  <div className="mobile-user-menu">
                     <button 
-                      onClick={() => {
-                        localStorage.removeItem('jwtToken');
-                        setUser(null);
-                        setIdUsuario(null);
-                        setIsDropdownOpen(false);
-                        setIsMobileMenuOpen(false);
-                        navigate('/');
-                      }}
-                      className="dropdown-item logout"
+                      className="user-button"
+                      onClick={() => setIsMobileDropdownOpen(!isMobileDropdownOpen)}
                     >
-                      <span>🚪</span> Cerrar Sesión
+                      👤 {user.nombre}
                     </button>
+                    <div className={`mobile-user-dropdown ${isMobileDropdownOpen ? 'active' : ''}`}>
+
+                      <Link to="/DireccionesGuardadas" className="dropdown-item" onClick={() => { setIsMobileMenuOpen(false); }}>
+                        <span>📍</span> Mis Direcciones
+                      </Link>
+                      <Link to="/Configuraciones" className="dropdown-item" onClick={() => { setIsMobileMenuOpen(false); }}>
+                        <span>⚙️</span> Configuración
+                      </Link>
+                      <Link to="/Facturas" className="dropdown-item" onClick={() => { setIsMobileMenuOpen(false); }}>
+                        <span>📄</span> Facturas
+                      </Link>
+                      <button 
+                        onClick={() => {
+                          localStorage.removeItem('jwtToken');
+                          setUser(null);
+                          setIdUsuario(null);
+                          setIsMobileMenuOpen(false);
+                          navigate('/');
+                        }}
+                        className="dropdown-item logout"
+                      >
+                        <span>🚪</span> Cerrar Sesión
+                      </button>
+                    </div>
                   </div>
-                )}
-              </div>
-            ) : (
+                ) : (
+
               <>
                 <Link to="/Login" onClick={() => setIsMobileMenuOpen(false)}>
                   <button className="btnLogin">Inicia Sesión</button>
@@ -281,9 +277,6 @@ const actualizarCantidad = (id, cantidad) => {
                 </button>
                 {isDropdownOpen && (
                   <div className="user-dropdown">
-                    <Link to="/Usuario" className="dropdown-item">
-                      <span>👤</span> Mi Perfil
-                    </Link>
                     <Link to="/DireccionesGuardadas" className="dropdown-item">
                       <span>📍</span> Mis Direcciones
                     </Link>

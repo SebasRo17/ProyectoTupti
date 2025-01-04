@@ -19,11 +19,10 @@ const Facturas = () => {
   return (
     <div className="app-wrapper">
       <Header />
-      
       <main className="main-content">
         <div className="facturas-container">
           <section className="facturas-section">
-            <h2>Listado de Facturas</h2>
+            <h2>Listado de Pedidos</h2>
             
             <div className="table-container">
               <table className="facturas-table">
