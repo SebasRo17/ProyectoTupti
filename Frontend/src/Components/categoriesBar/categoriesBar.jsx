@@ -58,10 +58,27 @@ const CategoriesBar = ({ categoryData }) => {
         </button>
       )}
 
-      <div className="categories-bar" ref={scrollRef}>
+      <div 
+        className="categories-bar" 
+        ref={scrollRef} 
+        role="menu" 
+        aria-label="Categorías de productos"
+      >
         {safeCategoryData.map((category) => (
-          <Link to={`/Categoria/${category.id}`} key={category.id} className="category-item">
-            <img src={category.icon} alt={category.label} className="category-icon" />
+          <Link 
+            to={`/Categoria/${category.id}`} 
+            key={category.id} 
+            className="category-item"
+            role="menuitem"
+            aria-label={`Ver productos de la categoría ${category.label}`}
+          >
+            <img 
+              src={category.icon} 
+              alt={`Ícono de ${category.label}`} 
+              className="category-icon"
+              role="img"
+              aria-label={`Ícono representativo de la categoría ${category.label}`}
+            />
             <div>{category.label}</div>
           </Link>
         ))}

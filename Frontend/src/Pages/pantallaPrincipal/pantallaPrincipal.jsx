@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import axios from 'axios';
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import { Link, useNavigate } from 'react-router-dom';
@@ -42,6 +43,8 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
         localStorage.removeItem('jwtToken'); // Limpia token corrupto
       }
     }
+
+    axios.get('https://proyectotupti.onrender.com/api-docs/')
   }, []);
 
   const handleLogout = () => {
@@ -49,17 +52,6 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
     setIsTokenActive(false);
     navigate('/');
   };
-
-  const [productos, setProductos] = useState([
-    { id: 1, nombre: "Manzana", precio: 10.5, cantidad: 1, imagen: "https://via.placeholder.com/150" },
-    { id: 2, nombre: "Chocolate", precio: 20.0, cantidad: 2, imagen: "https://via.placeholder.com/150" },
-    { id: 3, nombre: "Producto 3", precio: 5.5, cantidad: 5, imagen: "https://via.placeholder.com/150" },
-    { id: 4, nombre: "Producto 4", precio: 2.0, cantidad: 2, imagen: "https://via.placeholder.com/150" },
-    { id: 5, nombre: "Producto 5", precio: 6.0, cantidad: 2, imagen: "https://via.placeholder.com/150" },
-    { id: 6, nombre: "Producto 6", precio: 1.0, cantidad: 3, imagen: "https://via.placeholder.com/150" },
-  ]);
-
-
 
   // Función para eliminar un producto del carrito
   const eliminarProducto = (productoId) => {
@@ -313,9 +305,21 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
 
       {/* Botones de promoción */}
       <div className="promo-buttons-container">
-        <button className="promo-button button-1"></button>
-        <button className="promo-button button-2"></button>
-        <button className="promo-button button-3"></button>
+        <button className="promo-button button-1" 
+        aria-label='Promocioón 1'
+        role='button'
+        tabIndex="0"
+        ></button>
+        <button className="promo-button button-2"
+        aria-label='Promocioón 2'
+        role='button'
+        tabIndex="0"
+        ></button>
+        <button className="promo-button button-3"
+        aria-label='Promocioón 3'
+        role='button'
+        tabIndex="0"
+        ></button>
       </div>
 
       {/* Nuevo carrusel de productos */}
