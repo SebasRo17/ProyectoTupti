@@ -4,7 +4,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export const createDireccion = async (direccionData) => {
   try {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('jwtToken'); // Cambiado de 'token' a 'jwtToken'
     if (!token) {
       throw new Error('No hay token de autenticación');
     }
