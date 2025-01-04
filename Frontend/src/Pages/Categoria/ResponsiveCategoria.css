@@ -4,9 +4,10 @@
 @media screen and (min-width: 1441px){
     .categoria-container {
         max-width: 1200px;
-        margin-top: -35%;
+        margin-top: 20%;
         margin-left: 20;
         margin-right: 10%;
+        background-color: white;
       }
       .productos-grid{
         margin-top: 0%;
@@ -21,8 +22,9 @@
 @media screen and (min-width: 1024x) and (max-width: 1440px) {
   .categoria-container {
       max-width: 100%;
-      margin-left: 20;
+      margin-left: 20%;
       margin-right: 5%;
+      margin-top: -55%;
       gap: 5px;
     }
   
@@ -36,18 +38,16 @@
 /* Tablets (768px - 1023px) */
 @media (min-width: 768px) and (max-width: 1023px) {
     .categoria-container {
-        background-color: #f4f5f4;
+        background-color: white;
         width: 150%;
-        margin-top: -45%;
+        margin-top: 30%;
         padding: 10px;
         margin-left: 45%;
-        margin-bottom: 0%;
       }
     
       .productos-grid {
         grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
         gap: 10px;
-        margin-bottom: 0%;
       }
 
 }
@@ -57,7 +57,7 @@
     .categoria-container {
         padding: 10px;
         width: 60%;
-        margin-top: -55% !important;
+        margin-top: 25% !important;
         margin-left: 35%;
       }
     
@@ -89,29 +89,7 @@
     
 }
 
-@media screen and (max-width: 767px) {
-    .categoria-container {
-        padding: 5px;
-        margin-top: 55%;
-      }
-      .categoria-titulo{
-        margin-top: -20%;
-        margin-bottom: 20%;
-      }
-      .productos-grid {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 5px;
-        margin-bottom: 25%;
-      }
-    
-      .producto-card {
-        padding: 5px;
-      }
-    
-      .producto-nombre {
-        font-size: 14px;
-      }
-}
+
 @media (min-width: 551px) and (max-width: 570px) {
   .menu-hamburguesa-container {
     display: block;
@@ -124,7 +102,6 @@
   
 }
 
-/* Pantallas de 350px a 360px */
 @media (min-width: 570px) and (max-width: 600px) {
   .menu-hamburguesa-container {
     display: block;
@@ -151,22 +128,29 @@
 
 @media (min-width: 499px) and (max-width: 599px) {
   .categoria-container{
-    margin-top: -70% !important;
+    margin-top: 30% !important;
     margin-left: 25%;
+  }
+  .categoria-container h1{
+    margin-bottom: 12%;
   }
   
 }
 @media (min-width: 391px) and (max-width: 498px) {
   .categoria-container{
-    margin-top: -100% !important;
+    margin-top: 30% !important;
     margin-left: 25%;
+  }
+  .categoria-container h1{
+    margin-bottom: 19%;
   }
   
 }
 @media screen and (max-width: 390px) {
     .categoria-container {
-      margin-top: -100% !important;  
+      margin-top: 30% !important;  
       padding: 5px;
+      margin-left: 20%;
       }
     
       .productos-grid {

@@ -27,6 +27,8 @@ function Categoria() {
    const { id } = useParams();
    const location = useLocation();
    const [isCartOpen, setIsCartOpen] = useState(false); 
+   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
 
    const toggleCart = () => {
       setIsCartOpen(!isCartOpen);
@@ -144,8 +146,14 @@ function Categoria() {
         };
   
         const result = await addToCart(productData);
-        // Manejar respuesta exitosa
         console.log('Producto agregado al carrito:', result);
+        // Mostrar mensaje de éxito
+         setShowSuccessMessage(true);
+
+         // Ocultar el mensaje después de 3 segundos
+         setTimeout(() => {
+         setShowSuccessMessage(false);
+         }, 3000);
       } catch (error) {
         // Manejar error
         console.error('Error al agregar al carrito:', error);
@@ -187,12 +195,19 @@ function Categoria() {
 
    return (
       <div className="categoria-page">
+         {showSuccessMessage && (
+            <div className="success-message">
+               Producto agregado exitosamente al carrito
+            </div>
+         )}
+
          <Header 
             toggleCart={toggleCart} 
             isCartOpen={isCartOpen}
          />
          <CategoriesBar categoryData={categoryData} />
          <div className="categoria-container">
+
             <h1 className="categoria-titulo">Productos de la Categoría</h1>
             <div className="productos-grid">
                {productos.map((producto) => {
