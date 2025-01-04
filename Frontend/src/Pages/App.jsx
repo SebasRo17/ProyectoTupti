@@ -15,7 +15,6 @@ import Direccion from './Direccion/direccion.jsx';
 import MetodoPago from './MetodoPago/MetodoPago.jsx';
 import DireccionesGuardadas from '../Components/Direcciones/direcciones.jsx';
 import PDFModelo from '../Components/PDFModelo/pdf.jsx'; // Importa el componente PDFModelo
-import Usuario from '../Components/Usuario/usuario.jsx';
 import Configuraciones from '../Components/ConfiguracionesUsuario/configuraciones.jsx';
 import Facturas from '../Components/Facturas/facturas.jsx';
 
@@ -31,7 +30,6 @@ function App() {
         <Route path="/olvido-contrasena" element={<OlvidoContrasena />} />
         <Route path="/Direccion" element={<Direccion />} />
         <Route path="/DireccionesGuardadas" element={<DireccionesGuardadas />} />
-        <Route path="/Usuario" element={<Usuario />} />
         <Route path="/Configuraciones" element={<Configuraciones />} />
         <Route path="/Facturas" element={<Facturas />} />
         <Route path="/admin" 

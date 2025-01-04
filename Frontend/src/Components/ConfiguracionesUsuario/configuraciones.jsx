@@ -40,7 +40,7 @@ const Configuraciones = () => {
   };
 
   return (
-    <div className="app-wrapper">
+    <div className="body">
       <Header toggleCart={toggleCart} isCartOpen={isCartOpen} />
       
       <main className="main-content">

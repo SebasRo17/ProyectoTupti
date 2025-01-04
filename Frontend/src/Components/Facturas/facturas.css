@@ -1,6 +1,6 @@
 .app-wrapper {
   min-height: 100vh;
-  background-color: #f5f7fa;
+  background-color: white;
   margin-top: -20%;
 }
 
@@ -85,4 +85,47 @@
     margin: 0;
     border-radius: 0;
   }
+}
+@media screen and (max-width: 390px) {
+  .facturas-container{
+    margin-top: 130%;
+    margin-bottom: auto;
+  }
+}
+@media screen and (min-width: 391px) and (max-width: 550px) {
+  .facturas-container{
+    margin-top: 50%;
+    margin-bottom: auto;
+  }
+  
+}
+@media screen and (min-width: 551px) and (max-width: 767px) {
+  .facturas-container{
+    margin-top:35%;
+    margin-bottom: auto;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .facturas-container{
+    margin-top:35%;
+    margin-bottom: auto;
+    justify-content: center;
+    align-items: center;
+    margin-left: 50%;
+  }
+}
+@media screen and (min-width: 1024px) and (max-width: 1440px) {
+  .facturas-container{
+    margin-top: 35%;
+    margin-bottom: auto;
+    margin-left: 40%;
+  }
+}
+@media screen and (min-width: 1441px) {
+  .facturas-container{
+    margin-top: 35%;
+    
+    margin-left: 30%;
+  }
+  
 }
