@@ -3,13 +3,20 @@ import './editarProductos.css';
 
 const EditarProductos = ({ product, onClose }) => {
     // Initialize state with product data
-    const [formData, setFormData] = useState({
-        id: product?.id || '',
-        name: product?.name || '',
-        details: product?.details || '',
-        price: product?.price || '',
-        image: product?.image || ''
-    });
+    useEffect(() => {
+        console.log('Producto actualizado:', product);
+        if (product) {
+            setFormData({
+                id: product.id,
+                name: product.name,
+                details: product.details,
+                price: product.price,
+                image: product.image
+            });
+            setImagePreview(product.image);
+        }
+    }, [product]);
+    
 
     // Keep track of image preview
     const [imagePreview, setImagePreview] = useState(product?.image || '');
@@ -33,7 +40,7 @@ const EditarProductos = ({ product, onClose }) => {
         // Add validation here if needed
         onClose();
     };
-
+    console.log('Producto recibido en EditarProductos:', product);
     return (
         <div className="modal-overlay">
             <div className="modal-content">

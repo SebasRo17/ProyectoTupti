@@ -18,11 +18,12 @@ const ProductosAdmin = () => {
     const [suggestions, setSuggestions] = useState([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-    const [selectedProduct, setSelectedProduct] = useState(null);
     const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    
     useEffect(() => {
         fetchProductos();
     }, []);
@@ -75,14 +76,15 @@ const ProductosAdmin = () => {
         setIsEditModalOpen(true);
     };
 
-    const handleOpenModal = () => {
+    const handleOpenModal = (product) => {
+        console.log('Opening modal for:', product);
         setIsEditModalOpen(true);
         setSelectedProduct({
-            id: '',
-            name: '',
-            details: '',
-            price: '',
-            image: ''
+            id: product.IdProducto,
+            name: product.Nombre,
+            details: product.Descripcion,
+            price: product.Precio,
+            image: product.ImagenUrl
         });
     };
 
@@ -97,6 +99,10 @@ const ProductosAdmin = () => {
             <BarraLateralAdmin />
             <div className="productos-container">
                 <h1>Productos</h1>
+                {isModalOpen && (
+    <EditarProductos product={selectedProduct} onClose={closeModal} />
+)}
+
             <FiltroAdmin showNewProduct={true} />
                 <main className="product-grid">
                     {loading ? (
@@ -118,11 +124,11 @@ const ProductosAdmin = () => {
                                 <p className="product-details">{product.Descripcion}</p>
                                 <p className="product-price">${product.Precio}</p>
                                 <div className="card-buttons">
-                                    <button 
-                                        className="editar-button"
-                                        onClick={handleOpenModal}
+                                <button 
+                                    className="editar-button"
+                                    onClick={() => handleOpenModal(product)}
                                     >
-                                        Editar
+                                    Editar
                                     </button>
                                     <button 
                                         className="delete-button"

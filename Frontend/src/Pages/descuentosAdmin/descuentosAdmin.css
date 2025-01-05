@@ -1,5 +1,7 @@
 .descuentos-admin {
   padding: 20px;
+  width: 150%;
+  margin-left: -20%;
 }
 .descuentos-admin h2{
     margin-top: 10%;

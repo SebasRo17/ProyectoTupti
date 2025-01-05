@@ -19,6 +19,7 @@ import Configuraciones from '../Components/ConfiguracionesUsuario/configuracione
 import Facturas from '../Components/Facturas/facturas.jsx';
 import PedidosAdmin from './pedidosAdmin/pedidosAdmin.jsx';
 import DescuentosAdmin from './descuentosAdmin/descuentosAdmin.jsx';
+import UsuariosAdmin from './usuariosAdmin/usuariosAdmin.jsx';
 
 function App() {
   return (
@@ -45,6 +46,13 @@ function App() {
           element={
             <AuthGuard>
               <PedidosAdmin />
+            </AuthGuard>
+          } 
+        />
+        <Route path="/UsuariosAdmin" 
+          element={
+            <AuthGuard>
+              <UsuariosAdmin />
             </AuthGuard>
           } 
         />
