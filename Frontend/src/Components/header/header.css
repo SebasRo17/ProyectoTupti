@@ -50,11 +50,13 @@ header .logo-imagen {
   height: 42px;
   margin: 0 20px;
   max-width: 600px;
+  border: none;
   flex: 1;
 }
 
 header .search-input {
   color: black;
+  border: transparent !important;
   border: none;
   background: none;
   padding: 10px;

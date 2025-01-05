@@ -21,6 +21,7 @@ import PedidosAdmin from './pedidosAdmin/pedidosAdmin.jsx';
 import DescuentosAdmin from './descuentosAdmin/descuentosAdmin.jsx';
 import UsuariosAdmin from './usuariosAdmin/usuariosAdmin.jsx';
 import DetallePedido from './detallePedido/detallePedido.jsx';
+import ModalProducto from '../Components/modalProducto/modalProducto.jsx';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
         <Route path="/DireccionesGuardadas" element={<DireccionesGuardadas />} />
         <Route path="/Configuraciones" element={<Configuraciones />} />
         <Route path="/Facturas" element={<Facturas />} />
+        <Route path="/ModalProducto" element={<ModalProducto />} />
         <Route path="/admin" 
           element={
             <AuthGuard>
