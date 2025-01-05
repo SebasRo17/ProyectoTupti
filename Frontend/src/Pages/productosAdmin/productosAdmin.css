@@ -10,7 +10,7 @@ body {
 
 .PantallaProductos {
   display: flex;
-  margin-top: 3%;
+  margin-top: 5%;
   height: 90vh;
   width: 100vw;
   margin-left: 0%;
@@ -263,7 +263,7 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 3000 !important; 
 }
 
 .modal-content {
@@ -274,8 +274,21 @@ header {
   max-width: 500px;
   max-height: 90vh;
   overflow-y: auto;
+  z-index: 2000 !important;
 }
 
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 5000 !important;
+}
 /* Contenedor del filtro */
 .filters-container {
   display: flex;

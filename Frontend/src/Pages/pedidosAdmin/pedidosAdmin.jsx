@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import HeaderAdmin from '../../Components/headerAdmin/headerAdmin.jsx';
 import BarraLateralAdmin from '../../Components/barraLateralAdmin/barraLateralAdmin.jsx'; 
 import './pedidosAdmin.css';
-
+import DetallePedido from '../detallePedido/detallePedido.jsx';
 const PedidosAdmin = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
@@ -16,15 +16,31 @@ const PedidosAdmin = () => {
     reembolsadas: 8
   };
 
-  const pedidos = [
-    {
-      id: '001',
-      cliente: 'Juan Pérez',
-      estado: 'cancelado',
-      fecha: '2024-03-15'
-    },
-    // ... más pedidos
-  ];
+    const pedidos = [
+        {
+            id: '001',
+            cliente: 'Juan Pérez',
+            estado: 'cancelado',
+            fecha: '2024-03-15',
+            direccion: 'Av. Principal 123, Quito',
+            telefono: '0998123456',
+            email: 'juan@example.com',
+            items: [
+                {
+                    id: 1,
+                    name: "Nintendo Switch",
+                    price: 299.99,
+                    discount: 15,
+                    quantity: 1
+                }
+            ]
+        }
+    ];
+
+    const handleVerDetalles = (pedidoId) => {
+        console.log('Navegando a:', pedidoId);
+        navigate(`/DetallePedido/${pedidoId}`);
+    };
 
   const getStatusColor = (estado) => {
     const colors = {
@@ -99,12 +115,12 @@ const PedidosAdmin = () => {
                 </td>
                 <td>{pedido.fecha}</td>
                 <td>
-                  <button
-                    onClick={() => navigate(`/pedido/${pedido.id}`)}
+                <button
+                    onClick={() => handleVerDetalles(pedido.id)}
                     className="action-btn"
-                  >
+                >
                     Ver Detalles
-                  </button>
+                </button>
                 </td>
               </tr>
             ))}
