@@ -241,8 +241,8 @@ function Categoria() {
          </div>
 
          {selectedProduct && (
-            <div className="modal-overlay" onClick={closeModal}>
-               <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <div className="modal-overlay2" onClick={closeModal}>
+               <div className="modal-content2" onClick={e => e.stopPropagation()}>
                   <button className="modal-close" onClick={closeModal}>&times;</button>
                   <div className="modal-product">
                      <div className="modal-images">

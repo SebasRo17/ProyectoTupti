@@ -32,9 +32,7 @@ const BarraLateralAdmin = () => {
           </li>
           <li><Link to="/DescuentosAdmin">💰 Descuentos</Link></li>
           <li><Link to="/PedidosAdmin">📦 Pedidos</Link></li>
-          <li><a href="#usuarios">👤 Usuarios</a></li>
-          <li><a href="#configuracion">⚙️ Configuración</a></li>
-          
+          <li><Link to="/UsuariosAdmin">👤 Usuarios</Link></li>
           <li>
             <button 
               onClick={handleLogout}
