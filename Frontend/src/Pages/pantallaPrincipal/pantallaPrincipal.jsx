@@ -47,22 +47,14 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
   
   const handleProductClick = (product) => {
     console.log('Product clicked:', product);
-    const formattedProduct = {
-      IdProducto: product.id,
-      Nombre: product.title,
-      Precio: product.price,
-      Descripcion: product.description,
-      // Use first image as main image
-      ImagenUrl: product.imageUrl,
-      IdTipoProducto: product.idTipoProducto, // Default to first category
-      // Pass all images array
-      Imagenes: product.imagenes || [product.imageUrl]
-    };
-
-    console.log('Formatted product:', formattedProduct);
-    setSelectedProduct(formattedProduct);
-  };
-  
+    // Navegar a la categoría con el ID del producto
+    navigate(`/Categoria/${product.idTipoProducto}`, {
+        state: {
+            selectedProductId: product.id,
+            openModal: true
+        }
+    });
+};
 
   useEffect(() => {
     // Verifica el token al cargar el componente
@@ -142,6 +134,7 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
           title: product.Producto || 'Sin título',
           price: product.Precio ? `$${product.Precio}` : 'Precio no disponible',
           description: product.Descripcion || 'Sin descripción',
+          idTipoProducto: product.IdTipoProducto, 
           allImages: product.Imagenes?.split(',') || []
         }));
         setProductCarouselImages(formattedProducts);
