@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import "./olvidoContrasena.css";
 import "./responsiveolvidoContrasena.css";
+import { resetApi } from '../../Api/resetApi';
 
 function OlvidoContrasena() {
   const [email, setEmail] = useState("");
@@ -33,10 +34,10 @@ function OlvidoContrasena() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/forgot-password`, { email });
-      setMessage("Si el correo existe en nuestra base de datos, recibirás instrucciones para restablecer tu contraseña.");
+      await resetApi.requestPasswordReset(email);
+      setMessage("Si el correo existe, recibirás instrucciones para restablecer tu contraseña.");
     } catch (error) {
-      setMessage("Ocurrió un error. Por favor intenta más tarde.");
+      setMessage(error.message);
     } finally {
       setIsLoading(false);
     }

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import './reset.css';
+import { resetApi } from '../../Api/resetApi';
 
 function ResetPassword() {
   const [password, setPassword] = useState('');
@@ -34,14 +35,11 @@ function ResetPassword() {
 
     setIsLoading(true);
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/auth/reset-password`, {
-        token,
-        newPassword: password
-      });
+      await resetApi.resetPassword(token, password);
       setSuccess('Contraseña actualizada correctamente');
       setTimeout(() => navigate('/login'), 2000);
-    } catch (err) {
-      setError(err.response?.data?.message || 'Error al restablecer la contraseña');
+    } catch (error) {
+      setError(error.message);
     } finally {
       setIsLoading(false);
     }
