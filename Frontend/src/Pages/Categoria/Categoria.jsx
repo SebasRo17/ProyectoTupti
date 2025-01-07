@@ -35,14 +35,22 @@ function Categoria() {
    };
 
    useEffect(() => {
-      // Verifica el token al cargar el componente
       const token = localStorage.getItem('jwtToken');
       if (token) {
         try {
           const payload = jwtDecode(token);
-          console.log('Token descifrado:', payload); // Agregar console.log para mostrar el token descifrado
+          console.log('Token descifrado:', payload);
+    
+          // Comprueba dónde está IdUsuario
+          const userId = payload?.IdUsuario || payload?.user?.IdUsuario;
+    
+          if (userId) {
+            setIdUsuario(userId);
+          } else {
+            console.error('IdUsuario no encontrado en el token');
+          }
+    
           const currentTime = Date.now() / 1000;
-          setIdUsuario(payload.user.IdUsuario); // Guardar idUsuario en el estado
           if (payload.exp <= currentTime) {
             localStorage.removeItem('jwtToken'); // Elimina token expirado
           }
