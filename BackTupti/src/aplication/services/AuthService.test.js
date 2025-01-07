@@ -13,7 +13,9 @@ describe('AuthService', () => {
     test('debería generar un token válido para usuario normal', () => {
       const mockUser = {
         IdUsuario: 1,
+        Nombre: 'Test User',
         Email: 'test@example.com',
+        CodigoUs: 'TEST001',
         IdRol: 2
       };
 
@@ -23,24 +25,29 @@ describe('AuthService', () => {
       
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       expect(decoded).toMatchObject({
-        id: mockUser.IdUsuario,
-        email: mockUser.Email,
+        IdUsuario: mockUser.IdUsuario,
+        Nombre: mockUser.Nombre,
+        Email: mockUser.Email,
+        CodigoUs: mockUser.CodigoUs,
+        IdRol: mockUser.IdRol,
         isAdmin: false,
-        idRol: 2
+        roleName: 'Cliente'
       });
     });
 
     test('debería generar un token válido para administrador', () => {
       const mockAdminUser = {
         IdUsuario: 1,
+        Nombre: 'Admin User',
         Email: 'admin@example.com',
+        CodigoUs: 'ADMIN001',
         IdRol: 1
       };
 
       const token = AuthService.generateToken(mockAdminUser);
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       expect(decoded.isAdmin).toBe(true);
-      expect(decoded.idRol).toBe(1);
+      expect(decoded.roleName).toBe('Administrador');
     });
 
     test('debería generar tokens diferentes para usuarios diferentes', () => {
@@ -58,7 +65,9 @@ describe('AuthService', () => {
     test('debería verificar un token válido correctamente', () => {
       const mockUser = {
         IdUsuario: 1,
+        Nombre: 'Test User',
         Email: 'test@example.com',
+        CodigoUs: 'TEST001',
         IdRol: 2
       };
 
@@ -66,8 +75,9 @@ describe('AuthService', () => {
       const verified = AuthService.verifyToken(token);
       
       expect(verified).toBeDefined();
-      expect(verified.email).toBe(mockUser.Email);
-      expect(verified.id).toBe(mockUser.IdUsuario);
+      expect(verified.Email).toBe(mockUser.Email);
+      expect(verified.IdUsuario).toBe(mockUser.IdUsuario);
+      expect(verified.roleName).toBe('Cliente');
     });
 
     test('debería lanzar error al verificar un token inválido', () => {
