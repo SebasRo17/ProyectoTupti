@@ -109,7 +109,7 @@ body {
 
 
 /* Estilos del Modal */
-.modal-overlay2 {
+.modal-overlay4 {
   position: fixed;
   top: 0;
   left: 0;
@@ -125,7 +125,7 @@ body {
   width: 100%;
 }
 
-.modal-content2 {
+.modal-content4 {
   background-color: white;
   padding: 30px;
   border-radius: 15px;
