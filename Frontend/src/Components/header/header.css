@@ -55,6 +55,7 @@ header .logo-imagen {
 }
 
 header .search-input {
+  margin-top: 3%;
   color: black;
   border: transparent !important;
   border: none;
@@ -66,6 +67,7 @@ header .search-input {
 }
 
 .search-icon {
+  margin-top: 3%;
   background: transparent !important; /* Forzar transparencia */
   border: none;
   cursor: pointer;

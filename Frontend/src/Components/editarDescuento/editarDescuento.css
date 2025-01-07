@@ -1,4 +1,4 @@
-.modal-wrapper {
+.modal-wrapper2 {
   position: fixed;
   top: 0;
   left: 0;
@@ -10,7 +10,7 @@
   z-index: 9999;
 }
 
-.modal-overlay {
+.modal-overlay2 {
   position: fixed;
   top: 0;
   left: 0;
@@ -19,7 +19,7 @@
   background: rgba(0, 0, 0, 0.5);
 }
 
-.modal-content {
+.modal-content2 {
   position: relative;
   background: white;
   padding: 25px;
