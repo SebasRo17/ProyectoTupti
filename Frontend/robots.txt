@@ -1,0 +1,22 @@
+# https://www.robotstxt.org/robotstxt.html
+
+User-agent: *
+Allow: /
+Allow: /productos/
+Allow: /categorias/
+Allow: /nosotros/
+Allow: /contacto/
+
+# Archivos y directorios a no indexar
+Disallow: /admin/
+Disallow: /checkout/
+Disallow: /carrito/
+Disallow: /api/
+Disallow: /src/
+Disallow: /node_modules/
+Disallow: /*.json$
+Disallow: /*.js$
+Disallow: /*.css$
+
+# Sitemap
+Sitemap: https://tupti.store/sitemap.xmlz

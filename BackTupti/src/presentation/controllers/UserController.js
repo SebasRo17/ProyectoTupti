@@ -41,19 +41,22 @@ class UserController {
   async updateUser(req, res) {
     try {
       const userId = req.params.id;
-      const { Email, Contrasenia, Activo } = req.body;
+      const { Email, Contrasenia, Activo, Nombre } = req.body;
 
       // Validación básica
-      if (!Email || !Contrasenia || Activo === undefined) {
+      if (!Email && !Contrasenia && Activo === undefined && !Nombre) {
         return res.status(400).json({ 
-          message: 'Todos los campos son requeridos' 
+          message: 'Al menos un campo es requerido' 
         });
       }
+
+      console.log('Datos recibidos para actualizar:', { Email, Contrasenia, Activo, Nombre });
 
       const updatedUser = await UserService.updateUser(userId, {
         Email,
         Contrasenia,
-        Activo
+        Activo,
+        Nombre
       });
 
       res.status(200).json(updatedUser);

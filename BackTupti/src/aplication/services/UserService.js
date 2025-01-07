@@ -43,6 +43,7 @@ class UserService {
       if (userData.Contrasenia) {
         userData.Contrasenia = await bcrypt.hash(userData.Contrasenia, 10);
       }
+      console.log('Datos para actualizar en el servicio:', userData);
       return await UserRepository.update(userId, userData);
     } catch (error) {
       console.error('Error al actualizar usuario en el servicio:', error);

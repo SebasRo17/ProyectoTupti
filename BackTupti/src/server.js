@@ -19,6 +19,7 @@ const calificacionRoutes = require('./presentation/routes/calificacionRoutes');
 const carritoRoutes = require('./presentation/routes/carritoRoutes');
 const paymentRoutes = require('./presentation/routes/paymentRoutes');
 const pedidoRoutes = require('./presentation/routes/PedidoRoutes');
+const direccionRoutes = require('./presentation/routes/direccionRoutes'); // Corregir importación de rutas de direcciones
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -90,6 +91,7 @@ app.use('/api', calificacionRoutes);
 app.use('/carrito', carritoRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/pedidos', pedidoRoutes);
+app.use('/direcciones', direccionRoutes); // Agregar rutas de direcciones
 
 // Sincronizar con la base de datos y iniciar el servidor
 sequelize.sync()

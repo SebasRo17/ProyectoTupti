@@ -17,6 +17,11 @@ import DireccionesGuardadas from '../Components/Direcciones/direcciones.jsx';
 import PDFModelo from '../Components/PDFModelo/pdf.jsx'; // Importa el componente PDFModelo
 import Configuraciones from '../Components/ConfiguracionesUsuario/configuraciones.jsx';
 import Facturas from '../Components/Facturas/facturas.jsx';
+import PedidosAdmin from './pedidosAdmin/pedidosAdmin.jsx';
+import DescuentosAdmin from './descuentosAdmin/descuentosAdmin.jsx';
+import UsuariosAdmin from './usuariosAdmin/usuariosAdmin.jsx';
+import DetallePedido from './detallePedido/detallePedido.jsx';
+import ModalProducto from '../Components/modalProducto/modalProducto.jsx';
 
 function App() {
   return (
@@ -32,10 +37,34 @@ function App() {
         <Route path="/DireccionesGuardadas" element={<DireccionesGuardadas />} />
         <Route path="/Configuraciones" element={<Configuraciones />} />
         <Route path="/Facturas" element={<Facturas />} />
+        <Route path="/ModalProducto" element={<ModalProducto />} />
         <Route path="/admin" 
           element={
             <AuthGuard>
               <PantallaAdmin />
+            </AuthGuard>
+          } 
+        />
+        <Route path="/PedidosAdmin" 
+          element={
+            <AuthGuard>
+              <PedidosAdmin />
+            </AuthGuard>
+          } 
+        />
+            <Route path="/DetallePedido/:id" element={<DetallePedido />} />
+            <Route path="/pedidosAdmin" element={<PedidosAdmin />} />
+        <Route path="/UsuariosAdmin" 
+          element={
+            <AuthGuard>
+              <UsuariosAdmin />
+            </AuthGuard>
+          } 
+        />
+        <Route path="/DescuentosAdmin" 
+          element={
+            <AuthGuard>
+              <DescuentosAdmin />
             </AuthGuard>
           } 
         />

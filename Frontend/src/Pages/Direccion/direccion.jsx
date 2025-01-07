@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../../Components/header/header';
 import Footer from '../../Components/footer/footer';
 import GoogleMaps from '../../Api/googleMaps.jsx';
+import jwtDecode from 'jwt-decode';
+import { createDireccion } from '../../Api/direccionApi';
 import './direccion.css';
 
 const Direccion = () => {
+  const navigate = useNavigate();
   const [direccion, setDireccion] = useState({
     callePrincipal: '',
     numeracion: '',
@@ -16,6 +20,21 @@ const Direccion = () => {
   });
   const [showModal, setShowModal] = useState(false);
   const [locationName, setLocationName] = useState('');
+  const [idUsuario, setIdUsuario] = useState(null);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+
+  useEffect(() => {
+    // Obtener y decodificar el token al cargar el componente
+    const token = localStorage.getItem('jwtToken');
+    if (token) {
+      try {
+        const payload = jwtDecode(token);
+        setIdUsuario(payload.user.IdUsuario);
+      } catch (error) {
+        console.error('Error decodificando el token:', error);
+      }
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,10 +48,44 @@ const Direccion = () => {
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
   };
-  const handleSaveLocation = () => {
-    console.log('Saving location:', { direccion, name: locationName });
-    setShowModal(false);
-    setLocationName('');
+
+  const handleSaveLocation = async () => {
+    try {
+      if (!idUsuario) {
+        alert('Debe iniciar sesión para guardar una dirección');
+        return;
+      }
+
+      const direccionData = {
+        IdUsuario: idUsuario,
+        CallePrincipal: direccion.callePrincipal,
+        Numeracion: direccion.numeracion,
+        CalleSecundaria: direccion.calleSecundaria,
+        Vecindario: direccion.barrio,
+        Ciudad: direccion.ciudad,
+        Provincia: direccion.provincia,
+        Pais: direccion.pais,
+        Descripcion: locationName
+      };
+
+      // Validar campos requeridos
+      const camposRequeridos = Object.entries(direccionData);
+      for (const [campo, valor] of camposRequeridos) {
+        if (!valor) {
+          alert(`El campo ${campo} es requerido`);
+          return;
+        }
+      }
+
+      const response = await createDireccion(direccionData);
+      if (response) {
+        setShowModal(false);
+        setShowConfirmModal(true); // Mostrar modal de confirmación
+      }
+    } catch (error) {
+      console.error('Error al guardar la dirección:', error);
+      alert('Error al guardar la dirección: ' + (error.message || 'Error desconocido'));
+    }
   };
 
   return (
@@ -62,7 +115,7 @@ const Direccion = () => {
             <label>Calle Secundaria:</label>
             <input
               type="text"
-              name="callesSecundaria"
+              name="calleSecundaria"  // Corregido de callesSecundaria a calleSecundaria
               value={direccion.calleSecundaria}
               onChange={handleChange}
             />
@@ -138,6 +191,25 @@ const Direccion = () => {
           </div>
         </div>
       )}
+
+      {showConfirmModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>¡Dirección guardada exitosamente!</h3>
+            <div className="modal-buttons">
+              <button 
+                onClick={() => {
+                  setShowConfirmModal(false);
+                  navigate('/');
+                }}
+              >
+                Aceptar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Footer moved outside of direccion-container */}
       <Footer />
     </div>
