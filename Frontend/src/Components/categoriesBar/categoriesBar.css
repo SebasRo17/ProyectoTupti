@@ -9,7 +9,7 @@
     padding: 0;
     box-sizing: border-box;
     overflow: hidden;
-    z-index: 1000; /* Aumentado para asegurar que esté por encima */
+    z-index: 995 !important; /* Aumentado para asegurar que esté por encima */
     font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
     padding-top: 10px;
 }
@@ -27,6 +27,7 @@
     -webkit-overflow-scrolling: touch;
     width: 96%;
     position: relative;
+    z-index: 1000 !important;
     box-sizing: border-box;
 }
 

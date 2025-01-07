@@ -16,8 +16,6 @@ import Footer from '../../Components/footer/footer.jsx';
 import CategoriesBar from '../../Components/categoriesBar/categoriesBar.jsx';
 import Header from '../../Components/header/header.jsx';
 import jwtDecode from 'jwt-decode';
-import ModalProducto from '../../Components/modalProducto/modalProducto.jsx';
-
 
 const TuptiPage = ({ carouselImages, categoryImages }) => {
   const [productCarouselImages, setProductCarouselImages] = useState([]);
@@ -28,26 +26,15 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isTokenActive, setIsTokenActive] = useState(false);
   const navigate = useNavigate();
-
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
     const fetchBestSellers = async () => {
-      setIsLoading(true);
-      setError(null);
       try {
-        const bestSellers = await getBestSellers();
-        const formattedProducts = bestSellers.map((product, index) => ({
-          id: product.IdProducto,
-          imageUrl: product.Imagenes?.split(',')[0] || '/images/placeholder.png',
-          title: product.Producto,
-          price: product.Precio ? `$${product.Precio}` : 'Precio no disponible',
-          description: product.Descripcion,
-          // Store all images as array
-          imagenes: product.Imagenes?.split(',') || []
-        }));
-        console.log('Formatted products:', formattedProducts);
-        setProductCarouselImages(formattedProducts);
+        const data = await getBestSellers();
+        console.log('Best sellers:', data);
+        setProductCarouselImages(data);
+        setIsLoading(false);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -67,38 +54,15 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
       Descripcion: product.description,
       // Use first image as main image
       ImagenUrl: product.imageUrl,
+      IdTipoProducto: product.idTipoProducto, // Default to first category
       // Pass all images array
       Imagenes: product.imagenes || [product.imageUrl]
     };
+
     console.log('Formatted product:', formattedProduct);
     setSelectedProduct(formattedProduct);
   };
   
-  const closeModal = () => {
-    console.log('Cerrando modal'); // Log cierre
-    setSelectedProduct(null);
-  };
-
-  
-  const handleAgregarCarrito = async (product, cantidad) => {
-    try {
-      const productData = {
-        idUsuario: localStorage.getItem('userId'), // Asume que tienes el ID del usuario guardado
-        idProducto: product.IdProducto,
-        cantidad: cantidad
-      };
-
-      const result = await addToCart(productData);
-      console.log('Producto agregado al carrito:', result);
-      
-      // Opcional: Mostrar mensaje de éxito
-      alert('Producto agregado al carrito exitosamente');
-      
-    } catch (error) {
-      console.error('Error al agregar al carrito:', error);
-      alert('Error al agregar al carrito');
-    }
-  };
 
   useEffect(() => {
     // Verifica el token al cargar el componente
@@ -334,13 +298,6 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
           paddingLeft={10} // Añadir padding
           paddingRight={10} // Añadir padding
         />
-        {selectedProduct && (
-          <ModalProducto
-            product={selectedProduct}
-            onClose={() => setSelectedProduct(null)}
-            onAddToCart={handleAgregarCarrito}
-          />
-        )}
       </div>
     );
   };
