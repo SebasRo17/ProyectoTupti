@@ -6,7 +6,6 @@ import TuptiPage from '../../Pages/pantallaPrincipal/pantallaPrincipal';
 import CarritoCompras from '../../Components/CarritoCompras/CarritoCompras.jsx';
 import Direccion from '../../Pages/Direccion/direccion.jsx';
 import DireccionesGuardadas from '../../Components/Direcciones/direcciones.jsx';
-import Usuario from '../Usuario/usuario.jsx';
 import Configuraciones from '../ConfiguracionesUsuario/configuraciones.jsx';
 import Facturas from '../Facturas/facturas.jsx';
 import { searchProducts } from '../../Api/searchProduts.js';
@@ -24,6 +23,7 @@ const Header = ({ toggleCart, isCartOpen}) => {
   const [user, setUser] = useState(null); // Nuevo estado para el usuario
   const dropdownRef = useRef(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobileDropdownOpen, setIsMobileDropdownOpen] = useState(false);
 
   useEffect(() => {
     // Verifica el token al cargar el componente
@@ -144,7 +144,7 @@ const actualizarCantidad = (id, cantidad) => {
         <Link to="/">
         <button className='btnLogo'>
           <img 
-            src="https://res.cloudinary.com/dd7etqrf2/image/upload/v1734134733/tupti_4_i0nwzz.png" 
+            src="https://res.cloudinary.com/dd7etqrf2/image/upload/v1735594095/tupti_4_i0nwzz.webp" 
             alt="TUPTI" 
             className="logo-imagen" 
           />
@@ -184,11 +184,14 @@ const actualizarCantidad = (id, cantidad) => {
         {/* Botón de menú móvil */}
         <button 
           className="hamburger-menu" 
-          onClick={() => setIsMobileMenuOpen(true)}
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} // Cambiar a toggle
           aria-label="Menú"
         >
           ☰
         </button>
+
+        {/* Superposición de la barra lateral */}
+        <div className={`mobile-nav-overlay ${isMobileMenuOpen ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}></div>
 
         {/* Menú móvil */}
         <div className={`mobile-nav ${isMobileMenuOpen ? 'active' : ''}`}>
@@ -200,57 +203,54 @@ const actualizarCantidad = (id, cantidad) => {
             ×
           </button>
           <nav className="mobile-nav-items">
-            <button onClick={() => setIsMobileMenuOpen(false)}>
-              <span>📍</span>
-              Dirección
-            </button>
-            {user ? (
-          <div className="user-menu" ref={dropdownRef}>
-            <button 
-              className="user-button"
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            >
-              👤 {user.nombre}
-            </button>
-            {isDropdownOpen && (
-              <div className="user-dropdown">
-                <Link to="/Usuario" className="dropdown-item">
-                  <ul><span>👤</span> Mi Perfil</ul>
+          <Link to="/Direccion" onClick={() => setIsMobileMenuOpen(false)}>
+            <button className="icon-button">📍 Dirección</button>
                 </Link>
-                <Link to="/DireccionesGuardadas" className="dropdown-item">
-                  <ul><span>📍</span> Mis Direcciones</ul>
+
+                {user ? (
+                  <div className="mobile-user-menu">
+                    <button 
+                      className="user-button"
+                      onClick={() => setIsMobileDropdownOpen(!isMobileDropdownOpen)}
+                    >
+                      👤 {user.nombre}
+                    </button>
+                    <div className={`mobile-user-dropdown ${isMobileDropdownOpen ? 'active' : ''}`}>
+
+                      <Link to="/DireccionesGuardadas" className="dropdown-item" onClick={() => { setIsMobileMenuOpen(false); }}>
+                        <span>📍</span> Mis Direcciones
+                      </Link>
+                      <Link to="/Configuraciones" className="dropdown-item" onClick={() => { setIsMobileMenuOpen(false); }}>
+                        <span>⚙️</span> Configuración
+                      </Link>
+                      <Link to="/Facturas" className="dropdown-item" onClick={() => { setIsMobileMenuOpen(false); }}>
+                        <span>📄</span> Facturas
+                      </Link>
+                      <button 
+                        onClick={() => {
+                          localStorage.removeItem('jwtToken');
+                          setUser(null);
+                          setIdUsuario(null);
+                          setIsMobileMenuOpen(false);
+                          navigate('/');
+                        }}
+                        className="dropdown-item logout"
+                      >
+                        <span>🚪</span> Cerrar Sesión
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+
+              <>
+                <Link to="/Login" onClick={() => setIsMobileMenuOpen(false)}>
+                  <button className="btnLogin">Inicia Sesión</button>
                 </Link>
-                <Link to="/Configuraciones" className="dropdown-item">
-                  <ul><span>⚙️</span> Configuración</ul>
+                <Link to="/registro" onClick={() => setIsMobileMenuOpen(false)}>
+                  <button className="btnRegister">Regístrate</button>
                 </Link>
-                <Link to="/Facturas" className="dropdown-item">
-                  <ul><span>📄</span> Facturas</ul>
-                </Link>
-                <button 
-                  onClick={() => {
-                    localStorage.removeItem('jwtToken');
-                    setUser(null);
-                    setIdUsuario(null);
-                    setIsDropdownOpen(false);
-                    navigate('/');
-                  }}
-                  className="dropdown-item logout"
-                >
-                  <span>🚪</span> Cerrar Sesión
-                </button>
-              </div>
+              </>
             )}
-          </div>
-        ) : (
-          <>
-            <Link to="/Login">
-              <button className="btnLogin">Inicia Sesión</button>
-            </Link>
-            <Link to="/registro">
-              <button className="btnRegister">Regístrate</button>
-            </Link>
-          </>
-        )}
             <button onClick={() => { 
               toggleCart(); 
               setIsMobileMenuOpen(false); 
@@ -277,9 +277,6 @@ const actualizarCantidad = (id, cantidad) => {
                 </button>
                 {isDropdownOpen && (
                   <div className="user-dropdown">
-                    <Link to="/Usuario" className="dropdown-item">
-                      <span>👤</span> Mi Perfil
-                    </Link>
                     <Link to="/DireccionesGuardadas" className="dropdown-item">
                       <span>📍</span> Mis Direcciones
                     </Link>
@@ -287,7 +284,7 @@ const actualizarCantidad = (id, cantidad) => {
                       <span>⚙️</span> Configuración
                     </Link>
                     <Link to="/Facturas" className="dropdown-item">
-                      <ul><span>📄</span> Facturas</ul>
+                      <span>📄</span> Facturas
                     </Link>
                     <button 
                       onClick={() => {
@@ -295,7 +292,7 @@ const actualizarCantidad = (id, cantidad) => {
                         setUser(null);
                         setIdUsuario(null);
                         setIsDropdownOpen(false);
-                        {/*navigate('/');*/}
+                        navigate('/');
                       }}
                       className="dropdown-item logout"
                     >

@@ -182,7 +182,7 @@
   }
   
   /* Pantallas de 350px a 360px */
-  @media (min-width: 521px) and (max-width: 535px) {
+  @media (min-width: 599px) and (max-width: 535px) {
     .menu-hamburguesa-container {
       display: block;
       position: fixed;
@@ -244,14 +244,20 @@
     
   }
   /* Pantallas de 350px a 360px */
-  @media (min-width: 651px) and (max-width: 700px) {
+  @media (min-width: 600px) and (max-width: 699px) {
     .menu-hamburguesa-container {
-      display: block;
-      position: fixed;
-      top: 10px;
-      right: 610px;
-      z-index: 1000;
-      transform: translateY(70px);
+      display: none; /* Ocultar el menú hamburguesa */
+    }
+  
+    .filtro-container {
+    display: block; /* Mostrar el filtro */
+    width: auto; /* Ajusta el ancho para ocupar su espacio natural */
+    transform: none; /* Elimina transformaciones */
+    margin-left: 70% !important; /* Ajusta el margen según sea necesario */
+    margin-top: -350%; /* Asegúrate de que el margen superior sea consistente */
+    transform: translateX(-410px);
+    position: relative;
+    z-index: 997;
     }
     
   }
@@ -272,7 +278,7 @@
     }
   }
   /* Pantallas de 500px o más: mostrar el filtro y ocultar el menú hamburguesa */
-  @media (min-width: 751px) and (max-width: 767px) {
+  @media (min-width: 751px) and (max-width: 766px) {
     .menu-hamburguesa-container {
       display: none; /* Ocultar el menú hamburguesa */
     }
@@ -287,17 +293,17 @@
     }
   }
   /* Pantallas de 500px o más: mostrar el filtro y ocultar el menú hamburguesa */
-  @media (min-width: 767px) and (max-width: 770px) {
+  @media (min-width: 767px) and (max-width: 769px) {
     .menu-hamburguesa-container {
       display: none; /* Ocultar el menú hamburguesa */
     }
   
     .filtro-container {
     display: block; /* Mostrar el filtro */
-    width: auto; /* Ajusta el ancho para ocupar su espacio natural */
+    width: 20%; /* Ajusta el ancho para ocupar su espacio natural */
     transform: none; /* Elimina transformaciones */
-    margin-left: 0; /* Ajusta el margen según sea necesario */
-    margin-top: 140px; /* Asegúrate de que el margen superior sea consistente */
+    margin-left: 50% !important; /* Ajusta el margen según sea necesario */
+    margin-top: 25% !important; /* Asegúrate de que el margen superior sea consistente */
     transform: translateX(-870px);
     }
   }
@@ -312,7 +318,7 @@
     width: auto; /* Ajusta el ancho para ocupar su espacio natural */
     transform: none; /* Elimina transformaciones */
     margin-left: 0; /* Ajusta el margen según sea necesario */
-    margin-top: 140px; /* Asegúrate de que el margen superior sea consistente */
+    margin-top: 20%; /* Asegúrate de que el margen superior sea consistente */
     transform: translateX(-870px);
     }
   } 
@@ -389,8 +395,8 @@
       margin-left: 15px;
       width: 200px; /* Ajusta el ancho según tu diseño */
       transform: none; /* Elimina transformaciones innecesarias */
-      top: auto;
-      right: auto;
+      margin-top: 75%;
+      right: -10%;
       transform: translateY(-1000px);
     }
   
@@ -587,7 +593,7 @@
       margin-left: 15px;
       width: 200px; /* Ajusta el ancho según tu diseño */
       transform: none; /* Elimina transformaciones innecesarias */
-      top: auto;
+      margin-top: 30%;
       right: auto;
       transform: translateY(-790px);
     }
@@ -604,7 +610,7 @@
       margin-left: 15px;
       width: 200px; /* Ajusta el ancho según tu diseño */
       transform: none; /* Elimina transformaciones innecesarias */
-      top: auto;
+      margin-top: 32%;
       right: auto;
       transform: translateY(-250px);
     }
@@ -710,7 +716,7 @@
       margin-left: 20px;
       width: 200px; /* Ajusta el ancho según tu diseño */
       transform: none; /* Elimina transformaciones innecesarias */
-      top: auto;
+      margin-top: -50% !important;
       right: auto;
       transform: translateY(130px);
     }

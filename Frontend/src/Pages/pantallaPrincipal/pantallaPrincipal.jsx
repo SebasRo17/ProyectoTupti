@@ -1,4 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { addToCart } from '../../Api/carritoApi';
+import axios from 'axios';
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import { Link, useNavigate } from 'react-router-dom';
@@ -14,18 +16,90 @@ import Footer from '../../Components/footer/footer.jsx';
 import CategoriesBar from '../../Components/categoriesBar/categoriesBar.jsx';
 import Header from '../../Components/header/header.jsx';
 import jwtDecode from 'jwt-decode';
+import ModalProducto from '../../Components/modalProducto/modalProducto.jsx';
 
 
 const TuptiPage = ({ carouselImages, categoryImages }) => {
   const [productCarouselImages, setProductCarouselImages] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [productos, setProductos] = useState([]); // Add productos state
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isTokenActive, setIsTokenActive] = useState(false);
   const navigate = useNavigate();
 
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  useEffect(() => {
+    const fetchBestSellers = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const bestSellers = await getBestSellers();
+        const formattedProducts = bestSellers.map((product, index) => ({
+          id: product.IdProducto,
+          imageUrl: product.Imagenes?.split(',')[0] || '/images/placeholder.png',
+          title: product.Producto,
+          price: product.Precio ? `$${product.Precio}` : 'Precio no disponible',
+          description: product.Descripcion,
+          // Store all images as array
+          imagenes: product.Imagenes?.split(',') || []
+        }));
+        console.log('Formatted products:', formattedProducts);
+        setProductCarouselImages(formattedProducts);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
   
+    fetchBestSellers();
+  }, []);
+  
+  const handleProductClick = (product) => {
+    console.log('Product clicked:', product);
+    const formattedProduct = {
+      IdProducto: product.id,
+      Nombre: product.title,
+      Precio: product.price,
+      Descripcion: product.description,
+      // Use first image as main image
+      ImagenUrl: product.imageUrl,
+      // Pass all images array
+      Imagenes: product.imagenes || [product.imageUrl]
+    };
+    console.log('Formatted product:', formattedProduct);
+    setSelectedProduct(formattedProduct);
+  };
+  
+  const closeModal = () => {
+    console.log('Cerrando modal'); // Log cierre
+    setSelectedProduct(null);
+  };
+
+  
+  const handleAgregarCarrito = async (product, cantidad) => {
+    try {
+      const productData = {
+        idUsuario: localStorage.getItem('userId'), // Asume que tienes el ID del usuario guardado
+        idProducto: product.IdProducto,
+        cantidad: cantidad
+      };
+
+      const result = await addToCart(productData);
+      console.log('Producto agregado al carrito:', result);
+      
+      // Opcional: Mostrar mensaje de éxito
+      alert('Producto agregado al carrito exitosamente');
+      
+    } catch (error) {
+      console.error('Error al agregar al carrito:', error);
+      alert('Error al agregar al carrito');
+    }
+  };
+
   useEffect(() => {
     // Verifica el token al cargar el componente
     const token = localStorage.getItem('jwtToken');
@@ -42,6 +116,8 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
         localStorage.removeItem('jwtToken'); // Limpia token corrupto
       }
     }
+
+    axios.get('https://proyectotupti.onrender.com/api-docs/')
   }, []);
 
   const handleLogout = () => {
@@ -49,17 +125,6 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
     setIsTokenActive(false);
     navigate('/');
   };
-
-  const [productos, setProductos] = useState([
-    { id: 1, nombre: "Manzana", precio: 10.5, cantidad: 1, imagen: "https://via.placeholder.com/150" },
-    { id: 2, nombre: "Chocolate", precio: 20.0, cantidad: 2, imagen: "https://via.placeholder.com/150" },
-    { id: 3, nombre: "Producto 3", precio: 5.5, cantidad: 5, imagen: "https://via.placeholder.com/150" },
-    { id: 4, nombre: "Producto 4", precio: 2.0, cantidad: 2, imagen: "https://via.placeholder.com/150" },
-    { id: 5, nombre: "Producto 5", precio: 6.0, cantidad: 2, imagen: "https://via.placeholder.com/150" },
-    { id: 6, nombre: "Producto 6", precio: 1.0, cantidad: 3, imagen: "https://via.placeholder.com/150" },
-  ]);
-
-
 
   // Función para eliminar un producto del carrito
   const eliminarProducto = (productoId) => {
@@ -77,7 +142,21 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
     );
   };
   
-  
+  useEffect(() => {
+    const fetchProducts = async () => {
+        try {
+            const data = await getBestSellers();
+            setProductos(data);
+            setProductCarouselImages(data);
+        } catch (error) {
+            console.error('Error fetching products:', error);
+            setError(error.message);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+    fetchProducts();
+}, []);
 
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
@@ -218,16 +297,21 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
           disableButtonsControls={true}
           mouseTracking={true}
           items={productCarouselImages.map((product) => (
-            <div key={product.id} className="product-item">
+          <div 
+              key={product.id} 
+              className="product-item"
+              onClick={() => handleProductClick(product)}
+              style={{ cursor: 'pointer' }}
+          >
               <img
-                src={product.imageUrl}
-                alt={product.title}
-                className="image-placeholder"
-                loading="lazy"
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = 'URL_DE_IMAGEN_POR DEFECTO';
-                }}
+                  src={product.imageUrl}
+                  alt={product.title}
+                  className="image-placeholder"
+                  loading="lazy"
+                  onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = 'URL_DE_IMAGEN_POR DEFECTO';
+                  }}
               />
               <p className="product-title">{product.title}</p>
               <p className="product-price">{product.price}</p>
@@ -250,6 +334,13 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
           paddingLeft={10} // Añadir padding
           paddingRight={10} // Añadir padding
         />
+        {selectedProduct && (
+          <ModalProducto
+            product={selectedProduct}
+            onClose={() => setSelectedProduct(null)}
+            onAddToCart={handleAgregarCarrito}
+          />
+        )}
       </div>
     );
   };
@@ -261,6 +352,7 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
         toggleCart={toggleCart} 
         isTokenActive={isTokenActive}
         handleLogout={handleLogout}
+        productos={productos}
       />
       
       {/* Categories Bar */}
@@ -313,9 +405,21 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
 
       {/* Botones de promoción */}
       <div className="promo-buttons-container">
-        <button className="promo-button button-1"></button>
-        <button className="promo-button button-2"></button>
-        <button className="promo-button button-3"></button>
+        <button className="promo-button button-1" 
+        aria-label='Promocioón 1'
+        role='button'
+        tabIndex="0"
+        ></button>
+        <button className="promo-button button-2"
+        aria-label='Promoción 2'
+        role='button'
+        tabIndex="0"
+        ></button>
+        <button className="promo-button button-3"
+        aria-label='Promoción 3'
+        role='button'
+        tabIndex="0"
+        ></button>
       </div>
 
       {/* Nuevo carrusel de productos */}

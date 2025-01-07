@@ -11,6 +11,7 @@ import "./ResponsiveCategoria.css";
 import Filtros from "../../Components/Filtros/Filtros.jsx";
 import { addToCart } from '../../Api/carritoApi.js';
 import jwtDecode from 'jwt-decode';
+import LoadingSpinner from '../../Components/LoadingSpinner/LoadingSpinner';
 
 function Categoria() {
    const [productos, setProductos] = useState([]);
@@ -27,6 +28,7 @@ function Categoria() {
    const { id } = useParams();
    const location = useLocation();
    const [isCartOpen, setIsCartOpen] = useState(false); 
+   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
    const toggleCart = () => {
       setIsCartOpen(!isCartOpen);
@@ -104,6 +106,7 @@ function Categoria() {
    useEffect(() => {
       if (selectedProduct) {
          cargarReseñas();
+         setCantidad(1); // Restablecer la cantidad a 1 cuando se selecciona un nuevo producto
       }
    }, [selectedProduct]);
 
@@ -144,8 +147,14 @@ function Categoria() {
         };
   
         const result = await addToCart(productData);
-        // Manejar respuesta exitosa
         console.log('Producto agregado al carrito:', result);
+        // Mostrar mensaje de éxito
+         setShowSuccessMessage(true);
+
+         // Ocultar el mensaje después de 3 segundos
+         setTimeout(() => {
+         setShowSuccessMessage(false);
+         }, 3000);
       } catch (error) {
         // Manejar error
         console.error('Error al agregar al carrito:', error);
@@ -182,17 +191,24 @@ function Categoria() {
       }
    };
 
-   if (loading) return <div>Cargando...</div>;
+   if (loading) return <LoadingSpinner />;
    if (error) return <div>Error: {error}</div>;
 
    return (
       <div className="categoria-page">
+         {showSuccessMessage && (
+            <div className="success-message">
+               Producto agregado exitosamente al carrito
+            </div>
+         )}
+
          <Header 
             toggleCart={toggleCart} 
             isCartOpen={isCartOpen}
          />
          <CategoriesBar categoryData={categoryData} />
          <div className="categoria-container">
+
             <h1 className="categoria-titulo">Productos de la Categoría</h1>
             <div className="productos-grid">
                {productos.map((producto) => {
@@ -225,8 +241,8 @@ function Categoria() {
          </div>
 
          {selectedProduct && (
-            <div className="modal-overlay" onClick={closeModal}>
-               <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <div className="modal-overlay2" onClick={closeModal}>
+               <div className="modal-content2" onClick={e => e.stopPropagation()}>
                   <button className="modal-close" onClick={closeModal}>&times;</button>
                   <div className="modal-product">
                      <div className="modal-images">
@@ -254,7 +270,7 @@ function Categoria() {
                               id="cantidad" 
                               min="1" 
                               max="99"
-                              defaultValue="1"
+                              value={cantidad} // Usar el estado cantidad como valor
                               className="cantidad-input"
                               onChange={handleCantidadChange}
                            />
@@ -340,6 +356,7 @@ function Categoria() {
          )}
 
           <Footer />
+
           <Filtros /> 
       </div>
    );

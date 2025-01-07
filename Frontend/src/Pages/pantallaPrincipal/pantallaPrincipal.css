@@ -8,24 +8,25 @@ body {
   background-size: 1000px 10px;
   background-repeat: repeat;
   background-position: 0 0;
-  overflow-x: hidden;
-  padding: 0;
-  padding-top: 100px; /* Compensar la altura del header fijo */
   position: relative; /* Asegurar que es el contenedor principal */
-  min-height: 100vh;
   background-color: #f4f5f4; /* Añadir color de fondo base */
-
-  background-image: none;
+  display: flex;
+  overflow: hidden; /* Evitar scroll en el body */
+  flex-direction: column;
+  width: 100%;
 }
 
 .tupti-container {
+  flex: 1;
+  margin-top: 0%;
   min-height: 100vh;
-  width: 100%;
+  width: 100vw;
+  margin-left: 0%;
   position: relative;
   overflow-x: hidden;
   padding-bottom: 50px; /* Espacio para el footer */
   overflow-y: auto; /* Permitir scroll solo en el contenedor */
-  background-color: #f4f5f4;
+  background-color: white;
   background-image: none;
 }
 
@@ -50,7 +51,7 @@ slider-container {
   margin-bottom: 20px; /* Reducido el margen inferior */
   position: relative;
   width: 100%;
-  z-index: 1;
+  z-index: 2;
 }
 
 .slider-container {
@@ -137,10 +138,10 @@ slider-container {
 .main-content h2 {
   color:#187946;
   font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
-  margin-bottom: 20%;
+  margin-bottom: 30%;
   margin-top: 0px; 
   position: relative; 
-  z-index: 2; 
+  z-index: 1; 
 }
 .main-content .product-carousel-container{
   position: absolute; 
@@ -151,13 +152,13 @@ slider-container {
   height: 0;
   width: 300%;
   margin-bottom: 10%;
-  background-color: #f4f5f4;
+  background-color: white;
 }
 
 /* Estilo del AliceCarousel dentro de main-content */
 .main-content .alice-carousel {
   position: relative;
-  margin-top: 10%;
+  margin-top: 5% !important;
   margin-left: 75px;
   margin: 20px auto;
   width: 100%; 
@@ -380,7 +381,7 @@ slider-container {
   position: relative;
   z-index: 2;
   margin-bottom: 30px; /* Añadir espacio después de los botones */
-  background-color: #f4f5f4;
+  background-color: white;
 }
 
 .promo-button {
@@ -410,7 +411,20 @@ slider-container {
 }
 
 .button-3 {
-  background-image: url('https://res.cloudinary.com/dd7etqrf2/image/upload/v1734134962/tupti_Imagen_de_productos_osnxye.png');
+  background-image: url('https://res.cloudinary.com/dd7etqrf2/image/upload/v1735594072/tupti_Imagen_de_productos_osnxye.webp');
 }
-
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999 !important;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+}
 

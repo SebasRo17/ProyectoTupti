@@ -32,6 +32,8 @@ class UserRepositoryImpl {
         throw new Error('Rol inválido. Solo se permiten roles 1 (Admin) o 2 (Cliente)');
       }
 
+      console.log('Datos para actualizar en el repositorio:', userData);
+
       return await user.update(userData);
     } catch (error) {
       console.error('Error al actualizar usuario en el repositorio:', error);

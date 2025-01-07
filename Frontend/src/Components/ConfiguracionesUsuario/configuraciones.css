@@ -1,19 +1,27 @@
-.app-wrapper {
-    min-height: 100vh;
-    background-color: #f5f7fa;
-    margin-top: 3%;
-  }
+body {
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 100vh;
+  background-color: white;
+}
+.body{
+  width: 100%;
+  background-color: white;
+}
   
   .main-content {
     padding: 2rem 1rem;
     max-width: 1200px;
     margin: 0 auto;
+    margin-top: -20%;
+    background-color: white;
   }
   
   .settings-container {
     background: white;
     border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
     padding: 2rem;
     margin: 1rem auto;
     max-width: 800px;
@@ -99,14 +107,14 @@
   
   .form-group input:focus {
     outline: none;
-    border-color: #4299e1;
+    border-color: #57c95a;
     box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
   }
   
   .update-password-btn {
     width: 100%;
     padding: 0.75rem 1.5rem;
-    background-color: #4299e1;
+    background-color: #4CAF50;
     color: white;
     border: none;
     border-radius: 6px;
@@ -123,6 +131,22 @@
   .update-password-btn:active {
     transform: translateY(1px);
   }
+  
+@media (min-width: 1441px) {
+  .settings-container {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    align-content: center;
+    width: 70%;
+    height: 100%;
+  }
+  .user-profile-section h2 {
+    margin-left: 0%;
+  }
+  .password-section h2 {
+    margin-left: 0%;
+  }
+}
   
   @media (max-width: 768px) {
     .settings-container {
@@ -148,5 +172,60 @@
     .settings-container {
       margin: 0;
       border-radius: 0;
+    }
+  }
+  @media screen and (max-width: 390px) {
+    .settings-container{
+      margin-top: 90%;
+      margin-bottom: -90%;
+    }
+    .settings-container h2 {
+      font-size: 1.2rem;
+      margin-top: 2%;
+    }
+  }
+  @media screen and (min-width: 391px) and (max-width: 767px) {
+    .settings-container{
+      margin-top: 40%;
+      margin-bottom: -30%;
+    }
+    .settings-container h2 {
+      font-size: 1.2rem;
+      margin-top: 2%;
+    }
+  }
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    .body{
+      background-color: white;
+    }
+    .main-content{
+      background-color: white;
+    }
+    .settings-container{
+      margin-top: 5%;
+      margin-bottom: -20%;
+      margin-left: 30%;
+      width: 80%;
+    }
+    .settings-container h2 {
+      font-size: 1.2rem;
+      margin-top: 2%;
+      margin-left: 10%;
+    }
+  }
+  @media screen and (min-width: 1024px) and (max-width: 1440px) {
+    .app-wrapper {
+      background-color: #f5f7fa;
+    }
+    .settings-container{
+      margin-top: 5%;
+      margin-bottom: 5%;
+      margin-left: 30%;
+      width: 70%;
+    }
+    .settings-container h2 {
+      font-size: 1.2rem;
+      margin-top: 2%;
+      margin-left: 10%;
     }
   }
