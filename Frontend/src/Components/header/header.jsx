@@ -30,20 +30,10 @@ const Header = ({ toggleCart, isCartOpen}) => {
     const token = localStorage.getItem('jwtToken');
     if (token) {
       try {
-        const payload = jwtDecode(token);
-        console.log('Token descifrado:', payload);
-        const currentTime = Date.now() / 1000;
-        setIdUsuario(payload.user.IdUsuario);
-        // Agregar esta línea para guardar el nombre del usuario
-        setUser({
-          nombre: payload.user.Nombre|| payload.user.Email,
-          isAdmin: payload.isAdmin
-        });
-        if (payload.exp <= currentTime) {
-          localStorage.removeItem('jwtToken');
-        }
+        const decodedToken = jwtDecode(token);
+        console.log('Token descifrado:', decodedToken);
+        setUser(decodedToken);
       } catch (error) {
-        console.error('Error decodificando el token:', error);
         localStorage.removeItem('jwtToken');
       }
     }
@@ -273,7 +263,7 @@ const actualizarCantidad = (id, cantidad) => {
                   className="user-button"
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 >
-                  👤 {user.nombre}
+                  👤 {user.Nombre}
                 </button>
                 {isDropdownOpen && (
                   <div className="user-dropdown">
