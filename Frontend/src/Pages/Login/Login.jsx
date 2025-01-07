@@ -133,14 +133,11 @@ function Login() {
       
       if (response.success) {
         localStorage.setItem('jwtToken', response.token);
-        const { isAdmin, hasName, IdUsuario } = response.user;
-        setUserId(IdUsuario);
-        if (!hasName) {
-          setShowUpdateNameModal(true);
-        } else {
-          const from = location.state?.from || (isAdmin ? '/admin' : '/');
-          navigate(from);
-        }
+        const decodedToken = jwtDecode(response.token);
+        console.log('Token descifrado:', decodedToken);
+        const { isAdmin } = decodedToken;
+        const from = location.state?.from || (isAdmin ? '/admin' : '/');
+        navigate(from);
       }
     } catch (error) {
       setPasswordError(error.message || 'Error al iniciar sesión');
