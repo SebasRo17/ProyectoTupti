@@ -65,7 +65,7 @@ const DireccionesGuardadas = () => {
       <Header toggleCart={toggleCart} isCartOpen={isCartOpen} />
       <div className="direcciones-container" style={{ padding: '20px' }}>
         <h1 style={{ textAlign: 'center', margin: '20px 0' }}>Direcciones Guardadas</h1>
-        <div className="direcciones-list">
+        <div className="direcciones-list1">
           {direccionesGuardadas.length === 0 ? (
             <p>No hay direcciones guardadas</p>
           ) : (
