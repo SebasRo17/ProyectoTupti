@@ -1,158 +1,444 @@
-
-/* ============================= */
-/*Responsive solo filtro */
-/* Desktop (2500px - 2560px) */
-/* ============================= */
-@media screen and (min-width: 2500px) and (max-width: 2560px) {
-    .filtros-clase {
-      width: 300px;
-      transform: translateY(350px);
-      margin-right: -850px;
-
-    }
+@media (min-width: 2560px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(-1395px);
+    margin-right: -250px;
+    width: 45%;
+    margin-left: 74%;
   }
-/* ============================= */
-/* Desktop (2001px - 2500px) */
-/* ============================= */
-@media screen and (min-width: 2001px) and (max-width: 2500px) {
-    .filtros-clase {
-      width: 0px;
-      transform: translateY(350px);
-      margin-right: -400px;
-
-    }
-  }
-/* ============================= */
-/* Desktop (1951px - 2000px) */
-/* ============================= */
-@media screen and (min-width: 1951px) and (max-width: 2000px) {
-    .filtros-clase {
-      width: 0px;
-      transform:translateY(350px)
-    }
-}
-
-/* ============================= */
-/* Desktop (1920px - 1950px) */
-/* ============================= */
-@media screen and (min-width: 1920px) and (max-width: 1950px) {
-    .filtros-clase {
-      width:0px;
-      margin-right: -120px;
-      transform: translateY(380px);
-    }
-}
-  
-/* ============================= */
-  /* Desktop (1801px - 1919px) */
-  /* ============================= */
-  @media screen and (min-width: 1801px) and (max-width: 1919px) {
-    .filtros-clase {
-      width: 0px;
-      transform: translateY(350px);
-    }
-}
-  
-/* ============================= */
-  /* Desktop (1650px - 1800px) */
-  /* ============================= */
-  @media screen and (min-width: 1650px) and (max-width: 1800px) {
-    .filtros-clase {
-      width: 110px;
-      transform: translateY(300px);
-    }
-}
-  
-/* ============================= */
-  /* Desktop (1441px - 1650px) */
-  /* ============================= */
-  @media screen and (min-width: 1440px) and (max-width: 1650px) {
-    .filtros-clase {
-      width: 220px;
-      transform: translateY(-200px);
-      margin-right: 60px;
-    }
-}
-  
-/* ============================= */
-  /* Laptops (1024px - 1439px) */
-  /* ============================= */
-  @media screen and (min-width: 1024px) and (max-width: 1439px) {
-    .filters-container {
-      justify-content: center; /* Centrar el filtro */
-    }
-  
-    .filtros-clase {
-      width: 0px;
-      margin-right: -550px;
-      transform: translateY(-100px);
-    }
-}
-  
-/* ============================= */
-  /* Tablets (768px - 1023px) */
-  /* ============================= */
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
-    .filters-container {
-      justify-content: center; /* Centrar el filtro */
-      margin-left: 500px;
-      margin-top: 20px;
-    }
-  
-    .filtros-clase {
-      width: 90%; /* Ancho casi completo */
-      padding: 15px;
-    }
-}
-  
-/* ========================================== */
-  /* Responsivo para pantallas entre 425px y 767px */
-  /* ========================================== */
-  @media screen and (min-width: 425px) and (max-width: 767px) {
-    .filters-container {
-      justify-content: center; /* Centrar el filtro */
-      margin-left: 550px;
-      transform: translateY(600px);
-
-    }
-  
-    .filtros-clase {
-      width: 95%; /* Ancho casi completo */
-      padding: 10px;
-    }
-  
-}
-  
-/* ======================================== */
-  /* Pantallas entre 424px y 375px */
-  /* ======================================== */
-  @media screen and (min-width: 375px) and (max-width: 424px) {
-    .filters-container {
-      justify-content: center;
-      transform: translateY(650px);
-      margin-left: 600px;
-    }
-  
-    .filtros-clase {
-      width: 100%; /* Ocupa todo el ancho */
-      padding: 8px;
-    }
-  
-}
-  
-/* ======================================== */
-  /* Pantallas entre 374px y 320px */
-  /* ======================================== */
-  @media screen and (max-width: 374px) {
-    .filters-container {
-      justify-content: center;
-      transform: translateY(600px);
-      margin-left: 570px;
-    }
-  
-    .filtros-clase {
-      width: 100%; /* Ancho completo */
-      padding: 5px;
-    }
 }  
+    
+
+/* Pantallas de 2500px a 2560px */
+@media (min-width: 2500px) and (max-width: 2560px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(-1390px);
+    margin-right: -250px;
+    width: 45%;
+    margin-left: 74%;
+  }
+}  
+
+/* Pantallas de 2400px a 2500px */
+@media (min-width: 2400px) and (max-width: 2500px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(-1300px);
+    margin-right: -250px;
+    width: 45%;
+    margin-left: 74%;
+  }
+}  
+
+/* Pantallas de 2300px a 2400px */
+@media (min-width: 2300px) and (max-width: 2400px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(-1200px);
+    margin-right: -250px;
+    width: 45%;
+    margin-left: 74%;
+  }
+}  
+
+/* Pantallas de 2200px a 2300px */
+@media (min-width: 2200px) and (max-width: 2300px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(-1050px);
+    margin-right: -250px;
+    width: 45%;
+    margin-left: 74%;
+  }
+}  
+
+/* Pantallas de 2115px a 2200px */
+@media (min-width: 2115px) and (max-width: 2200px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(-1030px);
+    margin-right: -250px;
+    width: 45%;
+    margin-left: 74%;
+  }
+}  
+
+/* Pantallas de 2060px a 2115px */
+@media (min-width: 2060px) and (max-width: 2115px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(-950px);
+    margin-right: -250px;
+    width: 45%;
+    margin-left: 74%;
+  }
+}  
+
+/* Pantallas de 2000px a 2059px */
+@media (min-width: 2000px) and (max-width: 2061px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(-920px);
+    margin-right: -250px;
+    width: 45%;
+    margin-left: 74%;
+  }
+}  
+
+
+
+/* Pantallas de 1950px a 2000px */
+@media (min-width: 1950px) and (max-width: 2000px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(-860px);
+    margin-right: -250px;
+    width: 45%;
+    margin-left: 74%;
+  }
+} 
+
+/* Pantallas de 1900px a 1950px */
+@media (min-width: 1900px) and (max-width: 1950px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(-1720px);
+    margin-right: 10px;
+    width: 45%;
+    margin-left: 74%;
+  }
+} 
+
+/* Pantallas de 1850px a 1900px */
+@media (min-width: 1850px) and (max-width: 1900px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(-1660px);
+    margin-right: 10px;
+    width: 45%;
+    margin-left: 74%;
+  }
+}  
+
+/* Pantallas de 1800px a 1850px */
+@media (min-width: 1800px) and (max-width: 1850px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(-1620px);
+    margin-right: 10px;
+    width: 45%;
+    margin-left: 74%;
+  }
+} 
+
+/* Pantallas de 1750px a 1800px */
+@media (min-width: 1750px) and (max-width: 1800px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(-1570px);
+    margin-right: 10px;
+    width: 45%;
+    margin-left: 74%;
+  }
+} 
+
+/* Pantallas de 1700px a 1750px */
+@media (min-width: 1700px) and (max-width: 1750px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(-1520px);
+    margin-right: 10px;
+    width: 45%;
+    margin-left: 74%;
+  }
+} 
+
+/* Pantallas de 1750px a 1800px */
+@media (min-width: 1750px) and (max-width: 1800px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(-1570px);
+    margin-right: 10px;
+    width: 45%;
+    margin-left: 74%;
+  }
+} 
+
+/* Pantallas de 1700px a 1750px */
+@media (min-width: 1700px) and (max-width: 1750px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(-1520px);
+    margin-right: 10px;
+    width: 45%;
+    margin-left: 74%;
+  }
+} 
+
+/* Pantallas de 1650px a 1700px */
+@media (min-width: 1650px) and (max-width: 1700px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(-1330px);
+    margin-right: 10px;
+    width: 45%;
+    margin-left: 74%;
+  }
+} 
+
+/* Pantallas de 1601px a 1650px */
+@media (min-width: 1601px) and (max-width: 1650px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(-1330px);
+    margin-right: 10px;
+    width: 45%;
+    margin-left: 74%;
+  }
+} 
+
+/* Pantallas de 1560px a 1601px */
+@media (min-width: 1560px) and (max-width: 1601px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(-1290px);
+    margin-right: 10px;
+    width: 45%;
+    margin-left: 74%;
+  }
+}
+
+  /* Pantallas de 1535px a 1559px */
+  @media (min-width: 1535px) and (max-width: 1559px) {
+    .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(-350px);
+    margin-right: 10px;
+    width: 45%;
+    margin-left: 74%;
+  }
+} 
+
+/* Pantallas de 1480px a 1535px */
+@media (min-width: 1480px) and (max-width: 1535px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(-300px);
+    margin-right: 10px;
+    width: 45%;
+    margin-left: 74%;
+  }
+} 
+
+/* Pantallas de 1441px a 1480px */
+@media (min-width: 1441px) and (max-width: 1480px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(-250px);
+    margin-right: 10px;
+    width: 45%;
+    margin-left: 74%;
+  }
+}   
+
+/* Pantallas de 1400px a 1440px */
+@media (min-width: 1400px) and (max-width: 1440px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(290px);
+    margin-right: 10px;
+    width: 45%;
+    margin-left: 74%;
+  }
+}
+
+/* Pantallas de 1310px a 1400px */
+@media (min-width: 1310px) and (max-width: 1400px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(320px);
+    margin-right: 10px;
+    width: 45%;
+    margin-left: 74%;
+  }
+}
+
+/* Pantallas de 1271px a 1310px */
+@media (min-width: 1271px) and (max-width: 1310px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(320px);
+    margin-right: 10px;
+    width: 45%;
+    margin-left: 76%;
+  }
+}
+
+/* Pantallas de 1251px a 1271px */
+@media (min-width: 1251px) and (max-width: 1271px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(370px);
+    margin-right: 10px;
+    width: 45%;
+    margin-left: 76%;
+  }
+}
+
+/* Pantallas de 1225px a 1251px */
+@media (min-width: 1225px) and (max-width: 1251px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(400px);
+    margin-right: 10px;
+    width: 45%;
+    margin-left: 76%;
+  }
+}
+
+/* Para pantallas entre 1200px y 1225px */
+@media (min-width: 1200px) and (max-width: 1225px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(400px);
+    margin-right: 10px;
+    width: 45%;
+    margin-left: 76%;
+  }
+}
+
+/* Para pantallas entre 1023px y 1224px */
+@media (min-width: 1197px) and (max-width: 1200px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(690px);
+    margin-right: 10px;
+    width: 45%;
+    margin-left: 76%;
+  }
+}
+
+/* Para pantallas entre 1180px y 1196px */
+@media (min-width: 1180px) and (max-width: 1196px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(700px);
+    margin-right: 10px;
+    width: 45%;
+    margin-left: 76%;
+  }
+}
+
+/* Para pantallas entre 1131px y 1180px */
+@media (min-width: 1131px) and (max-width: 1180px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(710px);
+    margin-right: 10px;
+    width: 45%;
+    margin-left: 78%;
+  }
+}
+
+/* Para pantallas entre 1080px y 1131px */
+@media (min-width: 1080px) and (max-width: 1131px) {
+  .filters-container {
+   display: flex;
+   justify-content: flex-end; /* Alinea el filtro a la derecha */
+   margin-top: 0px;
+   transform: translateY(720px);
+   margin-right: 10px;
+   width: 45%;
+   margin-left: 79%;
+  }
+}
+
+/* Para pantallas entre 1024px y 1080px */
+@media (min-width: 1030px) and (max-width: 1080px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(840px);
+    margin-right: 10px;
+    width: 45%;
+    margin-left: 80%;
+  }
+}
+
+/* Para pantallas entre 1024px y 1080px */
+@media (min-width: 1023px) and (max-width: 1030px) {
+  .filters-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el filtro a la derecha */
+    margin-top: 0px;
+    transform: translateY(840px);
+    margin-right: 10px;
+    width: 45%;
+    margin-left: 80%;
+  }
+}
 

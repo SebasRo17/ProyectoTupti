@@ -4,8 +4,8 @@
     color: #e5ffe5; /* Texto claro en tono verde */
     border-radius: 10px;
     width: 200px;
-    transform:translateY(200px);
-    margin-left: 15px;
+    transform:translateY(60px);
+    margin-left: 35px;
     font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
     margin-top: 22%;
   }
@@ -86,20 +86,8 @@ input[type="checkbox"]:checked {
   
 }
 
-/* Estilos para el Filtro */
-.filtro-container {
-  display: none; /* Oculto por defecto */
-  position: fixed;
-  top: 60px;
-  right: 10px;
-  background-color: #1f804c;
-  padding: 1rem;
-  border-radius: 10px;
-  z-index: 999;
-  width: 80%;
-}
+
 
 .filtro-container.visible {
   display: block; /* Mostrar cuando el estado es visible */
 }
-
