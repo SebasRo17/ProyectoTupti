@@ -5,8 +5,9 @@
     margin-top: 2%;
   }
   
-  .direcciones-list {
+  .direcciones-list1 {
     display: flex;
+    color : #333;
     gap: 20px;
     width: 100%;
   }
