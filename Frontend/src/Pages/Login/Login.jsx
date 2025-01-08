@@ -8,7 +8,6 @@ import "./Login.css";
 import { loginUser } from '../../Api/loginUsers';
 import "./responsiveLogin.css";
 import jwtDecode from 'jwt-decode';
-import UpdateNameModal from '../../Components/UpdateNameModal/UpdateNameModal'; // Importar el modal
 
 
 function Login() {
@@ -18,7 +17,6 @@ function Login() {
   const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [showUpdateNameModal, setShowUpdateNameModal] = useState(false);
   const [userId, setUserId] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
@@ -255,7 +253,6 @@ function Login() {
           <Link to="/Registro" className="signup-text">Regístrate</Link>
         </div>
       </div>
-      {showUpdateNameModal && <UpdateNameModal userId={userId} onClose={() => setShowUpdateNameModal(false)} />}
     </div>
   );
 }
