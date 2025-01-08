@@ -1,0 +1,187 @@
+.reset-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 20px;
+}
+
+.reset-card {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+  width: 100%;
+  max-width: 500px;
+  position: relative;
+  transform: translateY(0);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.reset-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.reset-back-button {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+}
+
+.back-reset-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(5px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s, transform 0.3s;
+}
+
+.back-reset-circle:hover {
+  background: rgba(255, 255, 255, 0.9);
+  transform: scale(1.05);
+}
+
+.back-reset-circle svg {
+  width: 24px;
+  height: 24px;
+  stroke: #333;
+  stroke-width: 2;
+  fill: none;
+}
+
+.reset-form {
+  margin-top: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #eee;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.reset-button {
+  width: 100%;
+  padding: 0.75rem;
+  background: linear-gradient(45deg, #007bff, #0056b3);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transform: translateY(0);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 123, 255, 0.2);
+}
+
+.reset-button:hover {
+  background: linear-gradient(45deg, #0056b3, #004094);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 123, 255, 0.3);
+}
+
+.reset-button:active {
+  transform: translateY(0);
+}
+
+.reset-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: #dc3545;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  background-color: #f8d7da;
+  border-left: 4px solid #dc3545;
+  animation: slideIn 0.3s ease;
+}
+
+.success-message {
+  color: #28a745;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  background-color: #d4edda;
+  border-left: 4px solid #28a745;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .reset-card {
+    max-width: 450px;
+    padding: 2rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .reset-card {
+    padding: 1.5rem;
+    max-width: 100%;
+  }
+
+  .reset-back-button {
+    top: 10px;
+    left: 10px;
+  }
+
+  .back-reset-circle {
+    width: 35px;
+    height: 35px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    margin-top: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .reset-card {
+    padding: 1rem;
+  }
+}
+
+h1 {
+  font-size: 2rem;
+  margin-top: 2rem;
+}

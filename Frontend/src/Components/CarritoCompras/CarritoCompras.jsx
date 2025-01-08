@@ -2,28 +2,32 @@ import React, { useState, useEffect } from 'react';
 import { FaTrash } from 'react-icons/fa'; // Importar el ícono de la basura
 import "./CarritoCompras.css";
 import "./responsiveCarrito.css";
-import { getCarritoByUsuario, addToCart } from '../../Api/carritoApi.js'; // Asegúrate de importar addToCart
+import { getCarritoByUsuario, addToCart } from '../../Api/carritoApi.js';
 import jwtDecode from 'jwt-decode';
+import { Link } from 'react-router-dom';
 
 const CarritoCompras = () => {
   const [productos, setProductos] = useState([]);
   const [idUsuario, setIdUsuario] = useState(null); // Definir el estado para idUsuario
+  const [idCarrito, setIdCarrito] = useState(null); // Definir el estado para idCarrito
   const [isLoading, setIsLoading] = useState(false); // Estado para manejar la carga
 
   useEffect(() => {
-    // Verifica el token al cargar el componente
     const token = localStorage.getItem('jwtToken');
     if (token) {
       try {
         const payload = jwtDecode(token);
-        console.log('Token descifrado:', payload); // Agregar console.log para mostrar el token descifrado
+        //console.log('Token descifrado:', payload); // Muestra el token descifrado
         const currentTime = Date.now() / 1000;
-        setIdUsuario(payload.user.IdUsuario); // Guardar idUsuario en el estado
+  
+        // Cambiar de payload.user.IdUsuario a payload.IdUsuario
+        setIdUsuario(payload.IdUsuario); 
+  
         if (payload.exp <= currentTime) {
           localStorage.removeItem('jwtToken'); // Elimina token expirado
         }
       } catch (error) {
-        console.error('Error decodificando el token:', error);
+        //console.error('Error decodificando el token:', error);
         localStorage.removeItem('jwtToken'); // Limpia token corrupto
       }
     }
@@ -35,8 +39,8 @@ const CarritoCompras = () => {
         setIsLoading(true); // Iniciar estado de carga
         try {
           const carritoData = await getCarritoByUsuario(idUsuario);
-          console.log('Carrito completo:', carritoData);
-          console.log('Detalles del carrito:', carritoData.detalles);
+          //console.log('Carrito completo:', carritoData);
+          //console.log('Detalles del carrito:', carritoData.detalles);
           // Actualizar el estado de productos con los datos obtenidos
           setProductos(carritoData.detalles.map(detalle => ({
             id: detalle.IdProducto,
@@ -45,8 +49,9 @@ const CarritoCompras = () => {
             cantidad: detalle.Cantidad,
             imagen: detalle.Producto.ImagenUrl
           })));
+          setIdCarrito(carritoData.carrito.IdCarrito); // Guardar el ID del carrito en el estado
         } catch (error) {
-          console.error('Error al cargar el carrito:', error);
+          //console.error('Error al cargar el carrito:', error);
         } finally {
           setIsLoading(false); // Finalizar estado de carga
         }
@@ -66,9 +71,9 @@ const CarritoCompras = () => {
       };
 
       const result = await addToCart(productData);
-      console.log('Producto actualizado en el carrito:', result);
+      //console.log('Producto actualizado en el carrito:', result);
     } catch (error) {
-      console.error('Error al actualizar el carrito:', error);
+      //console.error('Error al actualizar el carrito:', error);
     }
   };
 
@@ -82,7 +87,7 @@ const CarritoCompras = () => {
         // Actualizar el estado local después de una eliminación exitosa
         setProductos(productos.filter((p) => p.id !== productoId));
       } catch (error) {
-        console.error('Error al eliminar el producto:', error);
+        //console.error('Error al eliminar el producto:', error);
       }
     }
   };
@@ -105,7 +110,7 @@ const CarritoCompras = () => {
         )
       );
     } catch (error) {
-      console.error('Error al actualizar la cantidad:', error);
+      //console.error('Error al actualizar la cantidad:', error);
     }
   };
 
@@ -201,9 +206,11 @@ const CarritoCompras = () => {
                 ).toFixed(2)}
               </span>
             </p>
-            <button className="boton-continuar">
-              PAGAR
-            </button>
+            <Link to={`/MetodoPago`} state={{ idCarrito: idCarrito }}>
+              <button className="boton-continuar" disabled={!idCarrito}>
+                PAGAR
+              </button>
+            </Link>
           </div>
         )}
       </div>

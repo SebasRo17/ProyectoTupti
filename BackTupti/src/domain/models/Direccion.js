@@ -9,20 +9,46 @@ Direccion.init({
     primaryKey: true,
     autoIncrement: true
   },
-  Usuario_IdUsuario: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  Direccion: {
-    type: DataTypes.STRING,
-    allowNull: true
-  },
   IdUsuario: {
     type: DataTypes.INTEGER,
     allowNull: false
+  },
+  CallePrincipal: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  Numeracion: {
+    type: DataTypes.STRING, // Asegúrate de que sea de tipo STRING
+    allowNull: false
+  },
+  CalleSecundaria: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  Vecindario: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  Ciudad: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  Provincia: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  Pais: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  Descripcion: {
+    type: DataTypes.STRING,
+    allowNull: false
   }
+
 }, {
   sequelize,
+  modelName: 'Direccion',
   tableName: 'direccion',
   timestamps: false
 });

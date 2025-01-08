@@ -63,12 +63,9 @@ const HeaderAdmin = () => {
             </ul>
           )}
         </div>
-        <button className="search-button">🔍</button>
+        <button className="search-button2">🔍</button>
       </div>
       <div className="header-actions">
-        <button className="action-button">🔔</button>
-        <button className="action-button">💬</button>
-        <div className="profile-icon"></div>
       </div>
     </header>
   );

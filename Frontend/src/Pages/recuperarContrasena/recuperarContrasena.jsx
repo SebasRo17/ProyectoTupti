@@ -48,7 +48,7 @@ function RecuperarContrasena() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!passwordError && password && confirmPassword) {
-      console.log("Nueva contraseña establecida:", password);
+      //console.log("Nueva contraseña establecida:", password);
       // Aquí puedes agregar la lógica para enviar la nueva contraseña al servidor
     } else {
       setPasswordError("Por favor, corrige los errores antes de continuar.");

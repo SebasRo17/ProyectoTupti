@@ -1,0 +1,131 @@
+.app-wrapper {
+  min-height: 100vh;
+  background-color: white;
+  margin-top: -20%;
+}
+
+.main-content {
+  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.facturas-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+  margin: 1rem auto;
+}
+
+.facturas-section h2 {
+  color: #2d3748;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #edf2f7;
+  padding-bottom: 0.75rem;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.facturas-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.facturas-table th,
+.facturas-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.facturas-table th {
+  background-color: #f8fafc;
+  font-weight: 600;
+  color: #4a5568;
+}
+
+.facturas-table tr:hover {
+  background-color: #f7fafc;
+}
+
+@media (min-width: 1441px) {
+  .app-wrapper{
+    min-height: 100vh;
+  }
+  .facturas-container{
+    margin-top: 5%
+  }
+  .facturas-section h2{
+    margin-left: 0%;
+  }
+}
+
+@media (max-width: 768px) {
+  .facturas-container {
+    padding: 1rem;
+  }
+
+  .facturas-table th,
+  .facturas-table td {
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding: 1rem 0.5rem;
+  }
+
+  .facturas-container {
+    margin: 0;
+    border-radius: 0;
+  }
+}
+@media screen and (max-width: 390px) {
+  .facturas-container{
+    margin-top: 130%;
+    margin-bottom: auto;
+  }
+}
+@media screen and (min-width: 391px) and (max-width: 550px) {
+  .facturas-container{
+    margin-top: 50%;
+    margin-bottom: auto;
+  }
+  
+}
+@media screen and (min-width: 551px) and (max-width: 767px) {
+  .facturas-container{
+    margin-top:35%;
+    margin-bottom: auto;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .facturas-container{
+    margin-top:35%;
+    margin-bottom: auto;
+    justify-content: center;
+    align-items: center;
+    margin-left: 50%;
+  }
+}
+@media screen and (min-width: 1024px) and (max-width: 1440px) {
+  .facturas-container{
+    margin-top: 35%;
+    margin-bottom: auto;
+    margin-left: 40%;
+  }
+}
+@media screen and (min-width: 1441px) {
+  .facturas-container{
+    margin-top: 35%;
+    
+    margin-left: 30%;
+  }
+  
+}

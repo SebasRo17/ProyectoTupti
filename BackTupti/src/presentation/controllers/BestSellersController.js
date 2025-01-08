@@ -9,6 +9,7 @@ const getBestSellers = async (req, res) => {
                 p.IdProducto,
                 p.Nombre AS Producto,
                 p.Descripcion,
+                p.IdTipoProducto,
                 p.Precio,
                 GROUP_CONCAT(i.ImagenURL) AS Imagenes
             FROM 

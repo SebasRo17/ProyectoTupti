@@ -17,6 +17,7 @@ function Login() {
   const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [userId, setUserId] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
   const apiUrl = import.meta.env.MODE === 'development' 
@@ -34,34 +35,34 @@ function Login() {
 
   useEffect(() => {
     const handleMessage = (event) => {
-      console.log('Mensaje recibido:', event);
+      //console.log('Mensaje recibido:', event);
 
       if (event.origin !== apiUrl) {
 
-        console.warn('Origen no autorizado', event.origin);
+        //console.warn('Origen no autorizado', event.origin);
         return;
       }
 
       if (event.data && event.data.token) {
         try {
-          console.log('Token recibido:', event.data.token);
+          //console.log('Token recibido:', event.data.token);
           
           // Decodifica el token
           const payload = jwtDecode(event.data.token); 
-          console.log('Payload decodificado:', payload);
+          //console.log('Payload decodificado:', payload);
 
           // Verifica que la estructura de 'payload' sea la que esperas
-          console.log('isAdmin en el payload:', payload.isAdmin);
+          //console.log('isAdmin en el payload:', payload.isAdmin);
 
           // Almacena el token
           localStorage.setItem('jwtToken', event.data.token);
 
           // Redirigir al usuario a la página anterior o a la ruta por defecto
           const from = location.state?.from || (payload.isAdmin ? '/admin' : '/');
-          console.log('Redirigiendo a:', from); // Agregar un console.log para depurar
+          //console.log('Redirigiendo a:', from); // Agregar un console.log para depurar
           navigate(from);
         } catch (error) {
-          console.error('Error procesando el token:', error);
+          //console.error('Error procesando el token:', error);
         }
       }
     };
@@ -130,9 +131,9 @@ function Login() {
       
       if (response.success) {
         localStorage.setItem('jwtToken', response.token);
-        const { isAdmin } = response.user;
-        console.log("token",response.token);
-        // Redirigir al usuario a la página anterior o a la ruta por defecto
+        const decodedToken = jwtDecode(response.token);
+        console.log('Token descifrado:', decodedToken);
+        const { isAdmin } = decodedToken;
         const from = location.state?.from || (isAdmin ? '/admin' : '/');
         navigate(from);
       }

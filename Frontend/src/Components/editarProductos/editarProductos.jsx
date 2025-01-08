@@ -2,42 +2,47 @@ import React, { useState, useEffect } from 'react';
 import './editarProductos.css';
 
 const EditarProductos = ({ product, onClose }) => {
-    // Initialize state with product data
     const [formData, setFormData] = useState({
-        id: product?.id || '',
-        name: product?.name || '',
-        details: product?.details || '',
-        price: product?.price || '',
-        image: product?.image || ''
+        id: '',
+        name: '',
+        details: '',
+        price: '',
+        image: ''
     });
+    const [imagePreview, setImagePreview] = useState('');
 
-    // Keep track of image preview
-    const [imagePreview, setImagePreview] = useState(product?.image || '');
-
-    // Update form when product changes
     useEffect(() => {
+        //console.log('Producto actualizado:', product);
         if (product) {
             setFormData({
-                id: product.id,
-                name: product.name,
-                details: product.details,
-                price: product.price,
-                image: product.image
+                id: product.id || '',
+                name: product.name || '',
+                details: product.details || '',
+                price: product.price || '',
+                image: product.image || ''
             });
-            setImagePreview(product.image);
+            setImagePreview(product.image || '');
         }
     }, [product]);
 
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Add validation here if needed
-        onClose();
+        //console.log('Submitting:', formData);
+        onClose(formData);
     };
 
     return (
         <div className="modal-overlay">
             <div className="modal-content">
-                <h2>Editar Producto: {product?.name}</h2>
+                <h2>Editar Producto: {formData.name}</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label>Nombre del Producto:</label>
@@ -45,12 +50,11 @@ const EditarProductos = ({ product, onClose }) => {
                             type="text"
                             name="name"
                             value={formData.name}
-                            onChange={(e) => setFormData({...formData, name: e.target.value})}
+                            onChange={handleChange}
                             required
                         />
                     </div>
-
-                    <div className="form-group">
+            <div className="form-group">
                         <label>Precio:</label>
                         <input
                             type="text"
