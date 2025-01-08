@@ -88,19 +88,18 @@ function Categoria() {
    useEffect(() => {
       const fetchProducts = async () => {
          try {
-             // Revisar si hay productos filtrados en el estado de location
-             const filteredProducts = location.state?.products || [];
+            const data = await getCategoryProducts(id);
+            setProductos(data);
             
-             if (filteredProducts.length > 0) {
-                // Si hay productos filtrados, usarlos
-                setProductos(filteredProducts);
-             } else if (id && id !== "0") {
-                // Si no hay productos filtrados, buscar por categoría
-                const data = await getCategoryProducts(id);
-                setProductos(data);
-             } else {
-                setError("No se encontraron productos");
-             }
+            // Si hay un ID de producto seleccionado en el state, encontrarlo y mostrarlo
+            if (location.state?.selectedProductId && location.state?.openModal) {
+                const selectedProduct = data.find(
+                    product => product.IdProducto === location.state.selectedProductId
+                );
+                if (selectedProduct) {
+                    setSelectedProduct(selectedProduct);
+                }
+            }
          } catch (err) {
             setError(err.message);
          } finally {

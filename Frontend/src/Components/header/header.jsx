@@ -24,7 +24,6 @@ const Header = ({ toggleCart, isCartOpen}) => {
   const dropdownRef = useRef(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileDropdownOpen, setIsMobileDropdownOpen] = useState(false);
-  const [productos, setProductos] = useState([]);
 
   useEffect(() => {
     // Verifica el token al cargar el componente
@@ -110,9 +109,6 @@ const actualizarCantidad = (id, cantidad) => {
     setShowSuggestions(false);
   };
 
-  const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
   const handleSearchSubmit = async (event) => {
     if (event.key === 'Enter') {
       try {
@@ -121,6 +117,7 @@ const actualizarCantidad = (id, cantidad) => {
         if (products.length > 0) {
           const idTipoProducto = products[0].IdTipoProducto;
           navigate(`/categoria/${idTipoProducto}`, { state: { products } }); // Redirige y pasa los productos como estado
+          setSearchTerm('');
         } else {
           //console.log('No se encontraron productos.');
         }
@@ -154,7 +151,7 @@ const actualizarCantidad = (id, cantidad) => {
             placeholder="Buscar productos..."
             className="search-input"
             value={searchTerm}
-            onChange={handleSearchChange}
+            onChange={handleSearch}
             onKeyDown={handleSearchSubmit}
             onFocus={() => setShowSuggestions(true)}
           />

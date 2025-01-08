@@ -18,21 +18,20 @@ Descuento.init({
     allowNull: true
   },
   Porcentaje: {
-    type: DataTypes.STRING(45),
-    allowNull: false
+    type: DataTypes.STRING,
+    allowNull: true
   },
   FechaInicio: {
     type: DataTypes.DATE,
-    allowNull: false
+    allowNull: true
   },
   FechaFin: {
     type: DataTypes.DATE,
-    allowNull: false
+    allowNull: true
   },
   Activo: {
     type: DataTypes.BOOLEAN,
-    allowNull: false,
-    defaultValue: true
+    allowNull: true
   }
 }, {
   sequelize,
