@@ -38,7 +38,7 @@ const PedidosAdmin = () => {
     ];
 
     const handleVerDetalles = (pedidoId) => {
-        console.log('Navegando a:', pedidoId);
+        //console.log('Navegando a:', pedidoId);
         navigate(`/DetallePedido/${pedidoId}`);
     };
 

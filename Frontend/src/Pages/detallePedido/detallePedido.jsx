@@ -35,7 +35,7 @@ const DetallePedido = () => {
             };
             setOrderDetails(mockOrder);
         } catch (error) {
-            console.error('Error fetching order details:', error);
+            //console.error('Error fetching order details:', error);
             navigate('/pedidosAdmin');
         }
     };
