@@ -32,7 +32,7 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
     const fetchBestSellers = async () => {
       try {
         const data = await getBestSellers();
-        console.log('Best sellers:', data);
+        //console.log('Best sellers:', data);
         setProductCarouselImages(data);
         setIsLoading(false);
       } catch (error) {
@@ -46,7 +46,7 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
   }, []);
   
   const handleProductClick = (product) => {
-    console.log('Product clicked:', product);
+    //console.log('Product clicked:', product);
     // Navegar a la categoría con el ID del producto
     navigate(`/Categoria/${product.idTipoProducto}`, {
         state: {
@@ -68,7 +68,7 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
           localStorage.removeItem('jwtToken'); // Elimina token expirado
         }
       } catch (error) {
-        console.error('Error decodificando el token:', error);
+        //console.error('Error decodificando el token:', error);
         localStorage.removeItem('jwtToken'); // Limpia token corrupto
       }
     }
@@ -105,7 +105,7 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
             setProductos(data);
             setProductCarouselImages(data);
         } catch (error) {
-            console.error('Error fetching products:', error);
+            //console.error('Error fetching products:', error);
             setError(error.message);
         } finally {
             setIsLoading(false);

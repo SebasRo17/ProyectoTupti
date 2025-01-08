@@ -46,7 +46,7 @@ const ProductosAdmin = () => {
             await productosApi.deleteProduct(productId);
             fetchProductos(); // Recargar la lista después de eliminar
         } catch (error) {
-            console.error('Error al eliminar el producto:', error);
+            //console.error('Error al eliminar el producto:', error);
         }
     };
 
@@ -72,14 +72,14 @@ const ProductosAdmin = () => {
       };
 
       const handleEdit = (productId) => {
-        console.log(`Editando producto ${productId}`);
+        //console.log(`Editando producto ${productId}`);
         const productToEdit = productos.find(product => product.id === productId);
         setSelectedProduct(productToEdit);
         setIsEditModalOpen(true);
     };
 
     const handleOpenModal = (product) => {
-        console.log('Opening modal for:', product);
+        //console.log('Opening modal for:', product);
         const formattedProduct = {
             id: product.IdProducto,
             name: product.Nombre,
@@ -87,7 +87,7 @@ const ProductosAdmin = () => {
             price: product.Precio,
             image: product.ImagenUrl
         };
-        console.log('Formatted product:', formattedProduct);
+        //console.log('Formatted product:', formattedProduct);
         setSelectedProduct(formattedProduct);
         setIsEditModalOpen(true);
     };
@@ -108,7 +108,7 @@ const ProductosAdmin = () => {
                     <EditarProductos 
                         product={selectedProduct}
                         onClose={() => {
-                            console.log('Closing modal');
+                            //console.log('Closing modal');
                             setIsEditModalOpen(false);
                             setSelectedProduct(null);
                         }}

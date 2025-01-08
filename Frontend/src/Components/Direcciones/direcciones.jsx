@@ -23,27 +23,27 @@ const DireccionesGuardadas = () => {
         }
 
         const decodedToken = jwt_decode(token);
-        console.log('Token decodificado:', decodedToken);
+        //console.log('Token decodificado:', decodedToken);
         
         // Obtener el ID del usuario de la estructura correcta del token
         const userId = decodedToken.user.IdUsuario;
-        console.log('ID de usuario:', userId);
+        //console.log('ID de usuario:', userId);
 
         if (!userId) {
           throw new Error('No se pudo obtener el ID del usuario');
         }
 
         const direcciones = await getDireccionesByUserId(userId);
-        console.log('Direcciones recibidas:', direcciones);
+        //console.log('Direcciones recibidas:', direcciones);
         
         if (Array.isArray(direcciones)) {
           setDireccionesGuardadas(direcciones);
         } else {
-          console.error('Las direcciones no son un array:', direcciones);
+          //console.error('Las direcciones no son un array:', direcciones);
           setDireccionesGuardadas([]);
         }
       } catch (error) {
-        console.error('Error detallado al cargar direcciones:', error);
+        //console.error('Error detallado al cargar direcciones:', error);
         setError('No se pudieron cargar las direcciones: ' + error.message);
       } finally {
         setIsLoading(false);

@@ -11,7 +11,7 @@ const FiltroUsuario = () => {
   };
 
   const handleFilter = () => {
-    console.log('Filtering with:', { searchTerm, estado, fechaRegistro });
+    //console.log('Filtering with:', { searchTerm, estado, fechaRegistro });
   };
 
   return (
