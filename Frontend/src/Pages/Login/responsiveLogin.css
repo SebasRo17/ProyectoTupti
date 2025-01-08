@@ -148,6 +148,14 @@
     .social-buttons {
       margin-left: 15%;
     }
+    .login-error-message {
+      margin-bottom: 40px;
+      font-size: 12px;
+      text-align: center;
+      margin-left: -50px;
+      
+       
+    }
     .login-form {
       display: block;
       text-align: left;
@@ -367,6 +375,15 @@
       border-radius: 50px;
       margin-left: 10%;
     }
+    .login-error-message {
+      margin-bottom: -10px;
+      font-size: 12px;
+      text-align: center;
+      margin-left: -18px;
+      line-height: 1;
+       
+    }
+  
   
     .register-link {
       font-size: 0.8rem;
@@ -378,7 +395,7 @@
     }
   
     .forgot-password {
-      transform: translateX(0) translateY(-275%);
+      transform: translateX(0) translateY(-120%);
       margin-top:70px;
     }
     .social-buttons {
@@ -453,6 +470,7 @@
       font-size: 12px;
       text-align: center;
       margin-left: 0;
+      line-height: 1; 
     }
   
     .back-login-circle {
@@ -524,6 +542,7 @@
       font-size: 10px;
       text-align: center;
       margin-right: 20px;
+      line-height: 1; 
     }
   
     .back-login-circle {
@@ -593,7 +612,7 @@
     margin-top: 15px;
     text-align: center;
     transform: translateY(-50%);
-    margin-right: -150px;
+    margin-right: -120px;
   }
 
   .forgot-password a {
@@ -610,7 +629,8 @@
     margin-bottom: 5px;
     font-size: 10px;
     text-align: center;
-    margin-right: 20px;
+    margin-right: 2px;
+     
   }
 
   .back-login-circle {
@@ -699,6 +719,7 @@
     font-size: 10px;
     text-align: center;
     margin-right: 20px;
+    
   }
 
   .back-login-circle {
@@ -783,10 +804,11 @@
   }
 
   .login-error-message {
-    margin-bottom: 5px;
+  margin-top: -20px;
     font-size: 10px;
     text-align: center;
     margin-right: 20px;
+    line-height: 1; 
   }
 
   .back-login-circle {
@@ -855,7 +877,7 @@
     margin-top: 15px;
     text-align: center;
     transform: translateY(-50%);
-    margin-right: -90px;
+    margin-right: -60px;
   }
 
   .forgot-password a {
@@ -873,6 +895,8 @@
     font-size: 10px;
     text-align: center;
     margin-right: 20px;
+    line-height: 1; 
+    margin-top: -20px;
   }
 
   .back-login-circle {
