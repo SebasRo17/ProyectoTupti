@@ -11,14 +11,46 @@ const DescuentosAdmin = () => {
     const [selectedDiscount, setSelectedDiscount] = useState(null);
 
   // Mock data - replace with API data
-  const discounts = [
+const discounts = [
     {
       id: 1,
       producto: "Nintendo Switch",
       descuento: 15,
-      estado: "Activo",
+      estado: "Inactivo",
       fechaInicio: "2024-03-15",
       fechaFin: "2024-04-15"
+    },
+    {
+      id: 2,
+      producto: "Tomate",
+      descuento: 15,
+      estado: "Activo",
+      fechaInicio: "2024-03-01",
+      fechaFin: "2024-03-31"
+    },
+    {
+      id: 3,
+      producto: "Coca Cola",
+      descuento: 25,
+      estado: "Activo",
+      fechaInicio: "2024-03-01",
+      fechaFin: "2024-03-15"
+    },
+    {
+      id: 4,
+      producto: "Cerveza Pilsener",
+      descuento: 20,
+      estado: "Activo",
+      fechaInicio: "2024-03-05",
+      fechaFin: "2024-03-20"
+    },
+    {
+      id: 5,
+      producto: "Dog Chow 2kg",
+      descuento: 30,
+      estado: "Activo",
+      fechaInicio: "2024-03-01",
+      fechaFin: "2024-03-31"
     }
   ];
 
@@ -50,9 +82,9 @@ const DescuentosAdmin = () => {
             <BarraLateralAdmin />
             
       {showDeleteModal && (
-        <div className="modal-wrapper">
-          <div className="modal-overlay" onClick={() => setShowDeleteModal(false)} />
-          <div className="modal-content">
+        <div className="modal-wrapper3">
+          <div className="modal-overlay3" onClick={() => setShowDeleteModal(false)} />
+          <div className="modal-content3">
             <h3>Eliminar Descuento</h3>
             <p>
               ¿Está seguro que desea eliminar el descuento del producto <span className="product-name">{selectedDiscount.producto}</span>?
@@ -70,7 +102,7 @@ const DescuentosAdmin = () => {
       )}
       <h2>Gestión de Descuentos</h2>
       <FiltroAdmin showNewProduct={false} />
-      <div className="table-container">
+      <div className="table-container2">
         <table>
           <thead>
             <tr>

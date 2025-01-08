@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import "./olvidoContrasena.css";
 import "./responsiveolvidoContrasena.css";
+import { resetApi } from '../../Api/resetApi';
 
 function OlvidoContrasena() {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(true); // Estado para habilitar/deshabilitar el botón
+  const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   // Validación del correo electrónico
   const validateEmail = (value) => {
@@ -26,10 +30,17 @@ function OlvidoContrasena() {
     validateEmail(value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Solicitud de recuperación para:", email);
-    // Aquí puedes agregar la lógica para enviar el correo de recuperación.
+    setIsLoading(true);
+    try {
+      await resetApi.requestPasswordReset(email);
+      setMessage("Si el correo existe, recibirás instrucciones para restablecer tu contraseña.");
+    } catch (error) {
+      setMessage(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -61,6 +72,8 @@ function OlvidoContrasena() {
         <p className="message-info">
           Escribe la dirección de correo electrónico vinculada a tu cuenta y te enviaremos un mensaje.
         </p>
+
+        {message && <p className="message-info">{message}</p>}
 
         <form className="olvido-form" onSubmit={handleSubmit}>
           <div className="form-group">
@@ -94,8 +107,12 @@ function OlvidoContrasena() {
             {emailError && <p className="login-error-message">{emailError}</p>} {/* Mensaje de error */}
           </div>
 
-          <button type="submit" className="olvido-button" disabled={isButtonDisabled}>
-            Enviar Correo
+          <button 
+            type="submit" 
+            className="olvido-button" 
+            disabled={isButtonDisabled || isLoading}
+          >
+            {isLoading ? "Enviando..." : "Enviar Correo"}
           </button>
         </form>
       </div>

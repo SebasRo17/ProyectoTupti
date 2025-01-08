@@ -68,7 +68,14 @@ const MetodoPago = () => {
       </div>
 
       <div className="pago-container">
-        <h2>Escoge tu medio de pago</h2>
+        <div className="paypal">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg"
+            alt="Logo de PayPal"
+            className="paypal-logo"
+          />
+          <span></span>
+        </div>
 
         {detallesPedido ? (
           <>

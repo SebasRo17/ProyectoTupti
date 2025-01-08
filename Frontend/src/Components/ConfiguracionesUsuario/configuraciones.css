@@ -56,7 +56,9 @@ body {
     display: grid;
     gap: 1.5rem;
   }
-  
+  .password-form{
+    background-color: #ffffff;
+  }
   .info-item {
     margin-bottom: 1rem;
   }

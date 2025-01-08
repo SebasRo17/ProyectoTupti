@@ -16,9 +16,9 @@ const EditarDescuento = ({ descuento, onClose, onSave }) => {
   };
 
   return (
-    <div className="modal-wrapper">
-      <div className="modal-overlay" onClick={onClose} />
-      <div className="modal-content">
+    <div className="modal-wrapper2">
+      <div className="modal-overlay2" onClick={onClose} />
+      <div className="modal-content2">
         <h3>Editar Descuento</h3>
         <form onSubmit={handleSubmit}>
         <div className="form-group">

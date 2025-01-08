@@ -35,14 +35,22 @@ function Categoria() {
    };
 
    useEffect(() => {
-      // Verifica el token al cargar el componente
       const token = localStorage.getItem('jwtToken');
       if (token) {
         try {
           const payload = jwtDecode(token);
-          console.log('Token descifrado:', payload); // Agregar console.log para mostrar el token descifrado
+          console.log('Token descifrado:', payload);
+    
+          // Comprueba dónde está IdUsuario
+          const userId = payload?.IdUsuario || payload?.user?.IdUsuario;
+    
+          if (userId) {
+            setIdUsuario(userId);
+          } else {
+            console.error('IdUsuario no encontrado en el token');
+          }
+    
           const currentTime = Date.now() / 1000;
-          setIdUsuario(payload.user.IdUsuario); // Guardar idUsuario en el estado
           if (payload.exp <= currentTime) {
             localStorage.removeItem('jwtToken'); // Elimina token expirado
           }
@@ -80,18 +88,17 @@ function Categoria() {
    useEffect(() => {
       const fetchProducts = async () => {
          try {
-            // Revisar si hay productos filtrados en el estado de location
-            const filteredProducts = location.state?.products || [];
+            const data = await getCategoryProducts(id);
+            setProductos(data);
             
-            if (filteredProducts.length > 0) {
-               // Si hay productos filtrados, usarlos
-               setProductos(filteredProducts);
-            } else if (id && id !== "0") {
-               // Si no hay productos filtrados, buscar por categoría
-               const data = await getCategoryProducts(id);
-               setProductos(data);
-            } else {
-               setError("No se encontraron productos");
+            // Si hay un ID de producto seleccionado en el state, encontrarlo y mostrarlo
+            if (location.state?.selectedProductId && location.state?.openModal) {
+                const selectedProduct = data.find(
+                    product => product.IdProducto === location.state.selectedProductId
+                );
+                if (selectedProduct) {
+                    setSelectedProduct(selectedProduct);
+                }
             }
          } catch (err) {
             setError(err.message);
@@ -241,8 +248,8 @@ function Categoria() {
          </div>
 
          {selectedProduct && (
-            <div className="modal-overlay2" onClick={closeModal}>
-               <div className="modal-content2" onClick={e => e.stopPropagation()}>
+            <div className="modal-overlay4" onClick={closeModal}>
+               <div className="modal-content4" onClick={e => e.stopPropagation()}>
                   <button className="modal-close" onClick={closeModal}>&times;</button>
                   <div className="modal-product">
                      <div className="modal-images">
