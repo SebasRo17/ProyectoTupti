@@ -33,7 +33,7 @@ const Direccion = () => {
         const payload = jwtDecode(token);
         setIdUsuario(payload.user.IdUsuario);
       } catch (error) {
-        console.error('Error decodificando el token:', error);
+        //console.error('Error decodificando el token:', error);
       }
     }
   }, []);
@@ -84,7 +84,7 @@ const Direccion = () => {
         setShowConfirmModal(true);
       }
     } catch (error) {
-      console.error('Error al guardar la dirección:', error);
+      //console.error('Error al guardar la dirección:', error);
       alert('Error al guardar la dirección: ' + (error.message || 'Error desconocido'));
     }
   };

@@ -31,7 +31,7 @@ const Header = ({ toggleCart, isCartOpen}) => {
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
-        console.log('Token descifrado:', decodedToken);
+        //console.log('Token descifrado:', decodedToken);
         setUser(decodedToken);
       } catch (error) {
         localStorage.removeItem('jwtToken');
@@ -44,8 +44,8 @@ const Header = ({ toggleCart, isCartOpen}) => {
       if (idUsuario) {
         try {
           const carritoData = await getCarritoByUsuario(idUsuario);
-          console.log('Carrito completo:', carritoData);
-          console.log('Detalles del carrito:', carritoData.detalles);
+          //console.log('Carrito completo:', carritoData);
+          //console.log('Detalles del carrito:', carritoData.detalles);
           // Actualizar el estado de productos con los datos obtenidos
           setProductosCarrito(carritoData.detalles.map(detalle => ({
             id: detalle.IdProducto,
@@ -55,7 +55,7 @@ const Header = ({ toggleCart, isCartOpen}) => {
             imagen: detalle.Producto.ImagenUrl
           })));
         } catch (error) {
-          console.error('Error al cargar el carrito:', error);
+          //console.error('Error al cargar el carrito:', error);
         }
       }
     };
@@ -113,16 +113,16 @@ const actualizarCantidad = (id, cantidad) => {
     if (event.key === 'Enter') {
       try {
         const products = await searchProducts(searchTerm);
-        console.log('Productos filtrados:', products);
+        //console.log('Productos filtrados:', products);
         if (products.length > 0) {
           const idTipoProducto = products[0].IdTipoProducto;
           navigate(`/categoria/${idTipoProducto}`, { state: { products } }); // Redirige y pasa los productos como estado
           setSearchTerm('');
         } else {
-          console.log('No se encontraron productos.');
+          //console.log('No se encontraron productos.');
         }
       } catch (error) {
-        console.error('Error al buscar productos:', error);
+        //console.error('Error al buscar productos:', error);
       }
     }
   };

@@ -8,7 +8,6 @@ import "./Login.css";
 import { loginUser } from '../../Api/loginUsers';
 import "./responsiveLogin.css";
 import jwtDecode from 'jwt-decode';
-import UpdateNameModal from '../../Components/UpdateNameModal/UpdateNameModal'; // Importar el modal
 
 
 function Login() {
@@ -18,7 +17,6 @@ function Login() {
   const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [showUpdateNameModal, setShowUpdateNameModal] = useState(false);
   const [userId, setUserId] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
@@ -37,34 +35,34 @@ function Login() {
 
   useEffect(() => {
     const handleMessage = (event) => {
-      console.log('Mensaje recibido:', event);
+      //console.log('Mensaje recibido:', event);
 
       if (event.origin !== apiUrl) {
 
-        console.warn('Origen no autorizado', event.origin);
+        //console.warn('Origen no autorizado', event.origin);
         return;
       }
 
       if (event.data && event.data.token) {
         try {
-          console.log('Token recibido:', event.data.token);
+          //console.log('Token recibido:', event.data.token);
           
           // Decodifica el token
           const payload = jwtDecode(event.data.token); 
-          console.log('Payload decodificado:', payload);
+          //console.log('Payload decodificado:', payload);
 
           // Verifica que la estructura de 'payload' sea la que esperas
-          console.log('isAdmin en el payload:', payload.isAdmin);
+          //console.log('isAdmin en el payload:', payload.isAdmin);
 
           // Almacena el token
           localStorage.setItem('jwtToken', event.data.token);
 
           // Redirigir al usuario a la página anterior o a la ruta por defecto
           const from = location.state?.from || (payload.isAdmin ? '/admin' : '/');
-          console.log('Redirigiendo a:', from); // Agregar un console.log para depurar
+          //console.log('Redirigiendo a:', from); // Agregar un console.log para depurar
           navigate(from);
         } catch (error) {
-          console.error('Error procesando el token:', error);
+          //console.error('Error procesando el token:', error);
         }
       }
     };
@@ -255,7 +253,6 @@ function Login() {
           <Link to="/Registro" className="signup-text">Regístrate</Link>
         </div>
       </div>
-      {showUpdateNameModal && <UpdateNameModal userId={userId} onClose={() => setShowUpdateNameModal(false)} />}
     </div>
   );
 }

@@ -26,7 +26,7 @@ const Configuraciones = () => {
                     email: decoded.Email || ""
                 });
             } catch (error) {
-                console.error('Error al decodificar el token:', error);
+                //console.error('Error al decodificar el token:', error);
             }
         }
     }, []);
@@ -52,7 +52,7 @@ const Configuraciones = () => {
             return;
         }
         // API call logic here
-        console.log('Actualizando contraseña...');
+        //console.log('Actualizando contraseña...');
     };
 
     return (

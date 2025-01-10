@@ -25,8 +25,8 @@ const DireccionesGuardadas = () => {
         const decodedToken = jwt_decode(token);
         console.log('Token decodificado:', decodedToken);
         
-        // Obtener el ID del usuario de la estructura correcta del token
-        const userId = decodedToken.user.IdUsuario;
+        // Modificación: Acceder directamente al IdUsuario del token
+        const userId = decodedToken.IdUsuario;
         console.log('ID de usuario:', userId);
 
         if (!userId) {
@@ -65,7 +65,7 @@ const DireccionesGuardadas = () => {
       <Header toggleCart={toggleCart} isCartOpen={isCartOpen} />
       <div className="direcciones-container" style={{ padding: '20px' }}>
         <h1 style={{ textAlign: 'center', margin: '20px 0' }}>Direcciones Guardadas</h1>
-        <div className="direcciones-list">
+        <div className="direcciones-list1">
           {direccionesGuardadas.length === 0 ? (
             <p>No hay direcciones guardadas</p>
           ) : (

@@ -72,7 +72,7 @@ const discounts = [
   };
   const handleSave = (formData) => {
     // Add save logic here
-    console.log('Saving:', formData);
+    //console.log('Saving:', formData);
     setShowEditModal(false);
   };
   return (

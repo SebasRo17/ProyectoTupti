@@ -21,7 +21,7 @@ function Registro() {
   useEffect(() => {
     const handleMessage = (event) => {
       if (event.origin === import.meta.env.VITE_API_URL && event.data.token) {
-        console.log('Token JWT:', event.data.token);
+        //console.log('Token JWT:', event.data.token);
         // Guardar el token en el almacenamiento local
         localStorage.setItem('jwtToken', event.data.token);
       }
@@ -115,13 +115,13 @@ function Registro() {
         },
         body: JSON.stringify({ email, password }),
       });
-      console.log("Usuario registrado:", { email, password, confirmPassword });
+      //console.log("Usuario registrado:", { email, password, confirmPassword });
       setEmail("");
       setPassword("");
       setConfirmPassword("");
       setCaptchaVerified(false);
     } catch (error) {
-      console.error('Error durante el registro:', error);
+      //console.error('Error durante el registro:', error);
     }
   };
 

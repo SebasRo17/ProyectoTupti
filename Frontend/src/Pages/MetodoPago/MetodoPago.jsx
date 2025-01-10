@@ -53,7 +53,7 @@ const MetodoPago = () => {
       const order = await response.json();
       window.location.href = `https://www.sandbox.paypal.com/checkoutnow?token=${order.id}`;
     } catch (error) {
-      console.error('Error:', error);
+      //console.error('Error:', error);
       alert('Error al procesar el pago');
     } finally {
       setIsLoading(false);
