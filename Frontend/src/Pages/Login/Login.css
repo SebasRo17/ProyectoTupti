@@ -17,16 +17,17 @@ y que se ajuste a la pantalla de la computadora, pero sea flotante */
 .input-container input {
   color: #000000; 
   transition: all 0.3s ease;
-  margin-bottom: 10px; /* Este margen define el espacio debajo de cada campo de entrada */
+  margin-bottom: 5px; /* Este margen define el espacio debajo de cada campo de entrada */
   gap: 10px; /* Si deseas más espacio entre el icono y el campo */
-  transform: translateY(-20px);
+  transform: translateX(5px);
+
 }
   
 /* Tarjeta central del login: fondo blanco, bordes redondeados, sombra y centrado */
 .login-card {
     background: white;/* Fondo blanco */
     border-radius: 80px; /* Bordes redondeados */
-    padding: 20px; /* Espaciado interno para que los elementos no toquen los bordes */
+    padding: px; /* Espaciado interno para que los elementos no toquen los bordes */
     width: 100%; /* Ocupar todo el ancho disponible */
     max-width: 500px; /* Limita el ancho máximo para pantallas grandes */
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra suave alrededor de la tarjeta */
@@ -46,7 +47,7 @@ y que se ajuste a la pantalla de la computadora, pero sea flotante */
     text-align: center; /* Centra el texto */
     font-size: 60px; /* Tamaño de fuente grande */
     font-weight: 700; /* Negrita */
-    margin-bottom: 40px; /* Espacio debajo del título */
+    margin-bottom: 0px; /* Espacio debajo del título */
     color: #236c2f; /* Color verde */
     transform: translateY( 25px);
 }
@@ -54,11 +55,11 @@ y que se ajuste a la pantalla de la computadora, pero sea flotante */
 /* Estilos del formulario */
 .login-form {
   font-size: 10px; /* Tamaño de fuente más pequeño */
-  margin-left: -12px; /* Espaciado a la izquierda */
-  margin-bottom: 10px; /* Espaciado debajo del título */
+  margin-left: 60px; /* Espaciado a la izquierda */
   background-color: transparent;
   box-shadow: none; /* Elimina la sombra */
   border: none; /* Elimina cualquier borde */
+  transform: translateY(20px);
 }
   
 /* Grupo de cada campo del formulario, incluye etiqueta y campo de entrada */
@@ -74,6 +75,8 @@ margin-top: 10px;
 font-size: 14px;
 margin-left: 5px;
 transform: translateY(-10px);
+
+
 }
 
   /* Estilo del checkbox dentro del contenedor */
@@ -128,6 +131,7 @@ transition: all 0.3s ease; /* Transición suave para el enfoque */
   text-align: right; /* Alinea el enlace a la derecha */
   position: relative; /* Necesario para usar transform */
   transform: translateX(0px) translateY(-20px); 
+  margin-right: 30px;
 }
   
 .forgot-password a {
@@ -146,7 +150,7 @@ transition: all 0.3s ease; /* Transición suave para el enfoque */
 .password-login-toggle {
   position: absolute; /* Posiciona el icono de manera absoluta dentro del campo */
   right: 30px; 
-  top: 40%; 
+  top: 80%; 
   transform: translateY(-100%); 
   cursor: pointer; 
   color: #999; 
@@ -172,7 +176,7 @@ margin-top: -0px;
 cursor: pointer; 
 text-transform: uppercase; 
 transition: background 0.3s;
-margin-left: 20px;
+transform: translateX(-40px);
 }
 
 /* Estilo cuando el botón está deshabilitado */
@@ -236,7 +240,7 @@ margin-left: 20px;
     border: none; /* Elimina el borde */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
     margin-right: 20px;
-    margin-left: 210px;
+    margin-left: 250px;
   }
 
 /* Efecto hover: eleva ligeramente el botón */

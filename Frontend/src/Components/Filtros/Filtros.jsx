@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Filtros.css";
 import "./responsiveFiltros.css";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
 
 const Filtro = ({ onFilterChange }) => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [priceRange, setPriceRange] = useState([0, 9999]);
   const [selectedDiscount, setSelectedDiscount] = useState(null);
-  const [isFiltroVisible, setIsFiltroVisible] = useState(false); // Estado para controlar visibilidad del filtro
+  const [isFiltroVisible, setIsFiltroVisible] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 600);
 
   const categorias = ["Electrónicos", "Ropa", "Bebidas", "Carnes"];
   const precios = [
@@ -17,6 +19,20 @@ const Filtro = ({ onFilterChange }) => {
     { label: "$500+", range: [500, 9999] },
   ];
   const descuentos = ["0% - 20%", "20% - 40%", "40% - 60%", "60% - 80%"];
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 600);
+      if (window.innerWidth >= 600) {
+        setIsFiltroVisible(true);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Llamada inicial para establecer el estado correcto
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const toggleCategory = (categoria) => {
     const updatedCategories = selectedCategories.includes(categoria)
@@ -40,52 +56,67 @@ const Filtro = ({ onFilterChange }) => {
     setIsFiltroVisible(!isFiltroVisible);
   };
 
+  const filtroContent = (
+    <>
+      <h3>FILTRO</h3>
+
+      {/* Precio */}
+      <div className="filtro-precios">
+        <h4>Precio</h4>
+        {precios.map((precio, index) => (
+          <div key={index} className="filtro-radio">
+            <label>
+              <input
+                type="radio"
+                name="priceRange"
+                onChange={() => handlePriceRangeChange(precio.range)}
+              />
+              {precio.label}
+            </label>
+          </div>
+        ))}
+      </div>
+
+      {/* Descuentos */}
+      <div className="filtro-descuentos">
+        <h4>Descuentos</h4>
+        {descuentos.map((descuento, index) => (
+          <div key={index} className="filtro-radio">
+            <label>
+              <input
+                type="radio"
+                name="discount"
+                onChange={() => handleDiscountChange(descuento)}
+              />
+              {descuento}
+            </label>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+
   return (
-    <div>
-      {/* Botón Menú Hamburguesa */}
+    <div className="filtro-wrapper">
+      {/* Overlay */}
+      <div 
+        className={`overlay ${isFiltroVisible ? 'visible' : ''}`}
+        onClick={() => setIsFiltroVisible(false)}
+      />
+      
+      {/* Botón del filtro */}
       <div className="menu-hamburguesa-container">
-        <button className="menu-hamburguesa" onClick={toggleFiltroVisibility}>
-          ☰
-        </button>
+        {isSmallScreen && (
+          <button className="menu-hamburguesa" onClick={() => setIsFiltroVisible(!isFiltroVisible)}>
+            <FontAwesomeIcon icon={faFilter} />
+          </button>
+        )}
       </div>
 
       {/* Contenedor del Filtro */}
-      <div className={`filtro-container ${isFiltroVisible ? "visible" : "hidden"}`}>
-        <h3>FILTRO</h3>
-
-        {/* Precio */}
-        <div className="filtro-precios">
-          <h4>Precio</h4>
-          {precios.map((precio, index) => (
-            <div key={index} className="filtro-radio">
-              <label>
-                <input
-                  type="radio"
-                  name="priceRange"
-                  onChange={() => handlePriceRangeChange(precio.range)}
-                />
-                {precio.label}
-              </label>
-            </div>
-          ))}
-        </div>
-
-        {/* Descuentos */}
-        <div className="filtro-descuentos">
-          <h4>Descuentos</h4>
-          {descuentos.map((descuento, index) => (
-            <div key={index} className="filtro-radio">
-              <label>
-                <input
-                  type="radio"
-                  name="discount"
-                  onChange={() => handleDiscountChange(descuento)}
-                />
-                {descuento}
-              </label>
-            </div>
-          ))}
-        </div>
+      <div className={`filtro-container ${isFiltroVisible ? 'visible' : ''}`}>
+        {/* Tu contenido existente del filtro */}
+        {filtroContent}
       </div>
     </div>
   );

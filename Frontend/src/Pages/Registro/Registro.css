@@ -18,13 +18,14 @@ body {
   background: linear-gradient(135deg, #4CAF50 0%, #2196F3 100%); /* Fondo con un gradiente verde a azul */
   padding: 0px; /* Elimina el padding alrededor del contenedor */
   overflow: hidden; /* Elimina el scroll */
+  padding: 20px;
 }
 
 /* Estilos del contenedor interior donde se encuentra el formulario */
 .registro-container-inner {
   background: white; /* Fondo blanco */
     border-radius: 80px; /* Bordes redondeados */
-    padding: 15px; /* Espaciado interno para que los elementos no toquen los bordes */
+    padding: 1px; /* Espaciado interno para que los elementos no toquen los bordes */
     width: 100%; /* Ocupar todo el ancho disponible */
     max-width: 500px; /* Limita el ancho máximo para pantallas grandes */
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra suave alrededor de la tarjeta */

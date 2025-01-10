@@ -65,29 +65,31 @@ input[type="checkbox"]:checked {
   border-color: #4ade80; /* Cambia el borde del input */
 }
 
-/* Menú Hamburguesa */
-.menu-hamburguesa-container {
-  display: none; /* Oculto por defecto */
-  position: fixed;
-  top: 10px;
-  right: 270px;
-  z-index: 1000;
-  transform: translateY(70px);
-}
 
-.menu-hamburguesa {
-  background-color: #1f804c;
-  color: #ffffff;
-  border: none;
-  padding: 0.5rem 0.5rem;
-  border-radius: 5px;
-  font-size: 1.5rem;
-  cursor: pointer;
-  
-}
+@media (max-width: 599px) {
+  .menu-hamburguesa-container {
+    display: block;
+    margin-bottom: -120px;
+    
+  }
 
+  .filtro-container {
+    .filtro-container {
+      z-index: 9999;
+      padding: 1rem;
+      background-color: #1f804c; /* Fondo verde oscuro */
+      color: #e5ffe5; /* Texto claro en tono verde */
+      border-radius: 10px;
+      width: 200px;
+      transform:translateY(60px);
+      margin-left: 35px;
+      font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
+      margin-top: 22%;
+    }
+  }
 
-
-.filtro-container.visible {
-  display: block; /* Mostrar cuando el estado es visible */
+  .filtro-container.visible {
+    display: block;
+    
+  }
 }
