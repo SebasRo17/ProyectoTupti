@@ -21,7 +21,7 @@ const paymentRoutes = require('./presentation/routes/paymentRoutes');
 const pedidoRoutes = require('./presentation/routes/PedidoRoutes');
 const direccionRoutes = require('./presentation/routes/direccionRoutes'); // Corregir importación de rutas de direcciones
 const passwordResetRoutes = require('./presentation/routes/passwordResetRoutes'); // Agregar importación de rutas de reset de contraseña
-
+const descuentoRoutes = require ('./presentation/routes/descuentoRoutes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -94,6 +94,7 @@ app.use('/api/payments', paymentRoutes);
 app.use('/pedidos', pedidoRoutes);
 app.use('/direcciones', direccionRoutes); // Agregar rutas de direcciones
 app.use('/auth', passwordResetRoutes); // Agregar esta línea
+app.use('/descuentos', descuentoRoutes);
 
 // Sincronizar con la base de datos y iniciar el servidor
 sequelize.sync()
