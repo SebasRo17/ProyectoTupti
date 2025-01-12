@@ -7,8 +7,6 @@ import jwtDecode from 'jwt-decode';
 import { createDireccion } from '../../Api/direccionApi';
 import './direccion.css';
 
-
-
 const Direccion = () => {
   const navigate = useNavigate();
   const [direccion, setDireccion] = useState({
@@ -24,9 +22,9 @@ const Direccion = () => {
   const [locationName, setLocationName] = useState('');
   const [idUsuario, setIdUsuario] = useState(null);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [addressForSearch, setAddressForSearch] = useState(''); // Dirección a buscar
 
   useEffect(() => {
+    // Obtener y decodificar el token al cargar el componente
     const token = localStorage.getItem('jwtToken');
     if (token) {
       try {
@@ -45,11 +43,11 @@ const Direccion = () => {
       [name]: value
     }));
   };
-
   const [isCartOpen, setIsCartOpen] = useState(false);
+
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
-  };
+  };
 
   const handleSaveLocation = async () => {
     try {
@@ -70,6 +68,7 @@ const Direccion = () => {
         Descripcion: locationName
       };
 
+      // Validar campos requeridos
       const camposRequeridos = Object.entries(direccionData);
       for (const [campo, valor] of camposRequeridos) {
         if (!valor) {
@@ -81,7 +80,7 @@ const Direccion = () => {
       const response = await createDireccion(direccionData);
       if (response) {
         setShowModal(false);
-        setShowConfirmModal(true);
+        setShowConfirmModal(true); // Mostrar modal de confirmación
       }
     } catch (error) {
       //console.error('Error al guardar la dirección:', error);
@@ -89,39 +88,9 @@ const Direccion = () => {
     }
   };
 
-  const handleSearchAddress = async () => {
-    if (!direccion.callePrincipal) {
-      alert('Por favor ingrese la Calle principal para buscar la dirección');
-      return;
-    }
-
-    try {
-      // Aquí se asume que tienes una API que geocodifica la dirección
-      const geocodedData = await GoogleMaps.geocode(direccion.callePrincipal);
-      if (geocodedData) {
-        const { lat, lng, formatted_address } = geocodedData;
-        // Actualiza el estado con la dirección obtenida
-        setDireccion({
-          ...direccion,
-          callePrincipal: formatted_address // Otras claves pueden actualizarse si es necesario
-        });
-
-        // Actualiza el mapa con las nuevas coordenadas
-        setDireccion((prev) => ({
-          ...prev,
-          latitude: lat,
-          longitude: lng
-        }));
-      }
-    } catch (error) {
-      console.error('Error al buscar la dirección:', error);
-      alert('Error al buscar la dirección');
-    }
-  };
-
   return (
     <div className="page-container">
-      <Header toggleCart={toggleCart} isCartOpen={isCartOpen} />
+      <Header toggleCart={toggleCart} isCartOpen={isCartOpen} />
       <div className="direccion-container">
         <div className="form-container">
           <div className="form-group">
@@ -146,7 +115,7 @@ const Direccion = () => {
             <label>Calle Secundaria:</label>
             <input
               type="text"
-              name="calleSecundaria"
+              name="calleSecundaria"  // Corregido de callesSecundaria a calleSecundaria
               value={direccion.calleSecundaria}
               onChange={handleChange}
             />
@@ -197,23 +166,11 @@ const Direccion = () => {
             >
               Cancelar
             </button>
-            <button 
-              className="btn-buscar" 
-              onClick={handleSearchAddress}
-              disabled={!direccion.callePrincipal} // Deshabilitar el botón si la calle principal está vacía
-            >
-              Buscar Dirección
-            </button>
           </div>
         </div>
 
         <div className="map-container">
-          <GoogleMaps
-            address={direccion.callePrincipal} // Asumiendo que el mapa actualiza con la calle principal
-            latitude={direccion.latitude} // Usando latitud si está disponible
-            longitude={direccion.longitude} // Usando longitud si está disponible
-            onAddressChange={(newAddress) => setDireccion(prev => ({ ...prev, ...newAddress }))}
-          />
+        <GoogleMaps onAddressChange={(newAddress) => setDireccion(prev => ({ ...prev, ...newAddress }))} />
         </div>
       </div>
 
@@ -240,7 +197,7 @@ const Direccion = () => {
           <div className="modal-content">
             <h3>¡Dirección guardada exitosamente!</h3>
             <div className="modal-buttons">
-              <button
+              <button 
                 onClick={() => {
                   setShowConfirmModal(false);
                   navigate('/');
@@ -253,6 +210,7 @@ const Direccion = () => {
         </div>
       )}
 
+      {/* Footer moved outside of direccion-container */}
       <Footer />
     </div>
   );

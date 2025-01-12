@@ -6,7 +6,7 @@ const GoogleMaps = ({ onAddressChange }) => {
   const [marker, setMarker] = useState(null);
   const [mapRef, setMapRef] = useState(null);
   const [mapCenter, setMapCenter] = useState({
-    lat: -0.1807, // Coordenadas predeterminadas (Centro de Ecuador)
+    lat: -0.1807,
     lng: -78.4678
   });
 
@@ -14,7 +14,6 @@ const GoogleMaps = ({ onAddressChange }) => {
     height: '800px',
     width: '100%'
   };
-
   const onMapLoad = useCallback((map) => {
     setMapRef(map);
   }, []);
@@ -46,7 +45,7 @@ const GoogleMaps = ({ onAddressChange }) => {
     try {
       const geocoder = new window.google.maps.Geocoder();
       
-      // Añadimos límites para restringir los resultados a Ecuador
+      // Add bounds to restrict results to Ecuador
       const ecuadorBounds = {
         north: 1.4897,
         south: -5.0159,
@@ -57,7 +56,7 @@ const GoogleMaps = ({ onAddressChange }) => {
       const response = await geocoder.geocode({
         location: { lat, lng },
         bounds: ecuadorBounds,
-        region: 'ec'  // Restringir a Ecuador
+        region: 'ec'  // Restrict to Ecuador
       });
   
       if (response.results[0]) {
@@ -85,7 +84,7 @@ const GoogleMaps = ({ onAddressChange }) => {
           }
         });
         const crossStreet = await findNearestCrossStreet(lat, lng, route);
-        console.log('Calle secundaria encontrada:', crossStreet); 
+        console.log('Cross street found:', crossStreet); 
         onAddressChange({
           callePrincipal: route || result.formatted_address.split(',')[0],
           numeracion: streetNumber,
@@ -97,7 +96,7 @@ const GoogleMaps = ({ onAddressChange }) => {
         });
       }
     } catch (error) {
-      console.error('Error al obtener la dirección:', error);
+      console.error('Error getting address:', error);
     }
   };
 
@@ -122,7 +121,7 @@ const GoogleMaps = ({ onAddressChange }) => {
   }, [onAddressChange]);
 
   return (
-    <LoadScript googleMapsApiKey= "AIzaSyC9_P4vQeDtyafKAFvad3bJJPwmO7tmKQQ" libraries={['places', 'geometry']}>
+    <LoadScript googleMapsApiKey="AIzaSyC9_P4vQeDtyafKAFvad3bJJPwmO7tmKQQ" libraries={['places', 'geometry']}>
       <GoogleMap
         mapContainerStyle={mapStyles}
         zoom={13}
@@ -143,5 +142,3 @@ const GoogleMaps = ({ onAddressChange }) => {
 };
 
 export default GoogleMaps;
-
-
