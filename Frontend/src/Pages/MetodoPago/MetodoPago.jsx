@@ -3,7 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 import "./MetodoPago.css";
 import HeaderPagos from '../../Components/headerPago/headerPago.jsx';
 import './responsiveMetodoPago.css';
-import { getPedidoByCarrito, getDetallesPedido } from '../../Api/pedidoApi'; // ✅ Importar funciones
+import { getPedidoByCarrito, getDetallesPedido } from '../../Api/pedidoApi';
+import { openPaypalPopup, capturePaypalPayment } from '../../Api/pagosApi';
 
 const MetodoPago = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -11,6 +12,7 @@ const MetodoPago = () => {
   const [pedido, setPedido] = useState(null);
   const [detallesPedido, setDetallesPedido] = useState(null);
   const [error, setError] = useState(null);
+  const [paymentStatus, setPaymentStatus] = useState(null);
 
   const location = useLocation();
   const { idCarrito } = location.state || {};
@@ -22,12 +24,10 @@ const MetodoPago = () => {
         try {
           const pedidoData = await getPedidoByCarrito(idCarrito);
           setPedido(pedidoData);
-
-          // ✅ Obtener los detalles del pedido
           const detallesData = await getDetallesPedido(pedidoData.idPedido);
           setDetallesPedido(detallesData);
         } catch (error) {
-          setError(error.message);
+          setError('Error al cargar el pedido: ' + error.message);
         } finally {
           setIsLoading(false);
         }
@@ -35,32 +35,119 @@ const MetodoPago = () => {
     };
 
     obtenerPedido();
+
+    const handleMessage = async (event) => {
+      // Verificar origen del mensaje
+      if (event.origin !== window.location.origin) return;
+
+      if (event.data.type === 'PAYPAL_PAYMENT_SUCCESS') {
+        const { orderId } = event.data;
+        try {
+          setIsLoading(true);
+          await capturePaypalPayment(orderId);
+          setPaymentStatus('success');
+          // Redirigir a página de éxito
+          window.location.href = '/pago-exitoso';
+        } catch (err) {
+          setError('Error al finalizar el pago: ' + err.message);
+          setPaymentStatus('error');
+        } finally {
+          setIsLoading(false);
+        }
+      } else if (event.data.type === 'PAYPAL_PAYMENT_ERROR') {
+        setError('El pago no pudo ser completado');
+        setPaymentStatus('error');
+      } else if (event.data.type === 'PAYPAL_PAYMENT_CANCELLED') {
+        setError('El pago fue cancelado');
+        setPaymentStatus('cancelled');
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
   }, [idCarrito]);
 
   const handlePayment = async () => {
+    if (!pedido || !detallesPedido) {
+      setError('No hay información del pedido disponible');
+      return;
+    }
+  
+    setIsLoading(true);
+    setError(null);
+  
     try {
-      setIsLoading(true);
-      const response = await fetch('/api/create-paypal-order', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          total: detallesPedido.totales.total,
-        }),
-      });
-
-      const order = await response.json();
-      window.location.href = `https://www.sandbox.paypal.com/checkoutnow?token=${order.id}`;
+      const montoFormateado = Number(detallesPedido.totales.total.toFixed(2));
+      const popup = await openPaypalPopup(pedido.idPedido, montoFormateado);
+  
+      if (!popup) {
+        throw new Error('No se pudo abrir la ventana de PayPal');
+      }
+  
+      // Revisar si la ventana se cierra
+      const checkPopup = setInterval(async () => {
+        if (popup.closed) {
+          clearInterval(checkPopup);
+          // Obtener el orderId guardado
+          const orderId = localStorage.getItem('currentPaypalOrderId');
+          // Obtener el estado del pago
+          const paymentSuccess = localStorage.getItem('paypalPaymentSuccess');
+  
+          if (paymentSuccess === 'true' && orderId) {
+            try {
+              // Capturar el pago solo si fue exitoso
+              await capturePaypalPayment(orderId);
+              setPaymentStatus('success');
+              // Limpiar localStorage
+              localStorage.removeItem('currentPaypalOrderId');
+              localStorage.removeItem('paypalPaymentSuccess');
+              // Redireccionar
+              window.location.href = '/pago-exitoso';
+            } catch (err) {
+              setError('Error al finalizar el pago: ' + err.message);
+            }
+          } else {
+            setError('El pago no fue completado');
+          }
+          
+          setIsLoading(false);
+        }
+      }, 500);
+  
     } catch (error) {
-      //console.error('Error:', error);
-      alert('Error al procesar el pago');
-    } finally {
+      console.error('Error en el proceso de pago:', error);
+      setError('Error al iniciar el pago: ' + error.message);
       setIsLoading(false);
     }
   };
+  const confirmarCompra = () => {
+    setMostrarConfirmacion(false);
+    handlePayment();
+  };
 
-  // ✅ Renderizado de los detalles del pedido
+  const cerrarConfirmacion = () => {
+    setMostrarConfirmacion(false);
+  };
+
+  if (error) {
+    return (
+      <div className="pagina-metodo-pago">
+        <div className="header-container">
+          <HeaderPagos />
+        </div>
+        <div className="error-container">
+          <p>{error}</p>
+          <button 
+            className="boton-azul" 
+            onClick={() => setError(null)}
+          >
+            Intentar de nuevo
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="pagina-metodo-pago">
       <div className="header-container">
@@ -74,53 +161,78 @@ const MetodoPago = () => {
             alt="Logo de PayPal"
             className="paypal-logo"
           />
-          <span></span>
         </div>
 
-        {detallesPedido ? (
-          <>
-            <h3>Detalles del Pedido</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th>Producto</th>
-                  <th>Cantidad</th>
-                  <th>Precio Unitario</th>
-                  <th>Subtotal</th>
-                  <th>Impuesto</th>
-                </tr>
-              </thead>
-              <tbody>
-                {detallesPedido.items.map((item) => (
-                  <tr key={item.idCarritoDetalle}>
-                    <td>{item.producto.nombre}</td>
-                    <td>{item.producto.cantidad}</td>
-                    <td>${item.producto.precioUnitario.toFixed(2)}</td>
-                    <td>${item.producto.subtotal.toFixed(2)}</td>
-                    <td>{item.impuesto.nombre} ({item.impuesto.porcentaje}%)</td>
+        <div className="informacion-pago">
+          <div className="informacion-tabla">
+            <h3>Método de pago</h3>
+            <div className="paypal-1">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg"
+                alt="PayPal"
+                className="paypal-logo1"
+              />
+            </div>
+            <h4>Información de pago</h4>
+            {detallesPedido ? (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Subtotal</th>
+                    <th>Impuesto</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {detallesPedido.items.map((item) => (
+                    <tr key={item.idCarritoDetalle}>
+                      <td>{item.producto.nombre}</td>
+                      <td>{item.producto.cantidad}</td>
+                      <td>${item.producto.precioUnitario.toFixed(2)}</td>
+                      <td>${item.producto.subtotal.toFixed(2)}</td>
+                      <td>{item.impuesto.nombre} ({item.impuesto.porcentaje}%)</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p>Cargando detalles del pedido...</p>
+            )}
+          </div>
+        </div>
 
-            <h4>Totales</h4>
-            <p><strong>Subtotal:</strong> ${detallesPedido.totales.subtotal.toFixed(2)}</p>
-            <p><strong>Impuestos:</strong> ${detallesPedido.totales.impuestos.toFixed(2)}</p>
-            <p><strong>Total:</strong> ${detallesPedido.totales.total.toFixed(2)}</p>
-          </>
-        ) : (
-          <p>Cargando detalles del pedido...</p>
+        {paymentStatus === 'success' && (
+          <div className="success-message">
+            ¡Pago procesado con éxito!
+          </div>
         )}
 
+        <Link to="/">
+          <button className="boton-salir">SALIR</button>
+        </Link>
         <button
           type="button"
           className="boton-azul"
-          onClick={handlePayment}
+          onClick={() => setMostrarConfirmacion(true)}
           disabled={isLoading}
         >
           {isLoading ? 'Procesando...' : 'Ir a plataforma de pago'}
         </button>
       </div>
+      
+      {mostrarConfirmacion && (
+        <div className="modal-confirmacion">
+          <div className="modal-content">
+            <h3>¿Estás seguro de querer realizar la compra?</h3>
+            <div className="modal-buttons">
+              <button onClick={confirmarCompra}>Sí</button>
+              <button onClick={cerrarConfirmacion}>No</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
