@@ -29,7 +29,7 @@ const Facturas = () => {
 
   return (
     <div className="app-wrapper">
-      <Header />
+      <Header toggleCart={toggleCart} isCartOpen={isCartOpen} />
       <main className="main-content">
         <div className="facturas-container">
           <section className="facturas-section">
