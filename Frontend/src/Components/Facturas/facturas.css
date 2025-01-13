@@ -53,12 +53,6 @@
   background-color: #f7fafc;
 }
 
-.fecha-actual {
-    margin: 10px 0;
-    font-size: 1.1em;
-    color: #333;
-}
-
 @media (min-width: 1441px) {
   .app-wrapper{
     min-height: 100vh;
