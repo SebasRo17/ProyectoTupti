@@ -90,4 +90,30 @@ router.post('/login', (req, res) => UserController.login(req, res));
 router.get('/', (req, res) => UserController.getUsers(req, res));
 router.post('/', (req, res) => UserController.createUser(req, res));
 router.put('/:id', (req, res) => UserController.updateUser(req, res));
+/**
+ * @swagger
+ * /users/register:
+ *   post:
+ *     summary: Registrar un nuevo usuario con nombre
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - contrasenia
+ *               - nombre
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *               contrasenia:
+ *                 type: string
+ *               nombre:
+ *                 type: string
+ */
+router.post('/register', (req, res) => UserController.registerUser(req, res));
 module.exports = router;

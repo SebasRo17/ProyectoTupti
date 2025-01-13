@@ -5,6 +5,7 @@ import { FcGoogle } from "react-icons/fc"; // Ícono de Google
 import { FaFacebookF } from "react-icons/fa"; // Ícono de Facebook
 import { HiEye, HiEyeOff } from "react-icons/hi"; // Iconos de ojo
 import ReCAPTCHA from "react-google-recaptcha";
+import { registerUser } from '../../Api/userApi';
 import "./responsiveRegistro.css";
 
 
@@ -17,7 +18,55 @@ function Registro() {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [captchaVerified, setCaptchaVerified] = useState(false);
+  const [nombre, setNombre] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [registroError, setRegistroError] = useState("");
 
+  const handleNombreChange = (e) => {
+    setNombre(e.target.value);
+  };
+  
+  const handleRegister = async () => {
+    if (!captchaVerified) {
+      alert("Por favor, verifica el reCAPTCHA antes de registrarte.");
+      return;
+    }
+
+    if (!nombre || !email || !password) {
+      setRegistroError("Todos los campos son requeridos");
+      return;
+    }
+
+    setIsLoading(true);
+    setRegistroError("");
+
+    try {
+      const userData = {
+        nombre: nombre,
+        email: email,
+        contrasenia: password
+      };
+
+      const response = await registerUser(userData);
+      
+      if (response.success) {
+        // Limpiar formulario
+        setNombre("");
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+        setCaptchaVerified(false);
+         
+        // Redirigir o mostrar mensaje de éxito
+        alert("Registro exitoso!");
+        window.location.href = '/login';
+      }
+    } catch (error) {
+      setRegistroError(error.message || "Error al registrar usuario");
+    } finally {
+      setIsLoading(false);
+    }
+  };
   useEffect(() => {
     const handleMessage = (event) => {
       if (event.origin === import.meta.env.VITE_API_URL && event.data.token) {
@@ -101,29 +150,29 @@ function Registro() {
     }
   };
 
-  const handleRegister = async () => {
-    if (!captchaVerified) {
-      alert("Por favor, verifica el reCAPTCHA antes de registrarte.");
-      return;
-    }
+  // const handleRegister = async () => {
+  //   if (!captchaVerified) {
+  //     alert("Por favor, verifica el reCAPTCHA antes de registrarte.");
+  //     return;
+  //   }
 
-    try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-      //console.log("Usuario registrado:", { email, password, confirmPassword });
-      setEmail("");
-      setPassword("");
-      setConfirmPassword("");
-      setCaptchaVerified(false);
-    } catch (error) {
-      //console.error('Error durante el registro:', error);
-    }
-  };
+  //   try {
+  //     const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/register`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ email, password }),
+  //     });
+  //     //console.log("Usuario registrado:", { email, password, confirmPassword });
+  //     setEmail("");
+  //     setPassword("");
+  //     setConfirmPassword("");
+  //     setCaptchaVerified(false);
+  //   } catch (error) {
+  //     //console.error('Error durante el registro:', error);
+  //   }
+  // };
 
   const handleCaptchaChange = (value) => {
     if (value) {
@@ -166,6 +215,8 @@ function Registro() {
             <div className="registro-input-container">
               <input
                 type="text"
+                value={nombre}
+                onChange={handleNombreChange}
                 placeholder="Nombre completo"
                 required
                 className="registro-input"
