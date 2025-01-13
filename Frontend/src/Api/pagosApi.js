@@ -1,57 +1,89 @@
-import axios from 'axios';
 import { API_URL } from '../config/config';
 
 export const createPaypalOrder = async (idPedido, monto) => {
-    try {
-      const response = await axios.post(`${API_URL}/api/payments/create`, {
-        idPedido,
-        monto
-      });
-      console.log('Orden de PayPal creada:', response.data);
-      return response.data; // Esto devuelve { approveUrl, orderId }
-    } catch (error) {
-      console.error('Error al crear orden de PayPal:', error);
-      throw error;
-    }
-  };
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL_DEVELOPMENT}/api/payments/create`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ idPedido, monto }),
+    });
 
+    if (!response.ok) {
+      throw new Error('Error al crear la orden de pago');
+    }
+
+    return await response.json();
+  } catch (error) {
+    throw new Error(`Error al crear orden de PayPal: ${error.message}`);
+  }
+};
 export const capturePaypalPayment = async (orderId) => {
   try {
-    const response = await axios.post(`${API_URL}/api/payments/capture/${orderId}`);
-    console.log('Pago capturado:', response.data);
-    return response.data;
+    const response = await fetch(`${import.meta.env.VITE_API_URL_DEVELOPMENT}/api/payments/capture/${orderId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Error al capturar el pago');
+    }
+
+    return await response.json();
   } catch (error) {
-    console.error('Error al capturar el pago:', error);
+    console.error('Error en capturePaypalPayment:', error);
+    throw new Error(`Error al capturar el pago: ${error.message}`);
+  }
+};
+export const openPaypalPopup = async (idPedido, monto) => {
+  try {
+    const { approveUrl, orderId } = await createPaypalOrder(idPedido, monto);
+    
+    const width = 450;
+    const height = 600;
+    const left = window.screen.width / 2 - width / 2;
+    const top = window.screen.height / 2 - height / 2;
+
+    localStorage.setItem('currentPaypalOrderId', orderId);
+
+    const popup = window.open(
+      approveUrl,
+      'PayPal',
+      `width=${width},height=${height},left=${left},top=${top},scrollbars=yes`
+    );
+
+    if (!popup) {
+      throw new Error('El navegador bloqueó la ventana emergente');
+    }
+
+    return popup;
+  } catch (error) {
+    console.error('Error al abrir ventana de PayPal:', error);
     throw error;
   }
 };
 
-export const openPaypalPopup = async (idPedido, monto) => {
-    try {
-      // Crear la orden de pago y obtener la URL y orderId
-      const { approveUrl, orderId } = await createPaypalOrder(idPedido, monto);
-      
-      const width = 450;
-      const height = 600;
-      const left = window.screen.width / 2 - width / 2;
-      const top = window.screen.height / 2 - height / 2;
-  
-      // Guardar el orderId en localStorage para recuperarlo después
-      localStorage.setItem('currentPaypalOrderId', orderId);
-  
-      const popup = window.open(
-        approveUrl,
-        'PayPal',
-        `width=${width},height=${height},left=${left},top=${top},scrollbars=yes`
-      );
-  
-      if (!popup) {
-        throw new Error('El navegador bloqueó la ventana emergente');
-      }
-  
-      return popup;
-    } catch (error) {
-      console.error('Error al abrir ventana de PayPal:', error);
-      throw error;
+export const checkPaypalOrderStatus = async (orderId) => {
+  try {
+    const response = await fetch(`${API_URL}/api/payments/status/${orderId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Error al verificar el estado del pago');
     }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error al verificar estado del pago:', error);
+    throw error;
+  }
 };

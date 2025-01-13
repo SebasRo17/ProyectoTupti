@@ -287,7 +287,28 @@ table td:last-child {
 .privacy-link:hover {
   text-decoration: underline;
 }
+.resumen-totales {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
 
+.totales-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 10px;
+  color: black;
+}
+.totales-grid p {
+  margin: 5px 0;
+  color: black;
+}
+.totales-grid p:nth-child(even) {
+  text-align: right;
+  color: black;
+}
 
 
 
