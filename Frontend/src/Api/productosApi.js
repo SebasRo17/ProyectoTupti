@@ -1,6 +1,5 @@
 import axios from 'axios';
-
-const API_BASE_URL = 'http://localhost:3000'; // Ajusta según tu configuración
+import { API_URL } from '../config/config';
 
 export const productosApi = {
     getAllProducts: async (filters = {}) => {
@@ -11,7 +10,7 @@ export const productosApi = {
             if (filters.PrecioMax) queryParams.append('PrecioMax', filters.PrecioMax);
             if (filters.IdTipoProducto) queryParams.append('IdTipoProducto', filters.IdTipoProducto);
 
-            const response = await axios.get(`${API_BASE_URL}/products?${queryParams}`);
+            const response = await axios.get(`${API_URL}/products?${queryParams}`);
             return response.data;
         } catch (error) {
             console.error('Error fetching products:', error);
@@ -21,7 +20,7 @@ export const productosApi = {
 
     deleteProduct: async (productId) => {
         try {
-            const response = await axios.delete(`${API_BASE_URL}/products/${productId}`);
+            const response = await axios.delete(`${API_URL}/products/${productId}`);
             return response.data;
         } catch (error) {
             console.error('Error deleting product:', error);
@@ -31,7 +30,7 @@ export const productosApi = {
 
     updateProduct: async (productId, productData) => {
         try {
-            const response = await axios.put(`${API_BASE_URL}/products/${productId}`, productData);
+            const response = await axios.put(`${API_URL}/products/${productId}`, productData);
             return response.data;
         } catch (error) {
             console.error('Error updating product:', error);
