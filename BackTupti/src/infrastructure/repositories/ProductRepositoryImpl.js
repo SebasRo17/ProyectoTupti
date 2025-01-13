@@ -5,17 +5,18 @@ const TipoProducto = require('../../domain/models/TipoProducto');
 const ProductoImagen = require('../../domain/models/ProductoImagen');
 
 class ProductRepositoryImpl {
-    async findId(productId) {
-        try {
-            const product = await Product.findByPk(productId);
-            if (!product) {
-                throw new Error('Producto no encontrado');
-            }
-            return product;
-        } catch (error) {
-            throw new Error('Error al buscar el producto');
-        }
+  async findId(productId) {
+    try {
+      const product = await Product.findByPk(productId);
+      if (!product) {
+        throw new Error('Producto no encontrado');
+      }
+      return product;
+    } catch (error) {
+      console.error('Error al buscar el producto:', error);
+      throw error;
     }
+  }
 
     async create(productData) {
         try {

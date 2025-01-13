@@ -4,6 +4,9 @@ import Header from '../../Components/header/header';
 import Footer from '../../Components/footer/footer';
 import './configuraciones.css';
 import jwtDecode from 'jwt-decode'; // Importar jwt-decode
+import ErrorPopup from '../../Components/ErrorPopup/ErrorPopup';
+
+ 
 
 const Configuraciones = () => {
     const [isCartOpen, setIsCartOpen] = useState(false);
@@ -11,6 +14,15 @@ const Configuraciones = () => {
         name: "",
         email: ""
     });
+
+    const [passwords, setPasswords] = useState({
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: ''
+    });
+
+    const [showErrorPopup, setShowErrorPopup] = useState(false); // Estado para el pop-up
+    const [errorMessage, setErrorMessage] = useState(''); // Mensaje de error
 
     const toggleCart = () => {
         setIsCartOpen(!isCartOpen);
@@ -31,12 +43,6 @@ const Configuraciones = () => {
         }
     }, []);
 
-    const [passwords, setPasswords] = useState({
-        currentPassword: '',
-        newPassword: '',
-        confirmPassword: ''
-    });
-
     const handlePasswordChange = (e) => {
         const { name, value } = e.target;
         setPasswords(prev => ({
@@ -48,11 +54,16 @@ const Configuraciones = () => {
     const handleUpdatePassword = (e) => {
         e.preventDefault();
         if (passwords.newPassword !== passwords.confirmPassword) {
-            alert('Las contraseñas nuevas no coinciden');
+            setErrorMessage('Las contraseñas nuevas no coinciden');
+            setShowErrorPopup(true); // Mostrar el pop-up de error
             return;
         }
-        // API call logic here
+        // Aquí iría la lógica para actualizar la contraseña en la API
         //console.log('Actualizando contraseña...');
+    };
+
+    const closeErrorPopup = () => {
+        setShowErrorPopup(false); // Cerrar el pop-up
     };
 
     return (
@@ -99,6 +110,7 @@ const Configuraciones = () => {
                                 />
                             </div>
                             
+
                             <div className="form-group">
                                 <label>Contraseña nueva:</label>
                                 <input
@@ -130,6 +142,9 @@ const Configuraciones = () => {
             </main>
 
             <Footer />
+
+            {/* Mostrar el ErrorPopup si está habilitado */}
+            {showErrorPopup && <ErrorPopup message={errorMessage} onClose={closeErrorPopup} />}
         </div>
     );
 };

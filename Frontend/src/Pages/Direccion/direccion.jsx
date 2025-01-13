@@ -6,6 +6,7 @@ import GoogleMaps from '../../Api/googleMaps.jsx';
 import jwtDecode from 'jwt-decode';
 import { createDireccion } from '../../Api/direccionApi';
 import './direccion.css';
+import ErrorPopup from '../../Components/ErrorPopup/ErrorPopup';
 
 const Direccion = () => {
   const navigate = useNavigate();
@@ -22,19 +23,68 @@ const Direccion = () => {
   const [locationName, setLocationName] = useState('');
   const [idUsuario, setIdUsuario] = useState(null);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [direccionBuscada, setDireccionBuscada] = useState('');
+  const [mapCenter, setMapCenter] = useState({
+    lat: -0.1807,
+    lng: -78.4678
+  });
+  const [marker, setMarker] = useState(null);
+  
+  // Estado para manejar errores
+  const [errorMessage, setErrorMessage] = useState('');
+  const [showErrorPopup, setShowErrorPopup] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
-    // Obtener y decodificar el token al cargar el componente
     const token = localStorage.getItem('jwtToken');
     if (token) {
       try {
         const payload = jwtDecode(token);
         setIdUsuario(payload.user.IdUsuario);
       } catch (error) {
-        //console.error('Error decodificando el token:', error);
+        console.error('Error decodificando el token:', error);
       }
     }
   }, []);
+
+  useEffect(() => {
+    const updateMapFromFields = async () => {
+      const addressString = `${direccion.callePrincipal} ${direccion.numeracion}, ${direccion.barrio}, ${direccion.ciudad}, ${direccion.provincia}, ${direccion.pais}`;
+      
+      if (direccion.ciudad && direccion.provincia) {
+        const geocoder = new window.google.maps.Geocoder();
+        try {
+          const results = await new Promise((resolve, reject) => {
+            geocoder.geocode({ address: addressString }, (results, status) => {
+              if (status === 'OK') {
+                resolve(results);
+              } else {
+                reject(status);
+              }
+            });
+          });
+
+          const location = results[0].geometry.location;
+          setMapCenter({
+            lat: location.lat(),
+            lng: location.lng()
+          });
+          setMarker({
+            lat: location.lat(),
+            lng: location.lng()
+          });
+        } catch (error) {
+          console.log('No se pudo geocodificar la dirección:', error);
+        }
+      }
+    };
+
+    const timeoutId = setTimeout(() => {
+      updateMapFromFields();
+    }, 1000);
+
+    return () => clearTimeout(timeoutId);
+  }, [direccion]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,17 +93,68 @@ const Direccion = () => {
       [name]: value
     }));
   };
-  const [isCartOpen, setIsCartOpen] = useState(false);
 
-  const toggleCart = () => {
-    setIsCartOpen(!isCartOpen);
-  };
+  const handleSearchAddress = async () => {
+    if (!direccionBuscada) {
+      alert('Por favor ingrese una dirección para buscar');
+      return;
+    }
+
+    const geocoder = new window.google.maps.Geocoder();
+    geocoder.geocode({ address: direccionBuscada }, (results, status) => {
+      if (status === 'OK') {
+        const location = results[0].geometry.location;
+        setMapCenter({
+          lat: location.lat(),
+          lng: location.lng()
+        });
+        setMarker({
+          lat: location.lat(),
+          lng: location.lng()
+        });
+
+        const addressComponents = results[0].address_components;
+        let callePrincipal = '', numeracion = '', calleSecundaria = '', ciudad = '', provincia = '', barrio = '', pais = '';
+        
+        addressComponents.forEach(component => {
+          const types = component.types;
+          if (types.includes('street_number')) {
+            numeracion = component.long_name;
+          } else if (types.includes('route')) {
+            callePrincipal = component.long_name;
+          } else if (types.includes('sublocality_level_1')) {
+            calleSecundaria = component.long_name;
+          } else if (types.includes('locality')) {
+            ciudad = component.long_name;
+          } else if (types.includes('administrative_area_level_1')) {
+            provincia = component.long_name;
+          } else if (types.includes('neighborhood')) {
+            barrio = component.long_name;
+          } else if (types.includes('country')) {
+            pais = component.long_name;
+          }
+        });
+
+        setDireccion(prev => ({
+          ...prev,
+          callePrincipal,
+          numeracion,
+          calleSecundaria,
+          ciudad,
+          provincia,
+          barrio,
+          pais
+        }));
+      } else {
+        alert('No se pudo encontrar la dirección');
+      }
+    });
+  };
 
   const handleSaveLocation = async () => {
     try {
       if (!idUsuario) {
-        alert('Debe iniciar sesión para guardar una dirección');
-        return;
+        throw new Error('Debe iniciar sesión para guardar una dirección');
       }
 
       const direccionData = {
@@ -68,29 +169,30 @@ const Direccion = () => {
         Descripcion: locationName
       };
 
-      // Validar campos requeridos
       const camposRequeridos = Object.entries(direccionData);
       for (const [campo, valor] of camposRequeridos) {
         if (!valor) {
-          alert(`El campo ${campo} es requerido`);
-          return;
+          throw new Error(`El campo ${campo} es requerido`);
         }
       }
 
       const response = await createDireccion(direccionData);
       if (response) {
         setShowModal(false);
-        setShowConfirmModal(true); // Mostrar modal de confirmación
+        setShowConfirmModal(true);
       }
     } catch (error) {
-      //console.error('Error al guardar la dirección:', error);
-      alert('Error al guardar la dirección: ' + (error.message || 'Error desconocido'));
+      setErrorMessage(error.message || 'Error desconocido');
+      setShowErrorPopup(true);
     }
   };
 
+  const toggleCart = () => {
+    setIsCartOpen(!isCartOpen);
+  };
   return (
     <div className="page-container">
-      <Header toggleCart={toggleCart} isCartOpen={isCartOpen} />
+      <Header toggleCart={toggleCart} isCartOpen={isCartOpen} />
       <div className="direccion-container">
         <div className="form-container">
           <div className="form-group">
@@ -115,7 +217,7 @@ const Direccion = () => {
             <label>Calle Secundaria:</label>
             <input
               type="text"
-              name="calleSecundaria"  // Corregido de callesSecundaria a calleSecundaria
+              name="calleSecundaria"
               value={direccion.calleSecundaria}
               onChange={handleChange}
             />
@@ -151,26 +253,39 @@ const Direccion = () => {
             <label>País:</label>
             <input
               type="text"
-              name="Pais"
+              name="pais"
               value={direccion.pais}
               onChange={handleChange}
             />
           </div>
+          <div className="form-group">
+            <label>Buscar Dirección:</label>
+            <input
+              type="text"
+              value={direccionBuscada}
+              onChange={(e) => setDireccionBuscada(e.target.value)}
+              placeholder="Ingrese una dirección"
+            />
+          </div>
           <div className="button-container">
+            <button className="btn-buscar" onClick={handleSearchAddress}>
+              Buscar Dirección
+            </button>
             <button className="btn-agregar" onClick={() => setShowModal(true)}>
               Agregar Dirección
             </button>
-            <button
-              className="btn-cancelar"
-              onClick={() => window.history.back()}
-            >
+            <button className="btn-cancelar" onClick={() => window.history.back()}>
               Cancelar
             </button>
           </div>
         </div>
 
         <div className="map-container">
-        <GoogleMaps onAddressChange={(newAddress) => setDireccion(prev => ({ ...prev, ...newAddress }))} />
+          <GoogleMaps
+            mapCenter={mapCenter}
+            marker={marker}
+            onAddressChange={(newAddress) => setDireccion(prev => ({ ...prev, ...newAddress }))}
+          />
         </div>
       </div>
 
@@ -195,22 +310,20 @@ const Direccion = () => {
       {showConfirmModal && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <h3>¡Dirección guardada exitosamente!</h3>
-            <div className="modal-buttons">
-              <button 
-                onClick={() => {
-                  setShowConfirmModal(false);
-                  navigate('/');
-                }}
-              >
-                Aceptar
-              </button>
-            </div>
+            <h3>Dirección guardada correctamente.</h3>
+            <button onClick={() => setShowConfirmModal(false)}>Cerrar</button>
           </div>
         </div>
       )}
 
-      {/* Footer moved outside of direccion-container */}
+      {/* Mostrar el pop-up de error */}
+      {showErrorPopup && (
+        <ErrorPopup
+          message={errorMessage}
+          onClose={() => setShowErrorPopup(false)}
+        />
+      )}
+
       <Footer />
     </div>
   );
