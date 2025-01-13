@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Filtros.css";
 import "./responsiveFiltros.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
+
 
 const Filtro = ({ onFilterChange }) => {
   const [selectedCategories, setSelectedCategories] = useState([]);
