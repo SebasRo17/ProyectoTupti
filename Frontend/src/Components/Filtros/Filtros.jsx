@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Filtros.css";
 import "./responsiveFiltros.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
 
 const Filtro = ({ onFilterChange }) => {
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -108,8 +106,7 @@ const Filtro = ({ onFilterChange }) => {
       <div className="menu-hamburguesa-container">
         {isSmallScreen && (
           <button className="menu-hamburguesa" onClick={() => setIsFiltroVisible(!isFiltroVisible)}>
-            <FontAwesomeIcon icon={faFilter} />
-          </button>
+                      </button>
         )}
       </div>
 
