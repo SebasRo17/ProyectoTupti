@@ -22,13 +22,3 @@ export const getDetallesPedido = async (idPedido) => {
       throw error;
     }
   };
-  export const createPedido = async (pedidoData) => {
-    try {
-      const response = await axios.post(`${API_URL}/pedidos`, pedidoData);
-      console.log('Pedido creado:', response.data);
-      return response.data;
-    } catch (error) {
-      console.error('Error al crear el pedido:', error);
-      throw error;
-    }
-  };

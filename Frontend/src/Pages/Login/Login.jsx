@@ -8,7 +8,6 @@ import "./Login.css";
 import { loginUser } from '../../Api/loginUsers';
 import "./responsiveLogin.css";
 import jwtDecode from 'jwt-decode';
-import ErrorPopup from '../../Components/ErrorPopup/ErrorPopup';
 
 
 function Login() {
@@ -19,8 +18,6 @@ function Login() {
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [userId, setUserId] = useState(null);
-  const [errorPopupMessage, setErrorPopupMessage] = useState("");
-  const [showErrorPopup, setShowErrorPopup] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const apiUrl = import.meta.env.MODE === 'development' 
@@ -141,19 +138,12 @@ function Login() {
         navigate(from);
       }
     } catch (error) {
-      setErrorPopupMessage(error.message || 'Error al iniciar sesión');
-      setShowErrorPopup(true);
+      setPasswordError(error.message || 'Error al iniciar sesión');
     }
-  };
-
-  const closeErrorPopup = () => {
-    setShowErrorPopup(false);
-    setErrorPopupMessage("");
   };
 
   return (
     <div className="login-container">
-      {showErrorPopup && <ErrorPopup message={errorPopupMessage} onClose={closeErrorPopup} />}
       <div className="login-card">
         {/* Botón "Regresar" como flecha en círculo */}
         <div className="login-back-button">

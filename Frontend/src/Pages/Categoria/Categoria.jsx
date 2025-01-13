@@ -39,7 +39,7 @@ function Categoria() {
       if (token) {
         try {
           const payload = jwtDecode(token);
-          console.log('Token descifrado:', payload);
+          //console.log('Token descifrado:', payload);
     
           // Comprueba dónde está IdUsuario
           const userId = payload?.IdUsuario || payload?.user?.IdUsuario;
@@ -47,7 +47,7 @@ function Categoria() {
           if (userId) {
             setIdUsuario(userId);
           } else {
-            console.error('IdUsuario no encontrado en el token');
+            //console.error('IdUsuario no encontrado en el token');
           }
     
           const currentTime = Date.now() / 1000;
@@ -55,7 +55,7 @@ function Categoria() {
             localStorage.removeItem('jwtToken'); // Elimina token expirado
           }
         } catch (error) {
-          console.error('Error decodificando el token:', error);
+          //console.error('Error decodificando el token:', error);
           localStorage.removeItem('jwtToken'); // Limpia token corrupto
         }
       }
@@ -88,19 +88,18 @@ function Categoria() {
    useEffect(() => {
       const fetchProducts = async () => {
          try {
-             // Revisar si hay productos filtrados en el estado de location
-             const filteredProducts = location.state?.products || [];
+            const data = await getCategoryProducts(id);
+            setProductos(data);
             
-             if (filteredProducts.length > 0) {
-                // Si hay productos filtrados, usarlos
-                setProductos(filteredProducts);
-             } else if (id && id !== "0") {
-                // Si no hay productos filtrados, buscar por categoría
-                const data = await getCategoryProducts(id);
-                setProductos(data);
-             } else {
-                setError("No se encontraron productos");
-             }
+            // Si hay un ID de producto seleccionado en el state, encontrarlo y mostrarlo
+            if (location.state?.selectedProductId && location.state?.openModal) {
+                const selectedProduct = data.find(
+                    product => product.IdProducto === location.state.selectedProductId
+                );
+                if (selectedProduct) {
+                    setSelectedProduct(selectedProduct);
+                }
+            }
          } catch (err) {
             setError(err.message);
          } finally {
@@ -120,12 +119,12 @@ function Categoria() {
 
    const cargarReseñas = async () => {
       try {
-         console.log('Cargando reseñas para producto:', selectedProduct.IdProducto);
+         //console.log('Cargando reseñas para producto:', selectedProduct.IdProducto);
          const data = await getCalificaciones(selectedProduct.IdProducto);
-         console.log('Reseñas recibidas:', data);
+         //console.log('Reseñas recibidas:', data);
          setReseñas(data || []);
       } catch (error) {
-         console.error('Error al cargar reseñas:', error);
+         //console.error('Error al cargar reseñas:', error);
          setReseñas([]); 
       }
    };
@@ -155,7 +154,7 @@ function Categoria() {
         };
   
         const result = await addToCart(productData);
-        console.log('Producto agregado al carrito:', result);
+        //console.log('Producto agregado al carrito:', result);
         // Mostrar mensaje de éxito
          setShowSuccessMessage(true);
 
@@ -165,7 +164,7 @@ function Categoria() {
          }, 3000);
       } catch (error) {
         // Manejar error
-        console.error('Error al agregar al carrito:', error);
+        //console.error('Error al agregar al carrito:', error);
       }
     };
   

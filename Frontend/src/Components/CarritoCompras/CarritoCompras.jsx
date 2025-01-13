@@ -6,28 +6,29 @@ import { getCarritoByUsuario, addToCart } from '../../Api/carritoApi.js';
 import jwtDecode from 'jwt-decode';
 import { Link } from 'react-router-dom';
 
-
 const CarritoCompras = () => {
   const [productos, setProductos] = useState([]);
-  const [idUsuario, setIdUsuario] = useState(null); 
-  const [idCarrito, setIdCarrito] = useState(null); 
-  const [isLoading, setIsLoading] = useState(false); 
-  const [productoAEliminar, setProductoAEliminar] = useState(null); 
-  const [mostrarPopUp, setMostrarPopUp] = useState(false); 
+  const [idUsuario, setIdUsuario] = useState(null); // Definir el estado para idUsuario
+  const [idCarrito, setIdCarrito] = useState(null); // Definir el estado para idCarrito
+  const [isLoading, setIsLoading] = useState(false); // Estado para manejar la carga
 
   useEffect(() => {
     const token = localStorage.getItem('jwtToken');
     if (token) {
       try {
         const payload = jwtDecode(token);
+        //console.log('Token descifrado:', payload); // Muestra el token descifrado
         const currentTime = Date.now() / 1000;
+  
+        // Cambiar de payload.user.IdUsuario a payload.IdUsuario
         setIdUsuario(payload.IdUsuario); 
   
         if (payload.exp <= currentTime) {
-          localStorage.removeItem('jwtToken');
+          localStorage.removeItem('jwtToken'); // Elimina token expirado
         }
       } catch (error) {
-        localStorage.removeItem('jwtToken');
+        //console.error('Error decodificando el token:', error);
+        localStorage.removeItem('jwtToken'); // Limpia token corrupto
       }
     }
   }, []);
@@ -35,9 +36,12 @@ const CarritoCompras = () => {
   useEffect(() => {
     const fetchCarrito = async () => {
       if (idUsuario) {
-        setIsLoading(true);
+        setIsLoading(true); // Iniciar estado de carga
         try {
           const carritoData = await getCarritoByUsuario(idUsuario);
+          //console.log('Carrito completo:', carritoData);
+          //console.log('Detalles del carrito:', carritoData.detalles);
+          // Actualizar el estado de productos con los datos obtenidos
           setProductos(carritoData.detalles.map(detalle => ({
             id: detalle.IdProducto,
             nombre: detalle.Producto.Nombre,
@@ -45,11 +49,11 @@ const CarritoCompras = () => {
             cantidad: detalle.Cantidad,
             imagen: detalle.Producto.ImagenUrl
           })));
-          setIdCarrito(carritoData.carrito.IdCarrito);
+          setIdCarrito(carritoData.carrito.IdCarrito); // Guardar el ID del carrito en el estado
         } catch (error) {
-          // Manejar error
+          //console.error('Error al cargar el carrito:', error);
         } finally {
-          setIsLoading(false);
+          setIsLoading(false); // Finalizar estado de carga
         }
       }
     };
@@ -57,48 +61,47 @@ const CarritoCompras = () => {
     fetchCarrito();
   }, [idUsuario]);
 
+  // Función para agregar al carrito en el backend
   const handleAgregarCarrito = async (idProducto, cantidad) => {
     try {
       const productData = {
         idUsuario: idUsuario,
         idProducto: idProducto,
-        cantidad: cantidad
+        cantidad: cantidad  // Usar la cantidad que recibimos como parámetro en lugar de 1 fijo
       };
 
-      await addToCart(productData);
+      const result = await addToCart(productData);
+      //console.log('Producto actualizado en el carrito:', result);
     } catch (error) {
-      // Manejar error
+      //console.error('Error al actualizar el carrito:', error);
     }
   };
 
-  const eliminarProducto = async () => {
-    if (productoAEliminar) {
+  // Lógica del carrito
+  const eliminarProducto = async (productoId) => {
+    const producto = productos.find(p => p.id === productoId);
+    if (producto) {
       try {
-        await handleAgregarCarrito(productoAEliminar.id, -productoAEliminar.cantidad);
-        setProductos(productos.filter((p) => p.id !== productoAEliminar.id));
-        setMostrarPopUp(false);
+        // Pasar la cantidad negativa para disminuir la cantidad existente
+        await handleAgregarCarrito(productoId, -producto.cantidad);
+        // Actualizar el estado local después de una eliminación exitosa
+        setProductos(productos.filter((p) => p.id !== productoId));
       } catch (error) {
-        // Manejar error
+        //console.error('Error al eliminar el producto:', error);
       }
     }
   };
 
-  const mostrarConfirmacionEliminar = (producto) => {
-    setProductoAEliminar(producto); 
-    setMostrarPopUp(true); 
-  };
-
-  const cancelarEliminacion = () => {
-    setMostrarPopUp(false); 
-  };
-
   const actualizarCantidad = async (id, cambio) => {
     try {
+      // No permitir cantidades menores a 1
       const producto = productos.find(p => p.id === id);
       if (producto.cantidad + cambio < 1) return;
 
+      // Llamar a la función para actualizar en el backend
       await handleAgregarCarrito(id, cambio);
 
+      // Actualizar el estado local después de una actualización exitosa
       setProductos(
         productos.map((producto) =>
           producto.id === id
@@ -107,19 +110,7 @@ const CarritoCompras = () => {
         )
       );
     } catch (error) {
-      // Manejar error
-    }
-  };
-
-  const vaciarCarrito = async () => {
-    try {
-      // Eliminar todos los productos
-      for (const producto of productos) {
-        await handleAgregarCarrito(producto.id, -producto.cantidad); 
-      }
-      setProductos([]); // Vaciar la lista de productos en el estado
-    } catch (error) {
-      // Manejar error
+      //console.error('Error al actualizar la cantidad:', error);
     }
   };
 
@@ -129,7 +120,7 @@ const CarritoCompras = () => {
   );
   const comisionServicio = 0.08 * subtotal;
   const iva = 0.15 * subtotal;
-  const ahorroTotal = 3.37;
+  const ahorroTotal = 3.37; // Ejemplo de ahorro
 
   return (
     <div className="mi-carrito">
@@ -138,10 +129,11 @@ const CarritoCompras = () => {
           <h1>Carrito de Compras</h1>
           <div className="carrito-icon">
             🛒
-            <span>{productos.length}</span>
+            <span>{productos.length}</span> {/* Contador de productos */}
           </div>
         </header>
 
+        {/* Lista de productos */}
         <div className="productos-lista">
           {isLoading ? (
             <p>Cargando productos...</p>
@@ -157,11 +149,24 @@ const CarritoCompras = () => {
                   <p>{producto.precio.toFixed(2)} x {producto.cantidad}</p>
                 </div>
                 <div className="cantidad-controles">
-                  <button onClick={() => actualizarCantidad(producto.id, -1)} disabled={producto.cantidad <= 1}>-</button>
+                  {/* Botón para disminuir la cantidad */}
+                  <button
+                    onClick={() => actualizarCantidad(producto.id, -1)}
+                    disabled={producto.cantidad <= 1}
+                  >
+                    -
+                  </button>
                   <span>{producto.cantidad}</span>
-                  <button onClick={() => actualizarCantidad(producto.id, 1)}>+</button>
-                  <button onClick={() => mostrarConfirmacionEliminar(producto)} className="eliminar">
-                    <FaTrash />
+                  {/* Botón para aumentar la cantidad */}
+                  <button onClick={() => actualizarCantidad(producto.id, 1)}>
+                    +
+                  </button>
+                  {/* Botón para eliminar el producto */}
+                  <button
+                    onClick={() => eliminarProducto(producto.id)}
+                    className="eliminar"
+                  >
+                    <FaTrash /> {/* Ícono de la basura */}
                   </button>
                 </div>
               </div>
@@ -171,6 +176,7 @@ const CarritoCompras = () => {
           )}
         </div>
 
+        {/* Mostrar desglose solo si hay productos */}
         {productos.length > 0 && (
           <div className="resumen">
             <p>
@@ -191,33 +197,21 @@ const CarritoCompras = () => {
             </p>
             <p className="total">
               <span>Total</span>
-              <span>${(subtotal + comisionServicio + iva - ahorroTotal).toFixed(2)}</span>
+              <span>
+                ${(
+                  subtotal +
+                  comisionServicio +
+                  iva - 
+                  ahorroTotal
+                ).toFixed(2)}
+              </span>
             </p>
             <Link to={`/MetodoPago`} state={{ idCarrito: idCarrito }}>
               <button className="boton-continuar" disabled={!idCarrito}>
                 PAGAR
               </button>
             </Link>
-
-            {/* Botón Vaciar Carrito */}
-            <button onClick={vaciarCarrito} className="boton-vaciar">
-              VACIAR CARRITO
-            </button>
           </div>
-        )}
-
-        {mostrarPopUp && (
-          <div className="popup">
-            <div className="popup-contenido">
-              <p>¿Deseas eliminar este producto?</p>
-              <button className="btn-sí" onClick={eliminarProducto}>Sí</button>
-              <button className="btn-no" onClick={cancelarEliminacion}>No</button>
-            </div>
-          </div>
-        )}
-
-        {!idUsuario && (
-          <p className="mensaje-sesion">Debes iniciar sesión para realizar compras.</p>
         )}
       </div>
     </div>

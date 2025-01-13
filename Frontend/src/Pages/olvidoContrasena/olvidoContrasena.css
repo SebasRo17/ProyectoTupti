@@ -60,8 +60,6 @@
   background-color: #f8f8f8;
   font-size: 14px;
   transition: all 0.3s ease;
-  color: black !important;
-
 }
 
 /* Estilo al enfocar el campo de entrada */
@@ -92,7 +90,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  color: black !important;
+  
 }
 
 /* Icono dentro del campo de entrada */

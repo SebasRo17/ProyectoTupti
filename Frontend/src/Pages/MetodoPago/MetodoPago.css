@@ -1,56 +1,50 @@
 
-/* Contenedor principal */
 .pagina-metodo-pago {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 100px;
   padding: 5%;
-  margin: 0 auto;
-  width: 90%;
-  max-width: 1200px;
-  margin-top: 5%;
+  margin-left: 13%;
+  width: 100%;
+  
 }
 
-/* Encabezado */
+
 .header-container {
-  margin-bottom: 60px;
-  text-align: center;
+  margin-bottom: 120px;
+  
 }
 
-/* Contenedor de pago */
 .pago-container {
-  background-color: #fff;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  margin-bottom: 40px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+
+  
 }
 
 .pago-container h2 {
-  font-family: 'Comfortaa', sans-serif;
-  color: #fff;
-  background-color: #4d944f;
-  padding: 15px;
-  border-radius: 8px;
   text-align: center;
   margin-bottom: 20px;
+  font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
+  background-color: #4d944f;
+  
 }
 
-/* Contenedor de PayPal */
 .paypal {
   display: flex;
   align-items: center;
-  gap: 15px;
-  padding: 12px 20px;
-  background-color: #f0f0f0;
+  gap: 10px;
+  padding: 10px;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-}
-
-.paypal:hover {
-  background-color: #e0e0e0;
+  margin-bottom: 20px;
+  background-color: #c3cac4;
 }
 
 .paypal-logo {
@@ -58,60 +52,60 @@
   height: auto;
 }
 
-.paypal-logo1 {
-  width: 180px;
+
+.paypal-logo1{
+  width: 200px;
   height: auto;
   margin-bottom: 30px;
 }
 
-/* Información de pago */
 .informacion-pago {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   gap: 20px;
-  flex-wrap: wrap;
-  margin-top: 30px;
-}
-
-.informacion-pago h3,
-.informacion-pago h4 {
-  color: #151615;
-  font-weight: bold;
+  margin-top: 90px;
 }
 
 .informacion-pago h3 {
-  font-size: 18px;
+  margin-bottom: 10px;
+  color:#151615;
+  font-weight: bold;
+  transform: translateY(-20px);
+  
 }
-
 .informacion-pago h4 {
-  font-size: 16px;
+  margin-bottom: 10px;
+  color:#151615;
+  font-weight: bold;
+  transform: translateY(0px);
+  
 }
 
 .formulario-pago {
-  flex: 1;
+  flex: 5;
   max-width: 45%;
-  min-width: 300px;
-  margin-top: 20px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  padding: 20px;
-  background-color: #fafafa;
+  transform: translateY(-50px);
+  
+  
 }
 
 .formulario-pago h3 {
+  margin-bottom: 10px;
+  transform: translateY(0px);
   font-weight: bold;
-  margin-bottom: 15px;
 }
 
 .formulario-pago form input,
 .formulario-pago form select {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
+  padding: 10px;
+  margin-bottom: 10px;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 13px;
   box-sizing: border-box;
-  transition: border-color 0.3s ease-in-out;
+  margin-top: 20px;
+  
 }
 
 .formulario-pago form input:focus,
@@ -121,9 +115,11 @@
 }
 
 .formulario-pago form label {
+  display: flex;
+  align-items: center;
+  gap: 0px;
   font-size: 14px;
-  display: block;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .formulario-pago form a {
@@ -138,14 +134,13 @@
 .boton-azul {
   display: block;
   width: 100%;
-  padding: 12px;
+  padding: 10px;
   color: #fff;
   background-color: #007bff;
   border: none;
-  border-radius: 8px;
-  font-size: 16px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
+  font-size: 16px;
 }
 
 .boton-azul:hover {
@@ -155,26 +150,28 @@
 .informacion-tabla {
   flex: 1;
   max-width: 45%;
-  padding: 20px;
   background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transform: translateY(-50px);
+ 
 }
 
 .informacion-tabla h3 {
-  font-weight: bold;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
+  
+  
 }
 
 table td {
-  padding: 12px;
+  padding: 10px;
   border-bottom: 1px solid #ddd;
-  font-size: 14px;
 }
 
 table td:last-child {
@@ -183,22 +180,24 @@ table td:last-child {
 
 .boton-salir {
   display: block;
-  margin: 40px auto;
-  padding: 12px 40px;
+  margin: 40px auto 0;
+  padding: 10px 40px;
   background-color: #ff4d4d;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 15px;
   cursor: pointer;
   font-size: 16px;
-  transition: background-color 0.3s ease-in-out;
+  margin-left: 100px;
+  margin-top: 5px;
+  
 }
 
 .boton-salir:hover {
   background-color: #d32f2f;
 }
 
-/* Pantalla emergente */
+/*pantalla emergente */
 .modal-confirmacion {
   position: fixed;
   top: 0;
@@ -210,6 +209,7 @@ table td:last-child {
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  
 }
 
 .modal-content {
@@ -217,15 +217,15 @@ table td:last-child {
   padding: 20px;
   border-radius: 8px;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: -40px;
 }
 
 .modal-buttons button {
   margin: 10px;
-  padding: 12px 25px;
+  padding: 10px 20px;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   cursor: pointer;
   transform: translateX(-150px);
 }
@@ -239,30 +239,42 @@ table td:last-child {
   background: #f44336;
   color: white;
 }
-
-/* Contenedor de condiciones */
+/* Estilos para el contenedor de las condiciones */
 .condiciones-container {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 15px;
-  font-size: 14px;
-  color: #333;
+  align-items: flex-start; /* Alinear checkbox con el inicio del texto */
+  gap: 10px; /* Espacio entre checkbox y texto */
+  margin-top: 15px; /* Separación del resto de los campos */
+  font-size: 14px; /* Tamaño de fuente legible */
+  line-height: 1.5; /* Espaciado entre líneas para mejor legibilidad */
+  color: #333; /* Color de texto */
 }
 
+/* Ajustes específicos para el texto */
+.condiciones-container label {
+  cursor: pointer; /* Cambiar cursor al pasar por el texto */
+  display: inline-block;
+}
+
+/*  checkbox */
 .checkbox-label {
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-left: -950px;
+  margin-top: 10px;
 }
 
 .checkbox-input {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
+  margin-right: -460px;
 }
 
 .checkbox-text {
   font-size: 14px;
+  color: #333;
+  margin-top: 30px;
 }
 
 .terms-link,
@@ -276,236 +288,10 @@ table td:last-child {
   text-decoration: underline;
 }
 
-/* Totales */
-.resumen-totales {
-  margin-top: 20px;
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-}
 
-.totales-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 10px;
-  color: black;
-}
 
-.totales-grid p {
-  margin: 5px 0;
-}
 
-.totales-grid p:nth-child(even) {
-  text-align: right;
-  color: black;
-}
 
-/*RESPONSIVE*/
 
-/* Pantallas menores a 320px */
-@media (max-width: 319px) {
-  body {
-    font-size: 12px;
-    padding: 10%;
-  }
-  
-  .pagina-metodo-pago {
-    padding: 7%;
-    margin-left: 150px;
-  }
 
-  .informacion-pago {
-    flex-direction: column;
-  }
 
-  .formulario-pago, 
-  .informacion-tabla {
-    max-width: 100%;
-  }
-
-  .boton-salir {
-    width: 100%;
-  }
-}
-
-/* Pantallas de 320px a 375px */
-@media (min-width: 320px) and (max-width: 374px) {
-  body {
-    font-size: 13px;
-  }
-
-  .pagina-metodo-pago {
-    padding: 7%;
-    margin-left: 150px;
-  }
-
-  .informacion-pago {
-    flex-direction: column;
-  }
-
-  .formulario-pago,
-  .informacion-tabla {
-    max-width: 100%;
-  }
-
-  .boton-salir {
-    width: 100%;
-  }
-}
-
-/* Pantallas de 375px a 425px */
-@media (min-width: 375px) and (max-width: 424px) {
-  body {
-    font-size: 14px;
-  }
-
-  .pagina-metodo-pago {
-    padding: 5%;
-    margin-left: 150px;
-    margin-top: 70px;
-  }
-
-  .informacion-pago {
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .formulario-pago,
-  .informacion-tabla {
-    max-width: 100%;
-  }
-
-  .boton-salir {
-    width: 100%;
-  }
-}
-
-/* Pantallas de 425px a 768px */
-@media (min-width: 425px) and (max-width: 767px) {
-  body {
-    font-size: 15px;
-  }
-
-  .pagina-metodo-pago {
-    padding: 5%;
-    margin-left: 150px;
-    margin-top: 70px;
-  }
-
-  .informacion-pago {
-    flex-direction: row;
-    gap: 10px;
-  }
-
-  .formulario-pago,
-  .informacion-tabla {
-    max-width: 48%;
-  }
-
-  .boton-salir {
-    width: auto;
-  }
-}
-
-/* Pantallas de 768px a 1024px */
-@media (min-width: 768px) and (max-width: 1023px) {
-  body {
-    font-size: 16px;
-  }
-
-  .pagina-metodo-pago {
-    margin-top: 100px;
-  }
-
-  .informacion-pago {
-    gap: 20px;
-  }
-
-  .formulario-pago,
-  .informacion-tabla {
-    max-width: 45%;
-  }
-
-  .boton-salir {
-    margin: 20px auto;
-  }
-}
-
-/* Pantallas de 1024px a 1440px */
-@media (min-width: 1024px) and (max-width: 1439px) {
-  body {
-    font-size: 16px;
-  }
-
-  .pagina-metodo-pago {
-    max-width: 1200px;
-    margin: 0 auto;
-    margin-top: 150px;
-  }
-
-  .informacion-pago {
-    gap: 40px;
-  }
-
-  .formulario-pago,
-  .informacion-tabla {
-    max-width: 45%;
-  }
-
-  .boton-salir {
-    margin: 30px auto;
-  }
-}
-
-/* Pantallas de 1440px a 2560px */
-@media (min-width: 1440px) and (max-width: 2559px) {
-  body {
-    font-size: 18px;
-  }
-
-  .pagina-metodo-pago {
-    max-width: 1400px;
-    margin: 0 auto;
-    margin-top: 150px;
-  }
-
-  .informacion-pago {
-    gap: 50px;
-  }
-
-  .formulario-pago,
-  .informacion-tabla {
-    max-width: 45%;
-  }
-
-  .boton-salir {
-    margin: 40px auto;
-  }
-}
-
-/* Pantallas mayores a 2560px */
-@media (min-width: 2560px) {
-  body {
-    font-size: 20px;
-  }
-
-  .pagina-metodo-pago {
-    max-width: 1800px;
-    margin: 0 auto;
-  }
-
-  .informacion-pago {
-    gap: 60px;
-  }
-
-  .formulario-pago,
-  .informacion-tabla {
-    max-width: 40%;
-  }
-
-  .boton-salir {
-    margin: 50px auto;
-  }
-}

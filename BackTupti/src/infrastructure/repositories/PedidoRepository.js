@@ -1,5 +1,4 @@
 const { sequelize } = require('../database/mysqlConnection');
-const Pedido = require('../../domain/models/Pedido');
 
 class PedidoRepository {
   async findPedidoDetailsById(idPedido) {
@@ -56,30 +55,6 @@ class PedidoRepository {
       console.error('Error en el repositorio al buscar pedido por carrito:', error);
       throw error;
     }
-  }
-
-  async create(pedidoData) {
-    return await Pedido.create(pedidoData);
-  }
-
-  async findById(id) {
-    return await Pedido.findByPk(id);
-  }
-
-  async findAll() {
-    return await Pedido.findAll();
-  }
-
-  async update(id, data) {
-    const pedido = await Pedido.findByPk(id);
-    if (pedido) {
-      return await pedido.update(data);
-    }
-    return null;
-  }
-
-  async delete(id) {
-    return await Pedido.destroy({ where: { IdPedido: id } });
   }
 }
 
