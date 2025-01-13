@@ -107,7 +107,7 @@ const Filtro = ({ onFilterChange }) => {
       <div className="menu-hamburguesa-container">
         {isSmallScreen && (
           <button className="menu-hamburguesa" onClick={() => setIsFiltroVisible(!isFiltroVisible)}>
-            <FontAwesomeIcon icon={faFilter} />
+            
           </button>
         )}
       </div>
