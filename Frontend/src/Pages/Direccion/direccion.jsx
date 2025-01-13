@@ -33,6 +33,7 @@ const Direccion = () => {
   // Estado para manejar errores
   const [errorMessage, setErrorMessage] = useState('');
   const [showErrorPopup, setShowErrorPopup] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('jwtToken');
@@ -186,9 +187,12 @@ const Direccion = () => {
     }
   };
 
+  const toggleCart = () => {
+    setIsCartOpen(!isCartOpen);
+  };
   return (
     <div className="page-container">
-      <Header />
+      <Header toggleCart={toggleCart} isCartOpen={isCartOpen} />
       <div className="direccion-container">
         <div className="form-container">
           <div className="form-group">
