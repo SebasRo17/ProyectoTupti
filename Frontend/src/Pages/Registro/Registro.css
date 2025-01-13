@@ -19,6 +19,7 @@ body {
   padding: 0px; /* Elimina el padding alrededor del contenedor */
   overflow: hidden; /* Elimina el scroll */
   padding: 20px;
+  
 }
 
 /* Estilos del contenedor interior donde se encuentra el formulario */
@@ -57,14 +58,14 @@ body {
 .registro-input {
   width: 100%; /* Los campos de entrada ocupan el 100% del ancho */
   padding: 7px 15px; /* Espaciado interno */
-  border: 1px solid #201f1f; /* Borde gris oscuro */
-  border-radius: 50px; /* Bordes redondeados */
-  background: #f8f8f8; /* Fondo gris claro para los campos */
+  border: 1px solid #201f1f; 
+  border-radius: 50px; 
+  background: #f8f8f8; 
   font-size: 14px; /* Tamaño de fuente más pequeño */
   margin-bottom: 0px; /* Espaciado debajo del campo */
   outline: none; /* Elimina el contorno predeterminado */
   transition: border-color 0.3s; /* Transición suave en el borde cuando se enfoca */
-
+  color: black !important;
 }
 
 /* Estilo para cuando el campo de entrada está enfocado */

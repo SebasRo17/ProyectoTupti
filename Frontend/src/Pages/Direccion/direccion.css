@@ -70,6 +70,7 @@ body{
     display: flex;
     gap: 10px;
   }
+ 
   
   .btn-agregar {
     background-color: #4CAF50;
@@ -88,6 +89,17 @@ body{
     border-radius: 4px;
     cursor: pointer;
   }
+
+  .btn-buscar {
+    background-color: #436bbb;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+
   
   /* Modal styles */
   .modal-overlay {
@@ -125,6 +137,11 @@ body{
   .modal-buttons button:hover {
     background-color: #0056b3;
   }
+
+
+
+ 
+
   
   /* Responsive design */
   @media (max-width: 768px) {
@@ -293,5 +310,10 @@ body{
     margin-top: 20px;
   }
 }
+
+
+
+
+
 
 

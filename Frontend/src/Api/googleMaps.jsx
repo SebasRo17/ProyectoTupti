@@ -1,22 +1,32 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
+const libraries = ['places', 'geometry'];
 
-const GoogleMaps = ({ onAddressChange }) => {
-  const [marker, setMarker] = useState(null);
+const GoogleMaps = ({ mapCenter: propMapCenter, marker: propMarker, onAddressChange }) => {
   const [mapRef, setMapRef] = useState(null);
-  const [mapCenter, setMapCenter] = useState({
-    lat: -0.1807,
-    lng: -78.4678
-  });
 
   const mapStyles = {
     height: '800px',
     width: '100%'
   };
+
   const onMapLoad = useCallback((map) => {
     setMapRef(map);
   }, []);
+
+  // Efecto para mover el mapa cuando cambian las coordenadas desde el padre
+  useEffect(() => {
+    if (mapRef && propMapCenter) {
+      mapRef.panTo(propMapCenter);
+    }
+  }, [mapRef, propMapCenter]);
+
+  const moveMapToPosition = (lat, lng) => {
+    if (mapRef) {
+      mapRef.panTo({ lat, lng });
+    }
+  };
 
   const findNearestCrossStreet = async (lat, lng, mainStreet) => {
     return new Promise((resolve) => {
@@ -25,45 +35,43 @@ const GoogleMaps = ({ onAddressChange }) => {
       const service = new window.google.maps.places.PlacesService(mapRef);
       service.nearbySearch({
         location: { lat, lng },
-        radius: 200, // Aumentamos el radio de búsqueda a 200 metros
-        type: ['route'] // Aseguramos que solo buscamos "rutas" o "calles"
+        radius: 200,
+        type: ['route']
       }, (results, status) => {
         if (status === 'OK' && results) {
-          // Filtramos para encontrar la intersección más cercana que no sea la calle principal
           const crossStreet = results.find(place => 
-            place.name && place.name !== mainStreet && place.name.toLowerCase().includes('st') // Aseguramos que sea una calle
+            place.name && place.name !== mainStreet && place.name.toLowerCase().includes('st')
           );
-          resolve(crossStreet ? crossStreet.name : ''); // Devolvemos el nombre de la calle secundaria o vacío
+          resolve(crossStreet ? crossStreet.name : '');
         } else {
           resolve('');
         }
       });
     });
-  };  
+  };
 
   const getAddressFromCoordinates = async (lat, lng) => {
     try {
       const geocoder = new window.google.maps.Geocoder();
-      
-      // Add bounds to restrict results to Ecuador
       const ecuadorBounds = {
         north: 1.4897,
         south: -5.0159,
         west: -81.0849,
         east: -75.1652
       };
-  
+
       const response = await geocoder.geocode({
         location: { lat, lng },
         bounds: ecuadorBounds,
-        region: 'ec'  // Restrict to Ecuador
+        region: 'ec'
       });
-  
+
       if (response.results[0]) {
         const result = response.results[0];
         const addressComponents = result.address_components;
         let streetNumber = '', route = '', city = '', province = '',
-        neighborhood = '', country= '', secondaryStreet = '';
+        neighborhood = '', country = '', secondaryStreet = '';
+        
         addressComponents.forEach(component => {
           const types = component.types;
           
@@ -83,8 +91,9 @@ const GoogleMaps = ({ onAddressChange }) => {
             country = component.long_name;
           }
         });
+
         const crossStreet = await findNearestCrossStreet(lat, lng, route);
-        console.log('Cross street found:', crossStreet); 
+
         onAddressChange({
           callePrincipal: route || result.formatted_address.split(',')[0],
           numeracion: streetNumber,
@@ -105,9 +114,14 @@ const GoogleMaps = ({ onAddressChange }) => {
       lat: e.latLng.lat(),
       lng: e.latLng.lng()
     };
-    setMarker(newPosition);
-    setMapCenter(newPosition);
+    // En lugar de actualizar el estado local, notifica al componente padre
+    onAddressChange(prevState => ({
+      ...prevState,
+      _mapCenter: newPosition,
+      _marker: newPosition
+    }));
     getAddressFromCoordinates(newPosition.lat, newPosition.lng);
+    moveMapToPosition(newPosition.lat, newPosition.lng);
   }, [onAddressChange]);
 
   const onMarkerDragEnd = useCallback((e) => {
@@ -115,23 +129,28 @@ const GoogleMaps = ({ onAddressChange }) => {
       lat: e.latLng.lat(),
       lng: e.latLng.lng()
     };
-    setMarker(newPosition);
-    setMapCenter(newPosition);
+    // En lugar de actualizar el estado local, notifica al componente padre
+    onAddressChange(prevState => ({
+      ...prevState,
+      _mapCenter: newPosition,
+      _marker: newPosition
+    }));
     getAddressFromCoordinates(newPosition.lat, newPosition.lng);
+    moveMapToPosition(newPosition.lat, newPosition.lng);
   }, [onAddressChange]);
 
   return (
-    <LoadScript googleMapsApiKey="AIzaSyC9_P4vQeDtyafKAFvad3bJJPwmO7tmKQQ" libraries={['places', 'geometry']}>
+    <LoadScript googleMapsApiKey="AIzaSyC9_P4vQeDtyafKAFvad3bJJPwmO7tmKQQ" libraries={libraries}>
       <GoogleMap
         mapContainerStyle={mapStyles}
         zoom={13}
-        center={mapCenter}
+        center={propMapCenter || { lat: -0.1807, lng: -78.4678 }}
         onClick={onMapClick}
         onLoad={onMapLoad}
       >
-        {marker && (
+        {(propMarker && propMarker.lat && propMarker.lng) && (
           <Marker
-            position={marker}
+            position={propMarker}
             draggable={true}
             onDragEnd={onMarkerDragEnd}
           />

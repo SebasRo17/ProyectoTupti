@@ -284,6 +284,7 @@ transform: translateX(-40px);
     font-weight: bold; /* Negrita */
     color: #4CAF50; /* Color verde */
     cursor: pointer; /* Cambia el cursor a mano */
+    
 }
 
 .signup-text:hover {
