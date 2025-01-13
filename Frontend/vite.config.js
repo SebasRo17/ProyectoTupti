@@ -8,11 +8,6 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      external: [
-        '@fortawesome/fontawesome-svg-core',
-        '@fortawesome/free-solid-svg-icons',
-        '@fortawesome/react-fontawesome'
-      ],
       output: {
         manualChunks: undefined,
         compact: true,
