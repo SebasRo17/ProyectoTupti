@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './MetodoPago.css';
-import './responsiveMetodoPago.css';
+
 import HeaderPagos from '../../Components/headerPago/headerPago.jsx';
 import { getPedidoByCarrito, getDetallesPedido } from '../../Api/pedidoApi';
 import { createPaypalOrder, capturePaypalPayment } from '../../Api/pagosApi';
