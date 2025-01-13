@@ -6,8 +6,7 @@ import GoogleMaps from '../../Api/googleMaps.jsx';
 import jwtDecode from 'jwt-decode';
 import { createDireccion } from '../../Api/direccionApi';
 import './direccion.css';
-
-
+import ErrorPopup from '../../Components/ErrorPopup/ErrorPopup';
 
 const Direccion = () => {
   const navigate = useNavigate();
@@ -25,12 +24,15 @@ const Direccion = () => {
   const [idUsuario, setIdUsuario] = useState(null);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [direccionBuscada, setDireccionBuscada] = useState('');
-
   const [mapCenter, setMapCenter] = useState({
     lat: -0.1807,
     lng: -78.4678
   });
   const [marker, setMarker] = useState(null);
+  
+  // Estado para manejar errores
+  const [errorMessage, setErrorMessage] = useState('');
+  const [showErrorPopup, setShowErrorPopup] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('jwtToken');
@@ -151,8 +153,7 @@ const Direccion = () => {
   const handleSaveLocation = async () => {
     try {
       if (!idUsuario) {
-        alert('Debe iniciar sesión para guardar una dirección');
-        return;
+        throw new Error('Debe iniciar sesión para guardar una dirección');
       }
 
       const direccionData = {
@@ -170,8 +171,7 @@ const Direccion = () => {
       const camposRequeridos = Object.entries(direccionData);
       for (const [campo, valor] of camposRequeridos) {
         if (!valor) {
-          alert(`El campo ${campo} es requerido`);
-          return;
+          throw new Error(`El campo ${campo} es requerido`);
         }
       }
 
@@ -181,7 +181,8 @@ const Direccion = () => {
         setShowConfirmModal(true);
       }
     } catch (error) {
-      alert('Error al guardar la dirección: ' + (error.message || 'Error desconocido'));
+      setErrorMessage(error.message || 'Error desconocido');
+      setShowErrorPopup(true);
     }
   };
 
@@ -310,7 +311,15 @@ const Direccion = () => {
           </div>
         </div>
       )}
-      
+
+      {/* Mostrar el pop-up de error */}
+      {showErrorPopup && (
+        <ErrorPopup
+          message={errorMessage}
+          onClose={() => setShowErrorPopup(false)}
+        />
+      )}
+
       <Footer />
     </div>
   );
