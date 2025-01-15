@@ -44,5 +44,19 @@ class DireccionController {
         res.status(500).json({ message: 'Error al obtener las direcciones' });
       }
     }
+
+    async updateSelectedAddress(req, res) {
+      try {
+        const { idDireccion } = req.params;
+        await DireccionService.updateSelectedAddress(idDireccion);
+        res.status(200).json({ 
+          message: 'Dirección seleccionada actualizada exitosamente' 
+        });
+      } catch (error) {
+        console.error('Error en controlador:', error);
+        res.status(error.message === 'Dirección no encontrada' ? 404 : 500)
+          .json({ message: error.message });
+      }
+    }
   }
 module.exports = new DireccionController();
