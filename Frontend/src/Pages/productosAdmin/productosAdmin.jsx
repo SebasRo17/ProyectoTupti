@@ -22,6 +22,7 @@ const ProductosAdmin = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
 
     
@@ -41,12 +42,20 @@ const ProductosAdmin = () => {
         }
     };
 
-    const handleDelete = async (productId) => {
+    const handleDelete = (product) => {
+        setSelectedProduct(product);
+        setShowDeleteModal(true);
+        document.body.style.overflow = 'hidden';
+    };
+    
+    const confirmDelete = async () => {
         try {
-            await productosApi.deleteProduct(productId);
-            fetchProductos(); // Recargar la lista después de eliminar
+            await productosApi.deleteProduct(selectedProduct.id);
+            fetchProductos();
+            setShowDeleteModal(false);
+            document.body.style.overflow = 'auto';
         } catch (error) {
-            //console.error('Error al eliminar el producto:', error);
+            console.error('Error al eliminar el producto:', error);
         }
     };
 
@@ -115,7 +124,26 @@ const ProductosAdmin = () => {
                     />
                 </div>
             )}
-            <FiltroAdmin showNewProduct={true} />
+        {showDeleteModal && selectedProduct &&(
+        <div className="modal-wrapper3">
+          <div className="modal-overlay3" onClick={() => setShowDeleteModal(false)} />
+          <div className="modal-content3">
+            <h3>Eliminar Descuento</h3>
+            <p>
+              ¿Está seguro que desea eliminar el producto <span className="product-name">{selectedProduct.nombre}</span>?
+            </p>
+            <div className="modal-buttons">
+              <button className="cancel-btn" onClick={() => setShowDeleteModal(false)}>
+                Cancelar
+              </button>
+              <button className="delete-btn" onClick={confirmDelete}>
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+            <FiltroAdmin showNewProduct={true} showNewDiscount={false} />
                 <main className="product-grid">
                     {loading ? (
                         <p>Cargando productos...</p>
@@ -142,16 +170,14 @@ const ProductosAdmin = () => {
                                     >
                                     Editar
                                     </button>
-                                    <button 
-                                        className="delete-button"
-                                        onClick={() => handleDelete(product.IdProducto)}
-                                    >
-                                        Eliminar
+                                    <button className="delete-btn" onClick={() => handleDelete(product.IdProducto)}>
+                                    Eliminar
                                     </button>
                                 </div>
                             </div>
                         ))
                     )}
+
                 </main>
                     <div className="filters-container">
                     <div className="filtros-clase">

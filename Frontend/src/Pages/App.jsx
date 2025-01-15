@@ -11,6 +11,7 @@ import CarritoCompras from '../Components/CarritoCompras/CarritoCompras.jsx';
 import ProductosAdmin from './productosAdmin/productosAdmin.jsx'; // Asegúrate de importar el componente
 import AuthGuard from '../Components/AuthGuard/AuthGuard';
 import NuevoProducto from './nuevoProductoAdmin/nuevoProductoAdmin.jsx';
+import NuevoDescuento from '../Components/nuevoDescuento/nuevoDescuento.jsx';
 import Direccion from './Direccion/direccion.jsx';
 import MetodoPago from './MetodoPago/MetodoPago.jsx';
 import DireccionesGuardadas from '../Components/Direcciones/direcciones.jsx';
@@ -37,10 +38,18 @@ function App() {
         <Route path="/DireccionesGuardadas" element={<DireccionesGuardadas />} />
         <Route path="/Configuraciones" element={<Configuraciones />} />
         <Route path="/Facturas" element={<Facturas />} />
+        
         <Route path="/admin" 
           element={
             <AuthGuard>
               <PantallaAdmin />
+            </AuthGuard>
+          } 
+        />
+        <Route path="/NuevoDescuento" 
+          element={
+            <AuthGuard>
+              <NuevoDescuento />
             </AuthGuard>
           } 
         />
