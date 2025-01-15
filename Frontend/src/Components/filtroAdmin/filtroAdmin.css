@@ -70,6 +70,7 @@
 .search-button1,
 .filter-button,
 .export-button,
+.discount-button,
 .new-product-button {
   padding: 8px 16px;
   border: none;
@@ -100,5 +101,10 @@
 
 .new-product-button {
   background: #4CAF50;
+  color: white;
+}
+
+.discount-button {
+  background: #6ad407;
   color: white;
 }

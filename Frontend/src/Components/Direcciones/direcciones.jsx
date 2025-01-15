@@ -12,6 +12,20 @@ const DireccionesGuardadas = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState(null);
+
+  const handleDelete = (direccion) => {
+    setSelectedAddress(direccion);
+    setShowDeleteModal(true);
+    document.body.style.overflow = 'hidden';
+  };
+
+
+  const confirmDelete = () => {
+    setShowDeleteModal(false);
+    document.body.style.overflow = 'auto'; // Restore scroll
+  };
 
   useEffect(() => {
     const cargarDirecciones = async () => {
@@ -86,10 +100,30 @@ const DireccionesGuardadas = () => {
                   <p><strong>Ciudad:</strong> {direccion.Ciudad}</p>
                   <p><strong>Provincia:</strong> {direccion.Provincia}</p>
                   <p><strong>País:</strong> {direccion.Pais}</p>
+                  <button className="delete-btn1" onClick={() => handleDelete(direccion)}>🗑️</button>
                 </div>
               </div>
             ))
           )}
+            {showDeleteModal && (
+              <div className="modal-wrapper3">
+                <div className="modal-overlay3" onClick={() => setShowDeleteModal(false)} />
+                <div className="modal-content3">
+                  <h3>Eliminar Dirección</h3>
+                  <p>
+                    ¿Está seguro que desea eliminar la dirección <span className="direccion-name">{selectedAddress?.Descripcion} </span>?
+                  </p>
+                  <div className="modal-buttons">
+                    <button className="cancel-btn5" onClick={() => setShowDeleteModal(false)}>
+                      Cancelar
+                    </button>
+                    <button className="delete-btn5" onClick={confirmDelete}>
+                      Eliminar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
         </div>
       </div>
       <Footer />
