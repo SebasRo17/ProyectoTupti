@@ -3,15 +3,23 @@ import axios from 'axios';
 import './nuevoDescuento.css';
 
 const NuevoDescuento = ({ isOpen, onClose }) => {
-  const [formData, setFormData] = useState({
-    idProducto: '',
-    nombreProducto: '',
-    porcentajeDescuento: '',
-    estado: 'Activo',
-    fechaInicio: '',
-    fechaFin: ''
-  });
-
+    const [formData, setFormData] = useState({
+        idProducto: '',
+        nombreProducto: '',
+        porcentajeDescuento: '',
+        estado: 'Activo',
+        fechaInicio: '',
+        fechaFin: '',
+        aplicarCategoria: false
+      });
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOpen]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -55,11 +63,11 @@ const NuevoDescuento = ({ isOpen, onClose }) => {
 
   return (
     <>
-      <div className="modal-overlay" onClick={onClose} />
+      <div className="modal-overlay6" onClick={onClose} />
       <div className="nuevo-descuento-modal">
         <h2>Nuevo Descuento</h2>
         <form onSubmit={handleSubmit} className="nuevo-descuento-form">
-          <div className="form-group">
+          <div className="form-group6">
             <label>ID Producto:</label>
             <input
               type="text"
@@ -70,7 +78,7 @@ const NuevoDescuento = ({ isOpen, onClose }) => {
             />
           </div>
 
-          <div className="form-group">
+          <div className="form-group6">
             <label>Producto:</label>
             <input
               type="text"
@@ -79,7 +87,16 @@ const NuevoDescuento = ({ isOpen, onClose }) => {
             />
           </div>
 
-          <div className="form-group">
+          <div className="form-group6">
+            <label>Categoria:</label>
+            <input
+              type="text"
+              value={formData.nombreProducto}
+              disabled
+            />
+          </div>
+
+          <div className="form-group6">
             <label>Porcentaje de Descuento:</label>
             <input
               type="number"
@@ -92,7 +109,7 @@ const NuevoDescuento = ({ isOpen, onClose }) => {
             />
           </div>
 
-          <div className="form-group">
+          <div className="form-group6">
             <label>Estado:</label>
             <select
               name="estado"
@@ -105,7 +122,22 @@ const NuevoDescuento = ({ isOpen, onClose }) => {
             </select>
           </div>
 
-          <div className="form-group">
+        <div className="checkbox-container">
+        <input
+            type="checkbox"
+            id="aplicarCategoria"
+            name="aplicarCategoria"
+            checked={formData.aplicarCategoria}
+            onChange={(e) => setFormData({
+                ...formData,
+                aplicarCategoria: e.target.checked
+            })}
+            />
+            <label htmlFor="aplicarCategoria">Agregar a toda la categoría</label>
+        </div>
+
+
+          <div className="form-group6">
             <label>Fecha Inicio:</label>
             <input
               type="date"
@@ -116,7 +148,7 @@ const NuevoDescuento = ({ isOpen, onClose }) => {
             />
           </div>
 
-          <div className="form-group">
+          <div className="form-group6">
             <label>Fecha Fin:</label>
             <input
               type="date"
@@ -127,9 +159,9 @@ const NuevoDescuento = ({ isOpen, onClose }) => {
             />
           </div>
 
-          {error && <div className="error-message">{error}</div>}
+          {error && <div className="error-message6">{error}</div>}
 
-          <div className="form-actions">
+          <div className="form-actions6">
             <button type="button" className="btn-cancel" onClick={onClose}>
               Cancelar
             </button>

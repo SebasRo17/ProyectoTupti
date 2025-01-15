@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Header from '../../Components/header/header';
 import Footer from '../../Components/footer/footer';
-import { getDireccionesByUserId, updateSelectedAddress } from '../../Api/direccionApi';
+import { getDireccionesByUserId } from '../../Api/direccionApi';
 import jwt_decode from 'jwt-decode';
 import './direcciones.css';
 
@@ -11,7 +11,6 @@ const DireccionesGuardadas = () => {
   const [direccionesGuardadas, setDireccionesGuardadas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedDireccion, setSelectedDireccion] = useState(null);
   const navigate = useNavigate();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
@@ -28,32 +27,6 @@ const DireccionesGuardadas = () => {
     document.body.style.overflow = 'auto'; // Restore scroll
   };
 
-  const handleDireccionClick = async (direccion) => {
-    // Primero actualizamos la UI optimisticamente
-    const updatedDirecciones = direccionesGuardadas.map(dir => ({
-      ...dir,
-      EsSeleccionada: dir.IdDireccion === direccion.IdDireccion
-    }));
-    setDireccionesGuardadas(updatedDirecciones);
-    setSelectedDireccion(direccion.IdDireccion);
-
-    try {
-      // Luego realizamos la actualización en el servidor
-      await updateSelectedAddress(direccion.IdDireccion);
-    } catch (error) {
-      console.error('Error al seleccionar dirección:', error);
-      // En caso de error, revertimos los cambios
-      const revertedDirecciones = direccionesGuardadas.map(dir => ({
-        ...dir,
-        EsSeleccionada: dir.IdDireccion === selectedDireccion
-      }));
-      setDireccionesGuardadas(revertedDirecciones);
-      setSelectedDireccion(selectedDireccion);
-      // Opcional: Mostrar un mensaje de error al usuario
-      alert('No se pudo actualizar la dirección. Por favor, intente nuevamente.');
-    }
-  };
-
   useEffect(() => {
     const cargarDirecciones = async () => {
       try {
@@ -64,25 +37,28 @@ const DireccionesGuardadas = () => {
         }
 
         const decodedToken = jwt_decode(token);
+        console.log('Token decodificado:', decodedToken);
+        
+        // Modificación: Acceder directamente al IdUsuario del token
         const userId = decodedToken.IdUsuario;
+        console.log('ID de usuario:', userId);
 
         if (!userId) {
           throw new Error('No se pudo obtener el ID del usuario');
         }
 
         const direcciones = await getDireccionesByUserId(userId);
+        console.log('Direcciones recibidas:', direcciones);
+        
         if (Array.isArray(direcciones)) {
           setDireccionesGuardadas(direcciones);
-          const direccionSeleccionada = direcciones.find(dir => dir.EsSeleccionada);
-          if (direccionSeleccionada) {
-            setSelectedDireccion(direccionSeleccionada.IdDireccion);
-          }
         } else {
+          console.error('Las direcciones no son un array:', direcciones);
           setDireccionesGuardadas([]);
         }
       } catch (error) {
         console.error('Error detallado al cargar direcciones:', error);
-        setError(`Error al cargar direcciones: ${error.message}`);
+        setError('No se pudieron cargar las direcciones: ' + error.message);
       } finally {
         setIsLoading(false);
       }
@@ -108,20 +84,13 @@ const DireccionesGuardadas = () => {
             <p>No hay direcciones guardadas</p>
           ) : (
             direccionesGuardadas.map((direccion, index) => (
-              <div 
-                key={index} 
-                className={`direccion-card ${direccion.EsSeleccionada ? 'selected' : ''}`}
-                onClick={() => handleDireccionClick(direccion)}
-                style={{ 
-                  border: direccion.EsSeleccionada ? '2px solid #007bff' : '1px solid #ddd',
-                  borderRadius: '8px',
-                  padding: '15px',
-                  margin: '10px 0',
-                  backgroundColor: '#fff',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease'
-                }}
-              >
+              <div key={index} className="direccion-card" style={{ 
+                border: '1px solid #ddd',
+                borderRadius: '8px',
+                padding: '15px',
+                margin: '10px 0',
+                backgroundColor: '#fff'
+              }}>
                 <h2>{direccion.Descripcion}</h2>
                 <div className="direccion-detalles">
                   <p><strong>Calle Principal:</strong> {direccion.CallePrincipal}</p>
@@ -133,11 +102,6 @@ const DireccionesGuardadas = () => {
                   <p><strong>País:</strong> {direccion.Pais}</p>
                   <button className="delete-btn1" onClick={() => handleDelete(direccion)}>🗑️</button>
                 </div>
-                {direccion.EsSeleccionada && (
-                  <div className="direccion-selected-badge">
-                    ✓ Seleccionada
-                  </div>
-                )}
               </div>
             ))
           )}
@@ -147,7 +111,8 @@ const DireccionesGuardadas = () => {
                 <div className="modal-content3">
                   <h3>Eliminar Dirección</h3>
                   <p>
-                    ¿Está seguro que desea eliminar la dirección <span className="direccion-name">{selectedAddress?.Descripcion} </span>?
+                    ¿Está seguro que desea eliminar la dirección <span className="direccion-name">{selectedAddress?.Descripcion} </span>"?
+                    
                   </p>
                   <div className="modal-buttons">
                     <button className="cancel-btn5" onClick={() => setShowDeleteModal(false)}>
