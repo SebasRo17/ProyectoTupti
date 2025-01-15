@@ -1,4 +1,4 @@
-.modal-overlay {
+.modal-overlay6 {
     position: fixed;
     top: 0;
     left: 0;
@@ -11,7 +11,7 @@
 
 .nuevo-descuento-modal {
     position: fixed;
-    top: 70%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background:#15683b;
@@ -21,10 +21,11 @@
     max-width: 500px;
     z-index: 9999;
     box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-    overflow-y: auto !important;
+    height: 90vh;
 }
 
 .nuevo-descuento-modal h2 {
+    margin-top: -2% !important;
     color: white;
     margin-bottom: 20px;
     text-align: center;
@@ -32,27 +33,29 @@
 }
 
 .nuevo-descuento-form {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 15px;
-    overflow-y: auto;
-    scrollbar-width: auto;
+    max-height: 75vh;
+    overflow-y: auto !important;
+    scrollbar-width: thin;
 }
 
-.form-group {
+.form-group6 {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-.form-group label {
-    color: white;
+.form-group6 label {
+    color: rgb(73, 73, 73);
     font-weight: 500;
     font-size: 14px;
 }
 
-.form-group input,
-.form-group select {
+.form-group6 input,
+.form-group6 select {
     padding: 10px;
     border-radius: 6px;
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -61,28 +64,28 @@
     transition: all 0.3s ease;
 }
 
-.form-group input:focus,
-.form-group select:focus {
+.form-group6 input:focus,
+.form-group6 select:focus {
     outline: none;
     border-color: #ffffff;
     box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
 }
 
-.form-group input:disabled {
+.form-group6 input:disabled {
     background: rgba(255, 255, 255, 0.5);
     cursor: not-allowed;
 }
 
-.error-message {
+.error-message6 {
     color: #ff4444;
     background: rgba(255, 68, 68, 0.1);
-    padding: 10px;
+    padding: 15px;
     border-radius: 6px;
     font-size: 14px;
     text-align: center;
 }
 
-.form-actions {
+.form-actions6 {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
@@ -120,6 +123,33 @@
 
 .btn-cancel:hover {
     background-color: #cc0000;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    color: white;
+    margin-bottom: 2%;
+}
+  
+.checkbox-container input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    margin: 0;
+    margin-top: -12%;
+
+}
+  
+.checkbox-container label {
+    cursor: pointer;
+    font-size: 14px;
+    margin: 0;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 18px;
 }
 
 @media (max-width: 600px) {
