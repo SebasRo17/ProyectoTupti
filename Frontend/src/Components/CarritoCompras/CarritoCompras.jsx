@@ -5,6 +5,7 @@ import "./responsiveCarrito.css";
 import { getCarritoByUsuario, addToCart } from '../../Api/carritoApi.js';
 import jwtDecode from 'jwt-decode';
 import { Link } from 'react-router-dom';
+import { getDescuentoCarrito } from '../../Api/descuentosApi.js';
 
 
 const CarritoCompras = () => {
@@ -14,6 +15,7 @@ const CarritoCompras = () => {
   const [isLoading, setIsLoading] = useState(false); 
   const [productoAEliminar, setProductoAEliminar] = useState(null); 
   const [mostrarPopUp, setMostrarPopUp] = useState(false); 
+  const [descuentos, setDescuentos] = useState({ descuentoTotal: 0, detallesConDescuento: [] });
 
   useEffect(() => {
     const token = localStorage.getItem('jwtToken');
@@ -56,6 +58,24 @@ const CarritoCompras = () => {
 
     fetchCarrito();
   }, [idUsuario]);
+
+  useEffect(() => {
+    const fetchDescuentos = async () => {
+      if (idCarrito) {
+        try {
+          const descuentosData = await getDescuentoCarrito(idCarrito);
+          if (descuentosData) {
+            setDescuentos(descuentosData);
+          }
+        } catch (error) {
+          console.error('Error al obtener descuentos:', error);
+          setDescuentos({ descuentoTotal: 0, detallesConDescuento: [] });
+        }
+      }
+    };
+  
+    fetchDescuentos();
+  }, [idCarrito]);
 
   const handleAgregarCarrito = async (idProducto, cantidad) => {
     try {
@@ -129,7 +149,8 @@ const CarritoCompras = () => {
   );
   const comisionServicio = 0.08 * subtotal;
   const iva = 0.15 * subtotal;
-  const ahorroTotal = 3.37;
+  const ahorroTotal = descuentos.descuentoTotal || 0;
+  const total = subtotal + comisionServicio + iva - ahorroTotal;
 
   return (
     <div className="mi-carrito">
@@ -191,7 +212,7 @@ const CarritoCompras = () => {
             </p>
             <p className="total">
               <span>Total</span>
-              <span>${(subtotal + comisionServicio + iva - ahorroTotal).toFixed(2)}</span>
+              <span>${total.toFixed(2)}</span>
             </p>
             <Link to={`/MetodoPago`} state={{ idCarrito: idCarrito }}>
               <button className="boton-continuar" disabled={!idCarrito}>
