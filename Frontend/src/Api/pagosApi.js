@@ -2,7 +2,7 @@ import { API_URL } from '../config/config';
 
 export const createPaypalOrder = async (idPedido, monto) => {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL_DEVELOPMENT}/api/payments/create`, {
+    const response = await fetch(`${API_URL}/payments/create`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -19,9 +19,10 @@ export const createPaypalOrder = async (idPedido, monto) => {
     throw new Error(`Error al crear orden de PayPal: ${error.message}`);
   }
 };
+
 export const capturePaypalPayment = async (orderId) => {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL_DEVELOPMENT}/api/payments/capture/${orderId}`, {
+    const response = await fetch(`${API_URL}/payments/capture/${orderId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -29,16 +30,15 @@ export const capturePaypalPayment = async (orderId) => {
     });
 
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || 'Error al capturar el pago');
+      throw new Error('Error al capturar el pago');
     }
 
     return await response.json();
   } catch (error) {
-    console.error('Error en capturePaypalPayment:', error);
-    throw new Error(`Error al capturar el pago: ${error.message}`);
+    throw new Error(`Error al capturar pago de PayPal: ${error.message}`);
   }
 };
+
 export const openPaypalPopup = async (idPedido, monto) => {
   try {
     const { approveUrl, orderId } = await createPaypalOrder(idPedido, monto);

@@ -219,22 +219,27 @@ body {
 }
 
 .cantidad-input {
-  width: 70px;
-  padding: 8px;
-  border: 2px solid #649c41;
-  border-radius: 8px;
-  font-size: 1.1rem;
+  background-color: white;
+  color: black;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  padding: 5px 10px;
+  width: 60px;
   text-align: center;
-  transition: all 0.3s ease;
+  font-size: 16px;
   background-color: white;
 }
 
 .cantidad-input:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(100, 156, 65, 0.3);
-  transform: scale(1.05);
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
+.cantidad-input::-webkit-inner-spin-button,
+.cantidad-input::-webkit-outer-spin-button {
+  opacity: 1;
+}
 .btn-agregar-carrito {
   background-color: #649c41;
   color: white;

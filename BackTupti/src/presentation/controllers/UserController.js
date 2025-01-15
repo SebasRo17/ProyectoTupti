@@ -126,6 +126,40 @@ class UserController {
       });
     }
   }
+  async registerUser(req, res) {
+    try {
+      const { email, contrasenia, nombre } = req.body;
+      
+      if (!email || !contrasenia || !nombre) {
+        return res.status(400).json({ 
+          message: 'Email, contraseña y nombre son requeridos' 
+        });
+      }
+  
+      const newUser = await UserService.createUser({
+        Email: email,
+        Contrasenia: contrasenia,
+        Nombre: nombre
+      });
+  
+      res.status(201).json({
+        success: true,
+        message: 'Usuario registrado exitosamente',
+        user: {
+          id: newUser.IdUsuario,
+          email: newUser.Email,
+          nombre: newUser.Nombre,
+          codigoUs: newUser.CodigoUs
+        }
+      });
+    } catch (error) {
+      console.error('Error en registro:', error);
+      if (error.name === 'SequelizeUniqueConstraintError') {
+        return res.status(400).json({ message: 'Email ya registrado' });
+      }
+      res.status(500).json({ message: 'Error en registro de usuario' });
+    }
+  }
 }
 
 module.exports = new UserController();
