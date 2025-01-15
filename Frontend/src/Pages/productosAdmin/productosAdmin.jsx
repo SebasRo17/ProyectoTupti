@@ -115,7 +115,7 @@ const ProductosAdmin = () => {
                     />
                 </div>
             )}
-            <FiltroAdmin showNewProduct={true} />
+            <FiltroAdmin showNewProduct={true} showNewDiscount={false} />
                 <main className="product-grid">
                     {loading ? (
                         <p>Cargando productos...</p>

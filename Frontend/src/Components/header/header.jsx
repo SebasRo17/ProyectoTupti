@@ -220,7 +220,7 @@ const Header = ({ toggleCart, isCartOpen }) => {
                     <span>⚙️</span> Configuración
                   </Link>
                   <Link to="/Facturas" className="dropdown-item" onClick={() => { setIsMobileMenuOpen(false); }}>
-                    <span>📄</span> Facturas
+                    <span>📄</span> Pedidos
                   </Link>
                   <button
                     onClick={() => {
@@ -280,7 +280,7 @@ const Header = ({ toggleCart, isCartOpen }) => {
                     <span>⚙️</span> Configuración
                   </Link>
                   <Link to="/Facturas" className="dropdown-item">
-                    <span>📄</span> Facturas
+                    <span>📄</span> Pedidos
                   </Link>
                   <button
                     onClick={() => {
