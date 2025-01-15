@@ -8,25 +8,36 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999;
+    z-index: 9999 !important;
 }
 
 .modal-content7 {
     background-color: #15683b;
     padding: 30px;
     border-radius: 8px;
-    width: 90%;
+    width: 100%;
     max-width: 500px;
-    max-height: 90vh;
-    overflow-y: auto;
+    max-height: 100vh;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-top: 5%;
+    margin-top: 0%;
     z-index: 5000 !important;
 
+}
+.forms-container7{
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        max-height: 75vh;
+        overflow-y: auto !important;
+        scrollbar-width: thin;
 }
 
 .form-group7 {
     margin-bottom: 20px;
+    height: 50%;
+    overflow-y: auto;
+    scrollbar-width: thin;
 }
 
 .form-group7 label {
@@ -49,7 +60,11 @@
     min-height: 100px;
     resize: vertical;
 }
-
+.form-group7 input::placeholder {
+    color: #999;
+    font-style: italic;
+    font-size: 14px;
+}
 .current-image {
     margin: 10px 0;
     text-align: center;
@@ -102,4 +117,22 @@ h2 {
     margin-bottom: 20px;
     color: #ffffff;
     font-size: 1.5em;
+}
+
+.image-preview-container {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 20px;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.product-image-preview {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }

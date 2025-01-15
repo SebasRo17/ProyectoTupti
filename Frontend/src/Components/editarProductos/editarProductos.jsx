@@ -7,7 +7,7 @@ const EditarProductos = ({ product, onClose }) => {
         name: '',
         details: '',
         price: '',
-        image: ''
+        imageUrl: product.imageUrl || ''
     });
     const [imagePreview, setImagePreview] = useState('');
 
@@ -43,7 +43,8 @@ const EditarProductos = ({ product, onClose }) => {
         <div className="modal-overlay7">
             <div className="modal-content7">
                 <h2>Editar Producto: {formData.name}</h2>
-                <form onSubmit={handleSubmit}>
+                <div className="forms-container7">
+                <form onSubmit={handleSubmit} >
                     <div className="form-group7">
                         <label>Nombre del Producto:</label>
                         <input
@@ -54,7 +55,7 @@ const EditarProductos = ({ product, onClose }) => {
                             required
                         />
                     </div>
-            <div className="form-group7">
+                    <div className="form-group7">
                         <label>Precio:</label>
                         <input
                             type="text"
@@ -74,36 +75,37 @@ const EditarProductos = ({ product, onClose }) => {
                             required
                         />
                     </div>
-
+                    <div className="form-group7">
+                        <label>Stock:</label>
+                        <input
+                            type="number"
+                            name="stock"
+                            value={formData.stock}
+                            onChange={(e) => setFormData({...formData, stock: e.target.value})}
+                            min="0"
+                            required
+                        />
+                    </div>
                     <div className="form-group7">
                         <label>Imagen actual:</label>
-                        {imagePreview && (
-                            <div className="current-image">
-                                <img 
-                                    src={imagePreview} 
-                                    alt="Imagen actual" 
-                                    className="product-image-preview"
-                                />
+                            <div className="image-preview-container">
+                                {formData.imageUrl && (
+                                    <img 
+                                        src={formData.imageUrl} 
+                                        alt={formData.name}
+                                        className="product-image-preview"
+                                    />
+                                )}
                             </div>
-                        )}
+                    <div className="form-group7">
+                        <label>Agregar Imágenes:</label>
                         <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => {
-                                const file = e.target.files[0];
-                                if (file) {
-                                    const reader = new FileReader();
-                                    reader.onload = (e) => {
-                                        setImagePreview(e.target.result);
-                                        setFormData(prev => ({
-                                            ...prev,
-                                            image: e.target.result
-                                        }));
-                                    };
-                                    reader.readAsDataURL(file);
-                                }
-                            }}
+                            type="text"
+                            name="image"
+                            placeholder="Por favor ingrese la URL de la imagen a cargar"
+                            required
                         />
+                    </div>
                     </div>
 
                     <div className="modal-buttons7">
@@ -115,6 +117,7 @@ const EditarProductos = ({ product, onClose }) => {
                         </button>
                     </div>
                 </form>
+                </div>
             </div>
         </div>
     );
