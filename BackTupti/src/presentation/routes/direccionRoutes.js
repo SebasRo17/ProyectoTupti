@@ -171,5 +171,26 @@ router.get('/usuario/:userId', (req, res) => DireccionController.getDireccionesB
  *         description: Error interno del servidor
  */
 router.put('/:id', (req, res) => DireccionController.updateDireccion(req, res));
-
+/**
+ * @swagger
+ * /direcciones/{idDireccion}/seleccionar:
+ *   put:
+ *     summary: Actualiza la dirección seleccionada del usuario
+ *     tags: [Direcciones]
+ *     parameters:
+ *       - in: path
+ *         name: idDireccion
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de la dirección a seleccionar
+ *     responses:
+ *       200:
+ *         description: Dirección seleccionada actualizada exitosamente
+ *       404:
+ *         description: Dirección no encontrada
+ *       500:
+ *         description: Error del servidor
+ */
+router.put('/:idDireccion/seleccionar', (req, res) => DireccionController.updateSelectedAddress(req, res));
 module.exports = router;
