@@ -1,5 +1,6 @@
 const UserService = require('../../aplication/services/UserService');
 const jwt = require('jsonwebtoken');
+const EmailVerificationService = require('../../aplication/services/EmailVerificationService');
 
 class UserController {
   async getUsers(req, res) {
@@ -139,12 +140,19 @@ class UserController {
       const newUser = await UserService.createUser({
         Email: email,
         Contrasenia: contrasenia,
-        Nombre: nombre
+        Nombre: nombre,
+        EmailVerificado: false // Añadir este campo
       });
+
+      // Enviar email de verificación
+      await EmailVerificationService.sendVerificationEmail(
+        newUser.IdUsuario,
+        newUser.Email
+      );
   
       res.status(201).json({
         success: true,
-        message: 'Usuario registrado exitosamente',
+        message: 'Usuario registrado exitosamente. Por favor verifica tu correo electrónico.',
         user: {
           id: newUser.IdUsuario,
           email: newUser.Email,
