@@ -36,20 +36,39 @@ export const deleteDireccion = async (id) => {
 
 export const getDireccionesByUserId = async (userId) => {
   try {
-    const response = await axios.get(`${API_URL}/direcciones/usuario/${userId}`);
+    const response = await axios.get(`${API_URL}/direcciones/usuario/${userId}`, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    
     return response.data;
   } catch (error) {
-    console.error('Error al obtener las direcciones:', error);
-    throw error;
+    console.error('Error al obtener las direcciones:', {
+      status: error.response?.status,
+      message: error.response?.data?.message || error.message,
+      error
+    });
+    throw new Error(error.response?.data?.message || 'Error al obtener las direcciones');
   }
 };
 
-export const updateDireccion = async (id, direccionData) => {
+export const updateSelectedAddress = async (idDireccion) => {
   try {
-    const response = await axios.put(`${API_URL}/direcciones/${id}`, direccionData);
-    return response.data;
+    const response = await fetch(`${API_URL}/direcciones/${idDireccion}/seleccionar`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('Error al seleccionar la dirección');
+    }
+
+    return await response.json();
   } catch (error) {
-    console.error('Error al actualizar la dirección:', error);
+    console.error('Error:', error);
     throw error;
   }
 };

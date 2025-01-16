@@ -14,10 +14,10 @@
   
   .direccion-card {
     background-color: white;
-    border: 1px solid #ddd;
+    border: 1px solid #dddddd;
     border-radius: 8px;
     padding: 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(106, 221, 221, 0.705);
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -34,7 +34,96 @@
     margin: 5px 0;
     padding: 5px;
   }
+  .delete-btn1 {
+    text-align: start;
+    padding: 8px 16px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 20% !important;
+    margin-left: 80%;
+  }
+  /* Modal Styles */
+.modal-overlay3 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1003;
   
+}
+.modal-wrapper3 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+.modal-content3 {
+  position: relative;
+  background: white;
+  padding: 25px;
+  border-radius: 8px;
+  width: 400px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  z-index: 10000;
+}
+.modal-content3 p{
+  color: black;
+}
+.modal-content3 .product-name {
+  margin: 0 0 15px;
+  color: #00fa9a;
+  z-index: 1002;
+}
+.modal h3 {
+  margin: 0 0 15px;
+  color: #333;
+  z-index: 1002;
+}
+
+.product-name {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.cancel-btn5 {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  background: rgb(45, 112, 18) !important;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.delete-btn5 {
+  padding: 8px 16px;
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.direccion-name{
+  font-weight: bold;
+  color: #4aa039;
+}
   @media (max-width: 768px) {
     .direccion-detalles {
       grid-template-columns: 1fr;

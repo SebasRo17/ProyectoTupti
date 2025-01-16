@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import NuevoDescuento from '../nuevoDescuento/nuevoDescuento';
 import './filtroAdmin.css';
 
-const FiltroAdmin = ({ showNewProduct = true }) => {
+const FiltroAdmin = ({ showNewProduct = true , showNewDiscount = true }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
 
   const products = [
     { id: 1, name: 'Nintendo Switch', price: '$299.99', image: 'switch.jpg' },
@@ -78,6 +83,15 @@ const FiltroAdmin = ({ showNewProduct = true }) => {
       </div>
       <div className="action-buttons">
         <button className="export-button">Exportar</button>
+      {showNewDiscount && (
+        <button onClick={handleOpenModal} className="discount-button">
+          Nuevo Descuento
+        </button>
+      )}
+      <NuevoDescuento 
+        isOpen={isModalOpen} 
+        onClose={handleCloseModal}
+      />
         {showNewProduct && (
         <Link to="/NuevoProducto">
           <button className="new-product-button">Nuevo Producto</button>
