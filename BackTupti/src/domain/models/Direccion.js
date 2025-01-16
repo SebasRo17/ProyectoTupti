@@ -44,6 +44,10 @@ Direccion.init({
   Descripcion: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  EsSeleccionada: {
+    type: DataTypes.STRING,
+    allowNull: true
   }
 
 }, {

@@ -53,5 +53,28 @@ class DireccionService {
       throw error;
     }
   }
+
+  async updateSelectedAddress(idDireccion) {
+    try {
+      const direccion = await DireccionRepository.findById(idDireccion);
+      if (!direccion) {
+        throw new Error('Dirección no encontrada');
+      }
+  
+      const updated = await DireccionRepository.updateSelectedStatus(
+        idDireccion, 
+        direccion.IdUsuario
+      );
+      
+      if (!updated) {
+        throw new Error('Error al actualizar la dirección seleccionada');
+      }
+  
+      return true;
+    } catch (error) {
+      console.error('Error en servicio - updateSelectedAddress:', error);
+      throw error;
+    }
+  }
 }
 module.exports = new DireccionService();

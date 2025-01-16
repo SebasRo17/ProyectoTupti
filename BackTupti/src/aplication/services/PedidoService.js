@@ -10,12 +10,15 @@ class PedidoService {
         throw new Error('Pedido no encontrado');
       }
 
+      // Filtrar items con cantidad > 0
+      const detallesValidos = detalles.filter(item => item.Cantidad > 0);
+
       // Calcular totales y organizar la respuesta
       const resumen = {
         idPedido: detalles[0].IdPedido,
-        items: detalles.map(item => ({
+        items: detallesValidos.map(item => ({
           idCarritoDetalle: item.IdCarritoDetalle,
-          producto: {
+            producto: {
             nombre: item.NombreProducto,
             precio: parseFloat(item.PrecioProducto),
             cantidad: item.Cantidad,
@@ -28,14 +31,14 @@ class PedidoService {
           }
         })),
         totales: {
-          subtotal: detalles.reduce((acc, item) => 
+          subtotal: detallesValidos.reduce((acc, item) => 
             acc + (parseFloat(item.PrecioUnitario) * item.Cantidad), 0),
-          cantidadItems: detalles.reduce((acc, item) => acc + item.Cantidad, 0)
+          cantidadItems: detallesValidos.reduce((acc, item) => acc + item.Cantidad, 0)
         }
       };
 
       // Calcular impuestos totales
-      resumen.totales.impuestos = detalles.reduce((acc, item) => {
+      resumen.totales.impuestos = detallesValidos.reduce((acc, item) => {
         const subtotalItem = parseFloat(item.PrecioUnitario) * item.Cantidad;
         return acc + (subtotalItem * parseFloat(item.PorcentajeImpuesto) / 100);
       }, 0);

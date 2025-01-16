@@ -13,6 +13,11 @@ const MetodoPago = () => {
   const [detallesPedido, setDetallesPedido] = useState(null);
   const [error, setError] = useState(null);
   const [paymentStatus, setPaymentStatus] = useState('pending');
+  const [esConsumidorFinal, setEsConsumidorFinal] = useState(false); // Estado para consumidor final
+  const [tipoDocumento, setTipoDocumento] = useState('cedula'); // Estado para el tipo de documento
+  const [numeroIdentificacion, setNumeroIdentificacion] = useState(''); // Estado para el número de identificación
+  const [numeroTelefono, setNumeroTelefono] = useState(''); // Estado para el número de teléfono
+  const [aceptoTerminos, setAceptoTerminos] = useState(false); // Estado para aceptar términos
 
   const location = useLocation();
   const { idCarrito } = location.state || {};
@@ -40,91 +45,67 @@ const MetodoPago = () => {
     obtenerPedido();
   }, [idCarrito]);
 
-  const startPayPalFlow = async () => {
-    if (!pedido || !detallesPedido) {
-      alert('No hay información del pedido disponible');
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-      const montoFormateado = Number(detallesPedido.totales.total.toFixed(2));
-      const { approveUrl, orderId } = await createPaypalOrder(
-        pedido.idPedido,
-        montoFormateado
-      );
-
-      // Configuración del popup
-      const width = 450;
-      const height = 600;
-      const left = (window.innerWidth - width) / 2;
-      const top = (window.innerHeight - height) / 2;
-
-      const popupFeatures = `
-        width=${width},
-        height=${height},
-        left=${left},
-        top=${top},
-        scrollbars=yes,
-        status=yes,
-        resizable=yes,
-        location=yes
-      `;
-
-      const paypalPopup = window.open(approveUrl, 'PayPal', popupFeatures);
-
-      if (!paypalPopup || paypalPopup.closed || typeof paypalPopup.closed === 'undefined') {
-        alert('Por favor, habilita las ventanas emergentes para continuar con el pago');
-        setIsLoading(false);
-        return;
-      }
-
-      const checkPopupStatus = setInterval(() => {
-        if (!paypalPopup || paypalPopup.closed) {
-          clearInterval(checkPopupStatus);
-          setIsLoading(false);
-          return;
-        }
-
-        try {
-          const popupUrl = paypalPopup.location.href;
-          
-          if (popupUrl.includes('/payment-success')) {
-            paypalPopup.close();
-            clearInterval(checkPopupStatus);
-            console.log('Pago completado con éxito', orderId);
-            capturePaypalPayment(orderId);
-            setPaymentStatus('success');
-            setIsLoading(false);
-          } else if (popupUrl.includes('/payment-cancel')) {
-            paypalPopup.close();
-            clearInterval(checkPopupStatus);
-            setPaymentStatus('cancelled');
-            setIsLoading(false);
-          }
-        } catch (err) {
-          // Manejar errores de cross-origin
-          console.log('Esperando completar el pago...');
-        }
-      }, 1000);
-
-    } catch (err) {
-      console.error('Error al iniciar el pago:', err);
-      setError('Error al iniciar el pago: ' + err.message);
-      setIsLoading(false);
-    }
-  };
-
   const confirmarCompra = () => {
     setMostrarConfirmacion(false);
     startPayPalFlow();
   };
 
-  const cerrarConfirmacion = () => {
+  const cerrarFormulario = () => {
     setMostrarConfirmacion(false);
   };
 
-  // Renderizado condicional para estados de carga y error
+  const mostrarFormulario = () => {
+    setMostrarConfirmacion(true);
+  };
+
+  const manejarEnvioFormulario = (e) => {
+    e.preventDefault();
+    
+    // Validar el número de identificación
+    if (!esConsumidorFinal) {
+      if (tipoDocumento === 'cedula' && numeroIdentificacion.length !== 10) {
+        alert('La cédula debe tener 10 dígitos');
+        return;
+      }
+
+      if (tipoDocumento === 'ruc' && numeroIdentificacion.length !== 13) {
+        alert('El RUC debe tener 13 dígitos');
+        return;
+      }
+    }
+    
+    console.log('Formulario enviado');
+    setMostrarConfirmacion(false);
+  };
+
+  const handleConsumidorFinalChange = (e) => {
+    setEsConsumidorFinal(e.target.checked); // Actualiza el estado según el valor del checkbox
+  };
+
+  const handleTipoDocumentoChange = (e) => {
+    setTipoDocumento(e.target.value); // Actualiza el tipo de documento seleccionado
+  };
+
+  const handleNumeroIdentificacionChange = (e) => {
+    const value = e.target.value;
+    // Solo permite números
+    if (/^\d*$/.test(value)) {
+      setNumeroIdentificacion(value);
+    }
+  };
+
+  const handleTelefonoChange = (e) => {
+    const value = e.target.value;
+    // Solo permite números
+    if (/^\d*$/.test(value)) {
+      setNumeroTelefono(value);
+    }
+  };
+
+  const handleTerminosChange = (e) => {
+    setAceptoTerminos(e.target.checked); // Actualiza el estado cuando cambia el checkbox de términos
+  };
+
   if (isLoading && !detallesPedido) {
     return (
       <div className="pagina-metodo-pago">
@@ -194,15 +175,19 @@ const MetodoPago = () => {
                 <div className="totales-grid">
                   <p>Cantidad total de items:</p>
                   <p>{detallesPedido.totales.cantidadItems}</p>
-                  
+
                   <p>Subtotal:</p>
                   <p>${detallesPedido.totales.subtotal.toFixed(2)}</p>
-                  
+
                   <p>Impuestos:</p>
                   <p>${detallesPedido.totales.impuestos.toFixed(2)}</p>
-                  
-                  <p><strong>Total Final:</strong></p>
-                  <p><strong>${detallesPedido.totales.total.toFixed(2)}</strong></p>
+
+                  <p>
+                    <strong>Total Final:</strong>
+                  </p>
+                  <p>
+                    <strong>${detallesPedido.totales.total.toFixed(2)}</strong>
+                  </p>
                 </div>
               </div>
             </>
@@ -223,22 +208,97 @@ const MetodoPago = () => {
             <button className="boton-salir">SALIR</button>
           </Link>
           <button
-            className="boton-azul"
-            onClick={() => setMostrarConfirmacion(true)}
-            disabled={isLoading || paymentStatus === 'success'}
+            className="boton-azul-pago"
+            onClick={mostrarFormulario}
+            disabled={isLoading}
           >
-            {isLoading ? 'Procesando...' : 'Ir a plataforma de pago'}
+            PAGAR
           </button>
         </div>
       </div>
 
       {mostrarConfirmacion && (
-        <div className="modal-confirmacion">
-          <div className="modal-content">
-            <h3>¿Estás seguro de querer realizar la compra?</h3>
-            <div className="modal-buttons">
-              <button onClick={confirmarCompra}>Sí</button>
-              <button onClick={cerrarConfirmacion}>No</button>
+        <div className="modal-overlay10">
+          <div className="modal-content11">
+            <h3>COMPLETA LA INFORMACIÓN</h3>
+            <div className="modal-body">
+              <form onSubmit={manejarEnvioFormulario}>
+                <div className="checkbox-container">
+                  <input
+                    type="checkbox"
+                    id="checkbox-consufinal"
+                    checked={esConsumidorFinal}
+                    onChange={handleConsumidorFinalChange}
+                  />
+                  <label htmlFor="checkbox-consufinal">Consumidor final</label>
+                </div>
+
+                <input
+                  type="text"
+                  placeholder="Nombre del titular"
+                  required={!esConsumidorFinal}
+                  disabled={esConsumidorFinal}
+                />
+
+                <select
+                  value={tipoDocumento}
+                  onChange={handleTipoDocumentoChange}
+                  disabled={esConsumidorFinal}
+                  required={!esConsumidorFinal}
+                >
+                  <option value="cedula">Cédula</option>
+                  <option value="ruc">RUC</option>
+                </select>
+
+                <input
+                  type="text"
+                  placeholder="Número de identificación"
+                  required={!esConsumidorFinal}
+                  disabled={esConsumidorFinal}
+                  value={numeroIdentificacion}
+                  onChange={handleNumeroIdentificacionChange}
+                />
+
+                <input
+                  type="text"
+                  placeholder="Número de teléfono"
+                  required={!esConsumidorFinal}
+                  disabled={esConsumidorFinal}
+                  value={numeroTelefono}
+                  onChange={handleTelefonoChange} // Este maneja solo números
+                />
+                <input
+                  type="email"
+                  placeholder="Correo electrónico"
+                  required={!esConsumidorFinal}
+                  disabled={esConsumidorFinal}
+                />
+
+                <div className="checkbox-container">
+                  <input
+                    type="checkbox"
+                    id="terminos"
+                    checked={aceptoTerminos}
+                    onChange={handleTerminosChange}
+                    required={!esConsumidorFinal} // Esto se ajusta según el caso
+                  />
+                  <label htmlFor="terminos">
+                    Acepto haber leído los <a href="#">términos y condiciones</a> y
+                    la <a href="#">política de privacidad</a>
+                  </label>
+                </div>
+
+                <button
+                  type="submit"
+                  className="boton-confirmacion"
+                  disabled={isLoading || !aceptoTerminos} // Deshabilitado si no se marcan los términos
+                >
+                  {isLoading ? 'Procesando...' : 'Ir a la plataforma de pago'}
+                </button>
+              </form>
+              <button className="boton-salir" onClick={cerrarFormulario}>
+                Cerrar
+              </button>
             </div>
           </div>
         </div>

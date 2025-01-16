@@ -36,6 +36,68 @@
   margin-bottom: 20px;
 }
 
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Espacio entre el checkbox y el texto */
+  margin-top: 5px; /* Margen superior para separarlo de otros elementos */
+  font-size: 5px; /* Tamaño del texto */
+}
+
+.checkbox-container input[type="checkbox"] {
+  width: 18px; /* Ancho del checkbox */
+  height: 18px; /* Altura del checkbox */
+  accent-color: #007BFF; /* Color del checkbox cuando está seleccionado (compatible en navegadores modernos) */
+  cursor: pointer; /* Cambia el cursor al pasar por el checkbox */
+  margin-top: 20px;
+  margin-left: 10px;
+  transform: translateX(-15px);
+}
+
+.checkbox-container label a {
+  color: #007BFF; /* Color de los enlaces */
+  text-decoration: none; /* Quitar el subrayado */
+  font-weight: bold; /* Resaltar los enlaces */
+  
+}
+
+/* Estilo para el contenedor de la sección de selección de tipo de documento */
+.modal-body form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+}
+
+/* Estilo para los campos de entrada en el formulario */
+.modal-body form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+}
+
+/* Estilos para el checkbox de "Consumidor final" */
+#checkbox-consufinal {
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+  accent-color: #094d9b; /* Cambia el color del checkbox cuando está seleccionado */
+  margin-bottom: 20px;
+}
+
+/* Estilos para la etiqueta del "Consumidor final" */
+.checkbox-container label {
+  font-size: 15px;
+  color: #333;
+  font-weight: normal;
+}
+
+
 /* Contenedor de PayPal */
 .paypal {
   display: flex;
@@ -77,6 +139,7 @@
 .informacion-pago h4 {
   color: #151615;
   font-weight: bold;
+  
 }
 
 .informacion-pago h3 {
@@ -101,6 +164,7 @@
 .formulario-pago h3 {
   font-weight: bold;
   margin-bottom: 15px;
+
 }
 
 .formulario-pago form input,
@@ -135,21 +199,20 @@
   text-decoration: underline;
 }
 
-.boton-azul {
-  display: block;
-  width: 100%;
-  padding: 12px;
-  color: #fff;
+/* Estilo para el botón de la pantalla principal (PAGAR) */
+.boton-azul-pago {
   background-color: #007bff;
+  color: white;
   border: none;
-  border-radius: 8px;
+  padding: 15px 20px; /* Aumenta el padding para hacerlo más ancho */
   font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-}
-
-.boton-azul:hover {
-  background-color: #0056b3;
+  border-radius: 15px;
+  transition: background-color 0.3s ease;
+  display: block; /* Hace que el botón sea un bloque */
+  width: 100%; /* Hace que el botón ocupe el ancho completo del contenedor */
+  max-width: 400px; /* Añade un máximo ancho, puedes ajustarlo */
+  margin: 0 auto; /* Centra el botón dentro del contenedor */
 }
 
 .informacion-tabla {
@@ -191,6 +254,7 @@ table td:last-child {
   border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
+  
   transition: background-color 0.3s ease-in-out;
 }
 
@@ -198,47 +262,7 @@ table td:last-child {
   background-color: #d32f2f;
 }
 
-/* Pantalla emergente */
-.modal-confirmacion {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
 
-.modal-content {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
-}
-
-.modal-buttons button {
-  margin: 10px;
-  padding: 12px 25px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transform: translateX(-150px);
-}
-
-.modal-buttons button:first-child {
-  background: #4caf50;
-  color: white;
-}
-
-.modal-buttons button:last-child {
-  background: #f44336;
-  color: white;
-}
 
 /* Contenedor de condiciones */
 .condiciones-container {
@@ -302,7 +326,140 @@ table td:last-child {
   color: black;
 }
 
+/* FORMULARIO PANTALLA EMERGENTE */
+/* Estilos del modal */
+.modal-overlay10 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8); /* Fondo semi-transparente oscuro */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; 
+  overflow: auto; 
+}
+
+.modal-content11 {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+  border: none;
+  display: flex;
+  flex-direction: column;
+  height: 80%; 
+  max-height: 700px;
+transform: translateY(45px);
+}
+
+/* Contenedor para el título y los campos del formulario */
+.modal-body {
+  flex-grow: 1;
+  overflow-y: auto; 
+  margin-bottom: 20px;
+  max-height: 500px; 
+}
+
+.modal-content11 h3 {
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1f6621;
+  text-align: center;
+}
+
+.modal-content11 input,
+.modal-content11 button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 30px; 
+  font-size: 1rem;
+}
+
+.modal-content11 input[type="text"],
+.modal-content11 input[type="email"] {
+  font-size: 1rem;
+}
+
+.modal-content11 button[type="submit"] {
+  background-color: #4CAF50; 
+  color: white;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.modal-content11 button[type="submit"]:hover {
+  background-color: #45a049; 
+}
+
+.modal-content11 .boton-salir {
+  background-color: #f44336; 
+  color: white;
+  cursor: pointer;
+}
+
+.modal-content11 .boton-salir:hover {
+  background-color: #e53935; 
+}
+
+.modal-content11 input:focus,
+.modal-content11 button:focus {
+  outline: none; 
+}
+
+.modal-content11 input {
+  border-radius: 8px; 
+}
+
+
+
+
+/* Estilos para el checkbox de "Consumidor final" */
+#checkbox-consufinal {
+  width: 15px;
+  height: 15px;
+  margin-right: 10px; /* Espacio entre el checkbox y el texto */
+  accent-color: #172a3f; /* Cambia el color del checkbox cuando está seleccionado */
+ 
+}
+
+/* Estilos para la etiqueta del "Consumidor final" */
+.checkbox-container label {
+  font-size: 14px;
+  color: #333;
+  font-weight: bold; 
+  text-align: center; 
+ 
+}
+
+
+
 /*RESPONSIVE*/
+
+/* Responsivo: en pantallas pequeñas */
+@media (max-width: 600px) {
+  .modal-content11 {
+    width: 90%; /* Ajusta el tamaño del modal en pantallas pequeñas */
+  }
+  
+  .modal-content11 h3 {
+    font-size: 1.3rem;
+  }
+
+  .modal-content11 input,
+  .modal-content11 button {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+}
+
 
 /* Pantallas menores a 320px */
 @media (max-width: 319px) {

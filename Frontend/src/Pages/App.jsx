@@ -11,6 +11,7 @@ import CarritoCompras from '../Components/CarritoCompras/CarritoCompras.jsx';
 import ProductosAdmin from './productosAdmin/productosAdmin.jsx'; // Asegúrate de importar el componente
 import AuthGuard from '../Components/AuthGuard/AuthGuard';
 import NuevoProducto from './nuevoProductoAdmin/nuevoProductoAdmin.jsx';
+import NuevoDescuento from '../Components/nuevoDescuento/nuevoDescuento.jsx';
 import Direccion from './Direccion/direccion.jsx';
 import MetodoPago from './MetodoPago/MetodoPago.jsx';
 import DireccionesGuardadas from '../Components/Direcciones/direcciones.jsx';
@@ -22,6 +23,7 @@ import DescuentosAdmin from './descuentosAdmin/descuentosAdmin.jsx';
 import UsuariosAdmin from './usuariosAdmin/usuariosAdmin.jsx';
 import DetallePedido from './detallePedido/detallePedido.jsx';
 import ResetPassword from './resetPass/reset.jsx';
+import EmailVerification from './EmailVerification/emailVerification';
 
 function App() {
   return (
@@ -37,10 +39,18 @@ function App() {
         <Route path="/DireccionesGuardadas" element={<DireccionesGuardadas />} />
         <Route path="/Configuraciones" element={<Configuraciones />} />
         <Route path="/Facturas" element={<Facturas />} />
+        
         <Route path="/admin" 
           element={
             <AuthGuard>
               <PantallaAdmin />
+            </AuthGuard>
+          } 
+        />
+        <Route path="/NuevoDescuento" 
+          element={
+            <AuthGuard>
+              <NuevoDescuento />
             </AuthGuard>
           } 
         />
@@ -99,6 +109,7 @@ function App() {
         />
         <Route path="/pdf/:id" element={<PDFModelo />} /> {/* Nueva ruta para el PDF con ID */}
         <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/verify-email/:token" element={<EmailVerification />} />
       </Routes>
     </div>
   );

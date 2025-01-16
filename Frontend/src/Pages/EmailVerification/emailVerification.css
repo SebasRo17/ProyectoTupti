@@ -1,0 +1,73 @@
+.verification-container {
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background-color: #f5f5f5;
+}
+
+.verification-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #E95522;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.verification-success i,
+.verification-error i {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.verification-success i {
+  color: #4CAF50;
+}
+
+.verification-error i {
+  color: #f44336;
+}
+
+.verification-success h2,
+.verification-error h2 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.redirect-message {
+  color: #666;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+.login-button {
+  background-color: #E95522;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.3s;
+}
+
+.login-button:hover {
+  background-color: #d64a1a;
+}
