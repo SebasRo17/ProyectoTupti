@@ -116,5 +116,27 @@ router.post('/register', (req, res) => UserController.registerUser(req, res));
  *               nombre:
  *                 type: string
  */
-router.post('/register', (req, res) => UserController.registerUser(req, res));
+
+/**
+ * @swagger
+ * /users/verify-email/{token}:
+ *   get:
+ *     summary: Verificar el correo electrónico del usuario
+ *     tags: [Users]
+ *     parameters:
+ *       - name: token
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Email verificado exitosamente
+ *       400:
+ *         description: Token inválido o expirado
+ *       500:
+ *         description: Error del servidor
+ */
+router.get('/verify-email/:token', (req, res) => UserController.verifyEmail(req, res));
+
 module.exports = router;

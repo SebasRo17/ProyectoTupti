@@ -23,6 +23,7 @@ import DescuentosAdmin from './descuentosAdmin/descuentosAdmin.jsx';
 import UsuariosAdmin from './usuariosAdmin/usuariosAdmin.jsx';
 import DetallePedido from './detallePedido/detallePedido.jsx';
 import ResetPassword from './resetPass/reset.jsx';
+import EmailVerification from './EmailVerification/emailVerification';
 
 function App() {
   return (
@@ -108,6 +109,7 @@ function App() {
         />
         <Route path="/pdf/:id" element={<PDFModelo />} /> {/* Nueva ruta para el PDF con ID */}
         <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/verify-email/:token" element={<EmailVerification />} />
       </Routes>
     </div>
   );

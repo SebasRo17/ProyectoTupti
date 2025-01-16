@@ -168,6 +168,33 @@ class UserController {
       res.status(500).json({ message: 'Error en registro de usuario' });
     }
   }
+
+  async verifyEmail(req, res) {
+    try {
+      const { token } = req.params;
+      
+      await EmailVerificationService.verifyEmail(token);
+      
+      res.status(200).json({
+        success: true,
+        message: 'Email verificado exitosamente'
+      });
+    } catch (error) {
+      console.error('Error en verificación de email:', error);
+      
+      if (error.message === 'Token inválido o expirado') {
+        return res.status(400).json({
+          success: false,
+          message: error.message
+        });
+      }
+      
+      res.status(500).json({
+        success: false,
+        message: 'Error al verificar el email'
+      });
+    }
+  }
 }
 
 module.exports = new UserController();
