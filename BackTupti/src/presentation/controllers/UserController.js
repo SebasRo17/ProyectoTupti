@@ -1,5 +1,6 @@
 const UserService = require('../../aplication/services/UserService');
 const jwt = require('jsonwebtoken');
+const EmailVerificationService = require('../../aplication/services/EmailVerificationService');
 
 class UserController {
   async getUsers(req, res) {
@@ -139,12 +140,19 @@ class UserController {
       const newUser = await UserService.createUser({
         Email: email,
         Contrasenia: contrasenia,
-        Nombre: nombre
+        Nombre: nombre,
+        EmailVerificado: false // Añadir este campo
       });
+
+      // Enviar email de verificación
+      await EmailVerificationService.sendVerificationEmail(
+        newUser.IdUsuario,
+        newUser.Email
+      );
   
       res.status(201).json({
         success: true,
-        message: 'Usuario registrado exitosamente',
+        message: 'Usuario registrado exitosamente. Por favor verifica tu correo electrónico.',
         user: {
           id: newUser.IdUsuario,
           email: newUser.Email,
@@ -158,6 +166,33 @@ class UserController {
         return res.status(400).json({ message: 'Email ya registrado' });
       }
       res.status(500).json({ message: 'Error en registro de usuario' });
+    }
+  }
+
+  async verifyEmail(req, res) {
+    try {
+      const { token } = req.params;
+      
+      await EmailVerificationService.verifyEmail(token);
+      
+      res.status(200).json({
+        success: true,
+        message: 'Email verificado exitosamente'
+      });
+    } catch (error) {
+      console.error('Error en verificación de email:', error);
+      
+      if (error.message === 'Token inválido o expirado') {
+        return res.status(400).json({
+          success: false,
+          message: error.message
+        });
+      }
+      
+      res.status(500).json({
+        success: false,
+        message: 'Error al verificar el email'
+      });
     }
   }
 }

@@ -36,6 +36,10 @@ User.init({
     type: DataTypes.STRING,
     allowNull: true
 },
+  EmailVerificado: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
   IdRol: {
     type: DataTypes.INTEGER(11),
     allowNull: true,
