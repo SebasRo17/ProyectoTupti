@@ -1,13 +1,15 @@
 import axios from 'axios';
+import { API_URL } from '../config/config';
 
 export const updateUserName = async (userId, name) => {
-  const response = await axios.put(`${import.meta.env.VITE_API_URL_DEVELOPMENT}/users/${userId}`, { Nombre: name });
+  const response = await axios.put(`${API_URL}/users/${userId}`, { Nombre: name });
   return response.data;
 };
+
 export const registerUser = async (userData) => {
   try {
     const response = await axios.post(
-      `${import.meta.env.VITE_API_URL_DEVELOPMENT}/users/register`, 
+      `${API_URL}/users/register`, 
       {
         email: userData.email,
         contrasenia: userData.contrasenia,
