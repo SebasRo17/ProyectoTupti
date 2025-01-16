@@ -1,73 +1,135 @@
 .verification-container {
-  min-height: 80vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 2rem;
-  background-color: #f5f5f5;
+  padding: 5rem;
+  background: linear-gradient(135deg, #16441f, #a7d49b);
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 .verification-card {
   background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 4.5rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   text-align: center;
-  max-width: 400px;
+  max-width: 500px;
   width: 100%;
+  animation: fadeIn 0.6s ease-in-out;
 }
 
 .spinner {
-  border: 4px solid rgba(0, 0, 0, 0.1);
-  border-left-color: #E95522;
+  border: 4px solid rgba(255, 255, 255, 0.2);
+  border-left-color: #FF6F61;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
-  margin: 0 auto 1rem;
+  width: 50px;
+  height: 50px;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 1.5rem;
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .verification-success i,
 .verification-error i {
-  font-size: 4rem;
+  font-size: 5rem;
   margin-bottom: 1rem;
+  display: block;
 }
 
 .verification-success i {
   color: #4CAF50;
+  animation: bounce 1s infinite;
 }
 
 .verification-error i {
   color: #f44336;
+  animation: shake 0.6s ease-in-out;
 }
 
 .verification-success h2,
 .verification-error h2 {
   color: #333;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.8rem;
+  font-weight: bold;
 }
 
 .redirect-message {
-  color: #666;
-  font-size: 0.9rem;
-  margin-top: 1rem;
+  color: #555;
+  font-size: 1rem;
+  margin-top: 1.5rem;
 }
 
-.login-button {
-  background-color: #E95522;
-  color: white;
-  border: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 1rem;
-  transition: background-color 0.3s;
+.redirect-message a {
+  color: #FF6F61;
+  text-decoration: none;
+  font-weight: bold;
 }
 
-.login-button:hover {
-  background-color: #d64a1a;
+.redirect-message a:hover {
+  text-decoration: underline;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+}
+
+
+.login-button3 {
+  display: block; 
+background: linear-gradient(135deg, #2f3031 0%, #66bb6a 50%, #004d40 100%); /* Fondo con gradiente verde */
+color: rgb(255, 255, 255); 
+font-size: 19px; 
+font-weight: bold; 
+border-radius: 40px; 
+transition: background 0.3s;
+margin-left: 20px;
+}
+
+
+.login-button3:hover {
+  background: #71b479;
 }

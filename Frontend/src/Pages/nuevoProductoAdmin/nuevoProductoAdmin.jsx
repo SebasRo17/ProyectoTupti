@@ -15,6 +15,7 @@ const NuevoProducto = () => {
     cantidadStock: '',
     descripcion: '',
     id: '', 
+    imagenUrl: '', // Agregamos el campo imagenUrl
   });
 
   const handleChange = (e) => {
@@ -28,7 +29,7 @@ const NuevoProducto = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Aquí puedes agregar la lógica para enviar el formulario
-    //console.log('Formulario enviado:', formData);
+    console.log('Formulario enviado:', formData);
   };
 
   return (
@@ -37,12 +38,7 @@ const NuevoProducto = () => {
       <BarraLateralAdmin />
       <h2> NUEVO PRODUCTO </h2>
       <form onSubmit={handleSubmit}>
-        <div className="imagenes-producto-container">
-          <button type="button" className="image-selector-button">Escoger Imagen</button>
-          <button type="button" className="image-selector-button">Escoger Imagen</button>
-          <button type="button" className="image-selector-button">Escoger Imagen</button>
-        </div>
-
+        
         <div className="form-row-container">
           <div className="input-field-container">
             <label>Nombre del Producto</label>
@@ -79,7 +75,6 @@ const NuevoProducto = () => {
               <option value="">Seleccione una categoría</option>
               <option value="Electrónico">Electrónico</option>
               <option value="Ropa">Ropa</option>
-              {/* Agrega más opciones según sea necesario */}
             </select>
           </div>
 
@@ -144,10 +139,27 @@ const NuevoProducto = () => {
           </div>
         </div>
 
+        {/* Sección de agregar imagen */}
+        <div className="form-row-container">
+          <div className="input-field-container">
+            <h3>Agregar Imagen</h3>
+            <label></label>
+            <input
+              type="text"
+              name="imagenUrl"
+              value={formData.imagenUrl}
+              onChange={handleChange}
+              placeholder="Ingresa el URL para cargar la imagen"
+            />
+            {formData.imagenUrl && (
+              <div className="image-preview">
+                <img src={formData.imagenUrl} alt="Vista previa" style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
+              </div>
+            )}
+          </div>
+        </div>
+
         <div className="form-action-buttons">
-          <button type="button" className="save-draft-button">
-            Guardar Borrador
-          </button>
           <button type="submit" className="publish-product-button">
             Publicar Producto
           </button>
