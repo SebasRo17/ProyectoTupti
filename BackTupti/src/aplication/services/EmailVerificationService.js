@@ -30,8 +30,12 @@ class EmailVerificationService {
         expiresAt
       });
 
-      // URL de verificación
-      const verificationUrl = `${process.env.FRONTEND_URL}/verify-email/${token}`;
+      // Determinar URL según ambiente
+      const frontendUrl = process.env.NODE_ENV === 'production' 
+        ? process.env.PROD_URL1  // URL de producción desde .env
+        : process.env.DEV_URL1;  // URL de desarrollo desde .env
+
+      const verificationUrl = `${frontendUrl}/verify-email/${token}`;
 
       // Enviar email
       await this.transporter.sendMail({
