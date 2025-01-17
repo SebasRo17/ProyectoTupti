@@ -2,6 +2,8 @@ const Carrito = require('../../domain/models/Carrito');
 const CarritoDetalle = require('../../domain/models/CarritoDetalle');
 const Producto = require('../../domain/models/Producto');
 const ProductoImagen = require('../../domain/models/ProductoImagen');
+const Impuesto = require('../../domain/models/Impuesto');
+const { sequelize } = require('../../infrastructure/database/mysqlConnection');
 const { Op } = require('sequelize'); 
 
 class CarritoRepositoryImpl {
@@ -111,6 +113,42 @@ class CarritoRepositoryImpl {
       };
     } catch (error) {
       console.error('Error al obtener carrito:', error);
+      throw error;
+    }
+  }
+  async obtenerDetallesConImpuestos(idCarrito) {
+    try {
+      const detalles = await sequelize.query(`
+        SELECT 
+          cd.IdCarritoDetalle,
+          cd.IdProducto,
+          cd.Cantidad,
+          cd.PrecioUnitario,
+          p.Nombre as NombreProducto,
+          i.Porcentaje as PorcentajeImpuesto,
+          i.Nombre as NombreImpuesto,
+          i.Tipo as TipoImpuesto,
+          i.CodigoIVA,
+          i.CodigoICE,
+          (cd.PrecioUnitario * cd.Cantidad) as Subtotal,
+          (cd.PrecioUnitario * cd.Cantidad * i.Porcentaje / 100) as MontoImpuesto
+        FROM carrito_detalle cd
+        INNER JOIN producto p ON cd.IdProducto = p.IdProducto
+        INNER JOIN Impuesto i ON p.IdImpuesto = i.IdImpuesto
+        WHERE cd.IdCarrito = :idCarrito
+        AND i.Aplicable = 1
+      `, {
+        replacements: { idCarrito },
+        type: sequelize.QueryTypes.SELECT
+      });
+  
+      if (!detalles.length) {
+        throw new Error('No se encontraron detalles para el carrito');
+      }
+  
+      return detalles;
+    } catch (error) {
+      console.error('Error en repositorio:', error);
       throw error;
     }
   }

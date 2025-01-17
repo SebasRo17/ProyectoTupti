@@ -193,4 +193,55 @@ router.put('/:id', (req, res) => DireccionController.updateDireccion(req, res));
  *         description: Error del servidor
  */
 router.put('/:idDireccion/seleccionar', (req, res) => DireccionController.updateSelectedAddress(req, res));
+
+
+/**
+ * @swagger
+ * /direcciones/usuario/{idUsuario}/seleccionada:
+ *   get:
+ *     tags:
+ *       - Direcciones
+ *     summary: Obtiene la dirección seleccionada de un usuario
+ *     description: Retorna la dirección marcada como seleccionada para un usuario específico
+ *     parameters:
+ *       - in: path
+ *         name: idUsuario
+ *         required: true
+ *         description: ID del usuario
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Dirección seleccionada encontrada
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 IdDireccion:
+ *                   type: integer
+ *                 IdUsuario:
+ *                   type: integer
+ *                 CallePrincipal:
+ *                   type: string
+ *                 Numeracion:
+ *                   type: string
+ *                 CalleSecundaria:
+ *                   type: string
+ *                 Vecindario:
+ *                   type: string
+ *                 Ciudad:
+ *                   type: string
+ *                 Provincia:
+ *                   type: string
+ *                 Pais:
+ *                   type: string
+ *                 EsSeleccionada:
+ *                   type: boolean
+ *       404:
+ *         description: No se encontró la dirección seleccionada
+ *       500:
+ *         description: Error del servidor
+ */
+router.get('/usuario/:idUsuario/seleccionada', (req, res) => DireccionController.obtenerDireccionSeleccionada(req, res));
 module.exports = router;
