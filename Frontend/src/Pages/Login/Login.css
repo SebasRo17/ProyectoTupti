@@ -165,7 +165,7 @@ transition: all 0.3s ease; /* Transición suave para el enfoque */
 /* Botón principal para iniciar sesión */
 .login-button {
 display: block; 
-background: linear-gradient(135deg, #1b5e20 0%, #66bb6a 50%, #004d40 100%); /* Fondo con gradiente verde */
+background: linear-gradient(135deg, #2f3031 0%, #66bb6a 50%, #004d40 100%); /* Fondo con gradiente verde */
 color: rgb(38, 60, 40); 
 font-size: 19px; 
 font-weight: bold; 
