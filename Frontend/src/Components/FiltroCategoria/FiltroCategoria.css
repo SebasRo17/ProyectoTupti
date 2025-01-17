@@ -1,0 +1,93 @@
+/* FiltroCategoria.css */
+.filters-nombre15 {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 20%;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-right: auto;
+    margin-top: 450px;
+    margin-left: 40px;
+}
+  
+.filter-container-nombre15 {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+  
+.filter-title-nombre15 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+  
+.range-container-nombre15 {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+  
+.range-container-nombre15 span {
+    font-size: 14px;
+    color: #666;
+}
+  
+.filter-button-nombre15 {
+    padding: 10px;
+    font-size: 14px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+  
+.filter-button-nombre15:hover {
+    background-color: #45a049;
+}
+
+/* Estilos específicos para el input range */
+.range-container-nombre15 input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    border-radius: 2px;
+    outline: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+/* Estilo para el thumb */
+.range-container-nombre15 input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: #4caf50;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -6px;
+    border: none;
+}
+
+.range-container-nombre15 input[type="range"]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: #4caf50;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+/* Estilo para el foco */
+.range-container-nombre15 input[type="range"]:focus {
+    outline: none;
+}
+
