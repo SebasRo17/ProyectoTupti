@@ -80,5 +80,20 @@ class DireccionRepositoryImpl {
         throw error;
       }
     }
+    async obtenerDireccionSeleccionada(idUsuario) {
+      try {
+        const direccion = await Direccion.findOne({
+          where: {
+            IdUsuario: idUsuario,
+            EsSeleccionada: 1
+          }
+        });
+  
+        return direccion;
+      } catch (error) {
+        console.error('Error en repositorio - obtenerDireccionSeleccionada:', error);
+        throw error;
+      }
+    }
   }
   module.exports = new DireccionRepositoryImpl();

@@ -58,5 +58,18 @@ class DireccionController {
           .json({ message: error.message });
       }
     }
+
+    async obtenerDireccionSeleccionada(req, res) {
+      try {
+        const { idUsuario } = req.params;
+        const direccion = await DireccionService.obtenerDireccionSeleccionada(idUsuario);
+        res.status(200).json(direccion);
+      } catch (error) {
+        console.error('Error en controlador:', error);
+        res.status(404).json({ 
+          message: error.message || 'Error al obtener la dirección seleccionada'
+        });
+      }
+    }
   }
 module.exports = new DireccionController();

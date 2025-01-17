@@ -72,3 +72,13 @@ export const updateSelectedAddress = async (idDireccion) => {
     throw error;
   }
 };
+
+export const getSelectedAddress = async (idUsuario) => {
+  try {
+    const response = await axios.get(`${API_URL}/direcciones/usuario/${idUsuario}/seleccionada`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener la dirección seleccionada:', error);
+    throw error;
+  }
+};
