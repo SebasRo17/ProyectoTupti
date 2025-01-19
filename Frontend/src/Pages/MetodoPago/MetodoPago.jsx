@@ -153,6 +153,7 @@ const MetodoPago = () => {
                     <th>Precio Unitario</th>
                     <th>Subtotal</th>
                     <th>Impuesto</th>
+                    <th>Descuento</th> 
                   </tr>
                 </thead>
                 <tbody>
@@ -165,6 +166,7 @@ const MetodoPago = () => {
                       <td>
                         {item.impuesto.nombre} ({item.impuesto.porcentaje}%)
                       </td>
+                      <td>${item.producto.descuento.toFixed(2)}</td> {/* Add discount value */}
                     </tr>
                   ))}
                 </tbody>
@@ -181,6 +183,9 @@ const MetodoPago = () => {
 
                   <p>Impuestos:</p>
                   <p>${detallesPedido.totales.impuestos.toFixed(2)}</p>
+
+                  <p>Descuento Total:</p> {/* Add total discount row */}
+                  <p>${detallesPedido.totales.descuentos.toFixed(2)}</p>
 
                   <p>
                     <strong>Total Final:</strong>

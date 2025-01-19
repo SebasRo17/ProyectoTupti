@@ -76,5 +76,17 @@ class DireccionService {
       throw error;
     }
   }
+  async obtenerDireccionSeleccionada(idUsuario) {
+    try {
+      const direccion = await DireccionRepository.obtenerDireccionSeleccionada(idUsuario);
+      if (!direccion) {
+        throw new Error('No se encontró una dirección seleccionada');
+      }
+      return direccion;
+    } catch (error) {
+      console.error('Error en servicio:', error);
+      throw error;
+    }
+  }
 }
 module.exports = new DireccionService();

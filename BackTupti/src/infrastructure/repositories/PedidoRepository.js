@@ -13,26 +13,27 @@ class PedidoRepository {
           prod.Nombre as NombreProducto,
           prod.Precio as PrecioProducto,
           imp.Nombre as NombreImpuesto,
-          imp.Porcentaje as PorcentajeImpuesto
+          imp.Porcentaje as PorcentajeImpuesto,
+          COALESCE(d.Porcentaje, 0) as PorcentajeDescuento
         FROM pedido p
         JOIN carrito_detalle cd ON p.IdCarrito = cd.IdCarrito
         JOIN producto prod ON cd.IdProducto = prod.IdProducto
         JOIN Impuesto imp ON prod.IdImpuesto = imp.IdImpuesto
+        LEFT JOIN descuento d ON prod.IdProducto = d.IdProducto AND d.Activo = 1 AND NOW() BETWEEN d.FechaInicio AND d.FechaFin
         WHERE p.IdPedido = :idPedido
       `;
-
+  
       const result = await sequelize.query(query, {
         replacements: { idPedido },
         type: sequelize.QueryTypes.SELECT
       });
-
+  
       return result;
     } catch (error) {
       console.error('Error en el repositorio al obtener detalles del pedido:', error);
       throw error;
     }
   }
-
   async findByCarritoId(idCarrito) {
     try {
       const query = `

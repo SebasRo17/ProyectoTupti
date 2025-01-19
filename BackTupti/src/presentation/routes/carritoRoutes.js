@@ -7,6 +7,7 @@ const router = express.Router();
  * /carrito/agregar-producto:
  *   post:
  *     summary: Agregar producto al carrito
+ *     tags: [Carrito]
  *     requestBody:
  *       required: true
  *       content:
@@ -41,6 +42,7 @@ router.post('/agregar-producto', (req, res) => CarritoController.agregarProducto
  * /carrito/{id}/estado:
  *   patch:
  *     summary: Actualizar el estado de un carrito
+ *     tags: [Carrito]
  *     parameters:
  *       - name: id
  *         in: path
@@ -74,6 +76,7 @@ router.patch('/:id/estado', (req, res) => CarritoController.actualizarEstado(req
  * /carrito/{idUsuario}:
  *   get:
  *     summary: Obtener carrito activo de un usuario
+ *     tags: [Carrito]
  *     parameters:
  *       - name: idUsuario
  *         in: path
@@ -89,6 +92,36 @@ router.patch('/:id/estado', (req, res) => CarritoController.actualizarEstado(req
  *         description: Error del servidor
  */
 router.get('/:idUsuario', (req, res) => CarritoController.getActiveCarritoByUserId(req, res));
-
-
+/**
+ * @swagger
+ * /carrito/{idCarrito}/totales:
+ *   get:
+ *     summary: Obtiene los totales e impuestos del carrito
+ *     tags: [Carrito]
+ *     parameters:
+ *       - in: path
+ *         name: idCarrito
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID del carrito
+ *     responses:
+ *       200:
+ *         description: Totales calculados exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 subtotal:
+ *                   type: number
+ *                 impuestoTotal:
+ *                   type: number
+ *                 total:
+ *                   type: number
+ *       500:
+ *         description: Error del servidor
+ */
+router.get('/:idCarrito/totales', (req, res) => CarritoController.obtenerTotalesCarrito(req, res));
+  
 module.exports = router;

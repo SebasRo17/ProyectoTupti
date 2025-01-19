@@ -1,21 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { FaTrash } from 'react-icons/fa'; // Importar el ícono de la basura
+import { FaTrash } from 'react-icons/fa';
+import { Link, useNavigate } from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
 import "./CarritoCompras.css";
 import "./responsiveCarrito.css";
-import { getCarritoByUsuario, addToCart } from '../../Api/carritoApi.js';
-import jwtDecode from 'jwt-decode';
-import { Link } from 'react-router-dom';
+import { 
+  getCarritoByUsuario, addToCart, getTotalesCarrito, actualizarEstadoCarrito } from '../../Api/carritoApi.js';
 import { getDescuentoCarrito } from '../../Api/descuentosApi.js';
-
+import { createPedido, getPedidoByCarrito } from '../../Api/pedidoApi.js';
+import { getSelectedAddress } from '../../Api/direccionApi.js';
 
 const CarritoCompras = () => {
+  const navigate = useNavigate();
   const [productos, setProductos] = useState([]);
-  const [idUsuario, setIdUsuario] = useState(null); 
-  const [idCarrito, setIdCarrito] = useState(null); 
-  const [isLoading, setIsLoading] = useState(false); 
-  const [productoAEliminar, setProductoAEliminar] = useState(null); 
-  const [mostrarPopUp, setMostrarPopUp] = useState(false); 
+  const [idUsuario, setIdUsuario] = useState(null);
+  const [idCarrito, setIdCarrito] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [productoAEliminar, setProductoAEliminar] = useState(null);
+  const [mostrarPopUp, setMostrarPopUp] = useState(false);
   const [descuentos, setDescuentos] = useState({ descuentoTotal: 0, detallesConDescuento: [] });
+  const [totalesCarrito, setTotalesCarrito] = useState({ impuestoTotal: 0 });
+  const [isCreatingOrder, setIsCreatingOrder] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem('jwtToken');
@@ -23,7 +29,7 @@ const CarritoCompras = () => {
       try {
         const payload = jwtDecode(token);
         const currentTime = Date.now() / 1000;
-        setIdUsuario(payload.IdUsuario); 
+        setIdUsuario(payload.IdUsuario);
   
         if (payload.exp <= currentTime) {
           localStorage.removeItem('jwtToken');
@@ -33,6 +39,24 @@ const CarritoCompras = () => {
       }
     }
   }, []);
+
+  useEffect(() => {
+    const fetchSelectedAddress = async () => {
+      if (idUsuario) {
+        setIsLoading(true);
+        try {
+          const address = await getSelectedAddress(idUsuario);
+          setSelectedAddress(address);
+        } catch (error) {
+          console.error('Error al obtener la dirección seleccionada:', error);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    fetchSelectedAddress();
+  }, [idUsuario]);
 
   useEffect(() => {
     const fetchCarrito = async () => {
@@ -49,7 +73,7 @@ const CarritoCompras = () => {
           })));
           setIdCarrito(carritoData.carrito.IdCarrito);
         } catch (error) {
-          // Manejar error
+          console.error('Error al obtener el carrito:', error);
         } finally {
           setIsLoading(false);
         }
@@ -77,6 +101,21 @@ const CarritoCompras = () => {
     fetchDescuentos();
   }, [idCarrito]);
 
+  useEffect(() => {
+    const fetchTotales = async () => {
+      if (idCarrito) {
+        try {
+          const totales = await getTotalesCarrito(idCarrito);
+          setTotalesCarrito(totales);
+        } catch (error) {
+          console.error('Error al obtener totales:', error);
+        }
+      }
+    };
+
+    fetchTotales();
+  }, [idCarrito, productos]);
+
   const handleAgregarCarrito = async (idProducto, cantidad) => {
     try {
       const productData = {
@@ -87,7 +126,7 @@ const CarritoCompras = () => {
 
       await addToCart(productData);
     } catch (error) {
-      // Manejar error
+      console.error('Error al agregar al carrito:', error);
     }
   };
 
@@ -98,18 +137,18 @@ const CarritoCompras = () => {
         setProductos(productos.filter((p) => p.id !== productoAEliminar.id));
         setMostrarPopUp(false);
       } catch (error) {
-        // Manejar error
+        console.error('Error al eliminar producto:', error);
       }
     }
   };
 
   const mostrarConfirmacionEliminar = (producto) => {
-    setProductoAEliminar(producto); 
-    setMostrarPopUp(true); 
+    setProductoAEliminar(producto);
+    setMostrarPopUp(true);
   };
 
   const cancelarEliminacion = () => {
-    setMostrarPopUp(false); 
+    setMostrarPopUp(false);
   };
 
   const actualizarCantidad = async (id, cambio) => {
@@ -127,19 +166,67 @@ const CarritoCompras = () => {
         )
       );
     } catch (error) {
-      // Manejar error
+      console.error('Error al actualizar cantidad:', error);
     }
   };
 
-  const vaciarCarrito = async () => {
+  
+  const handlePagar = async (e) => {
+    e.preventDefault();
+    
+    if (!idCarrito || !selectedAddress) {
+      alert('No se puede procesar el pedido sin una dirección de envío');
+      return;
+    }
+
+    setIsCreatingOrder(true);
     try {
-      // Eliminar todos los productos
-      for (const producto of productos) {
-        await handleAgregarCarrito(producto.id, -producto.cantidad); 
+      let pedidoCreado;
+      try {
+        const pedidoExistente = await getPedidoByCarrito(idCarrito);
+        if (pedidoExistente) {
+          pedidoCreado = pedidoExistente;
+        }
+      } catch (error) {
+        console.log('No se encontró un pedido existente, creando uno nuevo...');
       }
-      setProductos([]); // Vaciar la lista de productos en el estado
+
+      if (!pedidoCreado) {
+        const orderData = {
+          IdUsuario: idUsuario,
+          Direccion_IdDireccion: selectedAddress.IdDireccion,
+          Estado: 0,
+          IdCarrito: idCarrito
+        };
+
+        console.log("Datos del pedido a enviar:", orderData); // Agregamos este log
+        pedidoCreado = await createPedido(orderData);
+      }
+
+      navigate('/MetodoPago', { 
+        state: { 
+          idCarrito: idCarrito,
+          idPedido: pedidoCreado.IdPedido
+        } 
+      });
     } catch (error) {
-      // Manejar error
+      console.error('Error al procesar el pedido:', error);
+      alert('No se pudo procesar el pedido. Por favor, intente nuevamente.');
+    } finally {
+      setIsCreatingOrder(false);
+    }
+  };
+
+  const abandonarCarrito = async () => {
+    try {
+      if (!idCarrito) return;
+      
+      await actualizarEstadoCarrito(idCarrito, "ABANDONADO");
+      setProductos([]);
+      setIdCarrito(null);
+    } catch (error) {
+      console.error('Error al abandonar el carrito:', error);
+      alert('No se pudo vaciar el carrito. Por favor, intente nuevamente.');
     }
   };
 
@@ -148,7 +235,7 @@ const CarritoCompras = () => {
     0
   );
   const comisionServicio = 0.08 * subtotal;
-  const iva = 0.15 * subtotal;
+  const iva = totalesCarrito.impuestoTotal;
   const ahorroTotal = descuentos.descuentoTotal || 0;
   const total = subtotal + comisionServicio + iva - ahorroTotal;
 
@@ -178,10 +265,18 @@ const CarritoCompras = () => {
                   <p>{producto.precio.toFixed(2)} x {producto.cantidad}</p>
                 </div>
                 <div className="cantidad-controles">
-                  <button onClick={() => actualizarCantidad(producto.id, -1)} disabled={producto.cantidad <= 1}>-</button>
+                  <button 
+                    onClick={() => actualizarCantidad(producto.id, -1)} 
+                    disabled={producto.cantidad <= 1}
+                  >
+                    -
+                  </button>
                   <span>{producto.cantidad}</span>
                   <button onClick={() => actualizarCantidad(producto.id, 1)}>+</button>
-                  <button onClick={() => mostrarConfirmacionEliminar(producto)} className="eliminar">
+                  <button 
+                    onClick={() => mostrarConfirmacionEliminar(producto)} 
+                    className="eliminar"
+                  >
                     <FaTrash />
                   </button>
                 </div>
@@ -203,7 +298,7 @@ const CarritoCompras = () => {
               <span>${comisionServicio.toFixed(2)}</span>
             </p>
             <p>
-              <span>IVA 15%</span>
+              <span>IVA</span>
               <span>${iva.toFixed(2)}</span>
             </p>
             <p className="ahorro">
@@ -214,14 +309,14 @@ const CarritoCompras = () => {
               <span>Total</span>
               <span>${total.toFixed(2)}</span>
             </p>
-            <Link to={`/MetodoPago`} state={{ idCarrito: idCarrito }}>
-              <button className="boton-continuar" disabled={!idCarrito}>
-                PAGAR
-              </button>
-            </Link>
-
-            {/* Botón Vaciar Carrito */}
-            <button onClick={vaciarCarrito} className="boton-vaciar">
+            <button 
+              className="boton-continuar" 
+              disabled={!idCarrito || isCreatingOrder || !selectedAddress}
+              onClick={handlePagar}
+            >
+              {isCreatingOrder ? 'PROCESANDO...' : 'PAGAR'}
+            </button>
+            <button onClick={abandonarCarrito} className="boton-vaciar">
               VACIAR CARRITO
             </button>
           </div>

@@ -39,7 +39,7 @@ const allowedOrigins = [
 app.use(cors({
     origin: [...allowedOrigins, /\.vercel\.app$/],
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With', 'Accept'],
     exposedHeaders: ['Access-Control-Allow-Origin']
 }));
