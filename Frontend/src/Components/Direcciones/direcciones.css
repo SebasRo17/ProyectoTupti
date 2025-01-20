@@ -34,8 +34,9 @@
     margin: 5px 0;
     padding: 5px;
   }
+
   .delete-btn1 {
-    text-align: start;
+    text-align: end;
     padding: 8px 16px;
     background: #dc3545;
     color: white;
@@ -105,16 +106,17 @@
   margin-top: 20px;
 }
 
-.cancel-btn5 {
+.boton-cancelar {
   padding: 8px 16px;
   border: 1px solid #ddd;
   background: rgb(45, 112, 18) !important;
   border-radius: 4px;
   cursor: pointer;
+  margin-left: -800% !important;
 }
-.delete-btn5 {
+.eliminar-boton {
   padding: 8px 16px;
-  background: #dc3545;
+  background: #dc3545 !important;
   color: white;
   border: none;
   border-radius: 4px;

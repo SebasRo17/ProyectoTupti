@@ -13,6 +13,20 @@ const DireccionesGuardadas = () => {
   const [error, setError] = useState(null);
   const [selectedDireccion, setSelectedDireccion] = useState(null);
   const navigate = useNavigate();
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState(null);
+
+  const handleDelete = (direccion) => {
+    setSelectedAddress(direccion);
+    setShowDeleteModal(true);
+    document.body.style.overflow = 'hidden';
+  };
+
+
+  const confirmDelete = () => {
+    setShowDeleteModal(false);
+    document.body.style.overflow = 'auto'; // Restore scroll
+  };
 
   const handleDireccionClick = async (direccion) => {
     // Primero actualizamos la UI optimisticamente
@@ -117,7 +131,27 @@ const DireccionesGuardadas = () => {
                   <p><strong>Ciudad:</strong> {direccion.Ciudad}</p>
                   <p><strong>Provincia:</strong> {direccion.Provincia}</p>
                   <p><strong>País:</strong> {direccion.Pais}</p>
+                  <button className="delete-btn1" onClick={() => handleDelete(direccion)}>🗑️</button>
                 </div>
+                {showDeleteModal && (
+              <div className="modal-wrapper3">
+                <div className="modal-overlay3" onClick={() => setShowDeleteModal(false)} />
+                <div className="modal-content3">
+                  <h3>Eliminar Dirección</h3>
+                  <p>
+                    ¿Está seguro que desea eliminar la dirección <span className="direccion-name">{selectedAddress?.Descripcion} </span>?
+                  </p>
+                  <div className="modal-buttons">
+                    <button className="boton-cancelar" onClick={() => setShowDeleteModal(false)}>
+                      Cancelar
+                    </button>
+                    <button className="eliminar-boton" onClick={confirmDelete}>
+                      Eliminar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
                 {direccion.EsSeleccionada && (
                   <div className="direccion-selected-badge">
                     ✓ Seleccionada
