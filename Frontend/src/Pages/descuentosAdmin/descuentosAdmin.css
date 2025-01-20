@@ -130,14 +130,15 @@ th, td {
 .cancel-btn {
   padding: 8px 16px;
   border: 1px solid #ddd;
-  background: white;
+  background: rgb(38, 94, 36) !important;
   border-radius: 4px;
   cursor: pointer;
+  margin-left: -800% !important;
 }
 
 .delete-btn {
   padding: 8px 16px;
-  background: #dc3545;
+  background: #dc3545 !important;
   color: white;
   border: none;
   border-radius: 4px;

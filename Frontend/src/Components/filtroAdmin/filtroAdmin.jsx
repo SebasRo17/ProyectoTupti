@@ -82,7 +82,7 @@ const FiltroAdmin = ({ showNewProduct = true , showNewDiscount = true }) => {
         <button className="filter-button">Filtrar</button>
       </div>
       <div className="action-buttons">
-        <button className="export-button">Exportar</button>
+       
       {showNewDiscount && (
         <button onClick={handleOpenModal} className="discount-button">
           Nuevo Descuento
