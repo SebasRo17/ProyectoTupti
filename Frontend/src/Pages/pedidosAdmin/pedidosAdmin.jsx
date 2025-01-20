@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import HeaderAdmin from '../../Components/headerAdmin/headerAdmin.jsx';
 import BarraLateralAdmin from '../../Components/barraLateralAdmin/barraLateralAdmin.jsx'; 
 import './pedidosAdmin.css';
+import ExportModal from '../../Components/exportModal/exportModal.jsx';
 import DetallePedido from '../detallePedido/detallePedido.jsx';
 const PedidosAdmin = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
+  const [showExportModal, setShowExportModal] = useState(false);
 
   // Mock data - replace with real data
   const stats = {
@@ -66,6 +68,17 @@ const PedidosAdmin = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <button className="search-btn">🔍 Buscar</button>
+
+        <button 
+          className="export-button" 
+          onClick={() => setShowExportModal(true)}
+        >
+          Exportar
+        </button>
+        <ExportModal 
+          isOpen={showExportModal} 
+          onClose={() => setShowExportModal(false)}
+        />
       </div>
 
       {/* Stats Cards */}
