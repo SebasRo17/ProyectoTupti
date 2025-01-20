@@ -45,10 +45,99 @@ const MetodoPago = () => {
     obtenerPedido();
   }, [idCarrito]);
 
+  const startPayPalFlow = async () => {
+    if (!pedido || !detallesPedido) {
+      alert('No hay información del pedido disponible');
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const montoFormateado = Number(detallesPedido.totales.total.toFixed(2));
+      const { approveUrl, orderId } = await createPaypalOrder(
+        pedido.idPedido,
+        montoFormateado
+      );
+
+      // Configuración del popup
+      const width = 450;
+      const height = 600;
+      const left = (window.innerWidth - width) / 2;
+      const top = (window.innerHeight - height) / 2;
+
+      const popupFeatures = `
+        width=${width},
+        height=${height},
+        left=${left},
+        top=${top},
+        scrollbars=yes,
+        status=yes,
+        resizable=yes,
+        location=yes
+      `;
+
+      const paypalPopup = window.open(approveUrl, 'PayPal', popupFeatures);
+
+      if (!paypalPopup || paypalPopup.closed || typeof paypalPopup.closed === 'undefined') {
+        alert('Por favor, habilita las ventanas emergentes para continuar con el pago');
+        setIsLoading(false);
+        return;
+      }
+
+      const checkPopupStatus = setInterval(() => {
+        if (!paypalPopup || paypalPopup.closed) {
+          clearInterval(checkPopupStatus);
+          setIsLoading(false);
+          return;
+        }
+
+        try {
+          const popupUrl = paypalPopup.location.href;
+          
+          if (popupUrl.includes('/payment-success')) {
+            paypalPopup.close();
+            clearInterval(checkPopupStatus);
+            console.log('Pago completado con éxito', orderId);
+            capturePaypalPayment(orderId);
+            setPaymentStatus('success');
+            setIsLoading(false);
+          } else if (popupUrl.includes('/payment-cancel')) {
+            paypalPopup.close();
+            clearInterval(checkPopupStatus);
+            setPaymentStatus('cancelled');
+            setIsLoading(false);
+          }
+        } catch (err) {
+          // Manejar errores de cross-origin
+          console.log('Esperando completar el pago...');
+        }
+      }, 1000);
+
+    } catch (err) {
+      console.error('Error al iniciar el pago:', err);
+      setError('Error al iniciar el pago: ' + err.message);
+      setIsLoading(false);
+    }
+  };
+
   const confirmarCompra = () => {
     setMostrarConfirmacion(false);
     startPayPalFlow();
   };
+
+  const cerrarConfirmacion = () => {
+    setMostrarConfirmacion(false);
+  };
+
+  // Renderizado condicional para estados de carga y error
+  if (isLoading && !detallesPedido) {
+    return (
+      <div className="pagina-metodo-pago">
+        <HeaderPagos />
+        <div className="loading-message">Cargando información del pedido...</div>
+      </div>
+    );
+  }
 
   const cerrarFormulario = () => {
     setMostrarConfirmacion(false);
@@ -292,13 +381,15 @@ const MetodoPago = () => {
                     la <a href="#">política de privacidad</a>
                   </label>
                 </div>
-
                 <button
-                  type="submit"
-                  className="boton-confirmacion"
-                  disabled={isLoading || !aceptoTerminos} // Deshabilitado si no se marcan los términos
+                  className="boton-azul"
+                  onClick={() => {
+                    setMostrarConfirmacion(true);
+                    confirmarCompra();
+                  }}
+                  disabled={isLoading || paymentStatus === 'success'}
                 >
-                  {isLoading ? 'Procesando...' : 'Ir a la plataforma de pago'}
+                  {isLoading ? 'Procesando...' : 'Ir a plataforma de pago'}
                 </button>
               </form>
               <button className="boton-salir" onClick={cerrarFormulario}>
