@@ -25,7 +25,18 @@ const ProductosAdmin = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
 
-    
+    // Añadir esta función para manejar las URLs de imágenes
+    const getImageUrl = (product) => {
+        if (!product) return '/images/placeholder.png';
+        
+        // Verificar si hay imágenes disponibles
+        if (product.Imagenes && product.Imagenes.length > 0) {
+            return product.Imagenes[0].ImagenUrl;
+        }
+        
+        // Si no hay imágenes, usar placeholder
+        return '/images/placeholder.png';
+    };
     
     useEffect(() => {
         fetchProductos();
@@ -34,7 +45,15 @@ const ProductosAdmin = () => {
     const fetchProductos = async () => {
         try {
             const data = await productosApi.getAllProducts();
-            setProductos(data);
+            if (Array.isArray(data)) {
+                const productosConImagen = data.map(product => ({
+                    ...product,
+                    ImagenUrl: product.imagen || product.imagenUrl || product.ImagenUrl || '/images/placeholder.png'
+                }));
+                setProductos(productosConImagen);
+            } else {
+                setError('Formato de datos incorrecto');
+            }
             setLoading(false);
         } catch (error) {
             setError('Error al cargar los productos');
@@ -81,22 +100,20 @@ const ProductosAdmin = () => {
       };
 
       const handleEdit = (productId) => {
-        //console.log(`Editando producto ${productId}`);
         const productToEdit = productos.find(product => product.id === productId);
         setSelectedProduct(productToEdit);
         setIsEditModalOpen(true);
     };
 
     const handleOpenModal = (product) => {
-        //console.log('Opening modal for:', product);
         const formattedProduct = {
             id: product.IdProducto,
             name: product.Nombre,
             details: product.Descripcion,
             price: product.Precio,
-            image: product.ImagenUrl
+            image: product.Imagenes?.[0]?.ImagenUrl,
+            imagenesArray: product.Imagenes
         };
-        //console.log('Formatted product:', formattedProduct);
         setSelectedProduct(formattedProduct);
         setIsEditModalOpen(true);
     };
@@ -117,7 +134,6 @@ const ProductosAdmin = () => {
                     <EditarProductos 
                         product={selectedProduct}
                         onClose={() => {
-                            //console.log('Closing modal');
                             setIsEditModalOpen(false);
                             setSelectedProduct(null);
                         }}
@@ -153,10 +169,11 @@ const ProductosAdmin = () => {
                         productos.map((product) => (
                             <div className="product-card" key={product.IdProducto}>
                                 <img 
-                                    src={product.ImagenUrl || '/images/placeholder.png'} 
-                                    alt={product.Nombre} 
+                                    src={getImageUrl(product)} 
+                                    alt={product.Nombre || 'Producto'} 
                                     className="product-image" 
                                     onError={(e) => {
+                                        e.target.onerror = null; // Previene loop infinito
                                         e.target.src = '/images/placeholder.png';
                                     }}
                                 />
