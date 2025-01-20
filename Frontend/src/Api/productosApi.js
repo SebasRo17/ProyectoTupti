@@ -11,9 +11,17 @@ export const productosApi = {
             if (filters.IdTipoProducto) queryParams.append('IdTipoProducto', filters.IdTipoProducto);
 
             const response = await axios.get(`${API_URL}/products?${queryParams}`);
-            return response.data;
+            
+            const formattedData = response.data.map(product => ({
+                ...product,
+                ImagenUrl: product.Imagenes && product.Imagenes.length > 0 
+                    ? product.Imagenes[0].ImagenUrl 
+                    : null,
+                imagenesArray: product.Imagenes || []
+            }));
+
+            return formattedData;
         } catch (error) {
-            console.error('Error fetching products:', error);
             throw error;
         }
     },
