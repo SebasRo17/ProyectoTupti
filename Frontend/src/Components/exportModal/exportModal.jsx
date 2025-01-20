@@ -57,6 +57,7 @@ const ExportModal = ({ isOpen, onClose }) => {
               <option value="reembolsadas">Reembolsadas</option>
               <option value="confirmadas">Confirmadas</option>
               <option value="completas">Completas</option>
+              <option value="todos">Todos las órdenes</option>
             </select>
           </div>
 
