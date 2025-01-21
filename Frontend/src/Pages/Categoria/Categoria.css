@@ -173,9 +173,12 @@ body {
    border-radius: 4px;
 }
 
-.modal-info {
+.modal-info1 {
    flex: 1;
    padding: 20px;
+}
+.modal-info8 h2{
+  color:#494949
 }
 
 .modal-precio {

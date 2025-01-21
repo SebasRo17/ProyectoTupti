@@ -8,6 +8,7 @@
 .usuarios-admin h2 {
   margin-top: 10%;
   margin-bottom: 2%;
+  color: #333;
 }
 
 .table-container {
@@ -76,16 +77,19 @@ th, td {
   background: rgba(0,0,0,0.5);
 }
 
-.modal-content {
+.modal-content10 {
   position: relative;
   background: white;
+  text-align: center;
   padding: 25px;
   border-radius: 8px;
   width: 400px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  z-index: 10000;
+  z-index: 10000 !important;
 }
-
+.modal-content10 P{
+  color:#949799;
+}
 .modal-buttons {
   display: flex;
   justify-content: center;
@@ -93,7 +97,7 @@ th, td {
   margin-top: 20px;
 }
 
-.cancel-btn, .delete-btn {
+.cancel-btn, .delete-btn{
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
@@ -106,7 +110,7 @@ th, td {
   border: none;
 }
 
-.delete-btn {
+.delete-btn0 {
   background: #dc3545;
   color: white;
   border: none;
