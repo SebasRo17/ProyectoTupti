@@ -6,29 +6,37 @@ const ExportModal = ({ isOpen, onClose }) => {
   const [documentType, setDocumentType] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+  const [exportType, setExportType] = useState('excel');
   const [dateError, setDateError] = useState('');
 
   const validateDateRange = (start, end, type) => {
-    if (!start || !end) return true;
+    if (!start || !end) {
+        setDateError('Ambas fechas son requeridas');
+        return false;
+    }
     
     const startDate = new Date(start);
     const endDate = new Date(end);
+    
+    if (endDate < startDate) {
+        setDateError('La fecha final debe ser mayor a la fecha inicial');
+        return false;
+    }
+
     const diffTime = Math.abs(endDate - startDate);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     
     if (type === 'excel' && diffDays > 7) {
-      setDateError('Para Excel, el rango máximo es de 7 días');
-      return false;
+        setDateError('Para Excel, el rango máximo es de 7 días');
+        return false;
     }
     if (type === 'pdf' && diffDays > 15) {
-      setDateError('Para PDF, el rango máximo es de 15 días');
-      return false;
+        setDateError('Para PDF, el rango máximo es de 15 días');
+        return false;
     }
-    
     setDateError('');
     return true;
   };
-
   const isFormValid = () => {
     return selectedStatus !== '' && 
            documentType !== '' && 
@@ -41,7 +49,7 @@ const ExportModal = ({ isOpen, onClose }) => {
 
   return (
     <div className="modal-overlay2">
-      <div className="modal-content2">
+      <div className={`modal-content2 ${dateError ? 'has-error' : ''}`}>
         <h2>Reporte de ventas</h2>
         <form>
           <div className="form-group">
@@ -75,33 +83,34 @@ const ExportModal = ({ isOpen, onClose }) => {
             </select>
           </div>
 
-          <div className="date-container">
-            <div className="date-group">
+          <div className="date-container1">
+            <div className="date-group1">
                 <label>Fecha inicio</label>
                 <input 
-                type="date" 
-                value={startDate}
-                onChange={(e) => {
-                    setStartDate(e.target.value);
-                    validateDateRange(e.target.value, endDate, dateError);
-                }}
-                
+                    type="date"
+                    value={startDate}
+                    className={dateError ? 'error' : ''}
+                    onChange={(e) => {
+                        setStartDate(e.target.value);
+                        validateDateRange(e.target.value, endDate, exportType);
+                    }}
                 />
             </div>
-            <div className="date-group">
+            <div className="date-group1">
                 <label>Fecha fin</label>
                 <input 
-                type="date"
-                value={endDate}
-                onChange={(e) => {
-                    setEndDate(e.target.value);
-                    validateDateRange(startDate, e.target.value, dateError);
-                }}
+                    type="date"
+                    value={endDate}
+                    className={dateError ? 'error' : ''}
+                    onChange={(e) => {
+                        setEndDate(e.target.value);
+                        validateDateRange(startDate, e.target.value, exportType);
+                    }}
                 />
-                {dateError && <p className="error-message">{dateError}</p>}
-                  </div>
-            
-            </div>
+               </div>
+            {dateError && <div className="error-message1">{dateError}</div>}
+        </div>
+
 
           <div className="button-group">
             <button type="button" className="cancel-btn1" onClick={onClose}>

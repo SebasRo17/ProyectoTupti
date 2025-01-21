@@ -17,12 +17,25 @@
   border-radius: 8px;
   width: 90%;
   max-width: 500px;
+ 
 }
 
 .modal-content2 h2 {
   text-align: center;
   margin-bottom: 1.5rem;
 }
+
+.modal-content2.has-error .form-group {
+  margin-bottom: 2.5rem !important; /* Increased margin when error exists */
+}
+.modal-content2.has-error .date-container1 {
+  margin-bottom: 6rem; /* Add more space below date container when error exists */
+}
+.modal-content2.has-error {
+  padding-bottom: 1.5rem; /* Extra space when error exists */
+}
+
+
 
 .form-group {
   margin-bottom: 1rem;
@@ -40,7 +53,7 @@
   border-radius: 4px;
 }
 
-.date-info {
+.date-info1 {
   margin: 1rem 0;
 }
 
@@ -50,17 +63,34 @@
   margin-top: 0.5rem;
 }
 
-.date-container {
+.date-container1 {
   display: flex;
   gap: 1rem;
   margin-bottom: 1rem;
+  position: relative;
 }
 
-.date-group {
+.error-message1 {
+  color: red;
+  background-color: #f3cdcd;
+  padding: 5px;
+  border-radius: 4px;
+  font-size: 0.8em;
+  position: absolute;
+  bottom: -75px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.date-group1 input.error {
+  border: 1px solid red !important;
+}
+.date-group1 {
   flex: 1;
 }
 
-.date-group input {
+.date-group1 input {
   width: 100%;
   padding: 0.5rem;
   border: 1px solid #ddd;
@@ -76,6 +106,7 @@
 .cancel-btn1, .download-btn {
   padding: 0.5rem 1rem;
   border-radius: 4px;
+  margin: 2%;
   cursor: pointer;
 }
 
@@ -90,20 +121,9 @@
   color: white;
   border: none;
 }
+
 .error {
     border: 1px solid red !important;
-  }
-  
-  .error-message {
-    color: red;
-    background-color: #f3cdcd;
-    height: fit-content;
-    font-size: 0.8em;
-    margin-top: 5px;
-    margin-left: -105%;
-  }
-  .required {
-  border-color: #ff0000;
 }
 
 .download-btn:disabled {
