@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from 'react-router-dom'; // Agregar este import
-import { getCarritoByUsuario } from "../../Api/carritoApi";
+import { useParams } from 'react-router-dom';
+import { getDetallesPedido, getLastPedidoByUserId } from "../../Api/pedidoApi";
 import { Page, Text, View, Document, PDFViewer, StyleSheet, Image } from "@react-pdf/renderer";
 
 // Definición de estilos
@@ -116,6 +116,11 @@ const styles = StyleSheet.create({
         padding: 5,
         fontSize: 8,
         textAlign: 'right'
+    },
+    descuentoLabel: {
+        color: 'red',
+        fontSize: 10,
+        fontWeight: 'bold'
     }
 });
 
@@ -128,50 +133,70 @@ const InvoicePDF = ({ idUsuario }) => {
             ruc: ""
         },
         items: [],
-        total: 0,
+        totales: {
+            subtotal: 0,
+            descuentos: 0,
+            impuestos: 0,
+            total: 0
+        },
         invoiceNumber: "001-001-000000123",
         date: new Date().toLocaleDateString()
     });
 
     useEffect(() => {
-        const fetchCarritoData = async () => {
+        const fetchPedidoData = async () => {
+            if (!idUsuario || isNaN(idUsuario)) {
+                console.error('ID de usuario inválido:', idUsuario);
+                return;
+            }
+
             try {
-                const carritoData = await getCarritoByUsuario(idUsuario);
-
-                if (carritoData && carritoData.detalles) {
-                    const items = carritoData.detalles.map(detalle => ({
-                        codigo: detalle.Producto.IdProducto,
-                        cantidad: detalle.Cantidad,
-                        descripcion: detalle.Producto.Nombre,
-                        precioUnitario: parseFloat(detalle.Producto.Precio),
-                        descuento: 0,
-                        precioTotal: detalle.Cantidad * parseFloat(detalle.Producto.Precio)
-                    }));
-
-                    const total = items.reduce((sum, item) => sum + item.precioTotal, 0);
-
-                    setInvoiceData(prev => ({
-                        ...prev,
-                        items: items,
-                        total: total,
-                        // Actualizar información del cliente si está disponible
-                        customer: {
-                            name: carritoData.carrito?.IdUsuario || "Cliente",
-                            address: "---",
-                            ruc: "---"
-                        },
-                        invoiceNumber: `001-001-${carritoData.carrito?.IdCarrito.toString().padStart(9, '0')}`,
-                        date: new Date(carritoData.carrito?.createdAt).toLocaleDateString()
-                    }));
+                // Primero obtenemos el último pedido del usuario
+                const ultimoPedido = await getLastPedidoByUserId(idUsuario);
+                if (!ultimoPedido || !ultimoPedido.IdPedido) {
+                    console.error('No se encontró el último pedido para el usuario:', idUsuario);
+                    return;
                 }
+
+                // Usando el IdPedido obtenido, conseguimos los detalles completos
+                const pedidoData = await getDetallesPedido(ultimoPedido.IdPedido);
+                
+                if (!pedidoData || !pedidoData.items) {
+                    console.error('Datos del pedido no válidos:', pedidoData);
+                    return;
+                }
+
+                setInvoiceData(prev => ({
+                    ...prev,
+                    pedidoInfo: ultimoPedido, // Guardamos la información básica del pedido
+                    customer: {
+                        name: pedidoData.usuario?.nombre || 'Cliente',
+                        address: pedidoData.usuario?.direccion || '',
+                        ruc: pedidoData.usuario?.identificacion || ''
+                    },
+                    items: pedidoData.items.map(item => ({
+                        codigo: item.idCarritoDetalle || 'N/A',
+                        cantidad: item.producto?.cantidad || 0,
+                        descripcion: item.producto?.nombre || 'Sin nombre',
+                        precioUnitario: item.producto?.precioUnitario || 0,
+                        descuento: item.producto?.descuento || 0,
+                        precioTotal: item.producto?.subtotal || 0
+                    })),
+                    totales: pedidoData.totales || {
+                        subtotal: 0,
+                        descuentos: 0,
+                        impuestos: 0,
+                        total: 0
+                    },
+                    invoiceNumber: `001-001-${ultimoPedido.IdPedido.toString().padStart(9, '0')}`,
+                    date: new Date().toLocaleDateString()
+                }));
             } catch (error) {
-                console.error("Error al cargar datos del carrito:", error);
+                console.error("Error al cargar datos del pedido:", error.message);
             }
         };
 
-        if (idUsuario) {
-            fetchCarritoData();
-        }
+        fetchPedidoData();
     }, [idUsuario]);
 
     // En el render, agregar validaciones para evitar errores de undefined
@@ -264,19 +289,19 @@ const InvoicePDF = ({ idUsuario }) => {
           <View style={styles.tableTotales}>
             <View style={styles.rowTotales}>
                 <Text style={styles.colLabelTotales}>SUBTOTAL</Text>
-                <Text style={styles.colValueTotales}>{renderPrecio(invoiceData.total)}</Text>
+                <Text style={styles.colValueTotales}>{renderPrecio(invoiceData.totales.subtotal)}</Text>
+            </View>
+            <View style={styles.rowTotales}>
+                <Text style={[styles.colLabelTotales, styles.descuentoLabel]}>DESCUENTO</Text>
+                <Text style={styles.colValueTotales}>{renderPrecio(invoiceData.totales.descuentos)}</Text>
             </View>
             <View style={styles.rowTotales}>
                 <Text style={styles.colLabelTotales}>IVA 15%</Text>
-                <Text style={styles.colValueTotales}>
-                    {renderPrecio(invoiceData.total * 0.15)}
-                </Text>
+                <Text style={styles.colValueTotales}>{renderPrecio(invoiceData.totales.impuestos)}</Text>
             </View>
             <View style={styles.rowTotales}>
                 <Text style={styles.colLabelTotales}>VALOR TOTAL</Text>
-                <Text style={styles.colValueTotales}>
-                    {renderPrecio(invoiceData.total * 1.15)}
-                </Text>
+                <Text style={styles.colValueTotales}>{renderPrecio(invoiceData.totales.total)}</Text>
             </View>
           </View>
   
@@ -292,11 +317,21 @@ const InvoicePDF = ({ idUsuario }) => {
   // Componente del visor del PDF
   const App = () => {
     const { id } = useParams(); // Obtener el ID de la URL
+    
+    useEffect(() => {
+        if (id) {
+            console.log('ID del pedido recibido:', id);
+        }
+    }, [id]);
+
+    if (!id || isNaN(id)) {
+        return <div>ID de pedido no válido</div>;
+    }
 
     return (
       <div style={{ width: '100vw', height: '100vh' }}>
         <PDFViewer style={{ width: '100%', height: '100%' }}>
-          <InvoicePDF idUsuario={id} />
+          <InvoicePDF idUsuario={parseInt(id)} />
         </PDFViewer>
       </div>
     );

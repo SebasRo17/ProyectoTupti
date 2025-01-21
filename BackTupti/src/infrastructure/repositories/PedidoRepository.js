@@ -82,6 +82,19 @@ class PedidoRepository {
   async delete(id) {
     return await Pedido.destroy({ where: { IdPedido: id } });
   }
+
+  async findLastByUserId(idUsuario) {
+    try {
+      const pedido = await Pedido.findOne({
+        where: { IdUsuario: idUsuario },
+        order: [['IdPedido', 'DESC']]
+      });
+      return pedido;
+    } catch (error) {
+      console.error('Error al buscar último pedido:', error);
+      throw error;
+    }
+  }
 }
 
 module.exports = new PedidoRepository();
