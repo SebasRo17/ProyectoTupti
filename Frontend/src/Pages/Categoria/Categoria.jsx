@@ -214,6 +214,10 @@ function Categoria() {
             toggleCart={toggleCart} 
             isCartOpen={isCartOpen}
          />
+         {/* Filtro de Categoría fijo */}
+      <div className="filtro-container16">
+         <FiltroCategoria />
+      </div>
          <CategoriesBar categoryData={categoryData} />
          <div className="categoria-container">
 
@@ -365,7 +369,6 @@ function Categoria() {
 
           <Footer />
 
-          <FiltroCategoria /> 
       </div>
    );
 }
