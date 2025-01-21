@@ -22,6 +22,8 @@ const CarritoCompras = () => {
   const [totalesCarrito, setTotalesCarrito] = useState({ impuestoTotal: 0 });
   const [isCreatingOrder, setIsCreatingOrder] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
+  const [showAddressWarning, setShowAddressWarning] = useState(false);
+  const [addressError, setAddressError] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem('jwtToken');
@@ -43,18 +45,18 @@ const CarritoCompras = () => {
   useEffect(() => {
     const fetchSelectedAddress = async () => {
       if (idUsuario) {
-        setIsLoading(true);
         try {
           const address = await getSelectedAddress(idUsuario);
           setSelectedAddress(address);
+          setAddressError(null);
         } catch (error) {
-          console.error('Error al obtener la dirección seleccionada:', error);
-        } finally {
-          setIsLoading(false);
+          setAddressError('No hay una dirección seleccionada. Por favor, seleccione una dirección de envío.');
+          setSelectedAddress(null);
+          setShowAddressWarning(true);
         }
       }
     };
-
+  
     fetchSelectedAddress();
   }, [idUsuario]);
 
@@ -174,11 +176,12 @@ const CarritoCompras = () => {
   const handlePagar = async (e) => {
     e.preventDefault();
     
-    if (!idCarrito || !selectedAddress) {
-      alert('No se puede procesar el pedido sin una dirección de envío');
+    if (!selectedAddress) {
+      setShowAddressWarning(true);
+      setAddressError('Por favor, seleccione una dirección de envío antes de continuar');
       return;
     }
-
+    setShowAddressWarning(false);
     setIsCreatingOrder(true);
     try {
       let pedidoCreado;
@@ -286,7 +289,12 @@ const CarritoCompras = () => {
             <p className="carrito-vacio">Tu carrito está vacío</p>
           )}
         </div>
-
+        {showAddressWarning && (
+          <div className="address-warning">
+            <span className="warning-icon">⚠️</span>
+            <p>{addressError}</p>
+          </div>
+        )}
         {productos.length > 0 && (
           <div className="resumen">
             <p>

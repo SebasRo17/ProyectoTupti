@@ -48,6 +48,11 @@ Direccion.init({
   EsSeleccionada: {
     type: DataTypes.STRING,
     allowNull: true
+  },
+  Activo: {
+    type: DataTypes.BOOLEAN,
+      defaultValue: 1,
+      allowNull: false
   }
 
 }, {

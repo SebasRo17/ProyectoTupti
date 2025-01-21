@@ -5,6 +5,8 @@ import './MetodoPago.css';
 import HeaderPagos from '../../Components/headerPago/headerPago.jsx';
 import { getPedidoByCarrito, getDetallesPedido } from '../../Api/pedidoApi';
 import { createPaypalOrder, capturePaypalPayment } from '../../Api/pagosApi';
+import jwtDecode from 'jwt-decode';
+import { getSelectedAddress } from '../../Api/direccionApi';
 
 const MetodoPago = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,9 +20,41 @@ const MetodoPago = () => {
   const [numeroIdentificacion, setNumeroIdentificacion] = useState(''); // Estado para el número de identificación
   const [numeroTelefono, setNumeroTelefono] = useState(''); // Estado para el número de teléfono
   const [aceptoTerminos, setAceptoTerminos] = useState(false); // Estado para aceptar términos
-
+  const [idUsuario, setIdUsuario] = useState(null);
+  const [selectedAddress, setSelectedAddress] = useState(null);
   const location = useLocation();
   const { idCarrito } = location.state || {};
+
+  useEffect(() => {
+    const token = localStorage.getItem('jwtToken');
+    if (token) {
+      try {
+        const payload = jwtDecode(token);
+        const currentTime = Date.now() / 1000;
+        setIdUsuario(payload.IdUsuario);
+  
+        if (payload.exp <= currentTime) {
+          localStorage.removeItem('jwtToken');
+        }
+      } catch (error) {
+        localStorage.removeItem('jwtToken');
+      }
+    }
+  }, []);
+  useEffect(() => {
+    const fetchSelectedAddress = async () => {
+      if (idUsuario) {
+        try {
+          const address = await getSelectedAddress(idUsuario);
+          setSelectedAddress(address);
+        } catch (error) {
+          console.error('Error al obtener la dirección:', error);
+        }
+      }
+    };
+
+    fetchSelectedAddress();
+  }, [idUsuario]);
 
   useEffect(() => {
     const obtenerPedido = async () => {
@@ -255,34 +289,52 @@ const MetodoPago = () => {
                       <td>
                         {item.impuesto.nombre} ({item.impuesto.porcentaje}%)
                       </td>
-                      <td>${item.producto.descuento.toFixed(2)}</td> {/* Add discount value */}
+                      <td>${item.producto.descuento.toFixed(2)}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
 
-              <div className="resumen-totales">
-                <h4>Resumen del Pedido</h4>
-                <div className="totales-grid">
-                  <p>Cantidad total de items:</p>
-                  <p>{detallesPedido.totales.cantidadItems}</p>
+              <div className="detalles-container">
+                <div className="resumen-totales">
+                  <h4>Resumen del Pedido</h4>
+                  <div className="totales-grid">
+                    <p>Cantidad total de items:</p>
+                    <p>{detallesPedido.totales.cantidadItems}</p>
 
-                  <p>Subtotal:</p>
-                  <p>${detallesPedido.totales.subtotal.toFixed(2)}</p>
+                    <p>Subtotal:</p>
+                    <p>${detallesPedido.totales.subtotal.toFixed(2)}</p>
 
-                  <p>Impuestos:</p>
-                  <p>${detallesPedido.totales.impuestos.toFixed(2)}</p>
+                    <p>Impuestos:</p>
+                    <p>${detallesPedido.totales.impuestos.toFixed(2)}</p>
 
-                  <p>Descuento Total:</p> {/* Add total discount row */}
-                  <p>${detallesPedido.totales.descuentos.toFixed(2)}</p>
+                    <p>Descuento Total:</p>
+                    <p>${detallesPedido.totales.descuentos.toFixed(2)}</p>
 
-                  <p>
-                    <strong>Total Final:</strong>
-                  </p>
-                  <p>
-                    <strong>${detallesPedido.totales.total.toFixed(2)}</strong>
-                  </p>
+                    <p>
+                      <strong>Total Final:</strong>
+                    </p>
+                    <p>
+                      <strong>${detallesPedido.totales.total.toFixed(2)}</strong>
+                    </p>
+                  </div>
                 </div>
+
+                {selectedAddress && (
+                  <div className="resumen-direccion">
+                    <h4>Dirección de Envío</h4>
+                    <div className="direccion-grid">
+                      <p><strong>Calle Principal:</strong></p>
+                      <p>{selectedAddress.CallePrincipal} {selectedAddress.Numeracion}</p>
+
+                      <p><strong>Calle Secundaria:</strong></p>
+                      <p>{selectedAddress.CalleSecundaria}</p>
+
+                      <p><strong>Referencia:</strong></p>
+                      <p>{selectedAddress.Descripcion}</p>
+                    </div>
+                  </div>
+                )}
               </div>
             </>
           )}
