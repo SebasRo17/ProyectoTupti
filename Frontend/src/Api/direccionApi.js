@@ -78,7 +78,10 @@ export const getSelectedAddress = async (idUsuario) => {
     const response = await axios.get(`${API_URL}/direcciones/usuario/${idUsuario}/seleccionada`);
     return response.data;
   } catch (error) {
+    if (error.response?.status === 404) {
+      throw new Error('No hay una dirección seleccionada. Por favor, seleccione una dirección de envío.');
+    }
     console.error('Error al obtener la dirección seleccionada:', error);
-    throw error;
+    throw new Error('Error al obtener la dirección seleccionada');
   }
 };

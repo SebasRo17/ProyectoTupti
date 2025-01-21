@@ -301,15 +301,28 @@ table td:last-child {
 }
 
 /* Totales */
-.resumen-totales {
+.detalles-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  margin-top: 30px;
+  width: 100%;
+}
+
+.resumen-totales,
+.resumen-direccion {
+  flex: 1;
   margin-top: 20px;
-  padding: 15px;
+  padding: 20px;
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: #f9f9f9;
+  min-width: 300px;
+  max-width: calc(50% - 15px);
 }
 
-.totales-grid {
+.totales-grid,
+.direccion-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
@@ -317,13 +330,26 @@ table td:last-child {
   color: black;
 }
 
-.totales-grid p {
+.totales-grid p,
+.direccion-grid p {
   margin: 5px 0;
 }
 
-.totales-grid p:nth-child(even) {
+.totales-grid p:nth-child(even),
+.direccion-grid p:nth-child(even) {
   text-align: right;
   color: black;
+}
+
+@media (max-width: 768px) {
+  .detalles-container {
+    flex-direction: column;
+  }
+
+  .resumen-totales,
+  .resumen-direccion {
+    max-width: 100%;
+  }
 }
 
 /* FORMULARIO PANTALLA EMERGENTE */

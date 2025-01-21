@@ -5,6 +5,8 @@ import './MetodoPago.css';
 import HeaderPagos from '../../Components/headerPago/headerPago.jsx';
 import { getPedidoByCarrito, getDetallesPedido } from '../../Api/pedidoApi';
 import { createPaypalOrder, capturePaypalPayment } from '../../Api/pagosApi';
+import jwtDecode from 'jwt-decode';
+import { getSelectedAddress } from '../../Api/direccionApi';
 
 const MetodoPago = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,9 +20,41 @@ const MetodoPago = () => {
   const [numeroIdentificacion, setNumeroIdentificacion] = useState(''); // Estado para el número de identificación
   const [numeroTelefono, setNumeroTelefono] = useState(''); // Estado para el número de teléfono
   const [aceptoTerminos, setAceptoTerminos] = useState(false); // Estado para aceptar términos
-
+  const [idUsuario, setIdUsuario] = useState(null);
+  const [selectedAddress, setSelectedAddress] = useState(null);
   const location = useLocation();
   const { idCarrito } = location.state || {};
+
+  useEffect(() => {
+    const token = localStorage.getItem('jwtToken');
+    if (token) {
+      try {
+        const payload = jwtDecode(token);
+        const currentTime = Date.now() / 1000;
+        setIdUsuario(payload.IdUsuario);
+  
+        if (payload.exp <= currentTime) {
+          localStorage.removeItem('jwtToken');
+        }
+      } catch (error) {
+        localStorage.removeItem('jwtToken');
+      }
+    }
+  }, []);
+  useEffect(() => {
+    const fetchSelectedAddress = async () => {
+      if (idUsuario) {
+        try {
+          const address = await getSelectedAddress(idUsuario);
+          setSelectedAddress(address);
+        } catch (error) {
+          console.error('Error al obtener la dirección:', error);
+        }
+      }
+    };
+
+    fetchSelectedAddress();
+  }, [idUsuario]);
 
   useEffect(() => {
     const obtenerPedido = async () => {
@@ -45,10 +79,99 @@ const MetodoPago = () => {
     obtenerPedido();
   }, [idCarrito]);
 
+  const startPayPalFlow = async () => {
+    if (!pedido || !detallesPedido) {
+      alert('No hay información del pedido disponible');
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const montoFormateado = Number(detallesPedido.totales.total.toFixed(2));
+      const { approveUrl, orderId } = await createPaypalOrder(
+        pedido.idPedido,
+        montoFormateado
+      );
+
+      // Configuración del popup
+      const width = 450;
+      const height = 600;
+      const left = (window.innerWidth - width) / 2;
+      const top = (window.innerHeight - height) / 2;
+
+      const popupFeatures = `
+        width=${width},
+        height=${height},
+        left=${left},
+        top=${top},
+        scrollbars=yes,
+        status=yes,
+        resizable=yes,
+        location=yes
+      `;
+
+      const paypalPopup = window.open(approveUrl, 'PayPal', popupFeatures);
+
+      if (!paypalPopup || paypalPopup.closed || typeof paypalPopup.closed === 'undefined') {
+        alert('Por favor, habilita las ventanas emergentes para continuar con el pago');
+        setIsLoading(false);
+        return;
+      }
+
+      const checkPopupStatus = setInterval(() => {
+        if (!paypalPopup || paypalPopup.closed) {
+          clearInterval(checkPopupStatus);
+          setIsLoading(false);
+          return;
+        }
+
+        try {
+          const popupUrl = paypalPopup.location.href;
+          
+          if (popupUrl.includes('/payment-success')) {
+            paypalPopup.close();
+            clearInterval(checkPopupStatus);
+            console.log('Pago completado con éxito', orderId);
+            capturePaypalPayment(orderId);
+            setPaymentStatus('success');
+            setIsLoading(false);
+          } else if (popupUrl.includes('/payment-cancel')) {
+            paypalPopup.close();
+            clearInterval(checkPopupStatus);
+            setPaymentStatus('cancelled');
+            setIsLoading(false);
+          }
+        } catch (err) {
+          // Manejar errores de cross-origin
+          console.log('Esperando completar el pago...');
+        }
+      }, 1000);
+
+    } catch (err) {
+      console.error('Error al iniciar el pago:', err);
+      setError('Error al iniciar el pago: ' + err.message);
+      setIsLoading(false);
+    }
+  };
+
   const confirmarCompra = () => {
     setMostrarConfirmacion(false);
     startPayPalFlow();
   };
+
+  const cerrarConfirmacion = () => {
+    setMostrarConfirmacion(false);
+  };
+
+  // Renderizado condicional para estados de carga y error
+  if (isLoading && !detallesPedido) {
+    return (
+      <div className="pagina-metodo-pago">
+        <HeaderPagos />
+        <div className="loading-message">Cargando información del pedido...</div>
+      </div>
+    );
+  }
 
   const cerrarFormulario = () => {
     setMostrarConfirmacion(false);
@@ -166,34 +289,52 @@ const MetodoPago = () => {
                       <td>
                         {item.impuesto.nombre} ({item.impuesto.porcentaje}%)
                       </td>
-                      <td>${item.producto.descuento.toFixed(2)}</td> {/* Add discount value */}
+                      <td>${item.producto.descuento.toFixed(2)}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
 
-              <div className="resumen-totales">
-                <h4>Resumen del Pedido</h4>
-                <div className="totales-grid">
-                  <p>Cantidad total de items:</p>
-                  <p>{detallesPedido.totales.cantidadItems}</p>
+              <div className="detalles-container">
+                <div className="resumen-totales">
+                  <h4>Resumen del Pedido</h4>
+                  <div className="totales-grid">
+                    <p>Cantidad total de items:</p>
+                    <p>{detallesPedido.totales.cantidadItems}</p>
 
-                  <p>Subtotal:</p>
-                  <p>${detallesPedido.totales.subtotal.toFixed(2)}</p>
+                    <p>Subtotal:</p>
+                    <p>${detallesPedido.totales.subtotal.toFixed(2)}</p>
 
-                  <p>Impuestos:</p>
-                  <p>${detallesPedido.totales.impuestos.toFixed(2)}</p>
+                    <p>Impuestos:</p>
+                    <p>${detallesPedido.totales.impuestos.toFixed(2)}</p>
 
-                  <p>Descuento Total:</p> {/* Add total discount row */}
-                  <p>${detallesPedido.totales.descuentos.toFixed(2)}</p>
+                    <p>Descuento Total:</p>
+                    <p>${detallesPedido.totales.descuentos.toFixed(2)}</p>
 
-                  <p>
-                    <strong>Total Final:</strong>
-                  </p>
-                  <p>
-                    <strong>${detallesPedido.totales.total.toFixed(2)}</strong>
-                  </p>
+                    <p>
+                      <strong>Total Final:</strong>
+                    </p>
+                    <p>
+                      <strong>${detallesPedido.totales.total.toFixed(2)}</strong>
+                    </p>
+                  </div>
                 </div>
+
+                {selectedAddress && (
+                  <div className="resumen-direccion">
+                    <h4>Dirección de Envío</h4>
+                    <div className="direccion-grid">
+                      <p><strong>Calle Principal:</strong></p>
+                      <p>{selectedAddress.CallePrincipal} {selectedAddress.Numeracion}</p>
+
+                      <p><strong>Calle Secundaria:</strong></p>
+                      <p>{selectedAddress.CalleSecundaria}</p>
+
+                      <p><strong>Referencia:</strong></p>
+                      <p>{selectedAddress.Descripcion}</p>
+                    </div>
+                  </div>
+                )}
               </div>
             </>
           )}
@@ -292,13 +433,15 @@ const MetodoPago = () => {
                     la <a href="#">política de privacidad</a>
                   </label>
                 </div>
-
                 <button
-                  type="submit"
-                  className="boton-confirmacion"
-                  disabled={isLoading || !aceptoTerminos} // Deshabilitado si no se marcan los términos
+                  className="boton-azul"
+                  onClick={() => {
+                    setMostrarConfirmacion(true);
+                    confirmarCompra();
+                  }}
+                  disabled={isLoading || paymentStatus === 'success'}
                 >
-                  {isLoading ? 'Procesando...' : 'Ir a la plataforma de pago'}
+                  {isLoading ? 'Procesando...' : 'Ir a plataforma de pago'}
                 </button>
               </form>
               <button className="boton-salir" onClick={cerrarFormulario}>

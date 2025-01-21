@@ -24,20 +24,25 @@ class DireccionRepositoryImpl {
 
     async delete(id) {
       try {
-        const resultado = await Direccion.destroy({
-          where: { IdDireccion: id }
-        });
-        return resultado > 0;
+        const resultado = await Direccion.update(
+          { Activo: 0 },
+          { where: { IdDireccion: id } }
+        );
+        return resultado[0] > 0;
       } catch (error) {
         console.error('Error en repositorio - delete:', error);
         throw error;
       }
     }
 
+
     async findByUserId(userId) {
       try {
         return await Direccion.findAll({
-          where: { IdUsuario: userId }
+          where: { 
+            IdUsuario: userId,
+            Activo: 1
+          }
         });
       } catch (error) {
         console.error('Error en repositorio - findByUserId:', error);
@@ -85,7 +90,8 @@ class DireccionRepositoryImpl {
         const direccion = await Direccion.findOne({
           where: {
             IdUsuario: idUsuario,
-            EsSeleccionada: 1
+            EsSeleccionada: 1,
+            Activo: 1
           }
         });
   
