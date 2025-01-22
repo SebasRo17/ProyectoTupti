@@ -151,34 +151,32 @@ const InvoicePDF = ({ idUsuario }) => {
             }
 
             try {
-                // Obtener datos del cliente del localStorage
-                const clienteData = JSON.parse(localStorage.getItem('clienteData')) || {
-                    nombre: 'Consumidor Final',
-                    identificacion: '9999999999999'
-                };
+                // Leer datos del cliente del localStorage
+                let clienteData;
+                try {
+                    const storedData = localStorage.getItem('clienteData');
+                    console.log('Datos almacenados:', storedData); // Debugging
+                    clienteData = JSON.parse(storedData);
+                    console.log('Datos parseados:', clienteData); // Debugging
+                } catch (error) {
+                    console.error('Error al leer datos del cliente:', error);
+                    clienteData = {
+                        nombre: 'Consumidor Final',
+                        identificacion: '9999999999999'
+                    };
+                }
 
-                // Primero obtenemos el último pedido del usuario
+                // Resto de la lógica de fetching
                 const ultimoPedido = await getLastPedidoByUserId(idUsuario);
-                if (!ultimoPedido || !ultimoPedido.IdPedido) {
-                    console.error('No se encontró el último pedido para el usuario:', idUsuario);
-                    return;
-                }
-
-                // Usando el IdPedido obtenido, conseguimos los detalles completos
                 const pedidoData = await getDetallesPedido(ultimoPedido.IdPedido);
-                
-                if (!pedidoData || !pedidoData.items) {
-                    console.error('Datos del pedido no válidos:', pedidoData);
-                    return;
-                }
 
+                // Actualizar el estado con los datos del cliente
                 setInvoiceData(prev => ({
                     ...prev,
                     pedidoInfo: ultimoPedido,
                     customer: {
-                        name: clienteData.nombre,
-                        address: '',
-                        ruc: clienteData.identificacion  // Aseguramos que la identificación va al campo correcto
+                        name: clienteData?.nombre || 'Consumidor Final',
+                        ruc: clienteData?.identificacion || '9999999999999'
                     },
                     items: pedidoData.items.map(item => ({
                         codigo: item.idCarritoDetalle || 'N/A',
@@ -197,8 +195,9 @@ const InvoicePDF = ({ idUsuario }) => {
                     invoiceNumber: `001-001-${ultimoPedido.IdPedido.toString().padStart(9, '0')}`,
                     date: new Date().toLocaleDateString()
                 }));
+
             } catch (error) {
-                console.error("Error al cargar datos del pedido:", error.message);
+                console.error("Error al cargar datos:", error);
             }
         };
 
@@ -240,8 +239,8 @@ const InvoicePDF = ({ idUsuario }) => {
             </View>
           {/* Información del cliente */}
           <View style={styles.section}>
-            <Text style={styles.cliente}>RAZON SOCIAL / NOMBRE Y APELLIDOS: {invoiceData.customer.name}</Text>
-            <Text style={styles.cliente}>RUCC/CI: {invoiceData.customer.ruc}</Text>  {/* Cambiamos .address por .ruc */}
+            <Text style={styles.cliente}>RAZON SOCIAL / NOMBRE Y APELLIDOS: {invoiceData.customer.name || 'Consumidor Final'}</Text>
+            <Text style={styles.cliente}>RUCC/CI: {invoiceData.customer.ruc || '9999999999999'}</Text>  {/* Cambiamos .address por .ruc */}
             <Text style={styles.cliente}>FECHA DE EMISION: {invoiceData.date}</Text>
           </View>
   

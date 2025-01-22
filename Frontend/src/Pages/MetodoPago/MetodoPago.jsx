@@ -183,7 +183,7 @@ const MetodoPago = () => {
     setMostrarConfirmacion(true);
   };
 
-  const manejarEnvioFormulario = (e) => {
+  const manejarEnvioFormulario = async (e) => {
     e.preventDefault();
     
     // Validar el número de identificación
@@ -199,14 +199,23 @@ const MetodoPago = () => {
       }
     }
 
-    // Guardar datos del cliente en localStorage para que PDF.jsx pueda accederlos
-    localStorage.setItem('clienteData', JSON.stringify({
-      nombre: nombreCliente,
-      identificacion: numeroIdentificacion
-    }));
-    
-    console.log('Formulario enviado');
-    setMostrarConfirmacion(false);
+    try {
+      // Guardar datos del cliente en localStorage
+      const clienteData = {
+        nombre: esConsumidorFinal ? 'Consumidor Final' : nombreCliente,
+        identificacion: esConsumidorFinal ? '9999999999999' : numeroIdentificacion
+      };
+      
+      localStorage.setItem('clienteData', JSON.stringify(clienteData));
+      console.log('Datos guardados:', clienteData); // Para verificar que se guardan
+  
+      // Cerrar el modal y comenzar el proceso de pago
+      setMostrarConfirmacion(false);
+      await startPayPalFlow();
+    } catch (error) {
+      console.error('Error al procesar el formulario:', error);
+      alert('Error al procesar el pago. Por favor, intente nuevamente.');
+    }
   };
 
   const handleConsumidorFinalChange = (e) => {
@@ -455,14 +464,11 @@ const MetodoPago = () => {
                   </label>
                 </div>
                 <button
-                  className="boton-azul"
-                  onClick={() => {
-                    setMostrarConfirmacion(true);
-                    confirmarCompra();
-                  }}
-                  disabled={isLoading || paymentStatus === 'success'}
+                  type="submit"
+                  className="boton-confirmacion"
+                  disabled={isLoading || !aceptoTerminos || ((!esConsumidorFinal && !nombreCliente) || (!esConsumidorFinal && !numeroIdentificacion))}
                 >
-                  {isLoading ? 'Procesando...' : 'Ir a plataforma de pago'}
+                  {isLoading ? 'Procesando...' : 'Ir a la plataforma de pago'}
                 </button>
               </form>
               <button className="boton-salir" onClick={cerrarFormulario}>
