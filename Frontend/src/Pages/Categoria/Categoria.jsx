@@ -266,7 +266,7 @@ function Categoria() {
                            />
                         ))}
                      </div>
-                     <div className="modal-info">
+                     <div className="modal-info8">
                         <h2>{selectedProduct.Nombre || selectedProduct.Producto}</h2>
                         <p className="modal-precio">${selectedProduct.Precio}</p>
                         <p className="modal-descripcion">{selectedProduct.Descripcion}</p>
