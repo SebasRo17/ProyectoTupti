@@ -151,6 +151,12 @@ const InvoicePDF = ({ idUsuario }) => {
             }
 
             try {
+                // Obtener datos del cliente del localStorage
+                const clienteData = JSON.parse(localStorage.getItem('clienteData')) || {
+                    nombre: 'Consumidor Final',
+                    identificacion: '9999999999999'
+                };
+
                 // Primero obtenemos el último pedido del usuario
                 const ultimoPedido = await getLastPedidoByUserId(idUsuario);
                 if (!ultimoPedido || !ultimoPedido.IdPedido) {
@@ -168,11 +174,11 @@ const InvoicePDF = ({ idUsuario }) => {
 
                 setInvoiceData(prev => ({
                     ...prev,
-                    pedidoInfo: ultimoPedido, // Guardamos la información básica del pedido
+                    pedidoInfo: ultimoPedido,
                     customer: {
-                        name: pedidoData.usuario?.nombre || 'Cliente',
-                        address: pedidoData.usuario?.direccion || '',
-                        ruc: pedidoData.usuario?.identificacion || ''
+                        name: clienteData.nombre,
+                        address: '',
+                        ruc: clienteData.identificacion  // Aseguramos que la identificación va al campo correcto
                     },
                     items: pedidoData.items.map(item => ({
                         codigo: item.idCarritoDetalle || 'N/A',
@@ -235,7 +241,7 @@ const InvoicePDF = ({ idUsuario }) => {
           {/* Información del cliente */}
           <View style={styles.section}>
             <Text style={styles.cliente}>RAZON SOCIAL / NOMBRE Y APELLIDOS: {invoiceData.customer.name}</Text>
-            <Text style={styles.cliente}>RUCC/CI: {invoiceData.customer.address}</Text>
+            <Text style={styles.cliente}>RUCC/CI: {invoiceData.customer.ruc}</Text>  {/* Cambiamos .address por .ruc */}
             <Text style={styles.cliente}>FECHA DE EMISION: {invoiceData.date}</Text>
           </View>
   

@@ -18,6 +18,7 @@ const MetodoPago = () => {
   const [numeroIdentificacion, setNumeroIdentificacion] = useState(''); // Estado para el número de identificación
   const [numeroTelefono, setNumeroTelefono] = useState(''); // Estado para el número de teléfono
   const [aceptoTerminos, setAceptoTerminos] = useState(false); // Estado para aceptar términos
+  const [nombreCliente, setNombreCliente] = useState(''); // Estado para el nombre del cliente
 
   const location = useLocation();
   const { idCarrito } = location.state || {};
@@ -73,6 +74,12 @@ const MetodoPago = () => {
         return;
       }
     }
+
+    // Guardar datos del cliente en localStorage para que PDF.jsx pueda accederlos
+    localStorage.setItem('clienteData', JSON.stringify({
+      nombre: nombreCliente,
+      identificacion: numeroIdentificacion
+    }));
     
     console.log('Formulario enviado');
     setMostrarConfirmacion(false);
@@ -80,6 +87,13 @@ const MetodoPago = () => {
 
   const handleConsumidorFinalChange = (e) => {
     setEsConsumidorFinal(e.target.checked); // Actualiza el estado según el valor del checkbox
+    if (e.target.checked) {
+      setNumeroIdentificacion('9999999999999');
+      setNombreCliente('Consumidor Final');
+    } else {
+      setNumeroIdentificacion('');
+      setNombreCliente('');
+    }
   };
 
   const handleTipoDocumentoChange = (e) => {
@@ -104,6 +118,10 @@ const MetodoPago = () => {
 
   const handleTerminosChange = (e) => {
     setAceptoTerminos(e.target.checked); // Actualiza el estado cuando cambia el checkbox de términos
+  };
+
+  const handleNombreClienteChange = (e) => {
+    setNombreCliente(e.target.value);
   };
 
   if (isLoading && !detallesPedido) {
@@ -243,6 +261,8 @@ const MetodoPago = () => {
                   placeholder="Nombre del titular"
                   required={!esConsumidorFinal}
                   disabled={esConsumidorFinal}
+                  value={nombreCliente}
+                  onChange={handleNombreClienteChange}
                 />
 
                 <select
