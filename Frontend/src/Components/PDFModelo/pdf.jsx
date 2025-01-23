@@ -124,6 +124,37 @@ const styles = StyleSheet.create({
     }
 });
 
+// Añadir estas funciones auxiliares antes del componente InvoicePDF
+const generateDigitoVerificador = (cadena) => {
+    const coeficientes = [3, 2, 7, 6, 5, 4, 3, 2];
+    let suma = 0;
+    
+    for (let i = 0; i < cadena.length; i++) {
+        suma += parseInt(cadena[i]) * coeficientes[i];
+    }
+    
+    const modulo = suma % 11;
+    const digito = 11 - modulo;
+    
+    return digito === 11 ? 0 : digito === 10 ? 1 : digito;
+};
+
+const generateClaveAcceso = (fecha, numeroFactura) => {
+    const fechaFormateada = fecha.replace(/[^\d]/g, '').slice(0, 8); // ddmmaaaa
+    const tipoComprobante = '01';
+    const ruc = '1751345263001';
+    const tipoAmbiente = '2';
+    const serie = '001001';
+    const secuencial = numeroFactura.toString().padStart(9, '0');
+    const codigoNumerico = '41231533';
+    const tipoEmision = '1';
+    
+    const baseClaveAcceso = `${fechaFormateada}${tipoComprobante}${ruc}${tipoAmbiente}${serie}${secuencial}${codigoNumerico}${tipoEmision}`;
+    const digitoVerificador = generateDigitoVerificador(codigoNumerico);
+    
+    return `${baseClaveAcceso}${digitoVerificador}`;
+};
+
 // Componente principal
 const InvoicePDF = ({ idUsuario }) => {
     const [invoiceData, setInvoiceData] = useState({
@@ -142,6 +173,10 @@ const InvoicePDF = ({ idUsuario }) => {
         invoiceNumber: "001-001-000000123",
         date: new Date().toLocaleDateString()
     });
+    const [claveAcceso, setClaveAcceso] = useState('');
+    const [numeroFactura, setNumeroFactura] = useState(1); // Contador para el número de factura
+    const [fechaAutorizacion, setFechaAutorizacion] = useState('');
+    const [totalesPorIva, setTotalesPorIva] = useState({});
 
     useEffect(() => {
         const fetchPedidoData = async () => {
@@ -170,6 +205,55 @@ const InvoicePDF = ({ idUsuario }) => {
                 const ultimoPedido = await getLastPedidoByUserId(idUsuario);
                 const pedidoData = await getDetallesPedido(ultimoPedido.IdPedido);
 
+                // Generar número de factura y clave de acceso
+                const currentDate = new Date();
+                const formattedDate = currentDate.toLocaleDateString('es-EC', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit'
+                });
+                
+                const claveAccesoGenerada = generateClaveAcceso(formattedDate, numeroFactura);
+                setClaveAcceso(claveAccesoGenerada);
+
+                // Generar fecha y hora de autorización
+                const formattedDateTime = currentDate.toLocaleString('es-EC', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: false
+                });
+                setFechaAutorizacion(formattedDateTime);
+
+                // Calcular subtotales por tipo de IVA
+                const subtotalesPorIva = {};
+                pedidoData.items.forEach(item => {
+                    // Agregamos console.log para ver cada item
+                    console.log('Item procesado:', item);
+                    
+                    // Obtener el IVA del objeto impuesto en lugar del producto
+                    const iva = item.impuesto?.porcentaje || 0;
+                    const subtotal = item.producto.precioUnitario * item.producto.cantidad;
+
+                    // Redondeamos el IVA a un número entero para evitar problemas de precisión
+                    const ivaKey = Math.round(iva);
+                    
+                    if (!subtotalesPorIva[ivaKey]) {
+                        subtotalesPorIva[ivaKey] = 0;
+                    }
+                    subtotalesPorIva[ivaKey] += subtotal;
+                    
+                    // Agregamos console.log para ver los subtotales
+                    console.log(`IVA ${ivaKey}%: Subtotal actual = ${subtotalesPorIva[ivaKey]}`);
+                });
+
+                console.log('Subtotales por IVA finales:', subtotalesPorIva);
+
+                setTotalesPorIva(subtotalesPorIva);
+
                 // Actualizar el estado con los datos del cliente
                 setInvoiceData(prev => ({
                     ...prev,
@@ -192,8 +276,8 @@ const InvoicePDF = ({ idUsuario }) => {
                         impuestos: 0,
                         total: 0
                     },
-                    invoiceNumber: `001-001-${ultimoPedido.IdPedido.toString().padStart(9, '0')}`,
-                    date: new Date().toLocaleDateString()
+                    invoiceNumber: `001-001-${numeroFactura.toString().padStart(9, '0')}`,
+                    date: formattedDate
                 }));
 
             } catch (error) {
@@ -202,7 +286,7 @@ const InvoicePDF = ({ idUsuario }) => {
         };
 
         fetchPedidoData();
-    }, [idUsuario]);
+    }, [idUsuario, numeroFactura]);
 
     // En el render, agregar validaciones para evitar errores de undefined
     const renderPrecio = (valor) => {
@@ -227,13 +311,16 @@ const InvoicePDF = ({ idUsuario }) => {
                     </View>
                 </View>
                 <View style={styles.automatico}>
-                    <Text style={styles.autLine}>RUC: 1714638598001</Text>
+                    <Text style={styles.autLine}>RUC: 1751345263001</Text>
                     <Text style={styles.autLine}>FACTURA    N°: {invoiceData.invoiceNumber}</Text>
-                    <Text style={styles.autLine}>NO. DE AUTORIZACION</Text>
-                    <Text style={styles.autLine}>FECHA Y HORA DE AUTORIZACION</Text>
-                    <Text style={styles.autLine}>AMBIENTE PRODUCCION</Text>
-                    <Text style={styles.autLine}>EMISION NORMAL</Text>
-                    <Text style={styles.autLine}>CLAVE DE ACCESO</Text>
+                    <Text style={styles.autLine}>NO. DE AUTORIZACION:</Text>
+                    <Text style={styles.autLine}>{claveAcceso}</Text>
+                    <Text style={styles.autLine}>FECHA Y HORA DE AUTORIZACION:</Text>
+                    <Text style={styles.autLine}>{fechaAutorizacion}</Text>
+                    <Text style={styles.autLine}>AMBIENTE: PRODUCCIÓN</Text>
+                    <Text style={styles.autLine}>EMISION: NORMAL</Text>
+                    <Text style={styles.autLine}>CLAVE DE ACCESO:</Text>
+                    <Text style={styles.autLine}>{claveAcceso}</Text>
                     {/* Removemos temporalmente la imagen del código de barras hasta resolver el problema CORS */}
                 </View>
             </View>
@@ -292,18 +379,35 @@ const InvoicePDF = ({ idUsuario }) => {
   
           {/* Tabla de Totales */}
           <View style={styles.tableTotales}>
-            <View style={styles.rowTotales}>
-                <Text style={styles.colLabelTotales}>SUBTOTAL</Text>
-                <Text style={styles.colValueTotales}>{renderPrecio(invoiceData.totales.subtotal)}</Text>
-            </View>
+            {/* Subtotales por tipo de IVA */}
+            {Object.entries(totalesPorIva).sort(([ivaA], [ivaB]) => Number(ivaA) - Number(ivaB)).map(([iva, subtotal]) => (
+                <View style={styles.rowTotales} key={`subtotal-${iva}`}>
+                    <Text style={styles.colLabelTotales}>Subtotal IVA {iva}%</Text>
+                    <Text style={styles.colValueTotales}>{renderPrecio(subtotal)}</Text>
+                </View>
+            ))}
+            
+            {/* Descuento */}
             <View style={styles.rowTotales}>
                 <Text style={[styles.colLabelTotales, styles.descuentoLabel]}>DESCUENTO</Text>
                 <Text style={styles.colValueTotales}>{renderPrecio(invoiceData.totales.descuentos)}</Text>
             </View>
+
+            {/* Subtotal general */}
             <View style={styles.rowTotales}>
-                <Text style={styles.colLabelTotales}>IVA 15%</Text>
-                <Text style={styles.colValueTotales}>{renderPrecio(invoiceData.totales.impuestos)}</Text>
+                <Text style={styles.colLabelTotales}>SUBTOTAL</Text>
+                <Text style={styles.colValueTotales}>{renderPrecio(invoiceData.totales.subtotal)}</Text>
             </View>
+
+            {/* IVAs */}
+            {Object.entries(totalesPorIva).sort(([ivaA], [ivaB]) => Number(ivaA) - Number(ivaB)).map(([iva, subtotal]) => (
+                <View style={styles.rowTotales} key={`iva-${iva}`}>
+                    <Text style={styles.colLabelTotales}>IVA {iva}%</Text>
+                    <Text style={styles.colValueTotales}>{renderPrecio(subtotal * (Number(iva)/100))}</Text>
+                </View>
+            ))}
+
+            {/* Valor Total */}
             <View style={styles.rowTotales}>
                 <Text style={styles.colLabelTotales}>VALOR TOTAL</Text>
                 <Text style={styles.colValueTotales}>{renderPrecio(invoiceData.totales.total)}</Text>
