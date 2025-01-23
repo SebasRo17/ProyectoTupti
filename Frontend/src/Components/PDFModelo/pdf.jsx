@@ -176,6 +176,7 @@ const InvoicePDF = ({ idUsuario }) => {
     const [claveAcceso, setClaveAcceso] = useState('');
     const [numeroFactura, setNumeroFactura] = useState(1); // Contador para el número de factura
     const [fechaAutorizacion, setFechaAutorizacion] = useState('');
+    const [totalesPorIva, setTotalesPorIva] = useState({});
 
     useEffect(() => {
         const fetchPedidoData = async () => {
@@ -226,6 +227,32 @@ const InvoicePDF = ({ idUsuario }) => {
                     hour12: false
                 });
                 setFechaAutorizacion(formattedDateTime);
+
+                // Calcular subtotales por tipo de IVA
+                const subtotalesPorIva = {};
+                pedidoData.items.forEach(item => {
+                    // Agregamos console.log para ver cada item
+                    console.log('Item procesado:', item);
+                    
+                    // Obtener el IVA del objeto impuesto en lugar del producto
+                    const iva = item.impuesto?.porcentaje || 0;
+                    const subtotal = item.producto.precioUnitario * item.producto.cantidad;
+
+                    // Redondeamos el IVA a un número entero para evitar problemas de precisión
+                    const ivaKey = Math.round(iva);
+                    
+                    if (!subtotalesPorIva[ivaKey]) {
+                        subtotalesPorIva[ivaKey] = 0;
+                    }
+                    subtotalesPorIva[ivaKey] += subtotal;
+                    
+                    // Agregamos console.log para ver los subtotales
+                    console.log(`IVA ${ivaKey}%: Subtotal actual = ${subtotalesPorIva[ivaKey]}`);
+                });
+
+                console.log('Subtotales por IVA finales:', subtotalesPorIva);
+
+                setTotalesPorIva(subtotalesPorIva);
 
                 // Actualizar el estado con los datos del cliente
                 setInvoiceData(prev => ({
@@ -352,18 +379,35 @@ const InvoicePDF = ({ idUsuario }) => {
   
           {/* Tabla de Totales */}
           <View style={styles.tableTotales}>
-            <View style={styles.rowTotales}>
-                <Text style={styles.colLabelTotales}>SUBTOTAL</Text>
-                <Text style={styles.colValueTotales}>{renderPrecio(invoiceData.totales.subtotal)}</Text>
-            </View>
+            {/* Subtotales por tipo de IVA */}
+            {Object.entries(totalesPorIva).sort(([ivaA], [ivaB]) => Number(ivaA) - Number(ivaB)).map(([iva, subtotal]) => (
+                <View style={styles.rowTotales} key={`subtotal-${iva}`}>
+                    <Text style={styles.colLabelTotales}>Subtotal IVA {iva}%</Text>
+                    <Text style={styles.colValueTotales}>{renderPrecio(subtotal)}</Text>
+                </View>
+            ))}
+            
+            {/* Descuento */}
             <View style={styles.rowTotales}>
                 <Text style={[styles.colLabelTotales, styles.descuentoLabel]}>DESCUENTO</Text>
                 <Text style={styles.colValueTotales}>{renderPrecio(invoiceData.totales.descuentos)}</Text>
             </View>
+
+            {/* Subtotal general */}
             <View style={styles.rowTotales}>
-                <Text style={styles.colLabelTotales}>IVA 15%</Text>
-                <Text style={styles.colValueTotales}>{renderPrecio(invoiceData.totales.impuestos)}</Text>
+                <Text style={styles.colLabelTotales}>SUBTOTAL</Text>
+                <Text style={styles.colValueTotales}>{renderPrecio(invoiceData.totales.subtotal)}</Text>
             </View>
+
+            {/* IVAs */}
+            {Object.entries(totalesPorIva).sort(([ivaA], [ivaB]) => Number(ivaA) - Number(ivaB)).map(([iva, subtotal]) => (
+                <View style={styles.rowTotales} key={`iva-${iva}`}>
+                    <Text style={styles.colLabelTotales}>IVA {iva}%</Text>
+                    <Text style={styles.colValueTotales}>{renderPrecio(subtotal * (Number(iva)/100))}</Text>
+                </View>
+            ))}
+
+            {/* Valor Total */}
             <View style={styles.rowTotales}>
                 <Text style={styles.colLabelTotales}>VALOR TOTAL</Text>
                 <Text style={styles.colValueTotales}>{renderPrecio(invoiceData.totales.total)}</Text>
