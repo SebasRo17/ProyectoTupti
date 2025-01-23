@@ -527,3 +527,9 @@ body {
    flex-direction: column;
    gap: 1rem;
 }
+
+
+/*filtro*/
+.filtro-container16 {
+  margin-bottom: -700px;
+}

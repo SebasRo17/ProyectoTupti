@@ -8,7 +8,7 @@ import Footer from "../../Components/footer/footer.jsx";
 import { createCalificacion, getCalificaciones } from '../../Api/calificacionApi';
 import "./Categoria.css";
 import "./ResponsiveCategoria.css";
-import Filtros from "../../Components/Filtros/Filtros.jsx";
+import FiltroCategoria from "../../Components/FiltroCategoria/FiltroCategoria.jsx";
 import { addToCart } from '../../Api/carritoApi.js';
 import jwtDecode from 'jwt-decode';
 import LoadingSpinner from '../../Components/LoadingSpinner/LoadingSpinner';
@@ -216,6 +216,10 @@ function Categoria() {
             toggleCart={toggleCart} 
             isCartOpen={isCartOpen}
          />
+         {/* Filtro de Categoría fijo */}
+      <div className="filtro-container16">
+         <FiltroCategoria />
+      </div>
          <CategoriesBar categoryData={categoryData} />
          <div className="categoria-container">
 
@@ -382,7 +386,6 @@ function Categoria() {
 
           <Footer />
 
-          <Filtros /> 
       </div>
    );
 }
