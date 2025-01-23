@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
 import "./FiltroCategoria.css";
 import "./FiltroCategoriaResponsive.css";
+import { useNavigate } from "react-router-dom";
+import { searchProducts } from "../../Api/searchProduts";
 
 const FiltroCategoria = () => {
-  const [precio, setPrecio] = useState([10, 100]);
-  const [descuento, setDescuento] = useState([0, 80]);
+  const [precio, setPrecio] = useState([0, 100]);
+  const [descuento, setDescuento] = useState([1, 80]);
   const [categoriasSeleccionadas, setCategoriasSeleccionadas] = useState([]);
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // Estado para el menú hamburguesa
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const navigate = useNavigate();
+  const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
     updateRangeBackground(precio, "precio-slider", 0, 100);
@@ -28,20 +33,59 @@ const FiltroCategoria = () => {
 
     newValues[index] = value;
 
-    // Asegurarse de que el mínimo no supere al máximo y viceversa
     if (index === 0 && value > newValues[1]) newValues[1] = value;
     if (index === 1 && value < newValues[0]) newValues[0] = value;
 
     tipo === "precio" ? setPrecio(newValues) : setDescuento(newValues);
   };
 
-  const handleFiltrar = (tipo) => {
-    if (tipo === "precio") {
-      alert(`Filtrando por precio entre ${precio[0]}$ y ${precio[1]}$`);
-    } else if (tipo === "descuento") {
-      alert(
-        `Filtrando por descuento entre ${descuento[0]}% y ${descuento[1]}%`
-      );
+  const handleFiltrar = async () => {
+    try {
+      const filteredProducts = await searchProducts({
+        PrecioMin: precio[0],
+        PrecioMax: precio[1],
+        ...(categoriasSeleccionadas.length > 0 && { 
+          IdTipoProducto: categoriasSeleccionadas[0] 
+        })
+      });
+
+      const finalFilteredProducts = filteredProducts.filter(product => {
+        const descuentoProducto = product.descuento 
+          ? parseFloat(product.descuento.porcentaje) 
+          : 0;
+        
+        // Handle zero case explicitly
+        const meetsDiscountCriteria = 
+          (descuento[0] === 0 ? descuentoProducto >= 0 : descuentoProducto >= descuento[0]) &&
+          descuentoProducto <= descuento[1];
+        
+        return meetsDiscountCriteria &&
+               parseFloat(product.Precio) >= precio[0] && 
+               parseFloat(product.Precio) <= precio[1];
+      });
+
+      console.log('Productos filtrados:', finalFilteredProducts);
+
+      if (finalFilteredProducts.length > 0) {
+        navigate('/categoria/filtrados', { 
+          state: { 
+            products: finalFilteredProducts,
+            filters: {
+              priceRange: { min: precio[0], max: precio[1] },
+              discountRange: { min: descuento[0], max: descuento[1] },
+              categoryId: categoriasSeleccionadas[0] || null
+            }
+          } 
+        });
+        setFilteredProducts(finalFilteredProducts);
+      } else {
+        console.log('No hay productos que coincidan con los filtros');
+        setShowAlert(true);
+        setTimeout(() => setShowAlert(false), 3000); // Hide after 3s
+        setFilteredProducts([]);
+      }
+    } catch (error) {
+      console.error('Error al filtrar productos:', error);
     }
   };
 
@@ -56,12 +100,11 @@ const FiltroCategoria = () => {
     setCategoriasSeleccionadas(selectedCategories);
   };
 
-  const handleFiltrarCategorias = () => {
-    if (categoriasSeleccionadas.length === 0) {
-      alert("Por favor selecciona al menos una categoría.");
-    } else {
-      alert(`Filtrando por categorías: ${categoriasSeleccionadas.join(", ")}`);
-    }
+  const clearFilters = () => {
+    setPrecio([0, 100]);
+    setDescuento([1, 80]);
+    setCategoriasSeleccionadas([]);
+    setFilteredProducts([]);
   };
 
   const toggleMenu = () => {
@@ -70,12 +113,10 @@ const FiltroCategoria = () => {
 
   return (
     <>
-      {/* Botón Menú Hamburguesa */}
       <button className="filter-hamburger" onClick={toggleMenu}>
         ☰
       </button>
 
-      {/* Filtro (Menú deslizable) */}
       <div className={`filters-nombre15 ${isMenuOpen ? "active" : ""}`}>
         {/* Filtro por Precio */}
         <div className="filter-container-nombre15">
@@ -87,6 +128,7 @@ const FiltroCategoria = () => {
                 type="range"
                 min="0"
                 max="100"
+                step="0.01"
                 value={precio[0]}
                 onChange={(e) => handleRangeChange(e, "precio", 0)}
                 className="range-input-nombre15"
@@ -95,6 +137,7 @@ const FiltroCategoria = () => {
                 type="range"
                 min="0"
                 max="100"
+                step="0.01"
                 value={precio[1]}
                 onChange={(e) => handleRangeChange(e, "precio", 1)}
                 className="range-input-nombre15"
@@ -104,12 +147,6 @@ const FiltroCategoria = () => {
               {precio[0]}$ - {precio[1]}$
             </span>
           </div>
-          <button
-            className="filter-button-nombre15"
-            onClick={() => handleFiltrar("precio")}
-          >
-            Filtrar
-          </button>
         </div>
 
         {/* Filtro por Descuento */}
@@ -139,12 +176,6 @@ const FiltroCategoria = () => {
               {descuento[0]}% - {descuento[1]}%
             </span>
           </div>
-          <button
-            className="filter-button-nombre15"
-            onClick={() => handleFiltrar("descuento")}
-          >
-            Filtrar
-          </button>
         </div>
 
         {/* Filtro por Categoría */}
@@ -156,35 +187,58 @@ const FiltroCategoria = () => {
             onChange={handleCategoriaChange}
             multiple
           >
-            <option value="carnes">Carnes</option>
-            <option value="vegetales">Vegetales</option>
-            <option value="frutas">Frutas</option>
-            <option value="bebidas">Bebidas</option>
-            <option value="lacteos">Lácteos</option>
-            <option value="panaderia">Panadería</option>
-            <option value="snacks">Snacks</option>
-            <option value="limpieza">Limpieza</option>
-            <option value="congelados">Congelados</option>
-            <option value="granos">Granos</option>
-            <option value="condimentos">Condimentos</option>
-            <option value="cuidado">Cuidado</option>
-            <option value="mascotas">Mascotas</option>
-            <option value="electronica">Electrónica</option>
-            <option value="dulces">Dulces</option>
-            <option value="enlatados">Enlatados</option>
-            <option value="pastas">Pastas</option>
-            <option value="aceites">Aceites</option>
-            <option value="licor">Licor</option>
+            <option value="1">Carnes</option>
+            <option value="2">Vegetales</option>
+            <option value="3">Frutas</option>
+            <option value="4">Bebidas</option>
+            <option value="5">Lácteos</option>
+            <option value="6">Panadería</option>
+            <option value="7">Snacks</option>
+            <option value="8">Limpieza</option>
+            <option value="9">Congelados</option>
+            <option value="10">Granos</option>
+            <option value="11">Condimentos</option>
+            <option value="12">Cuidado</option>
+            <option value="13">Mascotas</option>
+            <option value="14">Electrónica</option>
+            <option value="15">Dulces</option>
+            <option value="16">Enlatados</option>
+            <option value="17">Pastas</option>
+            <option value="18">Aceites</option>
+            <option value="19">Licor</option>
           </select>
+        </div>
+
+        {/* Botones de Filtrado */}
+        <div className="filter-buttons-container">
           <button
             className="filter-button-nombre15"
-            onClick={handleFiltrarCategorias}
-            disabled={categoriasSeleccionadas.length === 0}
+            onClick={handleFiltrar}
+            disabled={
+              precio[0] === 10 && 
+              precio[1] === 100 && 
+              descuento[0] === 0 && 
+              descuento[1] === 80 && 
+              categoriasSeleccionadas.length === 0
+            }
           >
-            Filtrar por Categoría
+            Filtrar
+          </button>
+          <button
+            className="clear-filter-button"
+            onClick={clearFilters}
+          >
+            Limpiar Filtros
           </button>
         </div>
       </div>
+      {showAlert && (
+        <div className="alert-container">
+          <div className="alert-message">
+            No hay productos que coincidan con los filtros
+          </div>
+        </div>
+      )}
     </>
   );
 };
