@@ -16,10 +16,7 @@
       width: 250px;
       margin-top: 0%
     }
-    .filtro-container16 {
-      margin-bottom: -1200px;
-      
-    }
+    
 }
 @media screen and (min-width: 1441px){
     .categoria-container {
@@ -37,10 +34,7 @@
         width: 250px;
         margin-top: 0%
       }
-      .filtro-container16 {
-        margin-bottom: -1000px;
-        
-      }
+    
 }
 
 @media screen and (min-width: 1024x) and (max-width: 1440px) {
@@ -57,10 +51,7 @@
       grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
       gap: 5px;
     }
-    .filtro-container16 {
-      margin-bottom: -800px;
-      
-    }
+   
   
   
 }
@@ -79,9 +70,6 @@
         gap: 10px;
       }
 
-      .filtro-container16 {
-        margin-bottom: -1050px;
-      }
     
 
 }
@@ -122,10 +110,7 @@
         grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
         gap: 5px;
       }
-      .filtro-container16 {
-        margin-bottom: -800px;
-        
-      }
+     
     
 }
 
@@ -227,4 +212,7 @@
       width: 150px;
       height: 150px;
    }
+   .filtro-container16 {
+    margin-bottom: 150px;
+  }
 }

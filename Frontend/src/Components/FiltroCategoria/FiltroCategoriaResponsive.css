@@ -1,9 +1,268 @@
 /* Responsividad */
 
+  /* Estilos para pantallas pequeñas (menores a 375px) */
+@media screen and (max-width: 320px) {
+    .filter-hamburger {
+    margin-top: 55px;
+    margin-right: 270px;
+     
+    }
   
+    .filters-nombre15 {
+      
+      margin-top: 100px;
+    }
+  
+    .filters-nombre15.active {
+      display: flex;
+    }
+  
+    /* Estilos para cerrar el menú */
+    .close-menu-btn {
+      position: absolute;
+      top: -15px;
+      right: -15px;
+      background: none;
+      border: none;
+      font-size: 33px;
+      cursor: pointer;
+    }
+}
 
-/* Pantallas entre 700px y 768px */
-@media (min-width: 700px) and (max-width: 768px) {
+/* Estilos para pantallas pequeñas (menores a 375px) */
+@media screen and (min-width: 321px) and (max-width: 350px) {
+    .filter-hamburger {
+        margin-top: 55px;
+        margin-right: 270px;
+         
+        }
+      
+        .filters-nombre15 {
+          
+          margin-top: 100px;
+        }
+      
+        .filters-nombre15.active {
+          display: flex;
+        }
+      
+        /* Estilos para cerrar el menú */
+        .close-menu-btn {
+          position: absolute;
+          top: -20px;
+          right: -15px;
+          background: none;
+          border: none;
+          font-size: 33px;
+          cursor: pointer;
+        }
+    }
+    
+
+/* Estilos para pantallas pequeñas (menores a 375px) */
+ @media screen and (min-width: 350px) and (max-width: 380px) {
+    .filter-hamburger {
+        margin-top: 55px;
+        margin-right: 305px;
+         
+        }
+      
+        .filters-nombre15 {
+          
+          margin-top: 100px;
+        }
+      
+        .filters-nombre15.active {
+          display: flex;
+        }
+      
+        /* Estilos para cerrar el menú */
+    .close-menu-btn {
+      position: absolute;
+      top: -15px;
+      right: -15px;
+      background: none;
+      border: none;
+      font-size: 33px;
+      cursor: pointer;
+    }
+    }
+
+
+/* Estilos para pantallas pequeñas (menores a 375px) */
+@media screen and (min-width: 380px) and (max-width: 400px) {
+    .filter-hamburger {
+        margin-top: 55px;
+        margin-right: 330px;
+         
+        }
+      
+        .filters-nombre15 {
+          
+          margin-top: 100px;
+        }
+      
+        .filters-nombre15.active {
+          display: flex;
+        }
+      
+      /* Estilos para cerrar el menú */
+    .close-menu-btn {
+      position: absolute;
+      top: -15px;
+      right: -15px;
+      background: none;
+      border: none;
+      font-size: 33px;
+      cursor: pointer;
+    }
+    }
+/* Estilos para pantallas pequeñas (menores a 375px) */
+@media screen and (min-width: 400px) and (max-width: 425px) {
+    .filter-hamburger {
+        margin-top: 55px;
+        margin-right: 350px;
+         
+        }
+      
+        .filters-nombre15 {
+          
+          margin-top: 100px;
+        }
+      
+        .filters-nombre15.active {
+          display: flex;
+        }
+      
+       /* Estilos para cerrar el menú */
+    .close-menu-btn {
+      position: absolute;
+      top: -15px;
+      right: -15px;
+      background: none;
+      border: none;
+      font-size: 33px;
+      cursor: pointer;
+    }
+}
+
+/* Estilos para pantallas pequeñas (menores a 375px) */
+@media screen and (min-width: 425px) and (max-width: 460px) {
+    .filter-hamburger {
+        margin-top: 55px;
+        margin-right: 380px;
+         
+        }
+      
+        .filters-nombre15 {
+          
+          margin-top: 100px;
+        }
+      
+        .filters-nombre15.active {
+          display: flex;
+        }
+      
+        /* Estilos para cerrar el menú */
+    .close-menu-btn {
+      position: absolute;
+      top: -15px;
+      right: -15px;
+      background: none;
+      border: none;
+      font-size: 33px;
+      cursor: pointer;
+    }
+    }
+/* Estilos para pantallas pequeñas (menores a 375px) */
+@media screen and (min-width: 500px) and (max-width: 550px) {
+    .filter-hamburger {
+        margin-top: 55px;
+        margin-right: 450px;
+         
+        }
+      
+        .filters-nombre15 {
+          
+          margin-top: 100px;
+        }
+      
+        .filters-nombre15.active {
+          display: flex;
+        }
+      
+       /* Estilos para cerrar el menú */
+    .close-menu-btn {
+      position: absolute;
+      top: -15px;
+      right: -15px;
+      background: none;
+      border: none;
+      font-size: 33px;
+      cursor: pointer;
+    }
+}
+/* Estilos para pantallas pequeñas (menores a 375px) */
+@media screen and (min-width: 550px) and (max-width: 580px) {
+    .filter-hamburger {
+        margin-top: 55px;
+        margin-right: 505px;
+         
+        }
+      
+        .filters-nombre15 {
+          
+          margin-top: 100px;
+        }
+      
+        .filters-nombre15.active {
+          display: flex;
+        }
+      
+       /* Estilos para cerrar el menú */
+    .close-menu-btn {
+      position: absolute;
+      top: -15px;
+      right: -15px;
+      background: none;
+      border: none;
+      font-size: 33px;
+      cursor: pointer;
+    }
+}
+
+/* Estilos para pantallas pequeñas (menores a 375px) */
+@media screen and (min-width: 580px) and (max-width: 600px) {
+    .filter-hamburger {
+        margin-top: 55px;
+        margin-right: 535px;
+         
+        }
+      
+        .filters-nombre15 {
+          
+          margin-top: 100px;
+        }
+      
+        .filters-nombre15.active {
+          display: flex;
+        }
+      
+        /* Estilos para cerrar el menú */
+    .close-menu-btn {
+      position: absolute;
+      top: -15px;
+      right: -15px;
+      background: none;
+      border: none;
+      font-size: 33px;
+      cursor: pointer;
+    }
+}
+
+
+/* Pantallas entre 600px y 700px */
+@media (min-width: 600px) and (max-width: 700px) {
     .filters-nombre15 {
         width: 30%; /* Ocupa 25% del ancho */
         position: relative; /* Diseño fluido */
@@ -12,12 +271,29 @@
         padding: -60px;
         max-width: 200px;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Sombra más sutil */
-        transform: translateY(-50px);
+        margin-top:-550px;
+        transform: translateY(800px);
     }
 }
 
-/* Pantallas entre 768px y 1024px */
-@media (min-width: 768px) and (max-width: 1024px) {
+@media (min-width: 701px) and (max-width: 768px) {
+    .filters-nombre15 {
+        width: 30%; /* Ocupa 25% del ancho */
+        position: relative; /* Diseño fluido */
+        top: 0;
+        margin-left: 20px;
+        padding: -60px;
+        max-width: 200px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Sombra más sutil */
+        margin-top:-550px;
+        transform: translateY(780px);
+    }
+}
+
+
+
+/* Pantallas entre 768px y 800px */
+@media (min-width: 769px) and (max-width: 800px) {
     .filters-nombre15 {
         width: 35%; /* Ocupa 20% del ancho */
         position: relative;
@@ -25,7 +301,54 @@
         top: 0;
         padding: 20px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        transform: translateY(-50px);
+        transform: translateY(-210px);
+        margin-left: 50px;
+
+    }
+}
+
+/* Pantallas entre 768px y 1024px */
+@media (min-width: 800px) and (max-width: 900px) {
+    .filters-nombre15 {
+        width: 35%; /* Ocupa 20% del ancho */
+        position: relative;
+        max-width: 220px;
+        top: 0;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        transform: translateY(-210px);
+        margin-left: 50px;
+        margin-top: 520px;
+
+    }
+}
+/* Pantallas entre 768px y 1024px */
+@media (min-width: 900px) and (max-width: 950px) {
+    .filters-nombre15 {
+        width: 35%; /* Ocupa 20% del ancho */
+        position: relative;
+        max-width: 220px;
+        top: 0;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        transform: translateY(-160px);
+        margin-left: 50px;
+        
+
+    }
+}
+
+/* Pantallas entre 768px y 1024px */
+@media (min-width: 950px) and (max-width: 1024px) {
+    .filters-nombre15 {
+        width: 35%; /* Ocupa 20% del ancho */
+        position: relative;
+        max-width: 220px;
+        top: 0;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        transform: translateY(-210px);
+        margin-left: 50px;
 
     }
 }
@@ -39,12 +362,27 @@
         left: 0;
         padding: 25px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        transform: translateY(-25px);
+        transform: translateY(-170px);
+        margin-top: 500px;
+        margin-left: 30px;
     }
 }
 
 /* Pantallas entre 1440px y 2560px */
-@media (min-width: 1440px) and (max-width: 2560px) {
+@media (min-width: 1440px)  {
+    .filters-nombre15 {
+        width: 20%; /* Ocupa 15% del ancho */
+        max-width: 300px;
+        top: 0;
+        left: 0;
+        padding: 30px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+        transform: translateY(-130px);
+    }
+  
+}
+/* Pantallas entre 1440px y 2560px */
+@media (min-width: 1441px) and (max-width: 2000px) {
     .filters-nombre15 {
         width: 20%; /* Ocupa 15% del ancho */
         max-width: 300px;
@@ -53,6 +391,22 @@
         padding: 30px;
         box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
        
+    }
+  
+}
+
+/* Pantallas entre 1440px y 2560px */
+@media (min-width: 2000px) and (max-width: 2560px) {
+    .filters-nombre15 {
+        width: 20%; /* Ocupa 15% del ancho */
+        max-width: 300px;
+        top: 0;
+        left: 0;
+        padding: 30px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+        transform: translateY(-40px);
+        margin-top: 500px;
+        margin-left: 100px;
     }
   
 }
@@ -66,6 +420,7 @@
         margin-left: 100px;
         padding: 35px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-        transform: translateY(120px);
+        transform: translateY(90px);
+        margin-top: 430px;
     }
 }
