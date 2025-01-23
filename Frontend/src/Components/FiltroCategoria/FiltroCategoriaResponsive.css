@@ -27,6 +27,9 @@
       font-size: 33px;
       cursor: pointer;
     }
+    .filtro-container16 {
+      margin-top: -130px;
+    }
 }
 
 /* Estilos para pantallas pequeñas (menores a 375px) */
@@ -45,6 +48,10 @@
         .filters-nombre15.active {
           display: flex;
         }
+        /*filtro*/
+.filtro-container16 {
+  margin-top: -130px;
+}
       
         /* Estilos para cerrar el menú */
         .close-menu-btn {
@@ -86,7 +93,10 @@
       font-size: 33px;
       cursor: pointer;
     }
+    .filtro-container16 {
+      margin-top: -130px;
     }
+}
 
 
 /* Estilos para pantallas pequeñas (menores a 375px) */
@@ -116,6 +126,9 @@
       font-size: 33px;
       cursor: pointer;
     }
+    .filtro-container16 {
+      margin-top: -150px;
+    }
     }
 /* Estilos para pantallas pequeñas (menores a 375px) */
 @media screen and (min-width: 400px) and (max-width: 425px) {
@@ -144,6 +157,7 @@
       font-size: 33px;
       cursor: pointer;
     }
+    
 }
 
 /* Estilos para pantallas pequeñas (menores a 375px) */
@@ -248,7 +262,7 @@
           display: flex;
         }
       
-        /* Estilos para cerrar el menú */
+/* Estilos para cerrar el menú */
     .close-menu-btn {
       position: absolute;
       top: -15px;
@@ -271,12 +285,12 @@
         padding: -60px;
         max-width: 200px;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Sombra más sutil */
-        margin-top:-550px;
-        transform: translateY(800px);
+        margin-top:-670px;
+        transform: translateY(880px);
     }
 }
 
-@media (min-width: 701px) and (max-width: 768px) {
+@media (min-width: 701px) and (max-width: 720px) {
     .filters-nombre15 {
         width: 30%; /* Ocupa 25% del ancho */
         position: relative; /* Diseño fluido */
@@ -290,7 +304,19 @@
     }
 }
 
-
+@media (min-width: 720px) and (max-width: 768px) {
+  .filters-nombre15 {
+      width: 30%; /* Ocupa 25% del ancho */
+      position: relative; /* Diseño fluido */
+      top: 0;
+      margin-left: 20px;
+      padding: -60px;
+      max-width: 200px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Sombra más sutil */
+      margin-top:-650px;
+      transform: translateY(890px);
+  }
+}
 
 /* Pantallas entre 768px y 800px */
 @media (min-width: 769px) and (max-width: 800px) {
@@ -362,7 +388,7 @@
         left: 0;
         padding: 25px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        transform: translateY(-170px);
+        transform: translateY(-200px);
         margin-top: 500px;
         margin-left: 30px;
     }

@@ -170,6 +170,7 @@
     margin-bottom: 19%;
   }
   
+  
 }
 @media screen and (max-width: 390px) {
     .categoria-container {
@@ -193,6 +194,7 @@
       }
     
 }
+
 
 @media screen and (max-width: 768px) {
    .modal-product {
