@@ -52,6 +52,16 @@
     background-color: #45a049;
 }
 
+.category-select {
+    padding: 10px;
+    font-size: 14px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}	
+
 /* Estilos específicos para el input range */
 .range-container-nombre15 input[type="range"] {
     -webkit-appearance: none;
@@ -136,12 +146,28 @@
 }
 
 .category-select:focus {
-    border-color: #4caf50;
+    border-color: #4caf50 !important;
 }
 
 /* Estilos adicionales para los select de categorías */
 .category-select option {
     padding: 10px;
+    color: #333;
+}
+
+.category-select option:checked {
+    background-color: #90EE90 !important;
+    color: #333;
+}
+
+.category-select option:hover {
+    background-color: #f0f0f0;
+}
+
+.category-select:focus option:checked {
+    background-color: #90EE90 !important;
+    color: #333;
+    font-weight: bold;
 }
 
 .checkbox-container-nombre15.second-column label {
