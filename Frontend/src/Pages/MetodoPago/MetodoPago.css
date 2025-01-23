@@ -79,8 +79,15 @@
   border-radius: 5px;
   border: 1px solid #ddd;
   font-size: 1rem;
+  background-color: white;
 }
-
+.modal-body select	{
+  background-color: white;;
+  color: #333
+}
+.modal-body select option{
+  color:#333;
+}
 /* Estilos para el checkbox de "Consumidor final" */
 #checkbox-consufinal {
   width: 15px;

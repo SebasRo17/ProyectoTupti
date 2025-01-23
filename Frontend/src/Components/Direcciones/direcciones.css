@@ -1,8 +1,13 @@
+
 .direcciones-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
     margin-top: 2%;
+    margin-left: 10%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   
   .direcciones-list1 {
@@ -138,3 +143,30 @@
     border-bottom: 2px solid #eee;
     padding-bottom: 10px;
   }
+
+    @media screen and (max-width: 645px) {
+      .direcciones-list1 {
+          flex-wrap: wrap;
+          justify-content: center;
+      }
+  
+      .direccion-card {
+          flex-basis: calc(50% - 10px); /* 50% width minus gap */
+          min-width: 250px;
+          margin-bottom: 20px;
+      }
+      .direcciones-container h1{
+        margin-top: -2% !important;
+        margin-bottom: 10% !important;
+      }
+  }
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .direcciones-list1 {
+        justify-content: center;
+        align-items: center;
+    }
+
+    .direccion-card {
+        margin-bottom: 20px;
+    }
+}

@@ -50,6 +50,8 @@ h2 {
     border: 1px solid #ccc;
     border-radius: 10px;
     box-sizing: border-box;
+    background-color: white;
+    color:#333
 }
 /* El textarea debe seguir con la altura definida */
 .input-field-container textarea {

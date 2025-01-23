@@ -59,7 +59,10 @@
   padding: 10px 0;
   margin-left: 90%;
 }
-
+.form-group select{
+  color: #333;
+  background-color: white;
+}
 .cancel-btn,
 .save-btn {
     

@@ -105,6 +105,7 @@ body {
     border-radius: 6px;
     font-size: 1rem;
     transition: all 0.3s ease;
+    background-color: white;
   }
   
   .form-group input:focus {

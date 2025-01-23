@@ -209,7 +209,7 @@ const Header = ({ toggleCart, isCartOpen }) => {
                   className="user-button"
                   onClick={() => setIsMobileDropdownOpen(!isMobileDropdownOpen)}
                 >
-                  👤 {user.nombre}
+                  👤 {user.Nombre}
                 </button>
                 <div className={`mobile-user-dropdown ${isMobileDropdownOpen ? 'active' : ''}`}>
 

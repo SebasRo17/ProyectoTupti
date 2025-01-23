@@ -133,11 +133,13 @@ body {
   margin: 10px;
   border: none;
   border-radius: 4px;
-  background-color: #007bff;
+  background-color: #1e3f11;
   color: white;
   cursor: pointer;
 }
-
+.modal-content input {
+  background-color: white;
+}
 .modal-buttons button:hover {
   background-color: #0056b3;
 }

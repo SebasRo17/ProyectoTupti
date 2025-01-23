@@ -232,6 +232,11 @@ function Categoria() {
                         className="producto-card"
                         onClick={() => handleProductClick(producto)}
                      >
+                           {producto.descuento && producto.descuento.porcentaje !== 0 && (
+                              <div className="discount-badge">
+                                   <span>-{producto.descuento.porcentaje}%</span>
+                              </div>
+                           )}
                         <img
                            src={primeraImagen}
                            alt={producto.Nombre || producto.Producto}
@@ -241,9 +246,19 @@ function Categoria() {
                            }}
                         />
                         <div className="producto-info">
-                           <h3>{producto.Nombre || producto.Producto}</h3>
-                           <p className="producto-precio">${producto.Precio}</p>
+                        <h3>{producto.Nombre || producto.Producto}</h3>
+                           {producto.descuento && producto.descuento.porcentaje !== 0 ? (
+                              <>
+                                    <p className="producto-precio-original">${producto.Precio}</p>
+                                    <p className="producto-precio-descuento">
+                                       ${producto.descuento.precioConDescuento}
+                                    </p>
+                              </>
+                           ) : (
+                              <p className="producto-precio">${producto.Precio}</p>
+                           )}
                         </div>
+                        
                      </div>
                   );
                })}
