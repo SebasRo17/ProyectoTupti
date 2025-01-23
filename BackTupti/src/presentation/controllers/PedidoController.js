@@ -83,6 +83,15 @@ class PedidoController {
       res.status(500).json({ message: 'Error al eliminar el pedido' });
     }
   }
+  async getLastPedidoByUserId(req, res) {
+    try {
+      const { idUsuario } = req.params;
+      const pedido = await PedidoService.getLastPedidoByUserId(idUsuario);
+      res.json(pedido);
+    } catch (error) {
+      res.status(404).json({ message: error.message });
+    }
+  }
 }
 
 module.exports = new PedidoController();

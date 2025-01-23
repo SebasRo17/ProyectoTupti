@@ -90,6 +90,7 @@ function Categoria() {
          try {
              // Revisar si hay productos filtrados en el estado de location
              const filteredProducts = location.state?.products || [];
+             console.log('Productos filtrados:', filteredProducts);
             
              if (filteredProducts.length > 0) {
                 // Si hay productos filtrados, usarlos
@@ -97,6 +98,7 @@ function Categoria() {
              } else if (id && id !== "0") {
                 // Si no hay productos filtrados, buscar por categoría
                 const data = await getCategoryProducts(id);
+                console.log('Productos recibidos:', data);
                 setProductos(data);
              } else {
                 setError("No se encontraron productos");

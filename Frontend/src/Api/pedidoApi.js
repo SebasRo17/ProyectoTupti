@@ -32,3 +32,14 @@ export const getDetallesPedido = async (idPedido) => {
       throw error;
     }
   };
+
+export const getLastPedidoByUserId = async (idUsuario) => {
+  try {
+    const response = await axios.get(`${API_URL}/pedidos/usuario/${idUsuario}/ultimo`);
+    console.log('Último pedido del usuario obtenido:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener el último pedido del usuario:', error);
+    throw error;
+  }
+};

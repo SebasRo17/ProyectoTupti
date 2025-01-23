@@ -16,6 +16,7 @@ class PedidoService {
       // Calcular totales y organizar la respuesta
       const resumen = {
         idPedido: detalles[0].IdPedido,
+        idUsuario: detalles[0].IdUsuario,
         items: detallesValidos.map(item => {
           const subtotal = parseFloat(item.PrecioUnitario) * item.Cantidad;
           const descuento = subtotal * (parseFloat(item.PorcentajeDescuento) / 100);
@@ -124,6 +125,20 @@ class PedidoService {
       throw error;
     }
   }
+
+  async getLastPedidoByUserId(idUsuario) {
+    try {
+      const pedido = await PedidoRepository.findLastByUserId(idUsuario);
+      if (!pedido) {
+        throw new Error('No se encontró pedido para este usuario');
+      }
+      return pedido;
+    } catch (error) {
+      console.error('Error en servicio:', error);
+      throw error;
+    }
+  }
+
 }
 
 module.exports = new PedidoService();
