@@ -1,0 +1,71 @@
+/* Responsividad */
+
+  
+
+/* Pantallas entre 700px y 768px */
+@media (min-width: 700px) and (max-width: 768px) {
+    .filters-nombre15 {
+        width: 30%; /* Ocupa 25% del ancho */
+        position: relative; /* Diseño fluido */
+        top: 0;
+        margin-left: 60px;
+        padding: -60px;
+        max-width: 200px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Sombra más sutil */
+        transform: translateY(-150px);
+    }
+}
+
+/* Pantallas entre 768px y 1024px */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .filters-nombre15 {
+        width: 35%; /* Ocupa 20% del ancho */
+        position: relative;
+        max-width: 220px;
+        top: 0;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        transform: translateY(-110px);
+
+    }
+}
+
+/* Pantallas entre 1024px y 1440px */
+@media (min-width: 1024px) and (max-width: 1440px) {
+    .filters-nombre15 {
+        width: 20%; /* Ocupa 18% del ancho */
+        max-width: 240px;
+        top: 0;
+        left: 0;
+        padding: 25px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        transform: translateY(-60px);
+    }
+}
+
+/* Pantallas entre 1440px y 2560px */
+@media (min-width: 1440px) and (max-width: 2560px) {
+    .filters-nombre15 {
+        width: 20%; /* Ocupa 15% del ancho */
+        max-width: 300px;
+        top: 0;
+        left: 0;
+        padding: 30px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+       
+    }
+  
+}
+
+/* Pantallas mayores a 2560px */
+@media (min-width: 2561px) {
+    .filters-nombre15 {
+        width: 20%; /* Ocupa 12% del ancho */
+        max-width: 350px;
+        top: 0;
+        margin-left: 100px;
+        padding: 35px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        transform: translateY(200px);
+    }
+}

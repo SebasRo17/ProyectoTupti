@@ -10,33 +10,33 @@
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-right: auto;
-    margin-top: 450px;
+    margin-top: 320px;
     margin-left: 40px;
 }
-  
+
 .filter-container-nombre15 {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
-  
+
 .filter-title-nombre15 {
     font-size: 16px;
     font-weight: bold;
     color: #333;
 }
-  
+
 .range-container-nombre15 {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 25px;
 }
-  
+
 .range-container-nombre15 span {
     font-size: 14px;
     color: #666;
 }
-  
+
 .filter-button-nombre15 {
     padding: 10px;
     font-size: 14px;
@@ -47,7 +47,7 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
-  
+
 .filter-button-nombre15:hover {
     background-color: #45a049;
 }
@@ -91,3 +91,76 @@
     outline: none;
 }
 
+/* Estilos para el slider */
+.slider-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.range-input-nombre15 {
+    width: 100%;
+    height: 8px;
+    background: transparent; /* Fondo transparente para superponer sliders */
+    position: absolute;
+    pointer-events: none;
+}
+
+.range-input-nombre15::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #4caf50;
+    border-radius: 50%;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.range-input-nombre15::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #4caf50;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.category-select {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.category-select:focus {
+    border-color: #4caf50;
+}
+
+/* Estilos adicionales para los select de categorías */
+.category-select option {
+    padding: 10px;
+}
+
+.checkbox-container-nombre15.second-column label {
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Botón de filtro */
+.filter-button-nombre15 {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.filter-button-nombre15:hover {
+    background-color: #45a049;
+}
