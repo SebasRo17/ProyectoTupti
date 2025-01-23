@@ -62,7 +62,7 @@ const EmailVerification: React.FC = () => {
               <i className="fas fa-times-circle"></i>
               <h2>Error de Verificación</h2>
               <p>{message}</p>
-              <button onClick={() => navigate('/login')} className="login-button3">
+              <button onClick={() => navigate('/login')} className="login-button">
                 Ir al inicio de sesión
               </button>
             </div>

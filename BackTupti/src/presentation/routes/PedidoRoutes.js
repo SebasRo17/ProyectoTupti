@@ -186,4 +186,29 @@ router.put('/:id', (req, res) => PedidoController.updatePedido(req, res));
  *         description: Error interno del servidor
  */
 router.delete('/:id', (req, res) => PedidoController.deletePedido(req, res));
+
+/**
+ * @swagger
+ * /pedidos/usuario/{idUsuario}/ultimo:
+ *   get:
+ *     summary: Obtener el último pedido de un usuario
+ *     tags:
+ *       - Pedidos
+ *     parameters:
+ *       - in: path
+ *         name: idUsuario
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID del usuario
+ *     responses:
+ *       200:
+ *         description: Último pedido encontrado
+ *       404:
+ *         description: No se encontró pedido para este usuario
+ *       500:
+ *         description: Error interno del servidor
+ */
+router.get('/usuario/:idUsuario/ultimo', (req, res) => PedidoController.getLastPedidoByUserId(req, res));
+
 module.exports = router;

@@ -22,6 +22,8 @@ const MetodoPago = () => {
   const [aceptoTerminos, setAceptoTerminos] = useState(false); // Estado para aceptar términos
   const [idUsuario, setIdUsuario] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState(null);
+  const [nombreCliente, setNombreCliente] = useState(''); // Estado para el nombre del cliente
+
   const location = useLocation();
   const { idCarrito } = location.state || {};
 
@@ -181,7 +183,7 @@ const MetodoPago = () => {
     setMostrarConfirmacion(true);
   };
 
-  const manejarEnvioFormulario = (e) => {
+  const manejarEnvioFormulario = async (e) => {
     e.preventDefault();
     
     // Validar el número de identificación
@@ -196,13 +198,35 @@ const MetodoPago = () => {
         return;
       }
     }
-    
-    console.log('Formulario enviado');
-    setMostrarConfirmacion(false);
+
+    try {
+      // Guardar datos del cliente en localStorage
+      const clienteData = {
+        nombre: esConsumidorFinal ? 'Consumidor Final' : nombreCliente,
+        identificacion: esConsumidorFinal ? '9999999999999' : numeroIdentificacion
+      };
+      
+      localStorage.setItem('clienteData', JSON.stringify(clienteData));
+      console.log('Datos guardados:', clienteData); // Para verificar que se guardan
+  
+      // Cerrar el modal y comenzar el proceso de pago
+      setMostrarConfirmacion(false);
+      await startPayPalFlow();
+    } catch (error) {
+      console.error('Error al procesar el formulario:', error);
+      alert('Error al procesar el pago. Por favor, intente nuevamente.');
+    }
   };
 
   const handleConsumidorFinalChange = (e) => {
     setEsConsumidorFinal(e.target.checked); // Actualiza el estado según el valor del checkbox
+    if (e.target.checked) {
+      setNumeroIdentificacion('9999999999999');
+      setNombreCliente('Consumidor Final');
+    } else {
+      setNumeroIdentificacion('');
+      setNombreCliente('');
+    }
   };
 
   const handleTipoDocumentoChange = (e) => {
@@ -227,6 +251,10 @@ const MetodoPago = () => {
 
   const handleTerminosChange = (e) => {
     setAceptoTerminos(e.target.checked); // Actualiza el estado cuando cambia el checkbox de términos
+  };
+
+  const handleNombreClienteChange = (e) => {
+    setNombreCliente(e.target.value);
   };
 
   if (isLoading && !detallesPedido) {
@@ -384,6 +412,8 @@ const MetodoPago = () => {
                   placeholder="Nombre del titular"
                   required={!esConsumidorFinal}
                   disabled={esConsumidorFinal}
+                  value={nombreCliente}
+                  onChange={handleNombreClienteChange}
                 />
 
                 <select
@@ -434,14 +464,11 @@ const MetodoPago = () => {
                   </label>
                 </div>
                 <button
-                  className="boton-azul"
-                  onClick={() => {
-                    setMostrarConfirmacion(true);
-                    confirmarCompra();
-                  }}
-                  disabled={isLoading || paymentStatus === 'success'}
+                  type="submit"
+                  className="boton-confirmacion"
+                  disabled={isLoading || !aceptoTerminos || ((!esConsumidorFinal && !nombreCliente) || (!esConsumidorFinal && !numeroIdentificacion))}
                 >
-                  {isLoading ? 'Procesando...' : 'Ir a plataforma de pago'}
+                  {isLoading ? 'Procesando...' : 'Ir a la plataforma de pago'}
                 </button>
               </form>
               <button className="boton-salir" onClick={cerrarFormulario}>
