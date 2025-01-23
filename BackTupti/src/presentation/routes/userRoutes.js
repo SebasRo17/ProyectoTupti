@@ -91,6 +91,7 @@ router.get('/', (req, res) => UserController.getUsers(req, res));
 router.post('/', (req, res) => UserController.createUser(req, res));
 router.put('/:id', (req, res) => UserController.updateUser(req, res));
 router.post('/register', (req, res) => UserController.registerUser(req, res));
+router.post('/:id/change-password', (req, res) => UserController.changePassword(req, res));
 /**
  * @swagger
  * /users/register:
