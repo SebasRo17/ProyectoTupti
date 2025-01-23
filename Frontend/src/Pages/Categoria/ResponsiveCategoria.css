@@ -1,6 +1,26 @@
 /* Media Queries */
 
-
+@media (min-width: 2560px) {
+  .categoria-container {
+      max-width: 1200px;
+      margin-top: 20%;
+      margin-left: 20;
+      margin-right: 10%;
+      background-color: white;
+    }
+    .productos-grid{
+      margin-top: 0%;
+    }
+  
+    .filter {
+      width: 250px;
+      margin-top: 0%
+    }
+    .filtro-container16 {
+      margin-bottom: -1200px;
+      
+    }
+}
 @media screen and (min-width: 1441px){
     .categoria-container {
         max-width: 1200px;
@@ -60,7 +80,7 @@
       }
 
       .filtro-container16 {
-        margin-bottom: -800px;
+        margin-bottom: -1050px;
       }
     
 

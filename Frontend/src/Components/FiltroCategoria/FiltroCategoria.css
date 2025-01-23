@@ -132,6 +132,7 @@
     background: #4caf50;
     border-radius: 50%;
     cursor: pointer;
+    color: black;
 }
 
 .category-select {

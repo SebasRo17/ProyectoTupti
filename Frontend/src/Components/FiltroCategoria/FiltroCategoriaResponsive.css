@@ -8,11 +8,11 @@
         width: 30%; /* Ocupa 25% del ancho */
         position: relative; /* Diseño fluido */
         top: 0;
-        margin-left: 60px;
+        margin-left: 20px;
         padding: -60px;
         max-width: 200px;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Sombra más sutil */
-        transform: translateY(-150px);
+        transform: translateY(-50px);
     }
 }
 
@@ -25,7 +25,7 @@
         top: 0;
         padding: 20px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        transform: translateY(-110px);
+        transform: translateY(-50px);
 
     }
 }
@@ -39,7 +39,7 @@
         left: 0;
         padding: 25px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        transform: translateY(-60px);
+        transform: translateY(-25px);
     }
 }
 
@@ -58,7 +58,7 @@
 }
 
 /* Pantallas mayores a 2560px */
-@media (min-width: 2561px) {
+@media (min-width: 2560px) {
     .filters-nombre15 {
         width: 20%; /* Ocupa 12% del ancho */
         max-width: 350px;
@@ -66,6 +66,6 @@
         margin-left: 100px;
         padding: 35px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-        transform: translateY(200px);
+        transform: translateY(120px);
     }
 }
