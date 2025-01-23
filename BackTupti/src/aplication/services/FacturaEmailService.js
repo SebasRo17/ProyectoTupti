@@ -48,8 +48,35 @@ class FacturaEmailService {
                 to: emailDestino,
                 subject: `Factura del pedido #${idPedido} - Tupti`,
                 html: `
-                    <h1>Gracias por tu compra en Tupti</h1>
-                    <p>Adjunto encontrarás la factura de tu compra.</p>
+                    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
+                        <div style="background-color: #f5f5f5; padding: 20px; text-align: center;">
+                            <img src="https://res.cloudinary.com/dd7etqrf2/image/upload/v1734638598/tupti_3_r82cww_dsbubc.png" alt="Tupti" style="max-width: 150px;">
+                        </div>
+                        <div style="padding: 20px;">
+                            <p>Estimado(a):</p>
+                            <h2 style="margin: 0;">[Nombre del cliente]</h2>
+                            <p>Le contactamos para enviarle su documento electrónico:</p>
+                            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                                <tr>
+                                    <td style="padding: 8px; border: 1px solid #ddd; background-color: #f9f9f9;">Tipo:</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">Factura</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px; border: 1px solid #ddd; background-color: #f9f9f9;">Número:</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">001-004-${idPedido}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px; border: 1px solid #ddd; background-color: #f9f9f9;">Valor:</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">USD [Monto]</td>
+                                </tr>
+                            </table>
+                            <p>Gracias por ser parte de nuestra empresa.</p>
+                        </div>
+                        <div style="background-color: #333; color: #fff; text-align: center; padding: 10px; font-size: 12px;">
+                            Este correo fue generado de forma automática. Por favor no responder.<br>
+                            Tupti Quito, Valle de los Chillos.
+                        </div>
+                    </div>
                 `,
                 attachments: [{
                     filename: `factura-${idPedido}.pdf`,
