@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Header from '../../Components/header/header';
 import Footer from '../../Components/footer/footer';
-import { getDireccionesByUserId, updateSelectedAddress } from '../../Api/direccionApi';
+import { getDireccionesByUserId, updateSelectedAddress, deleteDireccion } from '../../Api/direccionApi';
 import jwt_decode from 'jwt-decode';
 import './direcciones.css';
 
@@ -23,9 +23,21 @@ const DireccionesGuardadas = () => {
   };
 
 
-  const confirmDelete = () => {
-    setShowDeleteModal(false);
-    document.body.style.overflow = 'auto'; // Restore scroll
+  const confirmDelete = async () => {
+    try {
+      await deleteDireccion(selectedAddress.IdDireccion);
+      // Actualizar el estado local eliminando la dirección
+      setDireccionesGuardadas(prevDirecciones => 
+        prevDirecciones.filter(dir => dir.IdDireccion !== selectedAddress.IdDireccion)
+      );
+      setShowDeleteModal(false);
+      document.body.style.overflow = 'auto';
+    } catch (error) {
+      console.error('Error al eliminar la dirección:', error);
+      alert('No se pudo eliminar la dirección. Por favor, intente nuevamente.');
+    } finally {
+      setSelectedAddress(null);
+    }
   };
 
   const handleDireccionClick = async (direccion) => {
