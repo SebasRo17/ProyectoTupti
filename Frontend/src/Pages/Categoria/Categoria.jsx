@@ -29,6 +29,7 @@ function Categoria() {
    const location = useLocation();
    const [isCartOpen, setIsCartOpen] = useState(false); 
    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+   const [showErrorMessage, setShowErrorMessage] = useState(false);
 
    const toggleCart = () => {
       setIsCartOpen(!isCartOpen);
@@ -150,24 +151,25 @@ function Categoria() {
    
    const handleAgregarCarrito = async () => {
       try {
+        if (!idUsuario) {
+          setShowErrorMessage(true);
+          setTimeout(() => setShowErrorMessage(false), 3000);
+          return;
+        }
+    
         const productData = {
-          idUsuario: idUsuario, // Usar el idUsuario del estado
+          idUsuario: idUsuario,
           idProducto: selectedProduct.IdProducto,
           cantidad: cantidad
         };
-  
+    
         const result = await addToCart(productData);
-        console.log('Producto agregado al carrito:', result);
-        // Mostrar mensaje de éxito
-         setShowSuccessMessage(true);
-
-         // Ocultar el mensaje después de 3 segundos
-         setTimeout(() => {
-         setShowSuccessMessage(false);
-         }, 3000);
+        setShowSuccessMessage(true);
+        setTimeout(() => setShowSuccessMessage(false), 3000);
       } catch (error) {
-        // Manejar error
-        console.error('Error al agregar al carrito:', error);
+        console.error('Error al agregar producto al carrito:', error);
+        setShowErrorMessage(true);
+        setTimeout(() => setShowErrorMessage(false), 3000);
       }
     };
   
@@ -211,6 +213,11 @@ function Categoria() {
                Producto agregado exitosamente al carrito
             </div>
          )}
+         {showErrorMessage && (
+        <div className="alert-message error">
+          Debes iniciar sesión para agregar productos al carrito
+        </div>
+      )}
 
          <Header 
             toggleCart={toggleCart} 
@@ -223,7 +230,6 @@ function Categoria() {
          <CategoriesBar categoryData={categoryData} />
          <div className="categoria-container">
 
-            <h1 className="categoria-titulo">Productos de la Categoría</h1>
             <div className="productos-grid">
                {productos.map((producto) => {
                   // Procesar imágenes de manera uniforme
