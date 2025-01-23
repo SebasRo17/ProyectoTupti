@@ -1,4 +1,3 @@
-
 .direcciones-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -26,6 +25,25 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .direccion-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background-color: rgba(220, 53, 69, 0.1);
+    transition: height 0.3s ease;
+    z-index: 0;
+    pointer-events: none;
+  }
+  
+  .direccion-card[data-deletehover="true"]::before {
+    height: 100%;
   }
   
   .direccion-detalles {
@@ -33,6 +51,8 @@
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 10px;
     padding: 10px 0;
+    position: relative;
+    z-index: 1;
   }
   
   .direccion-detalles p {
@@ -50,7 +70,15 @@
     cursor: pointer;
     width: 20% !important;
     margin-left: 80%;
+    position: relative;
+    z-index: 1;
+    transition: background-color 0.3s ease;
   }
+  
+  .delete-btn1:hover {
+    background-color: #bd2130;
+  }
+  
   /* Modal Styles */
 .modal-overlay3 {
   position: fixed;
@@ -142,6 +170,8 @@
     margin-bottom: 15px;
     border-bottom: 2px solid #eee;
     padding-bottom: 10px;
+    position: relative;
+    z-index: 1;
   }
 
     @media screen and (max-width: 645px) {

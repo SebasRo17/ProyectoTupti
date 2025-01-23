@@ -195,6 +195,37 @@ class UserController {
       });
     }
   }
+
+  async changePassword(req, res) {
+    try {
+      const userId = req.params.id;
+      const { currentPassword, newPassword } = req.body;
+
+      if (!currentPassword || !newPassword) {
+        return res.status(400).json({
+          message: 'La contraseña actual y la nueva son requeridas'
+        });
+      }
+
+      const result = await UserService.changePassword(userId, currentPassword, newPassword);
+      
+      res.status(200).json({
+        success: true,
+        message: 'Contraseña actualizada exitosamente'
+      });
+    } catch (error) {
+      if (error.message === 'Contraseña actual incorrecta') {
+        return res.status(401).json({
+          success: false,
+          message: error.message
+        });
+      }
+      res.status(500).json({
+        success: false,
+        message: 'Error al actualizar la contraseña'
+      });
+    }
+  }
 }
 
 module.exports = new UserController();
