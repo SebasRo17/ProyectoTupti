@@ -5,7 +5,7 @@ import HeaderAdmin from '../../Components/headerAdmin/headerAdmin.jsx';
 import BarraLateralAdmin from '../../Components/barraLateralAdmin/barraLateralAdmin.jsx';
 import EditarProductos from '../../Components/editarProductos/editarProductos.jsx'
 import './productosAdmin.css';
-import Filtros from "../../Components/Filtros/Filtros.jsx";
+
 import './responsiveproductosAdmin.css';
 import NuevoProducto from "../nuevoProductoAdmin/nuevoProductoAdmin.jsx";
 import FiltroAdmin from '../../Components/filtroAdmin/filtroAdmin.jsx';
