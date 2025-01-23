@@ -17,6 +17,10 @@
         width: 250px;
         margin-top: 0%
       }
+      .filtro-container16 {
+        margin-bottom: -1000px;
+        
+      }
 }
 
 @media screen and (min-width: 1024x) and (max-width: 1440px) {
@@ -33,6 +37,11 @@
       grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
       gap: 5px;
     }
+    .filtro-container16 {
+      margin-bottom: -800px;
+      
+    }
+  
   
 }
 /* Tablets (768px - 1023px) */
@@ -49,6 +58,11 @@
         grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
         gap: 10px;
       }
+
+      .filtro-container16 {
+        margin-bottom: -800px;
+      }
+    
 
 }
 
@@ -73,6 +87,8 @@
       .producto-nombre {
         font-size: 14px;
       }
+      
+    
     
 }
 
@@ -85,6 +101,10 @@
       .productos-grid {
         grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
         gap: 5px;
+      }
+      .filtro-container16 {
+        margin-bottom: -800px;
+        
       }
     
 }
