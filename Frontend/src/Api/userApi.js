@@ -22,3 +22,18 @@ export const registerUser = async (userData) => {
     throw new Error('Error al registrar usuario');
   }
 };
+
+export const changePassword = async (userId, currentPassword, newPassword) => {
+  try {
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_URL_DEVELOPMENT}/users/${userId}/change-password`,
+      {
+        currentPassword,
+        newPassword
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || 'Error al cambiar la contraseña');
+  }
+};

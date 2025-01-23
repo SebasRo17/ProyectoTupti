@@ -229,7 +229,7 @@ function Categoria() {
       </div>
          <CategoriesBar categoryData={categoryData} />
          <div className="categoria-container">
-
+         <h1 className="categoria-titulo">Productos</h1>
             <div className="productos-grid">
                {productos.map((producto) => {
                   // Procesar imágenes de manera uniforme
@@ -280,6 +280,11 @@ function Categoria() {
                <div className="modal-content4" onClick={e => e.stopPropagation()}>
                   <button className="modal-close" onClick={closeModal}>&times;</button>
                   <div className="modal-product">
+                  {selectedProduct.descuento && selectedProduct.descuento.porcentaje !== 0 && (
+                     <div className="discount-badge-modal">
+                           <span>-{selectedProduct.descuento.porcentaje}%</span>
+                     </div>
+                  )}
                      <div className="modal-images">
                         {procesarImagenes(selectedProduct).map((imagen, index) => (
                            <img 
@@ -293,9 +298,20 @@ function Categoria() {
                            />
                         ))}
                      </div>
+                     
                      <div className="modal-info8">
                         <h2>{selectedProduct.Nombre || selectedProduct.Producto}</h2>
-                        <p className="modal-precio">${selectedProduct.Precio}</p>
+                        {selectedProduct.descuento && selectedProduct.descuento.porcentaje !== 0 ? (
+                           <div className="modal-precios">
+                              <p className="modal-precio-original">Precio Normal: ${selectedProduct.Precio}</p>
+                              <p className="modal-precio-descuento">
+                                    Precio Oferta: ${(selectedProduct.descuento.precioConDescuento)}
+                              </p>
+                           </div>
+                        ): (
+                           <p className="modal-precio">${selectedProduct.Precio}</p>
+                        )}
+                        
                         <p className="modal-descripcion">{selectedProduct.Descripcion}</p>
                         
                         <div className="cantidad-container">

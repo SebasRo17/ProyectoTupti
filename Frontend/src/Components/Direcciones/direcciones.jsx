@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Header from '../../Components/header/header';
 import Footer from '../../Components/footer/footer';
-import { getDireccionesByUserId, updateSelectedAddress } from '../../Api/direccionApi';
+import { getDireccionesByUserId, updateSelectedAddress, deleteDireccion } from '../../Api/direccionApi';
 import jwt_decode from 'jwt-decode';
 import './direcciones.css';
 
@@ -16,16 +16,35 @@ const DireccionesGuardadas = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
 
-  const handleDelete = (direccion) => {
-    setSelectedAddress(direccion);
-    setShowDeleteModal(true);
-    document.body.style.overflow = 'hidden';
-  };
+
+  const handleDelete = async (direccion) => {
+    try {
+        await axios.delete(`${API_URL}/DireccionesGuardades/${direccion.IdDireccion}`);
+        setDirecciones(prevDirecciones => 
+            prevDirecciones.filter(d => d.IdDireccion !== direccion.IdDireccion)
+        );
+        setShowDeleteModal(false);
+    } catch (error) {
+        console.error('Error al eliminar la dirección:', error);
+    }
+};
 
 
-  const confirmDelete = () => {
-    setShowDeleteModal(false);
-    document.body.style.overflow = 'auto'; // Restore scroll
+  const confirmDelete = async () => {
+    try {
+      await deleteDireccion(selectedAddress.IdDireccion);
+      // Actualizar el estado local eliminando la dirección
+      setDireccionesGuardadas(prevDirecciones => 
+        prevDirecciones.filter(dir => dir.IdDireccion !== selectedAddress.IdDireccion)
+      );
+      setShowDeleteModal(false);
+      document.body.style.overflow = 'auto';
+    } catch (error) {
+      console.error('Error al eliminar la dirección:', error);
+      alert('No se pudo eliminar la dirección. Por favor, intente nuevamente.');
+    } finally {
+      setSelectedAddress(null);
+    }
   };
 
   const handleDireccionClick = async (direccion) => {
@@ -111,6 +130,7 @@ const DireccionesGuardadas = () => {
               <div 
                 key={index} 
                 className={`direccion-card ${direccion.EsSeleccionada ? 'selected' : ''}`}
+                data-deletehover="false"
                 onClick={() => handleDireccionClick(direccion)}
                 style={{ 
                   border: direccion.EsSeleccionada ? '2px solid #007bff' : '1px solid #ddd',
@@ -119,7 +139,9 @@ const DireccionesGuardadas = () => {
                   margin: '10px 0',
                   backgroundColor: '#fff',
                   cursor: 'pointer',
-                  transition: 'all 0.3s ease'
+                  transition: 'all 0.3s ease',
+                  position: 'relative',
+                  overflow: 'hidden'
                 }}
               >
                 <h2 style={{ color: '#333' }}>{direccion.Descripcion}</h2>
@@ -131,7 +153,17 @@ const DireccionesGuardadas = () => {
                   <p><strong>Ciudad:</strong> {direccion.Ciudad}</p>
                   <p><strong>Provincia:</strong> {direccion.Provincia}</p>
                   <p><strong>País:</strong> {direccion.Pais}</p>
-                  <button className="delete-btn1" onClick={() => handleDelete(direccion)}>🗑️</button>
+                  <button 
+                    className="delete-btn1" 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDelete(direccion);
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.closest('.direccion-card').setAttribute('data-deletehover', 'true')}
+                    onMouseLeave={(e) => e.currentTarget.closest('.direccion-card').setAttribute('data-deletehover', 'false')}
+                  >
+                    🗑️
+                  </button>
                 </div>
                 {showDeleteModal && (
               <div className="modal-wrapper3">

@@ -23,7 +23,13 @@ body {
    max-width: 90%;
    margin-bottom: 2%;
 }
-
+.categoria-container h1{
+  color: black;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: center;
+  margin-bottom: 4%;
+}
 .success-message {
   position: fixed;
   top: 10%;
@@ -565,4 +571,39 @@ body {
     transform: translateX(0);
     opacity: 1;
   }
+}
+.modal-precio-original {
+    text-decoration: line-through;
+    color: #555;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.modal-precio-descuento {
+    color: #ff0000;
+    font-weight: bold;
+    font-size: 1.3rem;
+    margin: 0;
+}
+
+.discount-badge-modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 100px 100px 0 0;
+  border-color: #ff0000 transparent transparent transparent;
+  z-index: 2;
+}
+
+.discount-badge-modal span {
+  position: absolute;
+  top: -75px;
+  left: 5px;
+  transform: rotate(-45deg);
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
 }
