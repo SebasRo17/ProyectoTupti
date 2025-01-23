@@ -300,8 +300,8 @@ const Direccion = () => {
               placeholder="Nombre de la ubicación"
             />
             <div className="modal-buttons">
-              <button onClick={handleSaveLocation}>Guardar</button>
-              <button onClick={() => setShowModal(false)}>Cancelar</button>
+              <button className= "btn-guardar-modal" onClick={handleSaveLocation  => setShowModal(false)}>Guardar</button>
+              <button className= "btn-cancelar-modal"  onClick={() => setShowModal(false)}>Cancelar</button>
             </div>
           </div>
         </div>

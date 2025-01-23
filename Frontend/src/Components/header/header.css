@@ -392,6 +392,9 @@ header .search-input {
       justify-content: center;
       margin: 10px 0;
     }
+    .search-bar input {
+      margin-top: 3.5%;
+    }
     .header-icons {
       order: 3;
     }

@@ -11,9 +11,11 @@
   
   .direcciones-list1 {
     display: flex;
+    justify-content: center;
     color : #333;
     gap: 20px;
     width: 100%;
+    transition: all 0.3s ease;
   }
   
   .direccion-card {
@@ -27,6 +29,8 @@
     width: 100%;
     position: relative;
     overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.3s ease;
   }
   
   .direccion-card::before {
