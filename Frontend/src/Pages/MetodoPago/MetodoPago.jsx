@@ -280,6 +280,16 @@ const MetodoPago = () => {
     );
   }
 
+   // Validación del formulario
+   const esFormularioValido = 
+   (esConsumidorFinal && aceptoTerminos) || 
+   (!esConsumidorFinal && 
+     nombreCliente && 
+     numeroIdentificacion && 
+     numeroTelefono && 
+     aceptoTerminos);
+
+
   return (
     <div className="pagina-metodo-pago">
       <HeaderPagos />
@@ -464,12 +474,13 @@ const MetodoPago = () => {
                   </label>
                 </div>
                 <button
-                  type="submit"
-                  className="boton-confirmacion"
-                  disabled={isLoading || !aceptoTerminos || ((!esConsumidorFinal && !nombreCliente) || (!esConsumidorFinal && !numeroIdentificacion))}
-                >
-                  {isLoading ? 'Procesando...' : 'Ir a la plataforma de pago'}
-                </button>
+  type="submit"
+  className="boton-confirmacion"
+  disabled={!esFormularioValido || isLoading}
+>
+  {isLoading ? 'Procesando...' : 'Ir a la plataforma de pago'}
+</button>
+
               </form>
               <button className="boton-salir" onClick={cerrarFormulario}>
                 Cerrar
