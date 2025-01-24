@@ -89,11 +89,15 @@ const MetodoPago = () => {
 
     try {
       setIsLoading(true);
-      const montoFormateado = Number(detallesPedido.totales.total.toFixed(2));
-      const { approveUrl, orderId } = await createPaypalOrder(
-        pedido.idPedido,
-        montoFormateado
-      );
+    const subtotal = detallesPedido.totales.subtotal;
+    const serviceFee = subtotal * 0.08; // 8% del subtotal
+    const totalWithFee = detallesPedido.totales.total + serviceFee;
+    const montoFormateado = Number(totalWithFee.toFixed(2));
+
+    const { approveUrl, orderId } = await createPaypalOrder(
+      pedido.idPedido,
+      montoFormateado
+    );
 
       // Configuración del popup
       const width = 450;
@@ -338,12 +342,15 @@ const MetodoPago = () => {
 
                     <p>Descuento Total:</p>
                     <p>${detallesPedido.totales.descuentos.toFixed(2)}</p>
+                   
+                    <p>Cuota de servicio (8%):</p>
+                    <p>${(detallesPedido.totales.subtotal * 0.08).toFixed(2)}</p>
 
                     <p>
                       <strong>Total Final:</strong>
                     </p>
                     <p>
-                      <strong>${detallesPedido.totales.total.toFixed(2)}</strong>
+                      <strong>${(detallesPedido.totales.total + (detallesPedido.totales.subtotal * 0.08)).toFixed(2)}</strong>
                     </p>
                   </div>
                 </div>

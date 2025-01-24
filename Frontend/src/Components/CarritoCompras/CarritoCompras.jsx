@@ -5,7 +5,7 @@ import jwtDecode from 'jwt-decode';
 import "./CarritoCompras.css";
 import "./responsiveCarrito.css";
 import { 
-  getCarritoByUsuario, addToCart, getTotalesCarrito, actualizarEstadoCarrito } from '../../Api/carritoApi.js';
+  getCarritoByUsuario, addToCart, getTotalesCarrito, actualizarEstadoCarrito, deleteCarritoDetalle } from '../../Api/carritoApi.js';
 import { getDescuentoCarrito } from '../../Api/descuentosApi.js';
 import { createPedido, getPedidoByCarrito } from '../../Api/pedidoApi.js';
 import { getSelectedAddress } from '../../Api/direccionApi.js';
@@ -24,7 +24,7 @@ const CarritoCompras = () => {
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [showAddressWarning, setShowAddressWarning] = useState(false);
   const [addressError, setAddressError] = useState(null);
-
+  const [mostrarPopUpVaciar, setMostrarPopUpVaciar] = useState(false);
   useEffect(() => {
     const token = localStorage.getItem('jwtToken');
     if (token) {
@@ -68,6 +68,7 @@ const CarritoCompras = () => {
           const carritoData = await getCarritoByUsuario(idUsuario);
           setProductos(carritoData.detalles.map(detalle => ({
             id: detalle.IdProducto,
+            idCarritoDetalle: detalle.IdCarritoDetalle, 
             nombre: detalle.Producto.Nombre,
             precio: parseFloat(detalle.PrecioUnitario),
             cantidad: detalle.Cantidad,
@@ -81,7 +82,6 @@ const CarritoCompras = () => {
         }
       }
     };
-
     fetchCarrito();
   }, [idUsuario]);
 
@@ -135,15 +135,15 @@ const CarritoCompras = () => {
   const eliminarProducto = async () => {
     if (productoAEliminar) {
       try {
-        await handleAgregarCarrito(productoAEliminar.id, -productoAEliminar.cantidad);
+        await deleteCarritoDetalle(productoAEliminar.idCarritoDetalle);
         setProductos(productos.filter((p) => p.id !== productoAEliminar.id));
         setMostrarPopUp(false);
       } catch (error) {
         console.error('Error al eliminar producto:', error);
+        alert('No se pudo eliminar el producto del carrito');
       }
     }
   };
-
   const mostrarConfirmacionEliminar = (producto) => {
     setProductoAEliminar(producto);
     setMostrarPopUp(true);
@@ -232,7 +232,16 @@ const CarritoCompras = () => {
       alert('No se pudo vaciar el carrito. Por favor, intente nuevamente.');
     }
   };
-
+  const mostrarConfirmacionVaciar = () => {
+    setMostrarPopUpVaciar(true);
+  };
+  const cancelarVaciado = () => {
+    setMostrarPopUpVaciar(false);
+  };
+  const confirmarAbandonarCarrito = () => {
+    abandonarCarrito();
+    setMostrarPopUpVaciar(false);
+  };
   const subtotal = productos.reduce(
     (acc, producto) => acc + producto.precio * producto.cantidad,
     0
@@ -324,7 +333,7 @@ const CarritoCompras = () => {
             >
               {isCreatingOrder ? 'PROCESANDO...' : 'PAGAR'}
             </button>
-            <button onClick={abandonarCarrito} className="boton-vaciar">
+            <button onClick={mostrarConfirmacionVaciar}  className="boton-vaciar">
               VACIAR CARRITO
             </button>
           </div>
@@ -339,6 +348,15 @@ const CarritoCompras = () => {
             </div>
           </div>
         )}
+        {mostrarPopUpVaciar && (
+        <div className="popup">
+          <div className="popup-contenido">
+            <p>¿Estás seguro que deseas vaciar el carrito?</p>
+            <button className="btn-sí" onClick={confirmarAbandonarCarrito}>Sí</button>
+            <button className="btn-no" onClick={cancelarVaciado}>No</button>
+          </div>
+        </div>
+      )}
 
         {!idUsuario && (
           <p className="mensaje-sesion">Debes iniciar sesión para realizar compras.</p>

@@ -209,38 +209,52 @@ margin-top: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 }
 
 .popup-contenido {
   background-color: white;
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 10px;
   text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 90%;
+}
+
+.popup-contenido p {
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #333;
 }
 
 .popup-contenido button {
-  margin: 10px;
+  margin: 0 10px;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
 }
 
-.popup-contenido button:hover {
-  opacity: 0.9;
-}
-
-.popup-contenido .btn-sí { /* Botón "Sí" */
-  background-color: rgb(61, 138, 61);
+.popup-contenido .btn-sí {
+  background-color: #ff4d4d;
   color: white;
 }
 
-.popup-contenido .btn-no { /* Botón "No" */
-  background-color: red;
-  color: white;
+.popup-contenido .btn-no {
+  background-color: #f0f0f0;
+  color: #333;
 }
 
+.popup-contenido .btn-sí:hover {
+  background-color: #ff3333;
+}
+
+.popup-contenido .btn-no:hover {
+  background-color: #e0e0e0;
+}
 
 /*VACIAR CARRITO*/
 .boton-vaciar {
