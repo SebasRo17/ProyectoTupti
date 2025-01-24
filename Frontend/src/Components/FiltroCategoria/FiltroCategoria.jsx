@@ -54,7 +54,6 @@ const FiltroCategoria = () => {
           ? parseFloat(product.descuento.porcentaje) 
           : 0;
         
-        // Handle zero case explicitly
         const meetsDiscountCriteria = 
           (descuento[0] === 0 ? descuentoProducto >= 0 : descuentoProducto >= descuento[0]) &&
           descuentoProducto <= descuento[1];
@@ -81,7 +80,7 @@ const FiltroCategoria = () => {
       } else {
         console.log('No hay productos que coincidan con los filtros');
         setShowAlert(true);
-        setTimeout(() => setShowAlert(false), 3000); // Hide after 3s
+        setTimeout(() => setShowAlert(false), 3000);
         setFilteredProducts([]);
       }
     } catch (error) {
@@ -118,6 +117,12 @@ const FiltroCategoria = () => {
       </button>
 
       <div className={`filters-nombre15 ${isMenuOpen ? "active" : ""}`}>
+        {isMenuOpen && (
+          <button className="close-menu-btn" onClick={toggleMenu}>
+            ×
+          </button>
+        )}
+
         {/* Filtro por Precio */}
         <div className="filter-container-nombre15">
           <div className="filter-title-nombre15">Filtrar por Precio</div>
