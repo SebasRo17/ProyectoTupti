@@ -6,7 +6,7 @@ import { searchProducts } from "../../Api/searchProduts";
 
 const FiltroCategoria = () => {
   const [precio, setPrecio] = useState([0, 100]);
-  const [descuento, setDescuento] = useState([1, 80]);
+  const [descuento, setDescuento] = useState([0, 80]);
   const [categoriasSeleccionadas, setCategoriasSeleccionadas] = useState([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -41,30 +41,38 @@ const FiltroCategoria = () => {
 
   const handleFiltrar = async () => {
     try {
-      const filteredProducts = await searchProducts({
-        PrecioMin: precio[0],
-        PrecioMax: precio[1],
+      // Construct dynamic filter object
+      const filterParams = {
         ...(categoriasSeleccionadas.length > 0 && { 
           IdTipoProducto: categoriasSeleccionadas[0] 
         })
-      });
-
-      const finalFilteredProducts = filteredProducts.filter(product => {
+      };
+  
+      const allProducts = await searchProducts(filterParams);
+  
+      const finalFilteredProducts = allProducts.filter(product => {
+        // Category filter (always true if no category selected)
+        const categoryMatch = categoriasSeleccionadas.length === 0 || 
+          categoriasSeleccionadas.includes(product.IdTipoProducto.toString());
+  
+        // Price filter (only apply if not at full range)
+        const priceMatch = 
+          (precio[0] === 0 && precio[1] === 100) || 
+          (parseFloat(product.Precio) >= precio[0] && 
+           parseFloat(product.Precio) <= precio[1]);
+  
+        // Discount filter (only apply if not at full range)
         const descuentoProducto = product.descuento 
           ? parseFloat(product.descuento.porcentaje) 
           : 0;
-        
-        const meetsDiscountCriteria = 
-          (descuento[0] === 0 ? descuentoProducto >= 0 : descuentoProducto >= descuento[0]) &&
-          descuentoProducto <= descuento[1];
-        
-        return meetsDiscountCriteria &&
-               parseFloat(product.Precio) >= precio[0] && 
-               parseFloat(product.Precio) <= precio[1];
+        const discountMatch = 
+          (descuento[0] === 0 && descuento[1] === 80) ||
+          (descuentoProducto >= descuento[0] && 
+           descuentoProducto <= descuento[1]);
+  
+        return categoryMatch && priceMatch && discountMatch;
       });
-
-      console.log('Productos filtrados:', finalFilteredProducts);
-
+  
       if (finalFilteredProducts.length > 0) {
         navigate('/categoria/filtrados', { 
           state: { 
@@ -78,7 +86,6 @@ const FiltroCategoria = () => {
         });
         setFilteredProducts(finalFilteredProducts);
       } else {
-        console.log('No hay productos que coincidan con los filtros');
         setShowAlert(true);
         setTimeout(() => setShowAlert(false), 3000);
         setFilteredProducts([]);
@@ -87,7 +94,6 @@ const FiltroCategoria = () => {
       console.error('Error al filtrar productos:', error);
     }
   };
-
   const handleCategoriaChange = (e) => {
     const { options } = e.target;
     const selectedCategories = [];
@@ -101,11 +107,10 @@ const FiltroCategoria = () => {
 
   const clearFilters = () => {
     setPrecio([0, 100]);
-    setDescuento([1, 80]);
+    setDescuento([0, 80]);  
     setCategoriasSeleccionadas([]);
     setFilteredProducts([]);
   };
-
   const toggleMenu = () => {
     setIsMenuOpen((prevState) => !prevState);
   };
@@ -117,12 +122,6 @@ const FiltroCategoria = () => {
       </button>
 
       <div className={`filters-nombre15 ${isMenuOpen ? "active" : ""}`}>
-        {isMenuOpen && (
-          <button className="close-menu-btn" onClick={toggleMenu}>
-            ×
-          </button>
-        )}
-
         {/* Filtro por Precio */}
         <div className="filter-container-nombre15">
           <div className="filter-title-nombre15">Filtrar por Precio</div>

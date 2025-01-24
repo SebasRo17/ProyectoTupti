@@ -68,9 +68,12 @@ const CarritoCompras = () => {
           const carritoData = await getCarritoByUsuario(idUsuario);
           setProductos(carritoData.detalles.map(detalle => ({
             id: detalle.IdProducto,
-            idCarritoDetalle: detalle.IdCarritoDetalle, 
+            idCarritoDetalle: detalle.IdCarritoDetalle,
             nombre: detalle.Producto.Nombre,
             precio: parseFloat(detalle.PrecioUnitario),
+            precioOriginal: parseFloat(detalle.Producto.PrecioOriginal),
+            precioConDescuento: detalle.Producto.PrecioConDescuento,
+            porcentajeDescuento: detalle.Producto.PorcentajeDescuento || 0,
             cantidad: detalle.Cantidad,
             imagen: detalle.Producto.ImagenUrl
           })));
@@ -85,23 +88,27 @@ const CarritoCompras = () => {
     fetchCarrito();
   }, [idUsuario]);
 
-  useEffect(() => {
-    const fetchDescuentos = async () => {
-      if (idCarrito) {
-        try {
-          const descuentosData = await getDescuentoCarrito(idCarrito);
-          if (descuentosData) {
-            setDescuentos(descuentosData);
-          }
-        } catch (error) {
-          console.error('Error al obtener descuentos:', error);
-          setDescuentos({ descuentoTotal: 0, detallesConDescuento: [] });
+  // Update fetchDescuentos useEffect
+useEffect(() => {
+  const fetchDescuentos = async () => {
+    if (idCarrito && productos.length > 0) {
+      try {
+        const descuentosData = await getDescuentoCarrito(idCarrito);
+        if (descuentosData) {
+          setDescuentos(descuentosData);
         }
+      } catch (error) {
+        console.error('Error al obtener descuentos:', error);
+        setDescuentos({ descuentoTotal: 0, detallesConDescuento: [] });
       }
-    };
-  
-    fetchDescuentos();
-  }, [idCarrito]);
+    } else {
+      // Reset descuentos when cart is empty
+      setDescuentos({ descuentoTotal: 0, detallesConDescuento: [] });
+    }
+  };
+
+  fetchDescuentos();
+}, [idCarrito, productos]); 
 
   useEffect(() => {
     const fetchTotales = async () => {
@@ -268,13 +275,18 @@ const CarritoCompras = () => {
           ) : productos.length > 0 ? (
             productos.map((producto) => (
               <div key={producto.id} className="producto-item">
+                {producto.porcentajeDescuento > 0 && (
+                  <div className="descuento-badge">
+                    -{producto.porcentajeDescuento}%
+                  </div>
+                )}
                 <div className="producto-imagen">
                   <img src={producto.imagen} alt={producto.nombre} />
                 </div>
                 <div className="producto-info">
                   <p><strong>{producto.nombre}</strong></p>
                   <p>${(producto.precio * producto.cantidad).toFixed(2)}</p>
-                  <p>{producto.precio.toFixed(2)} x {producto.cantidad}</p>
+                  <p>${producto.precio.toFixed(2)} x {producto.cantidad}</p>
                 </div>
                 <div className="cantidad-controles">
                   <button 

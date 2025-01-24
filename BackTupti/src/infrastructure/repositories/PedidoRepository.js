@@ -12,17 +12,22 @@ class PedidoRepository {
           cd.PrecioUnitario,
           prod.Nombre as NombreProducto,
           prod.Precio as PrecioProducto,
+          prod.IdTipoProducto,
           imp.Nombre as NombreImpuesto,
           imp.Porcentaje as PorcentajeImpuesto,
-          COALESCE(d.Porcentaje, 0) as PorcentajeDescuento,
+          COALESCE(
+            (SELECT Porcentaje 
+             FROM descuento 
+             WHERE (IdProducto = prod.IdProducto OR IdTipoProducto = prod.IdTipoProducto)
+             AND Activo = 1 
+             AND NOW() BETWEEN FechaInicio AND FechaFin
+             LIMIT 1
+            ), 0) as PorcentajeDescuento,
           ROUND(prod.Precio * cd.Cantidad * (imp.Porcentaje / 100), 2) as MontoImpuesto
         FROM pedido p
         JOIN carrito_detalle cd ON p.IdCarrito = cd.IdCarrito
         JOIN producto prod ON cd.IdProducto = prod.IdProducto
         JOIN Impuesto imp ON prod.IdImpuesto = imp.IdImpuesto
-        LEFT JOIN descuento d ON prod.IdProducto = d.IdProducto 
-          AND d.Activo = 1 
-          AND NOW() BETWEEN d.FechaInicio AND d.FechaFin
         WHERE p.IdPedido = :idPedido
       `;
   
