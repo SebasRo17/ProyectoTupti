@@ -16,9 +16,8 @@ class PedidoService {
       // Calcular totales y organizar la respuesta
       const resumen = {
         idPedido: detalles[0].IdPedido,
-        idUsuario: detalles[0].IdUsuario,
         items: detallesValidos.map(item => {
-          const subtotal = parseFloat(item.PrecioUnitario) * item.Cantidad;
+          const subtotal = parseFloat(item.PrecioProducto) * item.Cantidad;
           const descuento = subtotal * (parseFloat(item.PorcentajeDescuento) / 100);
           return {
             idCarritoDetalle: item.IdCarritoDetalle,
@@ -38,22 +37,16 @@ class PedidoService {
         }),
         totales: {
           subtotal: detallesValidos.reduce((acc, item) => 
-            acc + (parseFloat(item.PrecioUnitario) * item.Cantidad), 0),
-          cantidadItems: detallesValidos.reduce((acc, item) => acc + item.Cantidad, 0)
+            acc + (parseFloat(item.PrecioProducto) * item.Cantidad), 0),
+          cantidadItems: detallesValidos.reduce((acc, item) => acc + item.Cantidad, 0),
+          descuentos: detallesValidos.reduce((acc, item) => {
+            const subtotalItem = parseFloat(item.PrecioProducto) * item.Cantidad;
+            return acc + (subtotalItem * parseFloat(item.PorcentajeDescuento) / 100);
+          }, 0),
+          impuestos: detallesValidos.reduce((acc, item) => 
+            acc + parseFloat(item.MontoImpuesto), 0)
         }
       };
-
-      // Calcular descuentos totales
-      resumen.totales.descuentos = detallesValidos.reduce((acc, item) => {
-        const subtotalItem = parseFloat(item.PrecioUnitario) * item.Cantidad;
-        return acc + (subtotalItem * parseFloat(item.PorcentajeDescuento) / 100);
-      }, 0);
-
-      // Calcular impuestos totales
-      resumen.totales.impuestos = detallesValidos.reduce((acc, item) => {
-        const subtotalItem = parseFloat(item.PrecioUnitario) * item.Cantidad;
-        return acc + ((subtotalItem - (subtotalItem * parseFloat(item.PorcentajeDescuento) / 100)) * parseFloat(item.PorcentajeImpuesto) / 100);
-      }, 0);
 
       // Calcular total final
       resumen.totales.total = resumen.totales.subtotal - resumen.totales.descuentos + resumen.totales.impuestos;

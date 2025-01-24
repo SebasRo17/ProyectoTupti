@@ -23,6 +23,8 @@ const direccionRoutes = require('./presentation/routes/direccionRoutes'); // Cor
 const passwordResetRoutes = require('./presentation/routes/passwordResetRoutes'); // Agregar importación de rutas de reset de contraseña
 const descuentoRoutes = require ('./presentation/routes/descuentoRoutes');
 const facturaEmailRoutes = require('./presentation/routes/facturaEmailRoutes');
+const stockRoutes = require('./presentation/routes/stockRoutes'); 
+const carritoDetalleRoutes = require('./presentation/routes/carritoDetalleRoutes'); // Agregar importación de rutas de carritoDetalle
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -98,6 +100,8 @@ app.use('/direcciones', direccionRoutes); // Agregar rutas de direcciones
 app.use('/auth', passwordResetRoutes); // Agregar esta línea
 app.use('/descuentos', descuentoRoutes);
 app.use('/facturas', facturaEmailRoutes);
+app.use('/api/stock', stockRoutes); 
+app.use('/carrito-detalle', carritoDetalleRoutes); 
 
 // Sincronizar con la base de datos y iniciar el servidor
 sequelize.sync()

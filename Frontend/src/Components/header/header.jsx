@@ -115,24 +115,34 @@ const Header = ({ toggleCart, isCartOpen }) => {
   const handleSearchSubmit = async (event) => {
     if (event.key === 'Enter' || event.type === 'click') {
       try {
-        const products = await searchProducts(searchTerm);
-        console.log('Productos filtrados:', products);
-        if (products.length > 0) {
-          const idTipoProducto = products[0].IdTipoProducto;
-          navigate(`/categoria/${idTipoProducto}`, { state: { products } }); // Redirige y pasa los productos como estado
+        const searchTermLower = searchTerm.toLowerCase().trim();
+        const allProducts = await searchProducts({});
+        const filteredProducts = allProducts.filter(product => 
+          product.Nombre.toLowerCase().includes(searchTermLower)
+        );
+  
+        console.log('Término de búsqueda:', searchTermLower);
+        console.log('Productos filtrados:', filteredProducts);
+  
+        if (filteredProducts.length > 0) {
+          navigate('/categoria/0', { 
+            state: { 
+              products: filteredProducts 
+            } 
+          });
           setSearchLabel(`Resultados para: ${searchTerm}`);
         } else {
           console.log('No se encontraron productos.');
           setSearchLabel('No se encontraron productos.');
         }
         setSearchTerm('');
+        setShowSuggestions(false);
       } catch (error) {
         console.error('Error al buscar productos:', error);
         setSearchLabel('Error al buscar productos.');
       }
     }
   };
-
   return (
     <>
       <header className="header" style={{ position: 'fixed', zIndex: 1000 }}>
