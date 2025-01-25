@@ -1,9 +1,10 @@
 .direcciones-container {
-    max-width: 1200px;
+    width: 80%;
     margin: 0 auto;
     padding: 20px;
     margin-top: 2%;
     margin-left: 10%;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -26,7 +27,7 @@
     box-shadow: 0 2px 4px rgba(106, 221, 221, 0.705);
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 25%;
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease;

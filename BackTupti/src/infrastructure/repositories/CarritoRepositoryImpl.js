@@ -3,6 +3,7 @@ const CarritoDetalle = require('../../domain/models/CarritoDetalle');
 const Producto = require('../../domain/models/Producto');
 const ProductoImagen = require('../../domain/models/ProductoImagen');
 const Impuesto = require('../../domain/models/Impuesto');
+const Descuento = require('../../domain/models/Descuento');
 const { sequelize } = require('../../infrastructure/database/mysqlConnection');
 const { Op } = require('sequelize'); 
 
@@ -57,7 +58,8 @@ class CarritoRepositoryImpl {
   }
   async findActiveCarritoByUserId(idUsuario) {
     try {
-      // Buscar carrito activo del usuario
+      const currentDate = new Date();
+
       const carrito = await Carrito.findOne({
         where: { 
           IdUsuario: idUsuario, 
@@ -69,12 +71,11 @@ class CarritoRepositoryImpl {
         return null;
       }
 
-      // Buscar detalles del carrito con cantidad mayor a 0
       const carritoDetalles = await CarritoDetalle.findAll({
         where: { 
           IdCarrito: carrito.IdCarrito,
           Cantidad: {
-            [Op.gt]: 0 // Greater Than 0
+            [Op.gt]: 0
           }
         },
         include: [
@@ -85,38 +86,58 @@ class CarritoRepositoryImpl {
               {
                 model: ProductoImagen,
                 as: 'Imagenes',
-                limit: 1 // Limitar a solo una imagen
+                limit: 1
               }
             ]
           }
         ]
       });
 
-      // Procesar los resultados para incluir solo la primera imagen como campo extra
-      const detallesConPrimeraImagen = carritoDetalles.map(detalle => {
+      // Buscar descuentos aplicables
+      const detallesConDescuentos = await Promise.all(carritoDetalles.map(async (detalle) => {
         const producto = detalle.Producto;
         const primeraImagen = producto.Imagenes.length > 0 ? producto.Imagenes[0].ImagenUrl : null;
         const productoData = producto.toJSON();
-        delete productoData.Imagenes; // Eliminar el array de imágenes
+
+        // Buscar descuento específico para el producto
+        const descuentoProducto = await Descuento.findOne({
+          where: {
+            [Op.or]: [
+              { IdProducto: producto.IdProducto },
+              { IdTipoProducto: producto.IdTipoProducto }
+            ],
+            Activo: true,
+            FechaInicio: { [Op.lte]: currentDate },
+            FechaFin: { [Op.gte]: currentDate }
+          }
+        });
+
+        // Calcular precios con descuento
+        const precioOriginal = producto.Precio;
+        const descuentoPorcentaje = descuentoProducto ? parseFloat(descuentoProducto.Porcentaje) : 0;
+        const precioConDescuento = precioOriginal * (1 - descuentoPorcentaje / 100);
+
         return {
           ...detalle.toJSON(),
           Producto: {
             ...productoData,
-            ImagenUrl: primeraImagen // Incluir la primera imagen como campo extra
+            ImagenUrl: primeraImagen,
+            PrecioOriginal: precioOriginal,
+            PorcentajeDescuento: descuentoPorcentaje,
+            PrecioConDescuento: precioConDescuento
           }
         };
-      });
+      }));
 
       return {
         carrito,
-        detalles: detallesConPrimeraImagen
+        detalles: detallesConDescuentos
       };
     } catch (error) {
       console.error('Error al obtener carrito:', error);
       throw error;
     }
-  }
-  async obtenerDetallesConImpuestos(idCarrito) {
+  }  async obtenerDetallesConImpuestos(idCarrito) {
     try {
       const detalles = await sequelize.query(`
         SELECT 

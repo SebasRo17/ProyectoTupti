@@ -65,3 +65,20 @@ export const actualizarEstadoCarrito = async (idCarrito, estado) => {
     throw error;
   }
 };
+
+export const deleteCarritoDetalle = async (id) => {
+  try {
+    const response = await fetch(`${API_URL}/carrito-detalle/${id}`, {
+      method: 'DELETE',
+    });
+    
+    if (!response.ok) {
+      throw new Error('Error al eliminar el detalle del carrito');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error en la API:', error);
+    throw error;
+  }
+};

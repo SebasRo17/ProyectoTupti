@@ -334,6 +334,7 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
               transform: `translateX(-${activeSlide * 100}%)`,
             }}
           >
+            
             {carouselData.map((image, index) => (
               <img
               key={index}
