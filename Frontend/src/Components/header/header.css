@@ -410,7 +410,9 @@ header .search-input {
     }
     .search-bar input {
       max-width: 300px;
+      height: 20px;
     }
+
   }
   
 @media (min-width: 768px) and (max-width: 1023px) {
@@ -456,10 +458,11 @@ header .search-input {
       order: 2;
       width: auto;
       margin: 0;
-      height: 30px;
+      height: 40px;
     }
     .search-bar input {
-      display: none;
+      width: 70%;
+      height: 50% !important;
     }
     .search-bar button {
       width: 8%;

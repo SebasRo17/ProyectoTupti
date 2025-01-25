@@ -329,7 +329,9 @@
       width: 100%;
       max-width: 100%;
     }
-  
+    .promo-button button-1{
+      width: 100%;
+    }
     .main-content {
       width: 100%;
       padding: 10px;
@@ -378,8 +380,8 @@
       padding: 0 20px;
     }
   
-    .promo-button {
-      width: 100%;
+    .promo-button-1 {
+      width: 80%;
     }
     .main-content .product-carousel-container{
       margin-top: 0%;
@@ -545,6 +547,33 @@
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
   }
+  @media screen and (max-width: 767px) {
+    .slider-container{
+      margin-top: -10% !important;
+      margin-left: 10% !important;
+      width: 80% !important;
+      height: 100%;
+      margin-top: 20px;
+    }
+    .slider-image{
+      object-fit: cover;
+    }
+    .hamburger-menu {
+      display: block;
+    }
+  
+    .mobile-nav {
+      display: none;
+    }
+
+    .promo-button {
+      width: 80% !important;
+      margin-top: 5%;
+      margin-right: 2%;
+      margin-left: 5%;
+    }
+    
+  }
   @media screen and (min-width:391px)and (max-width: 620px) {  
     body {
       overflow-y: auto;
@@ -552,7 +581,7 @@
     }
     .slider-container {
       width: 10%;
-      margin-top: 50%;
+      margin-top: -20% !important;
     }
       .mobile-nav {
         display: block;
@@ -580,12 +609,12 @@
         width: 100%;
       }
       .image-slider {
-        height: 100%; /* Altura fija para móvil */
+        height: 110%; /* Altura fija para móvil */
         margin-top: 50%;
       }
     
       .slider-image {
-        object-fit: contain;
+        object-fit: cover;
         height: 100%;
         background-color: #f5f5f5;
       }
@@ -723,6 +752,7 @@
         width: 100%;
         max-width: 100%;
       }
+
     
       .main-content {
         width: 100%;
@@ -773,7 +803,10 @@
       }
     
       .promo-button {
-        width: 100%;
+        width: 80% !important;
+        margin-top: 5%;
+        margin-right: 2%;
+        margin-left: 5%;
       }
       .main-content .product-carousel-container{
         margin-top: 0%;
@@ -817,19 +850,23 @@
     }
     .slider-container {
       top: 0;
-      height: 100%;
+      height: 120% !important;
       margin-top: 5%;
       
     }
     .promo-buttons-container {
-      width: 100%;
+      width: 90% !important;
       flex-direction: column;
       gap: 10px;
       padding: 0 20px;
+      margin-right: 2%;
     }
   
     .promo-button {
-      width: 100%;
+      width: 80% !important;
+      margin-top: 5%;
+      margin-right: 2%;
+      margin-left: 15%;
     }
     .image-slider {
       height: 100%;
@@ -900,3 +937,4 @@
     width: calc(100% - 100px);
   }
 }
+

@@ -16,18 +16,11 @@ const DireccionesGuardadas = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
 
-
-  const handleDelete = async (direccion) => {
-    try {
-        await axios.delete(`${API_URL}/DireccionesGuardades/${direccion.IdDireccion}`);
-        setDirecciones(prevDirecciones => 
-            prevDirecciones.filter(d => d.IdDireccion !== direccion.IdDireccion)
-        );
-        setShowDeleteModal(false);
-    } catch (error) {
-        console.error('Error al eliminar la dirección:', error);
-    }
-};
+  const handleDelete = (direccion) => {
+    setSelectedAddress(direccion);
+    setShowDeleteModal(true);
+    document.body.style.overflow = 'hidden';
+  };
 
 
   const confirmDelete = async () => {

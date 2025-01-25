@@ -222,7 +222,7 @@ const Direccion = () => {
     setIsCartOpen(!isCartOpen);
   };
   return (
-    <div className="page-container">
+    <div className="page-container1">
       <Header toggleCart={toggleCart} isCartOpen={isCartOpen} />
       <div className="direccion-container">
         <div className="form-container">

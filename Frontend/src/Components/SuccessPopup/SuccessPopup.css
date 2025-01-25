@@ -25,7 +25,9 @@
     font-size: 48px;
     margin-bottom: 15px;
 }
-
+.success-popup p {
+    color: #45a049;
+}
 .success-popup button {
     background-color: #4CAF50;
     color: white;
