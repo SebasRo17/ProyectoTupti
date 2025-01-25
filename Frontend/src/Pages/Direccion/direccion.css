@@ -158,7 +158,9 @@ body {
     margin-top: 2%;
     margin-left: 0%;
     width: 100%;
-    margin-bottom: 10%;
+  }
+  .form-container{
+    margin-bottom: -80% !important;
   }
   .map-container {
     margin-left: -10%;
@@ -175,7 +177,6 @@ body {
     margin-top: 3%;
     width: 150%;
     margin-left: 0%;
-    margin-bottom: 5%;
   }
   .map-container {
     margin-top: 2%;
