@@ -155,8 +155,8 @@ const generateClaveAcceso = (fecha, numeroFactura) => {
     return `${baseClaveAcceso}${digitoVerificador}`;
 };
 
-// Componente principal
-const InvoicePDF = ({ idUsuario }) => {
+// Modificar la exportación del componente InvoicePDF
+const InvoicePDF = ({ idUsuario, forEmail = false }) => {
     const [invoiceData, setInvoiceData] = useState({
         customer: {
             name: "Cliente",
@@ -186,6 +186,11 @@ const InvoicePDF = ({ idUsuario }) => {
             }
 
             try {
+                // Si es para email, asegurarse de que los datos estén cargados
+                if (forEmail) {
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                }
+
                 // Leer datos del cliente del localStorage
                 let clienteData;
                 try {
@@ -286,7 +291,7 @@ const InvoicePDF = ({ idUsuario }) => {
         };
 
         fetchPedidoData();
-    }, [idUsuario, numeroFactura]);
+    }, [idUsuario, numeroFactura, forEmail]);
 
     // En el render, agregar validaciones para evitar errores de undefined
     const renderPrecio = (valor) => {
@@ -446,4 +451,5 @@ const InvoicePDF = ({ idUsuario }) => {
     );
   };
   
+  export { InvoicePDF };
   export default App;

@@ -7,6 +7,7 @@ import { getPedidoByCarrito, getDetallesPedido } from '../../Api/pedidoApi';
 import { createPaypalOrder, capturePaypalPayment } from '../../Api/pagosApi';
 import jwtDecode from 'jwt-decode';
 import { getSelectedAddress } from '../../Api/direccionApi';
+import { enviarFacturaPorEmail } from '../../Api/facturaEmailApi';
 
 const MetodoPago = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -138,9 +139,7 @@ const MetodoPago = () => {
             paypalPopup.close();
             clearInterval(checkPopupStatus);
             console.log('Pago completado con éxito', orderId);
-            capturePaypalPayment(orderId);
-            setPaymentStatus('success');
-            setIsLoading(false);
+            handlePaymentSuccess(orderId);
           } else if (popupUrl.includes('/payment-cancel')) {
             paypalPopup.close();
             clearInterval(checkPopupStatus);
@@ -159,6 +158,29 @@ const MetodoPago = () => {
       setIsLoading(false);
     }
   };
+
+  const handlePaymentSuccess = async (orderId) => {
+    try {
+        // Capturar el pago de PayPal
+        await capturePaypalPayment(orderId);
+        
+        if (pedido && pedido.idPedido) {
+            // Esperar un momento para asegurar que el PDF esté listo
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // Enviar la factura por correo
+            await enviarFacturaPorEmail(pedido.idPedido);
+            console.log('Factura enviada correctamente');
+        }
+        
+        setPaymentStatus('success');
+    } catch (error) {
+        console.error('Error al procesar el pago:', error);
+        alert('El pago se realizó pero hubo un error al enviar la factura. Por favor, contacte al soporte.');
+    } finally {
+        setIsLoading(false);
+    }
+};
 
   const confirmarCompra = () => {
     setMostrarConfirmacion(false);
