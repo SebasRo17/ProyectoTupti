@@ -47,14 +47,12 @@ class UserController {
       const userId = req.params.id;
       const { Email, Contrasenia, Activo, Nombre } = req.body;
 
-      // Validación básica
+      // Validación modificada para permitir solo actualización de Activo
       if (!Email && !Contrasenia && Activo === undefined && !Nombre) {
         return res.status(400).json({ 
           message: 'Al menos un campo es requerido' 
         });
       }
-
-      console.log('Datos recibidos para actualizar:', { Email, Contrasenia, Activo, Nombre });
 
       const updatedUser = await UserService.updateUser(userId, {
         Email,

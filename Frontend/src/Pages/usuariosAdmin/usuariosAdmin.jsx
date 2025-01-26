@@ -3,7 +3,7 @@ import HeaderAdmin from '../../Components/headerAdmin/headerAdmin';
 import BarraLateralAdmin from '../../Components/barraLateralAdmin/barraLateralAdmin';
 import FiltroUsuario from '../../Components/filtroUsuarios/filtroUsuario';
 import EditarUsuario from '../../Components/editarUsuario/editarUsuario';
-import { getUsersInfo } from '../../Api/userApi';
+import { getUsersInfo, deactivateUser } from '../../Api/userApi';
 import './usuariosAdmin.css';
 
 const UsuariosAdmin = () => {
@@ -37,6 +37,19 @@ const UsuariosAdmin = () => {
   const handleEdit = (userId) => {
     setSelectedUser(users.find((user) => user.id === userId));
     setShowEditModal(true);
+  };
+
+  const confirmDelete = async () => {
+    try {
+      await deactivateUser(selectedUser.id);
+      // Actualizar la lista de usuarios después de desactivar
+      const updatedUsers = await getUsersInfo();
+      setUsers(updatedUsers);
+      setShowDeleteModal(false);
+    } catch (error) {
+      console.error('Error al desactivar usuario:', error);
+      // Opcionalmente, mostrar un mensaje de error al usuario
+    }
   };
 
   if (loading) return <div>Cargando usuarios...</div>;

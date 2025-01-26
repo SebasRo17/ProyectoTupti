@@ -62,3 +62,15 @@ export const getUsersInfo = async () => {
     throw new Error(error.response?.data?.message || 'Error al obtener información de los usuarios');
   }
 };
+
+export const deactivateUser = async (userId) => {
+  try {
+    const response = await axios.put(
+      `${import.meta.env.VITE_API_URL_DEVELOPMENT}/users/${userId}`,
+      { Activo: false }
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || 'Error al desactivar usuario');
+  }
+};
