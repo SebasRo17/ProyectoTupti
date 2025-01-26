@@ -232,37 +232,34 @@ class UserController {
 
   async getUserInfo(req, res) {
     try {
-      const { userId } = req.params;
-      
-      // Usar findByPk en lugar de findOne para buscar por clave primaria
-      const user = await User.findByPk(userId, {
-        attributes: ['CodigoUs', 'Nombre', 'Email', 'Activo', 'EmailVerificado']
+      // Obtener todos los usuarios con sus atributos necesarios
+      const users = await User.findAll({
+        attributes: ['IdUsuario', 'CodigoUs', 'Nombre', 'Email', 'Activo', 'EmailVerificado']
       });
 
-      if (!user) {
-        return res.status(404).json({ message: 'Usuario no encontrado' });
-      }
+      // Obtener las direcciones activas para todos los usuarios
+      const usersWithInfo = await Promise.all(users.map(async (user) => {
+        const tieneDireccion = await Direccion.count({
+          where: {
+            IdUsuario: user.IdUsuario,
+            Activo: true
+          }
+        }) > 0;
 
-      // Verificar si el usuario tiene direcciones activas
-      const tieneDireccion = await Direccion.count({
-        where: {
-          IdUsuario: userId,
-          Activo: true
-        }
-      }) > 0;
+        return {
+          id: user.IdUsuario,
+          codigo: user.CodigoUs,
+          nombre: user.Nombre,
+          email: user.Email,
+          estado: user.Activo ? 'Activo' : 'Inactivo',
+          tieneDireccion: tieneDireccion,
+          registro: user.EmailVerificado ? 'Confirmado' : 'Pendiente'
+        };
+      }));
 
-      const response = {
-        codigo: user.CodigoUs,
-        nombre: user.Nombre,
-        email: user.Email,
-        estado: user.Activo ? 'Activo' : 'Inactivo',
-        tieneDireccion: tieneDireccion,
-        registro: user.EmailVerificado ? 'Confirmado' : 'Pendiente'
-      };
-
-      res.json(response);
+      res.json(usersWithInfo);
     } catch (error) {
-      console.error('Error al obtener información del usuario:', error);
+      console.error('Error al obtener información de los usuarios:', error);
       res.status(500).json({ 
         message: 'Error interno del servidor',
         error: error.message 
