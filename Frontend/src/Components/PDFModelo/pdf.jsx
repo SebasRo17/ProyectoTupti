@@ -558,7 +558,7 @@ const generatePdfBlob = async (idUsuario) => {
               ))}
 
               <View style={styles.rowTotales}>
-                <Text style={styles.colLabelTotales}>DESCUENTO</Text>
+                <Text style={[styles.colLabelTotales, styles.descuentoLabel]}>DESCUENTO</Text>
                 <Text style={styles.colValueTotales}>${pedidoData.totales.descuentos.toFixed(2)}</Text>
               </View>
 
@@ -575,8 +575,17 @@ const generatePdfBlob = async (idUsuario) => {
               ))}
 
               <View style={styles.rowTotales}>
+                <Text style={styles.colLabelTotales}>Cuota de servicio (8%)</Text>
+                <Text style={styles.colValueTotales}>
+                  ${(pedidoData.totales.subtotal * 0.08).toFixed(2)}
+                </Text>
+              </View>
+
+              <View style={styles.rowTotales}>
                 <Text style={styles.colLabelTotales}>VALOR TOTAL</Text>
-                <Text style={styles.colValueTotales}>${pedidoData.totales.total.toFixed(2)}</Text>
+                <Text style={styles.colValueTotales}>
+                  ${(pedidoData.totales.total + (pedidoData.totales.subtotal * 0.08)).toFixed(2)}
+                </Text>
               </View>
             </View>
 
