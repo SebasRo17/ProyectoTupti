@@ -140,6 +140,31 @@ class PedidoRepository {
       throw error;
     }
   }
+
+  async findAllPedidosWithBasicInfo() {
+    try {
+      const query = `
+        SELECT 
+          u.Nombre as Usuario_Nombre,
+          p.IdPedido,
+          p.Estado as Pedido_Estado, 
+          c.updatedAt as Carrito_FechaActualizacion
+        FROM 
+          usuario u
+          JOIN pedido p ON u.IdUsuario = p.IdUsuario
+          JOIN carrito c ON p.IdCarrito = c.IdCarrito
+        ORDER BY
+          p.IdPedido DESC
+      `;
+
+      return await sequelize.query(query, {
+        type: sequelize.QueryTypes.SELECT
+      });
+    } catch (error) {
+      console.error('Error en el repositorio al obtener listado de pedidos:', error);
+      throw error;
+    }
+  }
 }
 
 module.exports = new PedidoRepository();

@@ -106,6 +106,18 @@ class PedidoController {
       }
     }
   }
+
+  async getAllPedidosWithBasicInfo(req, res) {
+    try {
+      const pedidos = await PedidoService.getAllPedidosWithBasicInfo();
+      res.json(pedidos);
+    } catch (error) {
+      console.error('Error al obtener listado de pedidos:', error);
+      res.status(500).json({ 
+        message: 'Error al obtener el listado de pedidos' 
+      });
+    }
+  }
 }
 
 module.exports = new PedidoController();

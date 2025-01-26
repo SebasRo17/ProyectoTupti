@@ -175,6 +175,21 @@ class PedidoService {
       throw error;
     }
   }
+
+  async getAllPedidosWithBasicInfo() {
+    try {
+      const pedidos = await PedidoRepository.findAllPedidosWithBasicInfo();
+      return pedidos.map(pedido => ({
+        idPedido: pedido.IdPedido,
+        estado: pedido.Pedido_Estado,
+        nombreUsuario: pedido.Usuario_Nombre,
+        fechaActualizacion: pedido.Carrito_FechaActualizacion
+      }));
+    } catch (error) {
+      console.error('Error en el servicio al obtener listado de pedidos:', error);
+      throw error;
+    }
+  }
 }
 
 module.exports = new PedidoService();
