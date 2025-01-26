@@ -1,45 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import HeaderAdmin from '../../Components/headerAdmin/headerAdmin';
 import BarraLateralAdmin from '../../Components/barraLateralAdmin/barraLateralAdmin';
 import FiltroUsuario from '../../Components/filtroUsuarios/filtroUsuario';
 import EditarUsuario from '../../Components/editarUsuario/editarUsuario';
+import { getUsersInfo } from '../../Api/userApi';
 import './usuariosAdmin.css';
 
 const UsuariosAdmin = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Mock data
-  const users = [
-    {
-      id: "USR001",
-      nombre: "Juan Pérez",
-      email: "juan@example.com",
-      fechaRegistro: "2024-03-15",
-      estado: "Activo",
-      direccion: "Registrada",
-      registro: "Completo"
-    }
-  ];
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const data = await getUsersInfo();
+        setUsers(data);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, []);
 
   const handleDelete = (user) => {
     setSelectedUser(user);
     setShowDeleteModal(true);
   };
+
   const handleEdit = (userId) => {
     setSelectedUser(users.find((user) => user.id === userId));
     setShowEditModal(true);
   };
-  const confirmDelete = () => {
-    // Add delete logic here
-    setShowDeleteModal(false);
-  };
-  const handleSave = (formData) => {
-    // Add save logic here
-    //console.log('Saving:', formData);
-    setShowEditModal(false);
-  };
+
+  if (loading) return <div>Cargando usuarios...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="usuarios-admin">
@@ -56,7 +57,6 @@ const UsuariosAdmin = () => {
               <th>Código</th>
               <th>Nombre</th>
               <th>Email</th>
-              <th>Fecha Registro</th>
               <th>Estado</th>
               <th>Dirección</th>
               <th>Registro</th>
@@ -66,35 +66,26 @@ const UsuariosAdmin = () => {
           <tbody>
             {users.map((user) => (
               <tr key={user.id}>
-                <td>{user.id}</td>
+                <td>{user.codigo}</td>
                 <td>{user.nombre}</td>
                 <td>{user.email}</td>
-                <td>{user.fechaRegistro}</td>
                 <td>
                   <span className={`status ${user.estado.toLowerCase()}`}>
                     {user.estado}
                   </span>
                 </td>
-                <td>{user.direccion}</td>
+                <td>{user.tieneDireccion ? 'Registrada' : 'No registrada'}</td>
                 <td>{user.registro}</td>
                 <td>
-                <button className="edit-btn"onClick={() => handleEdit(user.id)}>
+                  <button className="edit-btn" onClick={() => handleEdit(user.id)}>
                     ✏️
                   </button>
-                  {showEditModal && (
-                    <EditarUsuario
-                      user={selectedUser} // Pass full user object
-                      onClose={() => setShowEditModal(false)}
-                      onSave={handleSave}
-                    />
-                  )}
                   <button 
                     className="delete-btn0"
                     onClick={() => handleDelete(user)}
                   >
                     🗑️
                   </button>
-
                 </td>
               </tr>
             ))}
