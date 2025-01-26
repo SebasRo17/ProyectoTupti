@@ -9,6 +9,8 @@ import {
 import { getDescuentoCarrito } from '../../Api/descuentosApi.js';
 import { createPedido, getPedidoByCarrito } from '../../Api/pedidoApi.js';
 import { getSelectedAddress } from '../../Api/direccionApi.js';
+import { createKardexProduct, validateStock} from '../../Api/kardexApi.js';
+import { useCart } from '../../Context/CartContext.jsx';
 
 const CarritoCompras = () => {
   const navigate = useNavigate();
@@ -25,6 +27,10 @@ const CarritoCompras = () => {
   const [showAddressWarning, setShowAddressWarning] = useState(false);
   const [addressError, setAddressError] = useState(null);
   const [mostrarPopUpVaciar, setMostrarPopUpVaciar] = useState(false);
+  const [showStockError, setShowStockError] = useState(false);
+  const [stockErrorMessage, setStockErrorMessage] = useState('');
+  const { updateCartCount } = useCart();
+
   useEffect(() => {
     const token = localStorage.getItem('jwtToken');
     if (token) {
@@ -142,7 +148,17 @@ useEffect(() => {
   const eliminarProducto = async () => {
     if (productoAEliminar) {
       try {
+        const kardexData = {
+          idProducto: productoAEliminar.id,
+          movimiento: 'Ingreso',
+          cantidad: productoAEliminar.cantidad // Positive for ingreso
+        };
+
+        await handleAgregarCarrito(productoAEliminar.id, -productoAEliminar.cantidad);
+        await createKardexProduct(kardexData);
         await deleteCarritoDetalle(productoAEliminar.idCarritoDetalle);
+        
+        updateCartCount(); 
         setProductos(productos.filter((p) => p.id !== productoAEliminar.id));
         setMostrarPopUp(false);
       } catch (error) {
@@ -163,10 +179,32 @@ useEffect(() => {
   const actualizarCantidad = async (id, cambio) => {
     try {
       const producto = productos.find(p => p.id === id);
-      if (producto.cantidad + cambio < 1) return;
-
+      if (producto.cantidad < 1) return;
+  
+      // Only validate stock when increasing quantity
+      if (cambio > 0) {
+        const stockValidation = await validateStock(id, 1);
+        
+        if (!stockValidation.disponible) {
+          setShowStockError(true);
+          setStockErrorMessage(stockValidation.error);
+          setTimeout(() => {
+            setShowStockError(false);
+            setStockErrorMessage('');
+          }, 3000);
+          return;
+        }
+      }
+  
+      const kardexData = {
+        idProducto: id,
+        movimiento: cambio > 0 ? 'Venta' : 'Ingreso',
+        cantidad: cambio > 0 ? -1 : 1
+      };
+  
       await handleAgregarCarrito(id, cambio);
-
+      await createKardexProduct(kardexData);
+  
       setProductos(
         productos.map((producto) =>
           producto.id === id
@@ -176,6 +214,12 @@ useEffect(() => {
       );
     } catch (error) {
       console.error('Error al actualizar cantidad:', error);
+      setShowStockError(true);
+      setStockErrorMessage('Error al actualizar la cantidad');
+      setTimeout(() => {
+        setShowStockError(false);
+        setStockErrorMessage('');
+      }, 3000);
     }
   };
 
@@ -374,6 +418,11 @@ useEffect(() => {
           <p className="mensaje-sesion">Debes iniciar sesión para realizar compras.</p>
         )}
       </div>
+      {showStockError && (
+          <div className="alert-message error">
+            {stockErrorMessage}
+          </div>
+        )}
     </div>
   );
 };
