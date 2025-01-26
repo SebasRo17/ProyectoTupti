@@ -16,35 +16,40 @@ class PedidoService {
       // Calcular totales y organizar la respuesta
       const resumen = {
         idPedido: detalles[0].IdPedido,
-        items: detallesValidos.map(item => ({
-          idCarritoDetalle: item.IdCarritoDetalle,
+        items: detallesValidos.map(item => {
+          const subtotal = parseFloat(item.PrecioProducto) * item.Cantidad;
+          const descuento = subtotal * (parseFloat(item.PorcentajeDescuento) / 100);
+          return {
+            idCarritoDetalle: item.IdCarritoDetalle,
             producto: {
-            nombre: item.NombreProducto,
-            precio: parseFloat(item.PrecioProducto),
-            cantidad: item.Cantidad,
-            precioUnitario: parseFloat(item.PrecioUnitario),
-            subtotal: parseFloat(item.PrecioUnitario) * item.Cantidad
-          },
-          impuesto: {
-            nombre: item.NombreImpuesto,
-            porcentaje: parseFloat(item.PorcentajeImpuesto)
-          }
-        })),
+              nombre: item.NombreProducto,
+              precio: parseFloat(item.PrecioProducto),
+              cantidad: item.Cantidad,
+              precioUnitario: parseFloat(item.PrecioUnitario),
+              subtotal: subtotal,
+              descuento: descuento
+            },
+            impuesto: {
+              nombre: item.NombreImpuesto,
+              porcentaje: parseFloat(item.PorcentajeImpuesto)
+            }
+          };
+        }),
         totales: {
           subtotal: detallesValidos.reduce((acc, item) => 
-            acc + (parseFloat(item.PrecioUnitario) * item.Cantidad), 0),
-          cantidadItems: detallesValidos.reduce((acc, item) => acc + item.Cantidad, 0)
+            acc + (parseFloat(item.PrecioProducto) * item.Cantidad), 0),
+          cantidadItems: detallesValidos.reduce((acc, item) => acc + item.Cantidad, 0),
+          descuentos: detallesValidos.reduce((acc, item) => {
+            const subtotalItem = parseFloat(item.PrecioProducto) * item.Cantidad;
+            return acc + (subtotalItem * parseFloat(item.PorcentajeDescuento) / 100);
+          }, 0),
+          impuestos: detallesValidos.reduce((acc, item) => 
+            acc + parseFloat(item.MontoImpuesto), 0)
         }
       };
 
-      // Calcular impuestos totales
-      resumen.totales.impuestos = detallesValidos.reduce((acc, item) => {
-        const subtotalItem = parseFloat(item.PrecioUnitario) * item.Cantidad;
-        return acc + (subtotalItem * parseFloat(item.PorcentajeImpuesto) / 100);
-      }, 0);
-
       // Calcular total final
-      resumen.totales.total = resumen.totales.subtotal + resumen.totales.impuestos;
+      resumen.totales.total = resumen.totales.subtotal - resumen.totales.descuentos + resumen.totales.impuestos;
 
       return resumen;
     } catch (error) {
@@ -113,6 +118,20 @@ class PedidoService {
       throw error;
     }
   }
+
+  async getLastPedidoByUserId(idUsuario) {
+    try {
+      const pedido = await PedidoRepository.findLastByUserId(idUsuario);
+      if (!pedido) {
+        throw new Error('No se encontró pedido para este usuario');
+      }
+      return pedido;
+    } catch (error) {
+      console.error('Error en servicio:', error);
+      throw error;
+    }
+  }
+
 }
 
 module.exports = new PedidoService();

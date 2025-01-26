@@ -12,27 +12,36 @@ class PedidoRepository {
           cd.PrecioUnitario,
           prod.Nombre as NombreProducto,
           prod.Precio as PrecioProducto,
+          prod.IdTipoProducto,
           imp.Nombre as NombreImpuesto,
-          imp.Porcentaje as PorcentajeImpuesto
+          imp.Porcentaje as PorcentajeImpuesto,
+          COALESCE(
+            (SELECT Porcentaje 
+             FROM descuento 
+             WHERE (IdProducto = prod.IdProducto OR IdTipoProducto = prod.IdTipoProducto)
+             AND Activo = 1 
+             AND NOW() BETWEEN FechaInicio AND FechaFin
+             LIMIT 1
+            ), 0) as PorcentajeDescuento,
+          ROUND(prod.Precio * cd.Cantidad * (imp.Porcentaje / 100), 2) as MontoImpuesto
         FROM pedido p
         JOIN carrito_detalle cd ON p.IdCarrito = cd.IdCarrito
         JOIN producto prod ON cd.IdProducto = prod.IdProducto
         JOIN Impuesto imp ON prod.IdImpuesto = imp.IdImpuesto
         WHERE p.IdPedido = :idPedido
       `;
-
+  
       const result = await sequelize.query(query, {
         replacements: { idPedido },
         type: sequelize.QueryTypes.SELECT
       });
-
+  
       return result;
     } catch (error) {
       console.error('Error en el repositorio al obtener detalles del pedido:', error);
       throw error;
     }
   }
-
   async findByCarritoId(idCarrito) {
     try {
       const query = `
@@ -80,6 +89,19 @@ class PedidoRepository {
 
   async delete(id) {
     return await Pedido.destroy({ where: { IdPedido: id } });
+  }
+
+  async findLastByUserId(idUsuario) {
+    try {
+      const pedido = await Pedido.findOne({
+        where: { IdUsuario: idUsuario },
+        order: [['IdPedido', 'DESC']]
+      });
+      return pedido;
+    } catch (error) {
+      console.error('Error al buscar último pedido:', error);
+      throw error;
+    }
   }
 }
 

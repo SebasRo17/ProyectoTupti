@@ -285,14 +285,15 @@ function Registro() {
           )}
 
           <div className="registro-form-group">
-            <button
-              type="button"
-              className="registro-btn"
-              disabled={!captchaVerified || emailError !== "" || passwordError !== ""}
-              onClick={handleRegister}
-            >
-              REGISTRARSE
-            </button>
+          <button
+  type="button"
+  className="registro-btn"
+  disabled={isLoading || !captchaVerified || emailError !== "" || passwordError !== ""}
+  onClick={handleRegister}
+>
+  {isLoading ? "registrado..." : "REGISTRARSE"}
+</button>
+
           </div>
 
           <div className="registro-social-text">

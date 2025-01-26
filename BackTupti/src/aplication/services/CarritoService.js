@@ -79,6 +79,38 @@ class CarritoService {
           throw error;
         }
       }
+      async calcularTotalesCarrito(idCarrito) {
+        try {
+          const detalles = await CarritoRepository.obtenerDetallesConImpuestos(idCarrito);
+          
+          const resumen = {
+            subtotal: 0,
+            impuestoTotal: 0,
+            total: 0,
+            items: detalles.map(item => ({
+              idProducto: item.IdProducto,
+              nombre: item.NombreProducto || 'Producto sin nombre',
+              cantidad: item.Cantidad,
+              precioUnitario: parseFloat(item.PrecioUnitario),
+              subtotal: parseFloat(item.Subtotal),
+              impuesto: {
+                nombre: item.NombreImpuesto || 'Sin impuesto',
+                porcentaje: parseFloat(item.PorcentajeImpuesto || 0),
+                monto: parseFloat(item.MontoImpuesto || 0)
+              }
+            }))
+          };
+    
+          resumen.subtotal = resumen.items.reduce((acc, item) => acc + item.subtotal, 0);
+          resumen.impuestoTotal = resumen.items.reduce((acc, item) => acc + item.impuesto.monto, 0);
+          resumen.total = resumen.subtotal + resumen.impuestoTotal;
+    
+          return resumen;
+        } catch (error) {
+          console.error('Error en servicio:', error);
+          throw error;
+        }
+      }
 }
 
 module.exports = new CarritoService();

@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import HeaderAdmin from '../../Components/headerAdmin/headerAdmin';
 import BarraLateralAdmin from '../../Components/barraLateralAdmin/barraLateralAdmin';
 import FiltroUsuario from '../../Components/filtroUsuarios/filtroUsuario';
+import EditarUsuario from '../../Components/editarUsuario/editarUsuario';
 import './usuariosAdmin.css';
 
 const UsuariosAdmin = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
 
   // Mock data
@@ -25,10 +27,18 @@ const UsuariosAdmin = () => {
     setSelectedUser(user);
     setShowDeleteModal(true);
   };
-
+  const handleEdit = (userId) => {
+    setSelectedUser(users.find((user) => user.id === userId));
+    setShowEditModal(true);
+  };
   const confirmDelete = () => {
     // Add delete logic here
     setShowDeleteModal(false);
+  };
+  const handleSave = (formData) => {
+    // Add save logic here
+    //console.log('Saving:', formData);
+    setShowEditModal(false);
   };
 
   return (
@@ -68,12 +78,23 @@ const UsuariosAdmin = () => {
                 <td>{user.direccion}</td>
                 <td>{user.registro}</td>
                 <td>
+                <button className="edit-btn"onClick={() => handleEdit(user.id)}>
+                    ✏️
+                  </button>
+                  {showEditModal && (
+                    <EditarUsuario
+                      user={selectedUser} // Pass full user object
+                      onClose={() => setShowEditModal(false)}
+                      onSave={handleSave}
+                    />
+                  )}
                   <button 
-                    className="delete-btn"
+                    className="delete-btn0"
                     onClick={() => handleDelete(user)}
                   >
                     🗑️
                   </button>
+
                 </td>
               </tr>
             ))}
@@ -84,7 +105,7 @@ const UsuariosAdmin = () => {
       {showDeleteModal && (
         <div className="modal-wrapper">
           <div className="modal-overlay" onClick={() => setShowDeleteModal(false)} />
-          <div className="modal-content">
+          <div className="modal-content10">
             <h3>Eliminar Usuario</h3>
             <p>
               ¿Está seguro que desea eliminar al usuario {selectedUser.nombre}?

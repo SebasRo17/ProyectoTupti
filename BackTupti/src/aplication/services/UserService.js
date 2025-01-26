@@ -101,5 +101,19 @@ class UserService {
       throw error;
     }
   }
+
+  async changePassword(userId, currentPassword, newPassword) {
+    const user = await User.findByPk(userId);
+    if (!user) {
+      throw new Error('Usuario no encontrado');
+    }
+
+    const isValidPassword = await bcrypt.compare(currentPassword, user.Contrasenia);
+    if (!isValidPassword) {
+      throw new Error('Contraseña actual incorrecta');
+    }
+
+    return await UserRepository.updatePassword(userId, newPassword);
+  }
 }
 module.exports = new UserService();

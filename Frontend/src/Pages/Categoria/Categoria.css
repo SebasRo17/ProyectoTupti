@@ -23,7 +23,13 @@ body {
    max-width: 90%;
    margin-bottom: 2%;
 }
-
+.categoria-container h1{
+  color: black;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: center;
+  margin-bottom: 4%;
+}
 .success-message {
   position: fixed;
   top: 10%;
@@ -173,9 +179,12 @@ body {
    border-radius: 4px;
 }
 
-.modal-info {
+.modal-info1 {
    flex: 1;
    padding: 20px;
+}
+.modal-info8 h2{
+  color:#494949
 }
 
 .modal-precio {
@@ -318,6 +327,7 @@ body {
   resize: vertical;
   transition: all 0.3s ease;
   font-family: inherit;
+  background-color: white;
 }
 
 .resena-input:focus {
@@ -478,6 +488,39 @@ body {
    z-index: 1005 !important;
 }
 
+
+.discount-badge {
+  position: absolute;
+  border-style: solid;
+  border-width: 40px 40px 0 0; /* Ajusta el tamaño del triángulo */
+  border-color: red transparent transparent transparent; /* Triángulo rojo */
+  z-index: 1 !important;
+  background-color: transparent  !important;
+}
+.discount-badge span {
+  position: absolute;
+  top: -30px !important; 
+  left: 5px;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  transform: rotate(0deg); 
+  z-index: 3 !important;
+}
+
+.producto-precio-original {
+  text-decoration: line-through;
+  color: #555;
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
+.producto-precio-descuento {
+  color: #ff0000;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin: 0;
+}
 @keyframes fadeInOut {
    0% { opacity: 0; }
    15% { opacity: 1; }
@@ -489,4 +532,78 @@ body {
    display: flex;
    flex-direction: column;
    gap: 1rem;
+}
+
+
+/*filtro*/
+.filtro-container16 {
+  margin-bottom: -1150px;
+}
+
+.success-message,
+.alert-message.error {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 25px;
+  border-radius: 4px;
+  z-index: 10000;
+  animation: slideIn 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.success-message {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.alert-message.error {
+  background-color: #f44336;
+  color: white;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.modal-precio-original {
+    text-decoration: line-through;
+    color: #555;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.modal-precio-descuento {
+    color: #ff0000;
+    font-weight: bold;
+    font-size: 1.3rem;
+    margin: 0;
+}
+
+.discount-badge-modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 100px 100px 0 0;
+  border-color: #ff0000 transparent transparent transparent;
+  z-index: 2;
+}
+
+.discount-badge-modal span {
+  position: absolute;
+  top: -75px;
+  left: 5px;
+  transform: rotate(-45deg);
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
 }

@@ -3,7 +3,7 @@
     width: 850px;
     margin: 0 auto;
     padding: 25px;
-    margin-left: 400px;
+    margin-left: 100px;
     font-family: Comfortaa, Georgia, 'Times New Roman', Times, serif;
     background-color: #4CAF50;
     display: flex;
@@ -19,27 +19,7 @@ h2 {
     margin-bottom: 30px;
     font-weight: bold;
 }
-/* Estilo de las imágenes del producto */
-.imagenes-producto-container {
-    display: flex;
-    justify-content: space-evenly;
-    margin-bottom: 30px;
-    gap: 20px;
-}
 
-.image-selector-button {
-    padding: 50px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 180px;
-    text-align: center;
-}
-.image-selector-button:hover {
-    background-color: #45a049;
-}
 
 /* Estilos de las filas de formulario */
 .form-row-container {
@@ -47,6 +27,7 @@ h2 {
     justify-content: space-between;
     gap: 20px;
     margin-bottom: 30px;
+    padding: auto;
 }
 
 .input-field-container {
@@ -58,6 +39,7 @@ h2 {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
+    color: #000000;
 }
 /* Ajustes en los inputs, selects y textareas */
 .input-field-container input,
@@ -68,6 +50,8 @@ h2 {
     border: 1px solid #ccc;
     border-radius: 10px;
     box-sizing: border-box;
+    background-color: white;
+    color:#333
 }
 /* El textarea debe seguir con la altura definida */
 .input-field-container textarea {
@@ -81,19 +65,7 @@ h2 {
     justify-content: flex-start;
     gap: 20px;
     margin-top: 50px;
-    transform: translateY(-20px);
-}
-.publish-product-button,
-.save-draft-button {
-    padding: 20px 30px;
-    border: none;
-    border-radius: 15px;
-    font-size: 16px;
-    transform: translateX(120px);
-    cursor: pointer;
-    width: 200px; /* Asegura un tamaño consistente en los botones */
-    margin-left: 30px;
-    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+    transform: translateX(450px);
 }
 
 .publish-product-button {
@@ -135,3 +107,13 @@ form {
     justify-content: flex-start;
     gap: 20px;
 }
+
+/* Estilos para el subtítulo Agregar Imagen */
+.form-row-container .input-field-container h3 {
+    font-size: 1rem; 
+    font-weight: bold; 
+    color: #000000; 
+    margin-bottom: 12px; 
+    
+  }
+  

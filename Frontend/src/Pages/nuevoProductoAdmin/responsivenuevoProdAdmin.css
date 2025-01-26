@@ -1,140 +1,197 @@
 /* Desktop (2500px - 2560px) */
 @media (min-width: 2500px)  and (max-width: 2560px) {
-    .nuevo-producto-wrapper {
-        width: 900px; /* Ajusta el tamaño del contenedor */
-        margin-top: -300px;
-    }
+.nuevo-producto-wrapper {
+    width: 1000px; /* Ajuste para pantallas medianas grandes */
+    margin-top: 120px;
+    margin-bottom: 30px;
 }
+.publish-product-button,
+.save-draft-button {
+    transform: translateX(50px);
+    width: 200px; /* Asegura un tamaño consistente en los botones */
+    margin-left: -200px;
+    
+}
+}
+ 
 
 /* Desktop (2001px - 2500px) */
 @media (min-width: 2001px) and (max-width: 2449px) {
     .nuevo-producto-wrapper {
-        width: 850px; /* Ajuste para pantallas grandes */
-        margin-top: -300px;
-    }
-}
-
-/* Desktop (1951px - 2000px) */
-@media (min-width: 1951px) and (max-width: 2000px) {
-    .nuevo-producto-wrapper {
-        width: 800px; /* Ajuste para pantallas medianas grandes */
-        margin-top: -300px;
-    }
-}
-
-/* Desktop (1921px - 1950px) */
-@media (min-width: 1921px) and (max-width: 1950px) {
-    .nuevo-producto-wrapper {
-        width: 750px; /* Ajuste para pantallas grandes */
-        margin-top: -300px;
-    }
-}
-
-/* Desktop (1801px - 1919px) */
-@media (min-width: 1801px) and (max-width: 1920px) {
-    .nuevo-producto-wrapper {
-        width: 700px; /* Ajuste para pantallas grandes */
-        margin-top: -300px;
-       
-    }
-}
-
-/* Desktop (1650px - 1800px) */
-@media (min-width: 1650px) and (max-width: 1800px) {
-    .nuevo-producto-wrapper {
-        width: 650px; /* Ajuste para pantallas medianas grandes */
-        margin-top: -300px;
+        width: 1000px; /* Ajuste para pantallas medianas grandes */
+        margin-top: 120px;
+        margin-bottom: 30px;
     }
     .publish-product-button,
 .save-draft-button {
     transform: translateX(50px);
     width: 200px; /* Asegura un tamaño consistente en los botones */
-    margin-left: 0px;
+    margin-left: -200px;
     
 }
+}
+
+/* Desktop (1951px - 2000px) */
+@media (min-width: 1951px) and (max-width: 2000px) {
+    .nuevo-producto-wrapper {
+        width: 1000px; /* Ajuste para pantallas medianas grandes */
+        margin-top: 120px;
+        margin-bottom: 30px;
+    
+    }
+    .publish-product-button,
+.save-draft-button {
+    transform: translateX(50px);
+    width: 200px; /* Asegura un tamaño consistente en los botones */
+    margin-left: -200px;
+    
+}
+}
+
+/* Desktop (1921px - 1950px) */
+@media (min-width: 1921px) and (max-width: 1950px) {
+    .nuevo-producto-wrapper {
+        width: 1000px; /* Ajuste para pantallas medianas grandes */
+        margin-top: 120px;
+        margin-bottom: 30px;
+    }
+    .publish-product-button,
+.save-draft-button {
+    transform: translateX(50px);
+    width: 200px; /* Asegura un tamaño consistente en los botones */
+    margin-left: -200px;
+    
+}
+}
+
+/* Desktop (1801px - 1919px) */
+@media (min-width: 1801px) and (max-width: 1920px) {
+    .nuevo-producto-wrapper {
+        width: 1000px; /* Ajuste para pantallas medianas grandes */
+        margin-top: 120px;
+        margin-bottom: 30px;
+    }
+    
+.publish-product-button,
+.save-draft-button {
+    transform: translateX(50px);
+    width: 200px; /* Asegura un tamaño consistente en los botones */
+    margin-left: -200px;
+    
+}
+}
+
+
+/* Desktop (1650px - 1800px) */
+@media (min-width: 1650px) and (max-width: 1800px) {
+    .nuevo-producto-wrapper {
+        width: 1000px; /* Ajuste para pantallas medianas grandes */
+        margin-top: 120px;
+        margin-left: 20px;
+        margin-bottom: 30px;
+    }
+    .publish-product-button,
+.save-draft-button {
+    transform: translateX(50px);
+    width: 200px; /* Asegura un tamaño consistente en los botones */
+    margin-left: -200px;
+    
+}
+}
+
 
 /* Desktop (1441px - 1650px) */
 @media (min-width: 1441px) and (max-width: 1650px) {
     .nuevo-producto-wrapper {
-        width: 600px; /* Ajuste para pantallas medianas */
-        margin-top: -300px;
+        width: 850px; /* Ajuste para pantallas medianas grandes */
+        margin-top: 120px;
+        margin-left: 0px;
     }
+    .publish-product-button,
+.save-draft-button {
+    transform: translateX(50px);
+    width: 200px; /* Asegura un tamaño consistente en los botones */
+    margin-left: -200px;
+    
+}
 }
 
 /* Laptops (1024px - 1400px) */
 @media (min-width: 1025px) and (max-width: 1440px) {
     .nuevo-producto-wrapper {
-        width: 700px; /* Ajuste para pantallas grandes */
-        margin-top: -300px;
-       
+        width: 850px; /* Ajuste para pantallas medianas grandes */
+        margin-top: 120px;
+        margin-left:350px;
     }
+    .publish-product-button,
+.save-draft-button {
+    transform: translateX(50px);
+    width: 200px; /* Asegura un tamaño consistente en los botones */
+    margin-left: -200px;
+    
+}
 }
 
 /* Tablets (768px - 1023px) */
 @media (min-width: 769px) and (max-width: 1024px) {
     .nuevo-producto-wrapper {
-        width: 95%;
-        padding: 20px;
-        margin-top: -300px;
+        width: 850px; /* Ajuste para pantallas medianas grandes */
+        margin-top: 120px;
+        margin-left:600px;
     }
-
-    h2 {
-        font-size: 24px; /* Ajuste de tamaño para mejor visualización */
-    }
-
-    .form-row-container {
-        flex-direction: column; /* Los campos del formulario se apilan verticalmente */
-        gap: 10px;
-    }
-
-    .input-field-container {
-        width: 100%;
-    }
+    .publish-product-button,
+.save-draft-button {
+    transform: translateX(50px);
+    width: 200px; /* Asegura un tamaño consistente en los botones */
+    margin-left: -200px;
+    
+}
 }
 
 /* Responsivo para pantallas entre 425px y 767px */
-@media (min-width: 426px) and (max-width: 768px) {
+@media (min-width: 425px) and (max-width: 769px) {
     .nuevo-producto-wrapper {
-        width: 100%;
-        padding: 15px;
+        width: 650px; /* Ajuste para pantallas medianas grandes */
+        margin-top: 120px;
+        margin-left:690px;
     }
-
-    h2 {
-        font-size: 20px; /* Ajuste para pantallas más pequeñas */
-    }
-
-    .form-row-container {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .input-field-container input,
-    .input-field-container select,
-    .input-field-container textarea {
-        padding: 12px; /* Menos padding en pantallas pequeñas */
-    }
+    .publish-product-button,
+.save-draft-button {
+    transform: translateX(50px);
+    width: 200px; /* Asegura un tamaño consistente en los botones */
+    margin-left: -200px;
+    
+}
 }
 
 /* Pantallas entre 424px y 375px */
-@media (min-width: 376px) and (max-width: 425px) {
+@media (min-width: 375px) and (max-width: 425px) {
     .nuevo-producto-wrapper {
-        width: 100%;
-        padding: 10px;
-        margin-top: -200px;
+        width: 650px; /* Ajuste para pantallas medianas grandes */
+        margin-top: 120px;
+        margin-left:800px;
     }
-
-    h2 {
-        font-size: 18px; /* Ajuste para pantallas más pequeñas */
-    }
+    .publish-product-button,
+.save-draft-button {
+    transform: translateX(50px);
+    width: 200px; /* Asegura un tamaño consistente en los botones */
+    margin-left: -200px;
+    
+}
 }
 
 /* Pantallas entre 374px y 320px */
 @media (min-width: 320px) and (max-width: 375px) {
     .nuevo-producto-wrapper {
-        width: 100%;
-        padding: 10px;
-        margin-top: -200px;
+        width: 650px; /* Ajuste para pantallas medianas grandes */
+        margin-top: 120px;
+        margin-left:1050px;
     }
- 
+    .publish-product-button,
+.save-draft-button {
+    transform: translateX(50px);
+    width: 200px; /* Asegura un tamaño consistente en los botones */
+    margin-left: -200px;
+    
 }
 }

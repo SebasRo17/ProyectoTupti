@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react'; // Añadir useEffect
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Header from '../../Components/header/header';
 import Footer from '../../Components/footer/footer';
 import './configuraciones.css';
-import jwtDecode from 'jwt-decode'; // Importar jwt-decode
+import jwtDecode from 'jwt-decode';
 import ErrorPopup from '../../Components/ErrorPopup/ErrorPopup';
-
- 
+import { changePassword } from '../../Api/userApi'; // Añade esta línea
+import SuccessPopup from '../../Components/SuccessPopup/SuccessPopup';
 
 const Configuraciones = () => {
     const [isCartOpen, setIsCartOpen] = useState(false);
@@ -23,6 +23,8 @@ const Configuraciones = () => {
 
     const [showErrorPopup, setShowErrorPopup] = useState(false); // Estado para el pop-up
     const [errorMessage, setErrorMessage] = useState(''); // Mensaje de error
+    const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+    const [successMessage, setSuccessMessage] = useState('');
 
     const toggleCart = () => {
         setIsCartOpen(!isCartOpen);
@@ -51,19 +53,46 @@ const Configuraciones = () => {
         }));
     };
 
-    const handleUpdatePassword = (e) => {
+    const handleUpdatePassword = async (e) => {
         e.preventDefault();
+        
         if (passwords.newPassword !== passwords.confirmPassword) {
             setErrorMessage('Las contraseñas nuevas no coinciden');
-            setShowErrorPopup(true); // Mostrar el pop-up de error
+            setShowErrorPopup(true);
             return;
         }
-        // Aquí iría la lógica para actualizar la contraseña en la API
-        //console.log('Actualizando contraseña...');
+    
+        try {
+            const token = localStorage.getItem('jwtToken');
+            const decoded = jwtDecode(token);
+            
+            await changePassword(
+                decoded.IdUsuario,
+                passwords.currentPassword,
+                passwords.newPassword
+            );
+    
+            setPasswords({
+                currentPassword: '',
+                newPassword: '',
+                confirmPassword: ''
+            });
+    
+            // Mostrar mensaje de éxito con el nuevo popup
+            setSuccessMessage('Contraseña actualizada exitosamente');
+            setShowSuccessPopup(true);
+        } catch (error) {
+            setErrorMessage(error.message);
+            setShowErrorPopup(true);
+        }
     };
 
     const closeErrorPopup = () => {
         setShowErrorPopup(false); // Cerrar el pop-up
+    };
+
+    const closeSuccessPopup = () => {
+        setShowSuccessPopup(false);
     };
 
     return (
@@ -145,6 +174,7 @@ const Configuraciones = () => {
 
             {/* Mostrar el ErrorPopup si está habilitado */}
             {showErrorPopup && <ErrorPopup message={errorMessage} onClose={closeErrorPopup} />}
+            {showSuccessPopup && <SuccessPopup message={successMessage} onClose={closeSuccessPopup} />}
         </div>
     );
 };
