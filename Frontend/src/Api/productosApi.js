@@ -46,3 +46,21 @@ export const productosApi = {
         }
     }
 };
+
+export const getProductDetails = async (idProducto) => {
+ try {
+   const response = await fetch(`${API_URL}/product-details/${idProducto}`);
+   
+   if (!response.ok) {
+     if (response.status === 404) {
+       throw new Error('Producto no encontrado');
+     }
+     throw new Error(`Error ${response.status}: ${response.statusText}`);
+   }
+   
+   return await response.json();
+ } catch (error) {
+   console.error('Error al obtener detalles del producto:', error);
+   throw error;
+ }
+};

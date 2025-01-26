@@ -168,3 +168,26 @@
         margin: 5px 0;
     }
 }
+.date-picker-wrapper {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .date-picker-container {
+    width: 100%;
+  }
+  
+  .date-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .custom-calendar-popper {
+    z-index: 9999 !important;
+  }
+  
+  .react-datepicker-wrapper {
+    width: 100%;
+  }
