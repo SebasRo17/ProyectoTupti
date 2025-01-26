@@ -1,17 +1,27 @@
 import React, { useState } from 'react';
 import './filtroUsuario.css';
 
-const FiltroUsuario = () => {
+const FiltroUsuario = ({ onFilterChange }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [estado, setEstado] = useState('');
-  const [fechaRegistro, setFechaRegistro] = useState('');
 
   const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
+    const value = e.target.value;
+    setSearchTerm(value);
+    onFilterChange({ 
+      estado, 
+      searchTerm: value 
+    });
   };
 
-  const handleFilter = () => {
-    //console.log('Filtering with:', { searchTerm, estado, fechaRegistro });
+  const handleEstadoChange = (e) => {
+    const nuevoEstado = e.target.value;
+    console.log('Nuevo estado seleccionado:', nuevoEstado);
+    setEstado(nuevoEstado);
+    onFilterChange({ 
+      estado: nuevoEstado, 
+      searchTerm 
+    });
   };
 
   return (
@@ -33,27 +43,12 @@ const FiltroUsuario = () => {
         <select 
           className="estado-dropdown"
           value={estado}
-          onChange={(e) => setEstado(e.target.value)}
+          onChange={handleEstadoChange}
         >
-          <option value="">Estado</option>
+          <option value="">Todos</option>
           <option value="activo">Activo</option>
           <option value="inactivo">Inactivo</option>
         </select>
-
-        <input 
-          type="date"
-          className="fecha-registro"
-          value={fechaRegistro}
-          onChange={(e) => setFechaRegistro(e.target.value)}
-          placeholder="Fecha de registro"
-        />
-
-        <button 
-          className="filter-button"
-          onClick={handleFilter}
-        >
-          Filtrar
-        </button>
       </div>
     </header>
   );
