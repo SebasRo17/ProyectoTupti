@@ -103,6 +103,43 @@ class PedidoRepository {
       throw error;
     }
   }
+
+  async findPedidoFullDetails(idPedido) {
+    try {
+      const query = `
+        SELECT 
+          u.Nombre,
+          u.Email,
+          d.CallePrincipal,
+          d.Numeracion, 
+          d.CalleSecundaria,
+          d.Vecindario,
+          d.Ciudad,
+          p.IdPedido,
+          p.Estado,
+          c.updatedAt as CarritoFecha,
+          cd.IdProducto,
+          cd.Cantidad,
+          cd.PrecioUnitario,
+          prod.Nombre as NombreProducto
+        FROM pedido p
+        JOIN usuario u ON p.IdUsuario = u.IdUsuario
+        JOIN direccion d ON p.Direccion_IdDireccion = d.IdDireccion
+        JOIN carrito c ON p.IdCarrito = c.IdCarrito
+        JOIN carrito_detalle cd ON c.IdCarrito = cd.IdCarrito
+        JOIN producto prod ON cd.IdProducto = prod.IdProducto
+        WHERE p.IdPedido = :idPedido
+      `;
+
+      return await sequelize.query(query, {
+        replacements: { idPedido },
+        type: sequelize.QueryTypes.SELECT
+      });
+    } catch (error) {
+      console.error('Error en el repositorio al obtener detalles completos del pedido:', error);
+      throw error;
+    }
+  }
 }
 
 module.exports = new PedidoRepository();

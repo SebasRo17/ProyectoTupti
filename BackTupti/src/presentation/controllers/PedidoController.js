@@ -92,6 +92,20 @@ class PedidoController {
       res.status(404).json({ message: error.message });
     }
   }
+  async getPedidoFullDetails(req, res) {
+    try {
+      const { idPedido } = req.params;
+      const detalles = await PedidoService.getPedidoFullDetails(idPedido);
+      res.json(detalles);
+    } catch (error) {
+      console.error('Error en el controlador:', error);
+      if (error.message === 'Pedido no encontrado') {
+        res.status(404).json({ message: error.message });
+      } else {
+        res.status(500).json({ message: 'Error al obtener detalles completos del pedido' });
+      }
+    }
+  }
 }
 
 module.exports = new PedidoController();
