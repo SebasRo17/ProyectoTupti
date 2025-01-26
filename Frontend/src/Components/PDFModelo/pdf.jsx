@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import { getDetallesPedido, getLastPedidoByUserId } from "../../Api/pedidoApi";
-import { Page, Text, View, Document, PDFViewer, StyleSheet, Image } from "@react-pdf/renderer";
+import { Page, Text, View, Document, PDFViewer, StyleSheet, Image, pdf } from "@react-pdf/renderer";
 
 // Definición de estilos
 const styles = StyleSheet.create({
@@ -426,7 +426,14 @@ const InvoicePDF = ({ idUsuario, forEmail = false }) => {
     );
   };
   
+// Agregar esta función al componente InvoicePDF
+const generatePdfBlob = async (idUsuario) => {
+  const pdfDoc = <InvoicePDF idUsuario={idUsuario} />;
+  const blob = await pdf(pdfDoc).toBlob();
+  return blob;
+};
 
+export { InvoicePDF, generatePdfBlob };
   
   // Componente del visor del PDF
   const App = () => {
@@ -451,5 +458,4 @@ const InvoicePDF = ({ idUsuario, forEmail = false }) => {
     );
   };
   
-  export { InvoicePDF };
   export default App;

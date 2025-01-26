@@ -8,6 +8,7 @@ import { createPaypalOrder, capturePaypalPayment } from '../../Api/pagosApi';
 import jwtDecode from 'jwt-decode';
 import { getSelectedAddress } from '../../Api/direccionApi';
 import { enviarFacturaPorEmail } from '../../Api/facturaEmailApi';
+import { generatePdfBlob } from '../../Components/PDFModelo/pdf.jsx';
 
 const MetodoPago = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -165,12 +166,20 @@ const MetodoPago = () => {
         await capturePaypalPayment(orderId);
         
         if (pedido && pedido.idPedido) {
-            // Esperar un momento para asegurar que el PDF esté listo
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            // Generar el PDF
+            const pdfBlob = await generatePdfBlob(idUsuario);
             
-            // Enviar la factura por correo
-            await enviarFacturaPorEmail(pedido.idPedido);
-            console.log('Factura enviada correctamente');
+            // Convertir el Blob a base64
+            const reader = new FileReader();
+            reader.readAsDataURL(pdfBlob);
+            
+            reader.onloadend = async () => {
+                const base64data = reader.result.split(',')[1];
+                
+                // Enviar la factura por correo
+                await enviarFacturaPorEmail(pedido.idPedido, base64data);
+                console.log('Factura enviada correctamente');
+            };
         }
         
         setPaymentStatus('success');
