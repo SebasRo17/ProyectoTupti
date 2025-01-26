@@ -1,60 +1,68 @@
 import React, { useState, useEffect } from 'react';
-import './detallePedido.css';
-import { useParams,  useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { getPedidoFullDetails } from '../../Api/pedidoApi';
 import HeaderAdmin from '../../Components/headerAdmin/headerAdmin.jsx';
 import BarraLateralAdmin from '../../Components/barraLateralAdmin/barraLateralAdmin.jsx'; 
+import './detallePedido.css';
 
 const DetallePedido = () => {
     const { id } = useParams();
     const [orderDetails, setOrderDetails] = useState(null);
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchOrderDetails = async () => {
             try {
-                // Simular llamada a API
-                const mockOrder = {
-                    idPedido: id,
-                    status: "Confirmado",
-                    date: "2024-03-15",
-                    address: "Av. Principal 123, Quito",
+                const detalles = await getPedidoFullDetails(id);
+                setOrderDetails({
+                    idPedido: detalles.pedido.idPedido,
+                    status: getStatusText(detalles.pedido.estado),
+                    date: new Date(detalles.pedido.fechaPedido).toLocaleDateString(),
+                    address: `${detalles.direccion.callePrincipal} ${detalles.direccion.numeracion}, ${detalles.direccion.calleSecundaria}, ${detalles.direccion.vecindario}, ${detalles.direccion.ciudad}`,
                     customer: {
-                        name: "Juan Pérez",
-                        phone: "0998123456",
-                        email: "juan@example.com"
+                        name: detalles.usuario.nombre,
+                        email: detalles.usuario.email
                     },
-                    items: [
-                        {
-                            id: 1,
-                            name: "Nintendo Switch",
-                            price: 299.99,
-                            discount: 15,
-                            quantity: 1
-                        }
-                ]
-            };
-            setOrderDetails(mockOrder);
-        } catch (error) {
-            //console.error('Error fetching order details:', error);
-            navigate('/pedidosAdmin');
+                    items: detalles.productos.map(prod => ({
+                        id: prod.idProducto,
+                        name: prod.nombreProducto,
+                        price: parseFloat(prod.precioUnitario) || 0, // Asegurar que sea número
+                        quantity: parseInt(prod.cantidad) || 0,      // Asegurar que sea número
+                        discount: 0 // Por ahora lo dejamos en 0 ya que no viene del backend
+                    }))
+                });
+                setLoading(false);
+            } catch (error) {
+                console.error('Error al obtener detalles del pedido:', error);
+                navigate('/pedidosAdmin');
+            }
+        };
+
+        if (id) {
+            fetchOrderDetails();
+        }
+    }, [id, navigate]);
+
+    const getStatusText = (estado) => {
+        switch (estado) {
+            case 0: return 'En Espera';
+            case 1: return 'Reembolsado';
+            case 2: return 'Entregado';
+            default: return 'Desconocido';
         }
     };
 
-    if (id) {
-        fetchOrderDetails();
+    if (loading) {
+        return <div className="loading">Cargando detalles del pedido...</div>;
     }
-}, [id, navigate]);
 
-if (!orderDetails) {
-    return <div className="loading">Cargando detalles del pedido...</div>;
-}
     const calculateItemTotal = (item) => {
-        const discountedPrice = item.price - (item.price * item.discount / 100);
-        return discountedPrice * item.quantity;
+        return item.price * item.quantity;
     };
 
     const subtotal = orderDetails.items.reduce((acc, item) => acc + calculateItemTotal(item), 0);
-    const iva = subtotal * 0.15;
+    const iva = subtotal * 0.12; // 12% IVA
     const total = subtotal + iva;
 
     return (
