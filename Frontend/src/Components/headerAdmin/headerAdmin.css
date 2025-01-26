@@ -8,9 +8,9 @@
     padding: 0 20px;
     position: fixed;
     top: 0;
-    left: 250px;
-    width: 93%;
-    margin-left: -4.5%;
+    left: 100px;
+    width: 500vw;
+    
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 999 !important;
     
@@ -30,7 +30,7 @@
 @media screen and (min-width: 1024px) and (max-width: 1440px) {
   .header-admin {
     padding: 1rem 3rem;
-    width: 80%;
+    width: 100vw ;
   }
 
 }
