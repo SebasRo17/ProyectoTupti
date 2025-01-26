@@ -3,12 +3,41 @@ const facturaEmailService = require('../../aplication/services/FacturaEmailServi
 class FacturaEmailController {
     async enviarFactura(req, res) {
         try {
-            const { pdfData, idPedido } = req.body;
+            const { pdfData, idPedido, totalFactura } = req.body;
+            
+            console.log('Datos recibidos en el controlador:', {
+                totalFactura,
+                tipo: typeof totalFactura
+            });
+
+            // Validación más estricta
+            if (totalFactura === undefined || totalFactura === null) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Total de factura no proporcionado',
+                    debug: { receivedTotal: totalFactura }
+                });
+            }
+
+            const total = Number(totalFactura);
+            
+            if (isNaN(total) || total <= 0) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'El total de la factura debe ser un número válido mayor a 0',
+                    debug: { 
+                        receivedTotal: totalFactura,
+                        parsedTotal: total,
+                        tipo: typeof totalFactura
+                    }
+                });
+            }
             
             // Log completo del objeto user para debugging
             console.log('Información del usuario:', req.user);
             
             const emailDestino = req.user?.email;
+            const nombreCliente = req.user?.nombres || 'Estimado Cliente';
             
             // Validación más detallada del email
             if (!emailDestino) {
@@ -44,7 +73,9 @@ class FacturaEmailController {
             const resultado = await facturaEmailService.guardarYEnviarFactura(
                 Buffer.from(pdfData, 'base64'),
                 idPedido,
-                emailDestino
+                emailDestino,
+                nombreCliente,
+                totalFactura
             );
 
             res.status(200).json(resultado);

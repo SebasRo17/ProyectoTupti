@@ -162,31 +162,47 @@ const MetodoPago = () => {
 
   const handlePaymentSuccess = async (orderId) => {
     try {
-        // Capturar el pago de PayPal
         await capturePaypalPayment(orderId);
         
         if (pedido && pedido.idPedido) {
             setIsLoading(true);
             
-            // Asegurarse de que los datos del cliente estén disponibles
             const clienteData = JSON.parse(localStorage.getItem('clienteData'));
             if (!clienteData) {
                 throw new Error('Datos del cliente no encontrados');
             }
 
-            // Generar el PDF con los datos actualizados
+            // Calcular el total antes de generar el PDF
+            const subtotal = detallesPedido.totales.subtotal || 0;
+            const serviceFee = subtotal * 0.08;
+            const totalConServicio = (detallesPedido.totales.total || 0) + serviceFee;
+            const totalFacturaFinal = Number(totalConServicio.toFixed(2));
+
+            console.log('Total calculado:', {
+                subtotal,
+                serviceFee,
+                totalConServicio,
+                totalFacturaFinal
+            });
+
             const pdfBlob = await generatePdfBlob(idUsuario);
             
-            // Convertir el Blob a base64 y enviar
             const reader = new FileReader();
             reader.onloadend = async () => {
                 try {
                     const base64data = reader.result.split(',')[1];
-                    await enviarFacturaPorEmail(pedido.idPedido, base64data);
+                    
+                    // Usar el total pre-calculado
+                    await enviarFacturaPorEmail(
+                        pedido.idPedido, 
+                        base64data,
+                        totalFacturaFinal // Usar el valor pre-calculado
+                    );
+                    
                     console.log('Factura enviada correctamente');
                     setPaymentStatus('success');
                 } catch (error) {
-                    console.error('Error al enviar la factura:', error);
+                    console.error('Error detallado al enviar la factura:', error);
                     alert('Error al enviar la factura. Por favor, contacte al soporte.');
                 }
             };

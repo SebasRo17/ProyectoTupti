@@ -588,6 +588,55 @@ const generatePdfBlob = async (idUsuario) => {
   });
 };
 
+const handlePaymentSuccess = async (orderId) => {
+    try {
+        await capturePaypalPayment(orderId);
+        
+        if (pedido && pedido.idPedido) {
+            setIsLoading(true);
+            
+            const clienteData = JSON.parse(localStorage.getItem('clienteData'));
+            if (!clienteData) {
+                throw new Error('Datos del cliente no encontrados');
+            }
+
+            const pdfBlob = await generatePdfBlob(idUsuario);
+            
+            const reader = new FileReader();
+            reader.onloadend = async () => {
+                try {
+                    const base64data = reader.result.split(',')[1];
+                    
+                    // Calcular el total incluyendo la cuota de servicio
+                    const subtotal = detallesPedido.totales.subtotal;
+                    const serviceFee = subtotal * 0.08;
+                    const totalConServicio = detallesPedido.totales.total + serviceFee;
+                    
+                    // Convertir explícitamente a número y redondear a 2 decimales
+                    const totalFactura = parseFloat(totalConServicio.toFixed(2));
+                    
+                    console.log('Total a enviar:', totalFactura, typeof totalFactura);
+                    
+                    await enviarFacturaPorEmail(
+                        pedido.idPedido, 
+                        base64data, 
+                        totalFactura
+                    );
+                    
+                    console.log('Factura enviada correctamente');
+                    setPaymentStatus('success');
+                } catch (error) {
+                    console.error('Error al enviar la factura:', error);
+                    alert('Error al enviar la factura. Por favor, contacte al soporte.');
+                }
+            };
+            reader.readAsDataURL(pdfBlob);
+        }
+    } catch (error) {
+        // ...existing code...
+    }
+};
+
 export { InvoicePDF, generatePdfBlob };
   
   // Componente del visor del PDF

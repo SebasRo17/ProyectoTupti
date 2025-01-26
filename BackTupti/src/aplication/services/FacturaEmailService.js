@@ -13,11 +13,17 @@ class FacturaEmailService {
         });
     }
 
-    async guardarYEnviarFactura(pdfData, idPedido, emailDestino) {
+    async guardarYEnviarFactura(pdfData, idPedido, emailDestino, nombreCliente, totalFactura) {
         try {
-            // Validar email
+            // Validar email y total
             if (!emailDestino) {
                 throw new Error('Email de destino no proporcionado');
+            }
+
+            // Asegurar que totalFactura sea un número válido
+            const total = Number(totalFactura);
+            if (isNaN(total)) {
+                throw new Error('Total de factura inválido');
             }
 
             // Log para debugging
@@ -42,6 +48,8 @@ class FacturaEmailService {
                 throw new Error('Configuración de email incompleta');
             }
 
+            const numeroFactura = `001-004-${idPedido.toString().padStart(9, '0')}`;
+
             // Enviar el email usando la misma configuración que EmailVerificationService
             const mailOptions = {
                 from: `"Tupti" <${process.env.EMAIL_USER}>`,
@@ -54,7 +62,7 @@ class FacturaEmailService {
                         </div>
                         <div style="padding: 20px;">
                             <p>Estimado(a):</p>
-                            <h2 style="margin: 0;">[Nombre del cliente]</h2>
+                            <h2 style="margin: 0;">${nombreCliente}</h2>
                             <p>Le contactamos para enviarle su documento electrónico:</p>
                             <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
                                 <tr>
@@ -63,11 +71,11 @@ class FacturaEmailService {
                                 </tr>
                                 <tr>
                                     <td style="padding: 8px; border: 1px solid #ddd; background-color: #f9f9f9;">Número:</td>
-                                    <td style="padding: 8px; border: 1px solid #ddd;">001-004-${idPedido}</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">${numeroFactura}</td>
                                 </tr>
                                 <tr>
                                     <td style="padding: 8px; border: 1px solid #ddd; background-color: #f9f9f9;">Valor:</td>
-                                    <td style="padding: 8px; border: 1px solid #ddd;">USD [Monto]</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">USD ${total.toFixed(2)}</td>
                                 </tr>
                             </table>
                             <p>Gracias por ser parte de nuestra empresa.</p>
@@ -79,7 +87,7 @@ class FacturaEmailService {
                     </div>
                 `,
                 attachments: [{
-                    filename: `factura-${idPedido}.pdf`,
+                    filename: `factura-${numeroFactura}.pdf`,
                     content: pdfData
                 }]
             };
