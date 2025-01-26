@@ -3,7 +3,7 @@ import HeaderAdmin from '../../Components/headerAdmin/headerAdmin';
 import BarraLateralAdmin from '../../Components/barraLateralAdmin/barraLateralAdmin';
 import FiltroUsuario from '../../Components/filtroUsuarios/filtroUsuario';
 import EditarUsuario from '../../Components/editarUsuario/editarUsuario';
-import { getUsersInfo, deactivateUser } from '../../Api/userApi';
+import { getUsersInfo, deactivateUser, activateUser } from '../../Api/userApi';
 import './usuariosAdmin.css';
 
 const UsuariosAdmin = () => {
@@ -34,9 +34,16 @@ const UsuariosAdmin = () => {
     setShowDeleteModal(true);
   };
 
-  const handleEdit = (userId) => {
-    setSelectedUser(users.find((user) => user.id === userId));
-    setShowEditModal(true);
+  const handleEdit = async (userId) => {
+    try {
+      await activateUser(userId);
+      // Actualizar la lista de usuarios después de activar
+      const updatedUsers = await getUsersInfo();
+      setUsers(updatedUsers);
+    } catch (error) {
+      console.error('Error al activar usuario:', error);
+      // Opcionalmente, mostrar un mensaje de error al usuario
+    }
   };
 
   const confirmDelete = async () => {
@@ -90,12 +97,17 @@ const UsuariosAdmin = () => {
                 <td>{user.tieneDireccion ? 'Registrada' : 'No registrada'}</td>
                 <td>{user.registro}</td>
                 <td>
-                  <button className="edit-btn" onClick={() => handleEdit(user.id)}>
+                  <button 
+                    className="edit-btn" 
+                    onClick={() => handleEdit(user.id)}
+                    title="Activar Usuario"
+                  >
                     ✏️
                   </button>
                   <button 
                     className="delete-btn0"
                     onClick={() => handleDelete(user)}
+                    title="Desactivar Usuario"
                   >
                     🗑️
                   </button>
