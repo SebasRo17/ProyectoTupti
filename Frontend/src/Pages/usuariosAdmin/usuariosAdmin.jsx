@@ -32,20 +32,30 @@ const UsuariosAdmin = () => {
     fetchUsers();
   }, []);
 
-  const handleFilterChange = ({ estado }) => {
-    console.log('Estado seleccionado:', estado);
-    console.log('Usuarios disponibles:', users);
-    
-    if (!estado) {
-      setFilteredUsers(users);
-    } else {
-      const filtered = users.filter(user => {
-        console.log('Usuario estado:', user.estado, 'Comparando con:', estado);
-        return user.estado.toLowerCase() === estado.toLowerCase();
+  const handleFilterChange = ({ estado, searchTerm }) => {
+    let filtered = [...users];
+
+    // Filtrar por término de búsqueda
+    if (searchTerm) {
+      const searchLower = searchTerm.toLowerCase();
+      filtered = filtered.filter(user => {
+        const nombre = user.nombre || '';
+        const email = user.email || '';
+        
+        return nombre.toLowerCase().includes(searchLower) ||
+               email.toLowerCase().includes(searchLower);
       });
-      console.log('Usuarios filtrados:', filtered);
-      setFilteredUsers(filtered);
     }
+
+    // Filtrar por estado
+    if (estado) {
+      filtered = filtered.filter(user => {
+        const userEstado = user.estado || '';
+        return userEstado.toLowerCase() === estado.toLowerCase();
+      });
+    }
+
+    setFilteredUsers(filtered);
   };
 
   const handleDelete = (user) => {

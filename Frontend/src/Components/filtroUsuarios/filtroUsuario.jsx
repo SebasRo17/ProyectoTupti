@@ -6,14 +6,22 @@ const FiltroUsuario = ({ onFilterChange }) => {
   const [estado, setEstado] = useState('');
 
   const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
+    const value = e.target.value;
+    setSearchTerm(value);
+    onFilterChange({ 
+      estado, 
+      searchTerm: value 
+    });
   };
 
   const handleEstadoChange = (e) => {
     const nuevoEstado = e.target.value;
     console.log('Nuevo estado seleccionado:', nuevoEstado);
     setEstado(nuevoEstado);
-    onFilterChange({ estado: nuevoEstado });
+    onFilterChange({ 
+      estado: nuevoEstado, 
+      searchTerm 
+    });
   };
 
   return (
