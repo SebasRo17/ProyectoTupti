@@ -412,10 +412,18 @@ const InvoicePDF = ({ idUsuario, forEmail = false }) => {
                 </View>
             ))}
 
+            {/* Cuota de servicio */}
+            <View style={styles.rowTotales}>
+                <Text style={styles.colLabelTotales}>Cuota de servicio (8%)</Text>
+                <Text style={styles.colValueTotales}>{renderPrecio(invoiceData.totales.subtotal * 0.08)}</Text>
+            </View>
+
             {/* Valor Total */}
             <View style={styles.rowTotales}>
                 <Text style={styles.colLabelTotales}>VALOR TOTAL</Text>
-                <Text style={styles.colValueTotales}>{renderPrecio(invoiceData.totales.total)}</Text>
+                <Text style={styles.colValueTotales}>
+                    {renderPrecio(invoiceData.totales.total + (invoiceData.totales.subtotal * 0.08))}
+                </Text>
             </View>
           </View>
   
