@@ -10,6 +10,7 @@ import { getDescuentoCarrito } from '../../Api/descuentosApi.js';
 import { createPedido, getPedidoByCarrito } from '../../Api/pedidoApi.js';
 import { getSelectedAddress } from '../../Api/direccionApi.js';
 import { createKardexProduct, validateStock} from '../../Api/kardexApi.js';
+import { useCart } from '../../Context/CartContext.jsx';
 
 const CarritoCompras = () => {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ const CarritoCompras = () => {
   const [mostrarPopUpVaciar, setMostrarPopUpVaciar] = useState(false);
   const [showStockError, setShowStockError] = useState(false);
   const [stockErrorMessage, setStockErrorMessage] = useState('');
+  const { updateCartCount } = useCart();
 
   useEffect(() => {
     const token = localStorage.getItem('jwtToken');
@@ -156,6 +158,7 @@ useEffect(() => {
         await createKardexProduct(kardexData);
         await deleteCarritoDetalle(productoAEliminar.idCarritoDetalle);
         
+        updateCartCount(); 
         setProductos(productos.filter((p) => p.id !== productoAEliminar.id));
         setMostrarPopUp(false);
       } catch (error) {

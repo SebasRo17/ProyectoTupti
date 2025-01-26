@@ -11,7 +11,7 @@ import Facturas from '../Facturas/facturas.jsx';
 import { searchProducts } from '../../Api/searchProduts.js';
 import { getCarritoByUsuario } from '../../Api/carritoApi.js';
 import jwtDecode from 'jwt-decode';
-
+import { useCart } from '../../Context/CartContext.jsx';
 const Header = ({ toggleCart, isCartOpen }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -26,7 +26,7 @@ const Header = ({ toggleCart, isCartOpen }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileDropdownOpen, setIsMobileDropdownOpen] = useState(false);
   const [productos, setProductos] = useState([]);
-
+  const { cartCount, updateCartCount } = useCart();
   useEffect(() => {
     // Verifica el token al cargar el componente
     const token = localStorage.getItem('jwtToken');
@@ -64,6 +64,10 @@ const Header = ({ toggleCart, isCartOpen }) => {
 
     fetchCarrito();
   }, [idUsuario]);
+  useEffect(() => {
+    updateCartCount(); // Initial cart count fetch
+  }, []);
+
 
   // Lógica del carrito
   const eliminarProducto = (productoId) => {
@@ -260,9 +264,14 @@ const Header = ({ toggleCart, isCartOpen }) => {
             <button onClick={() => {
               toggleCart();
               setIsMobileMenuOpen(false);
-            }}>
+            }} className="header-cart-button">
               <span>🛒</span>
               Carrito
+              {cartCount > 0 && (
+                <span className="cart-count">
+                  {cartCount}
+                </span>
+              )}
             </button>
           </nav>
         </div>
@@ -318,10 +327,10 @@ const Header = ({ toggleCart, isCartOpen }) => {
             </>
           )}
           <button className="header-cart-button" onClick={toggleCart}>
-            🛒 Carrito
-            {productosCarrito.length > 0 && (
+            🛒 Carrito 
+            {cartCount > 0 && (
               <span className="cart-count">
-                {productosCarrito.length}
+                {cartCount}
               </span>
             )}
           </button>
