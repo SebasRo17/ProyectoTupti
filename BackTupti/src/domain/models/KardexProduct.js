@@ -9,7 +9,7 @@ KardexProduct.init({
     primaryKey: true,
     autoIncrement: true
   },
-  Producto_IdProducto: {
+  IdProducto: {
     type: DataTypes.INTEGER,
     allowNull: false
   },
@@ -18,7 +18,7 @@ KardexProduct.init({
     allowNull: true
   },
   Cantidad: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
     allowNull: true
   },
   Fecha: {

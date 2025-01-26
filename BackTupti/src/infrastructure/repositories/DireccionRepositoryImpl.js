@@ -2,16 +2,20 @@ const { sequelize } = require('../database/mysqlConnection');
 const Direccion = require('../../domain/models/Direccion');
 
 class DireccionRepositoryImpl {
-    async countByUserId(userId) {
-      try {
-        return await Direccion.count({
-          where: { IdUsuario: userId }
-        });
-      } catch (error) {
-        console.error('Error en repositorio - countByUserId:', error);
-        throw error;
-      }
+  async countByUserId(userId) {
+    try {
+      const count = await Direccion.count({
+        where: {
+          IdUsuario: userId,
+          Activo: 1
+        }
+      });
+      return count;
+    } catch (error) {
+      console.error('Error al contar direcciones:', error);
+      throw error;
     }
+  }
 
     async create(direccionData) {
       try {
