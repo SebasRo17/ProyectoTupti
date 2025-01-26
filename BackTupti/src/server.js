@@ -25,6 +25,7 @@ const descuentoRoutes = require ('./presentation/routes/descuentoRoutes');
 const facturaEmailRoutes = require('./presentation/routes/facturaEmailRoutes');
 const stockRoutes = require('./presentation/routes/stockRoutes'); 
 const carritoDetalleRoutes = require('./presentation/routes/carritoDetalleRoutes'); // Agregar importación de rutas de carritoDetalle
+const KardexProductRoutes = require('./presentation/routes/KardexProductRoutes'); 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -102,6 +103,7 @@ app.use('/descuentos', descuentoRoutes);
 app.use('/facturas', facturaEmailRoutes);
 app.use('/api/stock', stockRoutes); 
 app.use('/carrito-detalle', carritoDetalleRoutes); 
+app.use('/kardex-product', KardexProductRoutes);
 
 // Sincronizar con la base de datos y iniciar el servidor
 sequelize.sync()

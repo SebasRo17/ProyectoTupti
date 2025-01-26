@@ -12,6 +12,7 @@ import FiltroCategoria from "../../Components/FiltroCategoria/FiltroCategoria.js
 import { addToCart } from '../../Api/carritoApi.js';
 import jwtDecode from 'jwt-decode';
 import LoadingSpinner from '../../Components/LoadingSpinner/LoadingSpinner';
+import { createKardexProduct, validateStock } from '../../Api/kardexApi.js';
 
 function Categoria() {
    const [productos, setProductos] = useState([]);
@@ -30,6 +31,8 @@ function Categoria() {
    const [isCartOpen, setIsCartOpen] = useState(false); 
    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
    const [showErrorMessage, setShowErrorMessage] = useState(false);
+   const [showStockError, setShowStockError] = useState(false);
+   const [stockErrorMessage, setStockErrorMessage] = useState('');
 
    const toggleCart = () => {
       setIsCartOpen(!isCartOpen);
@@ -157,6 +160,21 @@ function Categoria() {
           return;
         }
     
+        // Primero validar stock
+        const stockValidation = await validateStock(
+          selectedProduct.IdProducto, 
+          cantidad
+        );
+    
+        if (!stockValidation || !stockValidation.disponible) {
+         setShowStockError(true);
+         setStockErrorMessage(stockValidation.error || 'Stock insuficiente');
+         setTimeout(() => {
+           setShowStockError(false);
+           setStockErrorMessage('');
+         }, 3000);
+         return;
+       }
         const productData = {
           idUsuario: idUsuario,
           idProducto: selectedProduct.IdProducto,
@@ -164,13 +182,26 @@ function Categoria() {
         };
     
         const result = await addToCart(productData);
+    
+        // Crear registro de Kardex
+        const kardexData = {
+          idProducto: selectedProduct.IdProducto,
+          movimiento: 'Venta',
+          cantidad: -cantidad // Cantidad negativa para salida
+        };
+    
+        await createKardexProduct(kardexData);
+    
         setShowSuccessMessage(true);
         setTimeout(() => setShowSuccessMessage(false), 3000);
       } catch (error) {
-        console.error('Error al agregar producto al carrito:', error);
-        setShowErrorMessage(true);
-        setTimeout(() => setShowErrorMessage(false), 3000);
-      }
+         setShowStockError(true);
+         setStockErrorMessage(error.response?.data?.error || 'Error al validar stock');
+         setTimeout(() => {
+           setShowStockError(false);
+           setStockErrorMessage('');
+         }, 3000);
+       }
     };
   
    const handleEnviarResena = async () => {
@@ -217,6 +248,11 @@ function Categoria() {
         <div className="alert-message error">
           Debes iniciar sesión para agregar productos al carrito
         </div>
+      )}
+      {showStockError && (
+      <div className="alert-message error">
+         {stockErrorMessage || 'Producto fuera de stock. Intenta más tarde.'}
+      </div>
       )}
 
          <Header 
