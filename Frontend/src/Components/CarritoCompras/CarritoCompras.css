@@ -116,7 +116,7 @@
 /* Resumen */
 .mi-carrito .resumen {
   border-top: 1px solid #ccc;
-  padding: 20px;
+  padding: 10px;
   background-color: #fff;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
   position: sticky;
@@ -124,7 +124,7 @@
 }
 
 .mi-carrito .resumen p {
-  margin: 10px 0;
+  margin: 5px 0;
   display: flex;
   justify-content: space-between;
   font-size: 14px;
@@ -162,16 +162,17 @@ margin-top: 20px;
 
 /* Contenedor de la imagen del producto */
 .mi-carrito .producto-item .producto-imagen {
-  width: 20%; 
-  padding-top: 15%; 
+  width: 35%; 
+  padding-top: 10%; 
   background-color: #79986a; 
-  border-radius: 12px; 
+  border-radius: 20px; 
   overflow: hidden; 
   display: flex;
   justify-content: center;
   align-items: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: relative; /* Necesario para colocar el texto encima */
+ 
 }
 
 .mi-carrito .producto-item .producto-imagen img {
