@@ -1,64 +1,94 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getAllPedidosWithBasicInfo } from '../../Api/pedidoApi';
 import HeaderAdmin from '../../Components/headerAdmin/headerAdmin.jsx';
 import BarraLateralAdmin from '../../Components/barraLateralAdmin/barraLateralAdmin.jsx'; 
-import './pedidosAdmin.css';
 import ExportModal from '../../Components/exportModal/exportModal.jsx';
-import DetallePedido from '../detallePedido/detallePedido.jsx';
+import './pedidosAdmin.css';
+
 const PedidosAdmin = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [pedidos, setPedidos] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const [showExportModal, setShowExportModal] = useState(false);
 
-  // Mock data - replace with real data
-  const stats = {
-    completadas: 150,
-    confirmadas: 45,
-    canceladas: 12,
-    reembolsadas: 8
+  // Modificar la estructura inicial de stats
+  const [stats, setStats] = useState({
+    espera: 0,
+    entregadas: 0,
+    reembolsadas: 0
+  });
+
+  useEffect(() => {
+    cargarPedidos();
+  }, []);
+
+  const cargarPedidos = async () => {
+    try {
+      const datos = await getAllPedidosWithBasicInfo();
+      setPedidos(datos);
+      calcularEstadisticas(datos);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error al cargar pedidos:', error);
+      setLoading(false);
+    }
   };
 
-    const pedidos = [
-        {
-            id: '001',
-            cliente: 'Juan Pérez',
-            estado: 'cancelado',
-            fecha: '2024-03-15',
-            direccion: 'Av. Principal 123, Quito',
-            telefono: '0998123456',
-            email: 'juan@example.com',
-            items: [
-                {
-                    id: 1,
-                    name: "Nintendo Switch",
-                    price: 299.99,
-                    discount: 15,
-                    quantity: 1
-                }
-            ]
-        }
-    ];
-
-    const handleVerDetalles = (pedidoId) => {
-        //console.log('Navegando a:', pedidoId);
-        navigate(`/DetallePedido/${pedidoId}`);
+  // Modificar la función de cálculo de estadísticas
+  const calcularEstadisticas = (pedidosData) => {
+    const stats = {
+      espera: 0,
+      entregadas: 0,
+      reembolsadas: 0
     };
+
+    pedidosData.forEach(pedido => {
+      switch (pedido.estado) {
+        case 0: stats.espera++; break;      // Pedidos en espera
+        case 1: stats.reembolsadas++; break; // Pedidos reembolsados
+        case 2: stats.entregadas++; break;   // Pedidos entregados
+        default: break;
+      }
+    });
+
+    setStats(stats);
+  };
+
+  const getStatusText = (estado) => {
+    switch (estado) {
+      case 0: return 'espera';
+      case 1: return 'reembolsado';
+      case 2: return 'entregado';
+      default: return 'desconocido';
+    }
+  };
 
   const getStatusColor = (estado) => {
     const colors = {
-      cancelado: 'red',
-      confirmado: 'green',
-      enviado: 'purple',
-      completado: 'blue'
+      espera: 'orange',
+      reembolsado: 'red',
+      entregado: 'green',
+      desconocido: 'gray'
     };
-    return colors[estado];
+    return colors[getStatusText(estado)];
   };
+
+  const handleVerDetalles = (pedidoId) => {
+    navigate(`/DetallePedido/${pedidoId}`);
+  };
+
+  if (loading) {
+    return <div>Cargando...</div>;
+  }
 
   return (
     <div className="pedidos-admin">
-              <HeaderAdmin />
-              <BarraLateralAdmin />
-              <h1>PEDIDOS</h1>
+      <HeaderAdmin />
+      <BarraLateralAdmin />
+      <h1>PEDIDOS</h1>
+      
       {/* Search Bar */}
       <div className="search-container">
         <input
@@ -68,36 +98,28 @@ const PedidosAdmin = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <button className="search-btn">🔍 Buscar</button>
-
-        <button 
-          className="export-button" 
-          onClick={() => setShowExportModal(true)}
-        >
+        <button className="export-button" onClick={() => setShowExportModal(true)}>
           Exportar
         </button>
-        <ExportModal 
-          isOpen={showExportModal} 
-          onClose={() => setShowExportModal(false)}
-        />
       </div>
 
       {/* Stats Cards */}
       <div className="stats-grid">
         <div className="stat-card">
-          <h3>Ordenes Completas</h3>
-          <p>{stats.completadas}</p>
+          <h3>En Espera</h3>
+          <p>{stats.espera}</p>
         </div>
         <div className="stat-card">
-          <h3>Ordenes Confirmadas</h3>
-          <p>{stats.confirmadas}</p>
+          <h3>Entregadas</h3>
+          <p>{stats.entregadas}</p>
         </div>
         <div className="stat-card">
-          <h3>Ordenes Canceladas</h3>
-          <p>{stats.canceladas}</p>
-        </div>
-        <div className="stat-card">
-          <h3>Ordenes Reembolsadas</h3>
+          <h3>Reembolsadas</h3>
           <p>{stats.reembolsadas}</p>
+        </div>
+        <div className="stat-card">
+          <h3>Total Pedidos</h3>
+          <p>{stats.espera + stats.entregadas + stats.reembolsadas}</p>
         </div>
       </div>
 
@@ -115,31 +137,36 @@ const PedidosAdmin = () => {
           </thead>
           <tbody>
             {pedidos.map((pedido) => (
-              <tr key={pedido.id}>
-                <td>{pedido.id}</td>
-                <td>{pedido.cliente}</td>
+              <tr key={pedido.idPedido}>
+                <td>{pedido.idPedido}</td>
+                <td>{pedido.nombreUsuario}</td>
                 <td>
                   <span
                     className="status-badge"
                     style={{ backgroundColor: getStatusColor(pedido.estado) }}
                   >
-                    {pedido.estado}
+                    {getStatusText(pedido.estado)}
                   </span>
                 </td>
-                <td>{pedido.fecha}</td>
+                <td>{new Date(pedido.fechaActualizacion).toLocaleDateString()}</td>
                 <td>
-                <button
-                    onClick={() => handleVerDetalles(pedido.id)}
+                  <button
+                    onClick={() => handleVerDetalles(pedido.idPedido)}
                     className="action-btn"
-                >
+                  >
                     Ver Detalles
-                </button>
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+
+      <ExportModal 
+        isOpen={showExportModal} 
+        onClose={() => setShowExportModal(false)}
+      />
     </div>
   );
 };
