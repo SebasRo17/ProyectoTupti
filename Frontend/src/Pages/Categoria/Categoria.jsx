@@ -13,7 +13,7 @@ import { addToCart } from '../../Api/carritoApi.js';
 import jwtDecode from 'jwt-decode';
 import LoadingSpinner from '../../Components/LoadingSpinner/LoadingSpinner';
 import { createKardexProduct, validateStock } from '../../Api/kardexApi.js';
-
+import { useCart } from '../../Context/CartContext.jsx';
 function Categoria() {
    const [productos, setProductos] = useState([]);
    const [loading, setLoading] = useState(true);
@@ -33,6 +33,7 @@ function Categoria() {
    const [showErrorMessage, setShowErrorMessage] = useState(false);
    const [showStockError, setShowStockError] = useState(false);
    const [stockErrorMessage, setStockErrorMessage] = useState('');
+   const { updateCartCount } = useCart();
 
    const toggleCart = () => {
       setIsCartOpen(!isCartOpen);
@@ -182,7 +183,7 @@ function Categoria() {
         };
     
         const result = await addToCart(productData);
-    
+        updateCartCount(); 
         // Crear registro de Kardex
         const kardexData = {
           idProducto: selectedProduct.IdProducto,

@@ -25,8 +25,10 @@ import DetallePedido from './detallePedido/detallePedido.jsx';
 import ResetPassword from './resetPass/reset.jsx';
 import EmailVerification from './EmailVerification/emailVerification';
 import ExportModal from '../Components/exportModal/exportModal.jsx';
+import { CartProvider } from '../Context/CartContext.jsx';
 function App() {
   return (
+    <CartProvider>
     <div>
        
       <Routes>
@@ -118,6 +120,7 @@ function App() {
         <Route path="/verify-email/:token" element={<EmailVerification />} />
       </Routes>
     </div>
+    </CartProvider>
   );
 }
 
