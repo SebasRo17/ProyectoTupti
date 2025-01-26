@@ -3,6 +3,7 @@ import "./FiltroCategoria.css";
 import "./FiltroCategoriaResponsive.css";
 import { useNavigate } from "react-router-dom";
 import { searchProducts } from "../../Api/searchProduts";
+import { Filter } from "lucide-react";
 
 const FiltroCategoria = () => {
   const [precio, setPrecio] = useState([0, 100]);
@@ -118,8 +119,8 @@ const FiltroCategoria = () => {
   return (
     <>
       <button className="filter-hamburger" onClick={toggleMenu}>
-        ☰
-      </button>
+  <Filter />
+</button>
 
       <div className={`filters-nombre15 ${isMenuOpen ? "active" : ""}`}>
         {/* Filtro por Precio */}
