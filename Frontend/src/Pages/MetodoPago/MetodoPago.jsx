@@ -166,26 +166,35 @@ const MetodoPago = () => {
         await capturePaypalPayment(orderId);
         
         if (pedido && pedido.idPedido) {
-            // Generar el PDF
+            setIsLoading(true);
+            
+            // Asegurarse de que los datos del cliente estén disponibles
+            const clienteData = JSON.parse(localStorage.getItem('clienteData'));
+            if (!clienteData) {
+                throw new Error('Datos del cliente no encontrados');
+            }
+
+            // Generar el PDF con los datos actualizados
             const pdfBlob = await generatePdfBlob(idUsuario);
             
-            // Convertir el Blob a base64
+            // Convertir el Blob a base64 y enviar
             const reader = new FileReader();
-            reader.readAsDataURL(pdfBlob);
-            
             reader.onloadend = async () => {
-                const base64data = reader.result.split(',')[1];
-                
-                // Enviar la factura por correo
-                await enviarFacturaPorEmail(pedido.idPedido, base64data);
-                console.log('Factura enviada correctamente');
+                try {
+                    const base64data = reader.result.split(',')[1];
+                    await enviarFacturaPorEmail(pedido.idPedido, base64data);
+                    console.log('Factura enviada correctamente');
+                    setPaymentStatus('success');
+                } catch (error) {
+                    console.error('Error al enviar la factura:', error);
+                    alert('Error al enviar la factura. Por favor, contacte al soporte.');
+                }
             };
+            reader.readAsDataURL(pdfBlob);
         }
-        
-        setPaymentStatus('success');
     } catch (error) {
         console.error('Error al procesar el pago:', error);
-        alert('El pago se realizó pero hubo un error al enviar la factura. Por favor, contacte al soporte.');
+        alert('Error en el proceso de pago. Por favor, contacte al soporte.');
     } finally {
         setIsLoading(false);
     }
