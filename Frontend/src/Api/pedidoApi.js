@@ -43,3 +43,25 @@ export const getLastPedidoByUserId = async (idUsuario) => {
     throw error;
   }
 };
+
+export const getAllPedidosWithBasicInfo = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/pedidos/list/basic`);
+    console.log('Lista básica de pedidos obtenida:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener la lista básica de pedidos:', error);
+    throw error;
+  }
+};
+
+export const getPedidoFullDetails = async (idPedido) => {
+  try {
+    const response = await axios.get(`${API_URL}/pedidos/${idPedido}/complete`);
+    console.log('Detalles completos del pedido obtenidos:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener detalles completos del pedido:', error);
+    throw error;
+  }
+};
