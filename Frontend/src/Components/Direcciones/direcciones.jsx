@@ -122,11 +122,11 @@ const DireccionesGuardadas = () => {
             direccionesGuardadas.map((direccion, index) => (
               <div 
                 key={index} 
-                className={`direccion-card ${direccion.EsSeleccionada ? 'selected' : ''}`}
+                className={`direccion-card ${Boolean(direccion.EsSeleccionada) ? 'selected' : ''}`}
                 data-deletehover="false"
                 onClick={() => handleDireccionClick(direccion)}
                 style={{ 
-                  border: direccion.EsSeleccionada ? '2px solid #007bff' : '1px solid #ddd',
+                  border: Boolean(direccion.EsSeleccionada) ? '2px solid #007bff' : '1px solid #ddd',
                   borderRadius: '8px',
                   padding: '15px',
                   margin: '10px 0',

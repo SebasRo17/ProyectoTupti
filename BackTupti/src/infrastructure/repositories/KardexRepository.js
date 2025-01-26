@@ -1,6 +1,6 @@
-const { Sequelize, literal } = require('sequelize');
 const KardexProduct = require('../../domain/models/KardexProduct');
-const sequelize = require('../../infrastructure/database/mysqlConnection');
+const { sequelize } = require('../../infrastructure/database/mysqlConnection');
+const { literal } = require('sequelize');
 
 class KardexRepository {
   async getStockByProductId(idProducto) {
@@ -20,6 +20,19 @@ class KardexRepository {
       return totalStock;
     } catch (error) {
       console.error('Error getting stock:', error);
+      throw error;
+    }
+  }
+  
+  async create(kardexData) {
+    try {
+      const kardex = await KardexProduct.create({
+        ...kardexData,
+        Fecha: new Date()
+      });
+      return kardex;
+    } catch (error) {
+      console.error('Error al crear kardex:', error);
       throw error;
     }
   }
