@@ -37,7 +37,10 @@ class FacturaEmailController {
             console.log('Información del usuario:', req.user);
             
             const emailDestino = req.user?.email;
-            const nombreCliente = req.user?.nombres || 'Estimado Cliente';
+            const nombreCliente = req.user?.Nombre || req.user?.nombres || req.user?.nombre || 'Estimado Cliente';
+            
+            // Validación del nombre del cliente
+            console.log('Nombre del cliente extraído:', nombreCliente);
             
             // Validación más detallada del email
             if (!emailDestino) {

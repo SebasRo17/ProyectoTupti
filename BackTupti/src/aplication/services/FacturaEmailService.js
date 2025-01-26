@@ -15,10 +15,14 @@ class FacturaEmailService {
 
     async guardarYEnviarFactura(pdfData, idPedido, emailDestino, nombreCliente, totalFactura) {
         try {
-            // Validar email y total
+            // Validar email, nombre y total
             if (!emailDestino) {
                 throw new Error('Email de destino no proporcionado');
             }
+
+            // Asegurar que el nombre del cliente sea válido
+            const nombreClienteValidado = nombreCliente || 'Estimado Cliente';
+            console.log('Nombre del cliente a usar en el email:', nombreClienteValidado);
 
             // Asegurar que totalFactura sea un número válido
             const total = Number(totalFactura);
@@ -62,7 +66,7 @@ class FacturaEmailService {
                         </div>
                         <div style="padding: 20px;">
                             <p>Estimado(a):</p>
-                            <h2 style="margin: 0;">${nombreCliente}</h2>
+                            <h2 style="margin: 0;">${nombreClienteValidado}</h2>
                             <p>Le contactamos para enviarle su documento electrónico:</p>
                             <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
                                 <tr>
