@@ -7,6 +7,8 @@ import { getPedidoByCarrito, getDetallesPedido } from '../../Api/pedidoApi';
 import { createPaypalOrder, capturePaypalPayment } from '../../Api/pagosApi';
 import jwtDecode from 'jwt-decode';
 import { getSelectedAddress } from '../../Api/direccionApi';
+import { enviarFacturaPorEmail } from '../../Api/facturaEmailApi';
+import { generatePdfBlob } from '../../Components/PDFModelo/pdf.jsx';
 
 const MetodoPago = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -138,9 +140,7 @@ const MetodoPago = () => {
             paypalPopup.close();
             clearInterval(checkPopupStatus);
             console.log('Pago completado con éxito', orderId);
-            capturePaypalPayment(orderId);
-            setPaymentStatus('success');
-            setIsLoading(false);
+            handlePaymentSuccess(orderId);
           } else if (popupUrl.includes('/payment-cancel')) {
             paypalPopup.close();
             clearInterval(checkPopupStatus);
@@ -159,6 +159,62 @@ const MetodoPago = () => {
       setIsLoading(false);
     }
   };
+
+  const handlePaymentSuccess = async (orderId) => {
+    try {
+        await capturePaypalPayment(orderId);
+        
+        if (pedido && pedido.idPedido) {
+            setIsLoading(true);
+            
+            const clienteData = JSON.parse(localStorage.getItem('clienteData'));
+            if (!clienteData) {
+                throw new Error('Datos del cliente no encontrados');
+            }
+
+            // Calcular el total antes de generar el PDF
+            const subtotal = detallesPedido.totales.subtotal || 0;
+            const serviceFee = subtotal * 0.08;
+            const totalConServicio = (detallesPedido.totales.total || 0) + serviceFee;
+            const totalFacturaFinal = Number(totalConServicio.toFixed(2));
+
+            console.log('Total calculado:', {
+                subtotal,
+                serviceFee,
+                totalConServicio,
+                totalFacturaFinal
+            });
+
+            const pdfBlob = await generatePdfBlob(idUsuario);
+            
+            const reader = new FileReader();
+            reader.onloadend = async () => {
+                try {
+                    const base64data = reader.result.split(',')[1];
+                    
+                    // Usar el total pre-calculado
+                    await enviarFacturaPorEmail(
+                        pedido.idPedido, 
+                        base64data,
+                        totalFacturaFinal // Usar el valor pre-calculado
+                    );
+                    
+                    console.log('Factura enviada correctamente');
+                    setPaymentStatus('success');
+                } catch (error) {
+                    console.error('Error detallado al enviar la factura:', error);
+                    alert('Error al enviar la factura. Por favor, contacte al soporte.');
+                }
+            };
+            reader.readAsDataURL(pdfBlob);
+        }
+    } catch (error) {
+        console.error('Error al procesar el pago:', error);
+        alert('Error en el proceso de pago. Por favor, contacte al soporte.');
+    } finally {
+        setIsLoading(false);
+    }
+};
 
   const confirmarCompra = () => {
     setMostrarConfirmacion(false);
