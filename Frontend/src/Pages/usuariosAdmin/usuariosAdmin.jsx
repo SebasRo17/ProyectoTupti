@@ -11,6 +11,7 @@ const UsuariosAdmin = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -19,6 +20,8 @@ const UsuariosAdmin = () => {
       try {
         const data = await getUsersInfo();
         setUsers(data);
+        setFilteredUsers(data); // Asegurarnos de que filteredUsers tenga los datos iniciales
+        console.log('Datos cargados:', data);
         setLoading(false);
       } catch (err) {
         setError(err.message);
@@ -28,6 +31,22 @@ const UsuariosAdmin = () => {
 
     fetchUsers();
   }, []);
+
+  const handleFilterChange = ({ estado }) => {
+    console.log('Estado seleccionado:', estado);
+    console.log('Usuarios disponibles:', users);
+    
+    if (!estado) {
+      setFilteredUsers(users);
+    } else {
+      const filtered = users.filter(user => {
+        console.log('Usuario estado:', user.estado, 'Comparando con:', estado);
+        return user.estado.toLowerCase() === estado.toLowerCase();
+      });
+      console.log('Usuarios filtrados:', filtered);
+      setFilteredUsers(filtered);
+    }
+  };
 
   const handleDelete = (user) => {
     setSelectedUser(user);
@@ -68,7 +87,7 @@ const UsuariosAdmin = () => {
       <BarraLateralAdmin />
       <h2>Gestión de Usuarios</h2>
       
-      <FiltroUsuario />
+      <FiltroUsuario onFilterChange={handleFilterChange} />
       
       <div className="table-container">
         <table>
@@ -84,7 +103,7 @@ const UsuariosAdmin = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
+            {filteredUsers.map((user) => (
               <tr key={user.id}>
                 <td>{user.codigo}</td>
                 <td>{user.nombre}</td>

@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
 import './filtroUsuario.css';
 
-const FiltroUsuario = () => {
+const FiltroUsuario = ({ onFilterChange }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [estado, setEstado] = useState('');
   const [fechaRegistro, setFechaRegistro] = useState('');
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
+  };
+
+  const handleEstadoChange = (e) => {
+    const nuevoEstado = e.target.value;
+    console.log('Nuevo estado seleccionado:', nuevoEstado);
+    setEstado(nuevoEstado);
+    onFilterChange({ estado: nuevoEstado });
   };
 
   const handleFilter = () => {
@@ -33,9 +40,9 @@ const FiltroUsuario = () => {
         <select 
           className="estado-dropdown"
           value={estado}
-          onChange={(e) => setEstado(e.target.value)}
+          onChange={handleEstadoChange}
         >
-          <option value="">Estado</option>
+          <option value="">Todos</option>
           <option value="activo">Activo</option>
           <option value="inactivo">Inactivo</option>
         </select>
