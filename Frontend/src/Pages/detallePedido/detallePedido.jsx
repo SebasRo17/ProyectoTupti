@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getPedidoFullDetails } from '../../Api/pedidoApi';
+import { getPedidoFullDetails, getDetallesPedido } from '../../Api/pedidoApi';
 import HeaderAdmin from '../../Components/headerAdmin/headerAdmin.jsx';
 import BarraLateralAdmin from '../../Components/barraLateralAdmin/barraLateralAdmin.jsx'; 
 import './detallePedido.css';
@@ -8,23 +8,29 @@ import './detallePedido.css';
 const DetallePedido = () => {
     const { id } = useParams();
     const [orderDetails, setOrderDetails] = useState(null);
+    const [paymentDetails, setPaymentDetails] = useState(null);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchOrderDetails = async () => {
             try {
-                const detalles = await getPedidoFullDetails(id);
+                const [fullDetails, paymentInfo] = await Promise.all([
+                    getPedidoFullDetails(id),
+                    getDetallesPedido(id)
+                ]);
+
+                // Configurar detalles generales del pedido
                 setOrderDetails({
-                    idPedido: detalles.pedido.idPedido,
-                    status: getStatusText(detalles.pedido.estado),
-                    date: new Date(detalles.pedido.fechaPedido).toLocaleDateString(),
-                    address: `${detalles.direccion.callePrincipal} ${detalles.direccion.numeracion}, ${detalles.direccion.calleSecundaria}, ${detalles.direccion.vecindario}, ${detalles.direccion.ciudad}`,
+                    idPedido: fullDetails.pedido.idPedido,
+                    status: getStatusText(fullDetails.pedido.estado),
+                    date: new Date(fullDetails.pedido.fechaPedido).toLocaleDateString(),
+                    address: `${fullDetails.direccion.callePrincipal} ${fullDetails.direccion.numeracion}, ${fullDetails.direccion.calleSecundaria}, ${fullDetails.direccion.vecindario}, ${fullDetails.direccion.ciudad}`,
                     customer: {
-                        name: detalles.usuario.nombre,
-                        email: detalles.usuario.email
+                        name: fullDetails.usuario.nombre,
+                        email: fullDetails.usuario.email
                     },
-                    items: detalles.productos.map(prod => ({
+                    items: fullDetails.productos.map(prod => ({
                         id: prod.idProducto,
                         name: prod.nombreProducto,
                         price: parseFloat(prod.precioUnitario) || 0, // Asegurar que sea número
@@ -32,6 +38,15 @@ const DetallePedido = () => {
                         discount: 0 // Por ahora lo dejamos en 0 ya que no viene del backend
                     }))
                 });
+
+                // Configurar detalles del pago
+                setPaymentDetails({
+                    subtotal: paymentInfo.totales.subtotal,
+                    descuentos: paymentInfo.totales.descuentos,
+                    impuestos: paymentInfo.totales.impuestos,
+                    total: paymentInfo.totales.total
+                });
+
                 setLoading(false);
             } catch (error) {
                 console.error('Error al obtener detalles del pedido:', error);
@@ -60,10 +75,6 @@ const DetallePedido = () => {
     const calculateItemTotal = (item) => {
         return item.price * item.quantity;
     };
-
-    const subtotal = orderDetails.items.reduce((acc, item) => acc + calculateItemTotal(item), 0);
-    const iva = subtotal * 0.12; // 12% IVA
-    const total = subtotal + iva;
 
     return (
         <div className="detalle-pedido">
@@ -156,15 +167,19 @@ const DetallePedido = () => {
                 <div className="payment-summary">
                     <div className="summary-item">
                         <span>Subtotal:</span>
-                        <span>${subtotal.toFixed(2)}</span>
+                        <span>${paymentDetails?.subtotal.toFixed(2)}</span>
                     </div>
                     <div className="summary-item">
-                        <span>IVA (15%):</span>
-                        <span>${iva.toFixed(2)}</span>
+                        <span>Descuentos:</span>
+                        <span>-${paymentDetails?.descuentos.toFixed(2)}</span>
+                    </div>
+                    <div className="summary-item">
+                        <span>IVA:</span>
+                        <span>${paymentDetails?.impuestos.toFixed(2)}</span>
                     </div>
                     <div className="summary-item total">
                         <span>Total:</span>
-                        <span>${total.toFixed(2)}</span>
+                        <span>${paymentDetails?.total.toFixed(2)}</span>
                     </div>
                 </div>
             </div>
