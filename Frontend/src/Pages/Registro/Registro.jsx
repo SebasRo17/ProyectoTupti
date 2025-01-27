@@ -10,70 +10,63 @@ import "./responsiveRegistro.css";
 
 
 
-
 function Registro() {
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [captchaVerified, setCaptchaVerified] = useState(false);
-  const [nombre, setNombre] = useState('');
+  const [nombre, setNombre] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [registroError, setRegistroError] = useState('');
-  const [showPopup, setShowPopup] = useState(false); // Estado para controlar la visualización del popup
+  const [registroError, setRegistroError] = useState("");
 
   const handleNombreChange = (e) => {
     setNombre(e.target.value);
   };
-
+  
   const handleRegister = async () => {
     if (!captchaVerified) {
-      alert('Por favor, verifica el reCAPTCHA antes de registrarte.');
+      alert("Por favor, verifica el reCAPTCHA antes de registrarte.");
       return;
     }
 
     if (!nombre || !email || !password) {
-      setRegistroError('Todos los campos son requeridos');
+      setRegistroError("Todos los campos son requeridos");
       return;
     }
 
     setIsLoading(true);
-    setRegistroError('');
+    setRegistroError("");
 
     try {
       const userData = {
         nombre: nombre,
         email: email,
-        contrasenia: password,
+        contrasenia: password
       };
 
       const response = await registerUser(userData);
-
+      
       if (response.success) {
         // Limpiar formulario
-        setNombre('');
-        setEmail('');
-        setPassword('');
-        setConfirmPassword('');
+        setNombre("");
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
         setCaptchaVerified(false);
-
-        // Mostrar el popup de registro exitoso
-        setShowPopup(true);
-
-        // Redirigir después de cerrar el popup
-        setTimeout(() => {
-          window.location.href = '/login';
-        }, 2000); // Redirige después de 2 segundos
+         
+        // Redirigir o mostrar mensaje de éxito
+        alert("Registro exitoso!");
+        window.location.href = '/login';
       }
     } catch (error) {
-      setRegistroError(error.message || 'Error al registrar usuario');
+      setRegistroError(error.message || "Error al registrar usuario");
     } finally {
       setIsLoading(false);
     }
   };
-
   useEffect(() => {
     const handleMessage = (event) => {
       if (event.origin === import.meta.env.VITE_API_URL && event.data.token) {
@@ -114,7 +107,6 @@ function Registro() {
       }
     }, 1000);
   };
-
   const handleGoogleLogin = () => {
     const googleAuthUrl = `${import.meta.env.VITE_API_URL}/auth/google`;
     const width = 600;
@@ -131,14 +123,13 @@ function Registro() {
       }
     }, 1000);
   };
-
   const handleEmailChange = (e) => {
     const value = e.target.value;
     setEmail(value);
     if (!validateEmail(value)) {
-      setEmailError('Por favor, ingresa un correo electrónico válido.');
+      setEmailError("Por favor, ingresa un correo electrónico válido.");
     } else {
-      setEmailError('');
+      setEmailError("");
     }
   };
 
@@ -149,15 +140,39 @@ function Registro() {
   const handleConfirmPasswordChange = (e) => {
     const value = e.target.value;
     setConfirmPassword(value);
-
+  
     if (value !== password) {
-      setPasswordError('Las contraseñas no coinciden.');
+      setPasswordError("Las contraseñas no coinciden.");
     } else if (password.length < 6) {
-      setPasswordError('La contraseña debe tener al menos 6 caracteres.');
+      setPasswordError("La contraseña debe tener al menos 6 caracteres.");
     } else {
-      setPasswordError(''); // Si ambas validaciones son correctas, elimina el mensaje de error
+      setPasswordError(""); // Si ambas validaciones son correctas, elimina el mensaje de error
     }
   };
+
+  // const handleRegister = async () => {
+  //   if (!captchaVerified) {
+  //     alert("Por favor, verifica el reCAPTCHA antes de registrarte.");
+  //     return;
+  //   }
+
+  //   try {
+  //     const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/register`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ email, password }),
+  //     });
+  //     //console.log("Usuario registrado:", { email, password, confirmPassword });
+  //     setEmail("");
+  //     setPassword("");
+  //     setConfirmPassword("");
+  //     setCaptchaVerified(false);
+  //   } catch (error) {
+  //     //console.error('Error durante el registro:', error);
+  //   }
+  // };
 
   const handleCaptchaChange = (value) => {
     if (value) {
@@ -171,10 +186,22 @@ function Registro() {
     <div className="registro-container">
       <div className="registro-container-inner">
         <div className="registro-form-container">
+          {/* Botón "Regresar" como flecha en círculo */}
           <div className="registro-back-button">
             <Link to="/" className="back-registro-circle">
-              <svg xmlns="http://www.w3.org/2000/svg" className="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="icon-arrow"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M15 19l-7-7 7-7"
+                />
               </svg>
             </Link>
           </div>
@@ -216,7 +243,7 @@ function Registro() {
             <div className="registro-field-title">Contraseña</div>
             <div className="registro-input-container">
               <input
-                type={passwordVisible ? 'text' : 'password'}
+                type={passwordVisible ? "text" : "password"}
                 value={password}
                 onChange={handlePasswordChange}
                 placeholder="Contraseña"
@@ -233,7 +260,7 @@ function Registro() {
             <div className="registro-field-title">Confirmar Contraseña</div>
             <div className="registro-input-container">
               <input
-                type={passwordVisible ? 'text' : 'password'}
+                type={passwordVisible ? "text" : "password"}
                 value={confirmPassword}
                 onChange={handleConfirmPasswordChange}
                 placeholder="Confirmar Contraseña"
@@ -247,21 +274,26 @@ function Registro() {
             {passwordError && <p className="registro-error-message">{passwordError}</p>}
           </div>
 
-          {emailError === '' && passwordError === '' && email && password && confirmPassword && (
+          {/* reCAPTCHA Condicional */}
+          {emailError === "" && passwordError === "" && email && password && confirmPassword && (
             <div className="registro-form-group">
-              <ReCAPTCHA sitekey="6LdWNJIqAAAAAGbK-oasKJ26wLYuigXLiFEtyUva" onChange={handleCaptchaChange} />
+              <ReCAPTCHA
+                sitekey="6LdWNJIqAAAAAGbK-oasKJ26wLYuigXLiFEtyUva"
+                onChange={handleCaptchaChange}
+              />
             </div>
           )}
 
           <div className="registro-form-group">
-            <button
-              type="button"
-              className="registro-btn"
-              disabled={isLoading || !captchaVerified || emailError !== '' || passwordError !== ''}
-              onClick={handleRegister}
-            >
-              {isLoading ? 'registrado...' : 'REGISTRARSE'}
-            </button>
+          <button
+  type="button"
+  className="registro-btn"
+  disabled={isLoading || !captchaVerified || emailError !== "" || passwordError !== ""}
+  onClick={handleRegister}
+>
+  {isLoading ? "registrado..." : "REGISTRARSE"}
+</button>
+
           </div>
 
           <div className="registro-social-text">
@@ -277,22 +309,11 @@ function Registro() {
           </div>
 
           <div className="registro-bottom-text">
-            ¿Ya tienes una cuenta?{' '}
-            <Link to="/Login" className="signup-text">
-              Iniciar Sesión
-            </Link>
+            ¿Ya tienes una cuenta?{" "}
+            <Link to="/Login" className="signup-text">Iniciar Sesión</Link>
           </div>
         </div>
       </div>
-
-      {/* Popup de Registro Exitoso */}
-      {showPopup && (
-        <div className="popup-container13">
-          <div className="popup13">
-            <p>¡Registro exitoso!</p>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
