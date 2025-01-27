@@ -22,7 +22,7 @@ const DescuentosAdmin = () => {
         try {
             setLoading(true);
             const data = await getAllDiscounts();
-            const formattedDiscounts = data.map((discount, index) => {
+            const formattedDiscounts = data.map((discount) => {
                 // Add timezone offset to prevent day shift
                 const fechaInicio = new Date(discount.fechaInicio);
                 const fechaFin = new Date(discount.fechaFin);
@@ -32,7 +32,7 @@ const DescuentosAdmin = () => {
                 fechaFin.setMinutes(fechaFin.getMinutes() + fechaFin.getTimezoneOffset());
         
                 return {
-                    id: index + 1,
+                    id: discount.id, // Asegúrate de usar el ID correcto aquí
                     producto: discount.nombre,
                     descuento: discount.porcentaje,
                     estado: discount.estado === true ? "Activo" : "Inactivo",

@@ -143,6 +143,6 @@ router.put('/:id', (req, res) => descuentoController.updateDiscount(req, res));
  *       500:
  *         description: Error interno del servidor
  */
-router.delete('/:id', (req, res) => descuentoController.deleteDescuentoById(req, res));
+router.delete('/:id', (req, res) => descuentoController.deleteDescuento(req, res));
 
 module.exports = router;

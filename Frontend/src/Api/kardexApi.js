@@ -2,6 +2,7 @@ import { API_URL } from '../config/config';
 
 export const createKardexProduct = async (kardexData) => {
   try {
+    console.log('kardexData:', kardexData);
     const response = await fetch(`${API_URL}/kardex-product`, {
       method: 'POST',
       headers: {
