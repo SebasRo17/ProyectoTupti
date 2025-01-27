@@ -112,6 +112,22 @@ class ProductController {
           res.status(500).json({ error: error.message });
         }
       }
+      async updatePartialProduct(req, res) {
+        try {
+          const { idProducto } = req.params;
+          const updateData = req.body;
+    
+          const updatedProduct = await ProductService.updatePartialProduct(idProducto, updateData);
+          res.json(updatedProduct);
+        } catch (error) {
+          console.error('Error en controlador al actualizar producto:', error);
+          if (error.message === 'Producto no encontrado') {
+            res.status(404).json({ message: error.message });
+          } else {
+            res.status(500).json({ message: 'Error al actualizar el producto' });
+          }
+        }
+      }
 }
 
 module.exports = new ProductController();

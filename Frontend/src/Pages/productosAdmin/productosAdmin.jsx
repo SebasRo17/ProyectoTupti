@@ -9,6 +9,7 @@ import './responsiveproductosAdmin.css';
 import NuevoProducto from "../nuevoProductoAdmin/nuevoProductoAdmin.jsx";
 import FiltroAdmin from '../../Components/filtroAdmin/filtroAdmin.jsx';
 import { productosApi } from '../../Api/productosApi';
+import { sumCantidadByIdProducto } from '../../Api/kardexApi';
 
 const ProductosAdmin = () => {
     const navigate = useNavigate();
@@ -42,9 +43,13 @@ const ProductosAdmin = () => {
             const data = await productosApi.getAllProducts();
             console.log('Productos:', data);
             if (Array.isArray(data)) {
-                const productosConImagen = data.map(product => ({
-                    ...product,
-                    ImagenUrl: product.imagen || product.imagenUrl || product.ImagenUrl || '/images/placeholder.png'
+                const productosConImagen = await Promise.all(data.map(async (product) => {
+                    const totalCantidad = await sumCantidadByIdProducto(product.IdProducto);
+                    return {
+                        ...product,
+                        ImagenUrl: product.imagen || product.imagenUrl || product.ImagenUrl || '/images/placeholder.png',
+                        totalCantidad
+                    };
                 }));
                 setProductos(productosConImagen);
             } else {
@@ -57,15 +62,15 @@ const ProductosAdmin = () => {
         }
     };
 
-    const handleDelete = (product) => {
-        setSelectedProduct(product);
+    const handleDelete = (productId) => {
+        setSelectedProduct(productId);
         setShowDeleteModal(true);
         document.body.style.overflow = 'hidden';
     };
     
     const confirmDelete = async () => {
         try {
-            await productosApi.deleteProduct(selectedProduct.id);
+            await productosApi.deleteProduct(selectedProduct);
             fetchProductos();
             setShowDeleteModal(false);
             document.body.style.overflow = 'auto';
@@ -80,7 +85,7 @@ const ProductosAdmin = () => {
       
         if (value.length > 0) {
           const filteredProducts = productos.filter(product =>
-            product.name.toLowerCase().includes(value.toLowerCase())
+            product.Nombre.toLowerCase().includes(value.toLowerCase())
           );
           setSuggestions(filteredProducts);
           setShowSuggestions(true);
@@ -91,12 +96,12 @@ const ProductosAdmin = () => {
     };
       
     const handleSuggestionClick = (product) => {
-        setSearchTerm(product.name);
+        setSearchTerm(product.Nombre);
         setShowSuggestions(false);
     };
 
     const handleEdit = (productId) => {
-        const productToEdit = productos.find(product => product.id === productId);
+        const productToEdit = productos.find(product => product.IdProducto === productId);
         setSelectedProduct(productToEdit);
         setIsEditModalOpen(true);
     };
@@ -142,7 +147,7 @@ const ProductosAdmin = () => {
                         <div className="modal-content3">
                             <h3>Eliminar Producto</h3>
                             <p>
-                                ¿Está seguro que desea eliminar el producto <span className="product-name">{selectedProduct.nombre}</span>?
+                                ¿Está seguro que desea eliminar el producto <span className="product-name">{selectedProduct.Nombre}</span>?
                             </p>
                             <div className="modal-buttons">
                                 <button className="cancel-btn" onClick={() => setShowDeleteModal(false)}>
@@ -183,6 +188,7 @@ const ProductosAdmin = () => {
 
                             <h3 className="product-title">{product.Nombre}</h3>
                             <p className="product-details">{product.Descripcion}</p>
+                            <p className="product-stock">Cantidad Total: {product.totalCantidad}</p>
 
                             {product.descuento ? (
                                 <div className="price-container">

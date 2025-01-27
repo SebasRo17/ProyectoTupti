@@ -58,16 +58,18 @@ router.get('/:id', ProductController.getProducts);
 router.post('', (req, res) => ProductController.createProduct(req, res));
 
 
+
 /**
  * @swagger
- * /products/{id}:
- *   put:
- *     summary: Actualiza un producto existente
- *     tags: [Products]
+ * /products/{idProducto}:
+ *   patch:
+ *     summary: Actualizar parcialmente un producto (nombre, precio y descripción)
+ *     tags: [Productos]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: idProducto
  *         required: true
+ *         description: ID del producto a actualizar
  *         schema:
  *           type: integer
  *     requestBody:
@@ -77,23 +79,42 @@ router.post('', (req, res) => ProductController.createProduct(req, res));
  *           schema:
  *             type: object
  *             properties:
- *               Nombre:
+ *               nombre:
  *                 type: string
- *               Precio:
+ *                 description: Nuevo nombre del producto
+ *               precio:
  *                 type: number
- *               Descripcion:
+ *                 format: float
+ *                 description: Nuevo precio del producto
+ *               descripcion:
  *                 type: string
- *               IdTipoProducto:
- *                 type: integer
- *               Stock:
- *                 type: integer
+ *                 description: Nueva descripción del producto
+ *             example:
+ *               nombre: "Producto Actualizado"
+ *               precio: 99.99
+ *               descripcion: "Nueva descripción del producto"
  *     responses:
  *       200:
  *         description: Producto actualizado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 IdProducto:
+ *                   type: integer
+ *                 Nombre:
+ *                   type: string
+ *                 Precio:
+ *                   type: number
+ *                 Descripcion:
+ *                   type: string
  *       404:
  *         description: Producto no encontrado
+ *       500:
+ *         description: Error del servidor
  */
-router.put('/:id', ProductController.updateProduct);
+router.patch('/:idProducto', (req, res) => ProductController.updatePartialProduct(req, res));
 
 /**
  * @swagger

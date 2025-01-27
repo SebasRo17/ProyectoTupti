@@ -29,7 +29,31 @@ class ProductRepository {
   async deleteProductoById(id) {
     return await Product.destroy({ where: { IdProducto: id } });
   }
+  async updatePartial(idProducto, updateData) {
+    try {
+      const [updatedRows] = await Product.update(
+        {
+          Nombre: updateData.nombre,
+          Precio: updateData.precio,
+          Descripcion: updateData.descripcion
+        },
+        {
+          where: { IdProducto: idProducto }
+        }
+      );
 
+      if (updatedRows === 0) {
+        throw new Error('Producto no encontrado');
+      }
+
+      // Obtener el producto actualizado
+      const updatedProduct = await Product.findByPk(idProducto);
+      return updatedProduct;
+    } catch (error) {
+      console.error('Error en repository al actualizar producto:', error);
+      throw error;
+    }
+  }
 }
 
 module.exports = new ProductRepository();
