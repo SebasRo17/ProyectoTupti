@@ -23,6 +23,9 @@ const ProductosAdmin = () => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
+    const [productosFiltrados, setProductosFiltrados] = useState([]);
+    const [categorias, setCategorias] = useState([]);
+    const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('');
 
     const getImageUrl = (product) => {
         if (!product) return '/images/placeholder.png';
@@ -36,7 +39,14 @@ const ProductosAdmin = () => {
     
     useEffect(() => {
         fetchProductos();
+        fetchCategorias();
     }, []);
+
+    useEffect(() => {
+        if (productos.length > 0) {
+            setProductosFiltrados(productos);
+        }
+    }, [productos]);
 
     const fetchProductos = async () => {
         try {
@@ -62,6 +72,16 @@ const ProductosAdmin = () => {
         }
     };
 
+    const fetchCategorias = async () => {
+        try {
+            const response = await fetch('tu-api/categorias');
+            const data = await response.json();
+            setCategorias(data);
+        } catch (error) {
+            console.error('Error al cargar categorías:', error);
+        }
+    };
+
     const handleDelete = (productId) => {
         setSelectedProduct(productId);
         setShowDeleteModal(true);
@@ -79,22 +99,18 @@ const ProductosAdmin = () => {
         }
     };
 
-    const handleSearch = (e) => {
-        const value = e.target.value;
-        setSearchTerm(value);
-      
-        if (value.length > 0) {
-          const filteredProducts = productos.filter(product =>
-            product.Nombre.toLowerCase().includes(value.toLowerCase())
-          );
-          setSuggestions(filteredProducts);
-          setShowSuggestions(true);
-        } else {
-          setSuggestions([]);
-          setShowSuggestions(false);
+    const handleSearch = (searchTerm) => {
+        if (!searchTerm) {
+            setProductosFiltrados(productos);
+            return;
         }
+
+        const filtered = productos.filter(product =>
+            product.Nombre.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setProductosFiltrados(filtered);
     };
-      
+
     const handleSuggestionClick = (product) => {
         setSearchTerm(product.Nombre);
         setShowSuggestions(false);
@@ -122,6 +138,17 @@ const ProductosAdmin = () => {
     const handleCloseModal = () => {
         setIsEditModalOpen(false);
         setSelectedProduct(null);
+    };
+
+    const handleFilterCategory = (categoria) => {
+        if (!categoria) {
+            setProductosFiltrados(productos);
+        } else {
+            const filtered = productos.filter(producto => 
+                producto.TipoProducto?.detalle === categoria
+            );
+            setProductosFiltrados(filtered);
+        }
     };
 
     return (
@@ -160,14 +187,20 @@ const ProductosAdmin = () => {
                         </div>
                     </div>
                 )}
-                <FiltroAdmin showNewProduct={true} showNewDiscount={false} />
+                <FiltroAdmin 
+                    showNewProduct={true} 
+                    showNewDiscount={false} 
+                    onSearch={handleSearch}
+                    onFilterCategory={handleFilterCategory}
+                    categorias={categorias}
+                />
                 <main className="product-grid">
                     {loading ? (
                         <p>Cargando productos...</p>
                     ) : error ? (
                         <p>{error}</p>
                     ) : (
-                        productos.map((product) => (
+                        productosFiltrados.map((product) => (
                             <div className="product-card" key={product.IdProducto}>
                             <div className="image-container">
                                 {product.descuento && (
