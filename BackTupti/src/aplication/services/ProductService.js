@@ -124,6 +124,13 @@ class ProductService {
           throw error;
         }
       }
+      async deleteProductoById(id) {
+        const deleted = await ProductRepository.deleteProductoById(id);
+        if (!deleted) {
+          throw new Error('Producto no encontrado');
+        }
+        return deleted;
+      }
     
 }
 

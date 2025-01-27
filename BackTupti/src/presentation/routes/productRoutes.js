@@ -99,8 +99,8 @@ router.put('/:id', ProductController.updateProduct);
  * @swagger
  * /products/{id}:
  *   delete:
- *     summary: Elimina un producto
- *     tags: [Products]
+ *     summary: Elimina un producto existente
+ *     tags: [Producto]
  *     parameters:
  *       - in: path
  *         name: id
@@ -108,12 +108,14 @@ router.put('/:id', ProductController.updateProduct);
  *         schema:
  *           type: integer
  *     responses:
- *       200:
+ *       204:
  *         description: Producto eliminado exitosamente
  *       404:
  *         description: Producto no encontrado
+ *       500:
+ *         description: Error del servidor
  */
-router.delete('/:id', ProductController.deleteProduct);
+router.delete('/:id', (req, res) => ProductController.deleteProducto(req, res));
 
 /**
  * @swagger

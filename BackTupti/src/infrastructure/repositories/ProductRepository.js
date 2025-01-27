@@ -26,6 +26,10 @@ class ProductRepository {
       throw error;
     }
   }
+  async deleteProductoById(id) {
+    return await Product.destroy({ where: { IdProducto: id } });
+  }
+
 }
 
 module.exports = new ProductRepository();

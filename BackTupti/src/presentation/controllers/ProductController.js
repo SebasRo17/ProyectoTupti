@@ -102,6 +102,16 @@ class ProductController {
           res.status(500).json({ message: 'Error al obtener detalles del producto' });
         }
       }
+      async deleteProducto(req, res) {
+        try {
+          const { id } = req.params;
+          await ProductService.deleteProductoById(id);
+          res.status(204).send(); // No Content
+        } catch (error) {
+          console.error('Error en el controlador al eliminar producto:', error.message);
+          res.status(500).json({ error: error.message });
+        }
+      }
 }
 
 module.exports = new ProductController();
