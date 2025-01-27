@@ -140,13 +140,12 @@ const ProductosAdmin = () => {
         setSelectedProduct(null);
     };
 
-    const handleFilterCategory = (categoriaId) => {
-        setCategoriaSeleccionada(categoriaId);
-        if (!categoriaId) {
+    const handleFilterCategory = (categoria) => {
+        if (!categoria) {
             setProductosFiltrados(productos);
         } else {
             const filtered = productos.filter(producto => 
-                producto.IdCategoria === parseInt(categoriaId)
+                producto.TipoProducto?.detalle === categoria
             );
             setProductosFiltrados(filtered);
         }
