@@ -1,18 +1,50 @@
 import React, { useState } from 'react';
 import './editarDescuento.css';
+import { updateDiscount } from '../../Api/descuentosApi';
+
+const formatDateForInput = (dateString) => {
+  if (!dateString) return '';
+  
+  try {
+    const [day, month, year] = dateString.split('/');
+    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+  } catch {
+    return '';
+  }
+};
 
 const EditarDescuento = ({ descuento, onClose, onSave }) => {
   const [formData, setFormData] = useState({
+    id: descuento.id,
     producto: descuento.producto,
     porcentaje: descuento.descuento,
     estado: descuento.estado,
-    fechaInicio: descuento.fechaInicio,
-    fechaFin: descuento.fechaFin
+    fechaInicio: formatDateForInput(descuento.fechaInicio),
+    fechaFin: formatDateForInput(descuento.fechaFin)
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSave(formData);
+    try {
+      const discountData = {
+        porcentaje: formData.porcentaje,
+        fechaInicio: formData.fechaInicio,
+        fechaFin: formData.fechaFin,
+        activo: formData.estado === "Activo"
+      };
+      
+      console.log('ID del descuento:', descuento.id); // Verifica este valor
+      const response = await updateDiscount(descuento.id, discountData);
+      if (response.error) {
+        console.error('Error updating discount:', response.error);
+        return;
+      }
+      onSave(formData);
+      onClose();
+    } catch (error) {
+      console.error('Error updating discount:', error);
+    }
+    window.location.reload();
   };
 
   return (
@@ -22,7 +54,7 @@ const EditarDescuento = ({ descuento, onClose, onSave }) => {
         <h3>Editar Descuento</h3>
         <form onSubmit={handleSubmit}>
         <div className="form-group">
-        <label>Producto:</label>
+        <label>Producto o Categoria:</label>
         <input
             type="text"
             value={descuento.producto}
@@ -44,14 +76,14 @@ const EditarDescuento = ({ descuento, onClose, onSave }) => {
           </div>
 
           <div className="form-group">
-            <label>Estado:</label>
-            <select
+          <label>Estado:</label>
+          <select
               value={formData.estado}
               onChange={(e) => setFormData({...formData, estado: e.target.value})}
               required
             >
               <option value="Activo">Activo</option>
-              <option value="Cancelado">Cancelado</option>
+              <option value="Inactivo">Inactivo</option>
             </select>
           </div>
 

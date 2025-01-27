@@ -2,6 +2,7 @@ import { API_URL } from '../config/config';
 
 export const createKardexProduct = async (kardexData) => {
   try {
+    console.log('kardexData:', kardexData);
     const response = await fetch(`${API_URL}/kardex-product`, {
       method: 'POST',
       headers: {
@@ -60,4 +61,23 @@ export const validateStock = async (idProducto, cantidad) => {
       };
     }
 };
+export const sumCantidadByIdProducto = async (idProducto) => {
+    try {
+      const response = await fetch(`${API_URL}/kardex-product/sum/${idProducto}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
   
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+      }
+  
+      const data = await response.json();
+      return data.totalCantidad;
+    } catch (error) {
+      console.error('Error al sumar cantidad por IdProducto:', error);
+      throw error;
+    }
+  };

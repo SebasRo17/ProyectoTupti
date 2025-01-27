@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { getPedidosForExport } from '../../Api/pedidoApi';
+import * as XLSX from 'xlsx';
 import './exportModal.css';
 
 const ExportModal = ({ isOpen, onClose }) => {
@@ -44,6 +46,48 @@ const ExportModal = ({ isOpen, onClose }) => {
            endDate !== '' && 
            !dateError;
   };
+
+  const handleExport = async () => {
+    try {
+      const pedidos = await getPedidosForExport(selectedStatus, startDate, endDate);
+      
+      // Transformar datos para el Excel
+      const excelData = pedidos.map(p => ({
+        'N° Orden': p.pedido.idPedido,
+        'Estado': getStatusText(p.pedido.estado),
+        'Fecha': new Date(p.pedido.fechaPedido).toLocaleDateString(),
+        'Cliente': p.usuario.nombre,
+        'Email': p.usuario.email,
+        'Dirección': `${p.direccion.callePrincipal} ${p.direccion.numeracion}, ${p.direccion.calleSecundaria}`,
+        'Ciudad': p.direccion.ciudad,
+        'Total Productos': p.productos.reduce((sum, prod) => sum + prod.cantidad, 0),
+        'Valor Total': p.productos.reduce((sum, prod) => sum + (prod.precioUnitario * prod.cantidad), 0).toFixed(2)
+      }));
+
+      // Crear y descargar el archivo Excel
+      const ws = XLSX.utils.json_to_sheet(excelData);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Pedidos");
+      
+      // Generar nombre del archivo
+      const fileName = `Reporte_Pedidos_${startDate}_${endDate}.xlsx`;
+      XLSX.writeFile(wb, fileName);
+
+      onClose();
+    } catch (error) {
+      console.error('Error al exportar:', error);
+      setDateError('Error al generar el reporte');
+    }
+  };
+
+  const getStatusText = (status) => {
+    const statusMap = {
+      0: 'En Espera',
+      1: 'Reembolsado',
+      2: 'Entregado'
+    };
+    return statusMap[status] || 'Desconocido';
+  };
   
   if (!isOpen) return null;
 
@@ -51,77 +95,75 @@ const ExportModal = ({ isOpen, onClose }) => {
     <div className="modal-overlay2">
       <div className={`modal-content2 ${dateError ? 'has-error' : ''}`}>
         <h2>Reporte de ventas</h2>
-        <form>
+        <form onSubmit={(e) => e.preventDefault()}>
           <div className="form-group">
             <label>Estado Compras</label>
             <select 
-            value={selectedStatus}
-            onChange={(e) => setSelectedStatus(e.target.value)}
-            className={!selectedStatus ? 'required' : ''}
-            required
+              value={selectedStatus}
+              onChange={(e) => setSelectedStatus(e.target.value)}
+              className={!selectedStatus ? 'required' : ''}
+              required
             >
               <option value="">Seleccionar estado</option>
-              <option value="canceladas">Canceladas</option>
-              <option value="reembolsadas">Reembolsadas</option>
-              <option value="confirmadas">Confirmadas</option>
-              <option value="completas">Completas</option>
-              <option value="todos">Todos las órdenes</option>
+              <option value="espera">En Espera</option>
+              <option value="entregada">Entregados</option>
+              <option value="reembolsada">Reembolsados</option>
+              <option value="todos">Todos los pedidos</option>
             </select>
           </div>
 
           <div className="form-group">
             <label>Tipo de documento</label>
             <select 
-            value={documentType}
-            onChange={(e) => setDocumentType(e.target.value)}
-            className={!documentType ? 'required' : ''}
-            required
+              value={documentType}
+              onChange={(e) => setDocumentType(e.target.value)}
+              className={!documentType ? 'required' : ''}
+              required
             >
               <option value="">Seleccionar tipo</option>
               <option value="excel">Reporte de liquidaciones - Excel</option>
-              <option value="pdf">Reporte de liquidaciones - PDF</option>
             </select>
           </div>
 
           <div className="date-container1">
             <div className="date-group1">
-                <label>Fecha inicio</label>
-                <input 
-                    type="date"
-                    value={startDate}
-                    className={dateError ? 'error' : ''}
-                    onChange={(e) => {
-                        setStartDate(e.target.value);
-                        validateDateRange(e.target.value, endDate, exportType);
-                    }}
-                />
+              <label>Fecha inicio</label>
+              <input 
+                type="date"
+                value={startDate}
+                className={dateError ? 'error' : ''}
+                onChange={(e) => {
+                  setStartDate(e.target.value);
+                  validateDateRange(e.target.value, endDate, exportType);
+                }}
+              />
             </div>
             <div className="date-group1">
-                <label>Fecha fin</label>
-                <input 
-                    type="date"
-                    value={endDate}
-                    className={dateError ? 'error' : ''}
-                    onChange={(e) => {
-                        setEndDate(e.target.value);
-                        validateDateRange(startDate, e.target.value, exportType);
-                    }}
-                />
-               </div>
+              <label>Fecha fin</label>
+              <input 
+                type="date"
+                value={endDate}
+                className={dateError ? 'error' : ''}
+                onChange={(e) => {
+                  setEndDate(e.target.value);
+                  validateDateRange(startDate, e.target.value, exportType);
+                }}
+              />
+            </div>
             {dateError && <div className="error-message1">{dateError}</div>}
-        </div>
-
+          </div>
 
           <div className="button-group">
             <button type="button" className="cancel-btn1" onClick={onClose}>
               Cancelar
             </button>
             <button 
-            type="button" 
-            className="download-btn"
-            disabled={!isFormValid()}
+              type="button" 
+              className="download-btn"
+              disabled={!isFormValid()}
+              onClick={handleExport}
             >
-            Descargar documento
+              Descargar Excel
             </button>
           </div>
         </form>

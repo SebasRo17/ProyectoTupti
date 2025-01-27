@@ -1,5 +1,6 @@
 const ProductRepositoryImpl = require("../../infrastructure/repositories/ProductRepositoryImpl")
 const Product = require("../../domain/models/Producto")
+const ProductRepository = require('../../infrastructure/repositories/ProductRepository');
 
 class ProductService {
     static async getIdProducts(productId) {
@@ -92,6 +93,54 @@ class ProductService {
           throw error;
         }
       }
+      async getProductDetails(idProducto) {
+        try {
+          return await ProductRepository.findProductDetailsById(idProducto);
+        } catch (error) {
+          console.error('Error en servicio:', error);
+          throw error;
+        }
+      }
+      async createProduct(productData) {
+        try {
+          // Validar campos requeridos
+          if (!productData.Nombre) {
+            throw new Error('El nombre del producto es requerido');
+          }
+          if (!productData.Precio) {
+            throw new Error('El precio del producto es requerido');
+          }
+          if (!productData.IdTipoProducto) {
+            throw new Error('El tipo de producto es requerido');
+          }
+          if (!productData.IdImpuesto) {
+            throw new Error('El ID del impuesto es requerido');
+          }
+    
+          const product = await ProductRepository.create(productData);
+          return product;
+        } catch (error) {
+          console.error('Error en el servicio al crear producto:', error.message);
+          throw error;
+        }
+      }
+      async deleteProductoById(id) {
+        const deleted = await ProductRepository.deleteProductoById(id);
+        if (!deleted) {
+          throw new Error('Producto no encontrado');
+        }
+        return deleted;
+      }
+      async updatePartialProduct(idProducto, updateData) {
+        try {
+          const updatedProduct = await ProductRepository.updatePartial(idProducto, updateData);
+          return updatedProduct;
+        } catch (error) {
+          console.error('Error en servicio al actualizar producto:', error);
+          throw error;
+        }
+      }
+    
 }
 
 module.exports = new ProductService();

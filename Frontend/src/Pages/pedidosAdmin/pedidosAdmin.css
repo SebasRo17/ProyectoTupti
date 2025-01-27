@@ -10,6 +10,7 @@
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
+  z-index: 998;
 }
 
 .search-container input {
@@ -112,6 +113,12 @@ th, td {
   margin-bottom: 5%;
 
 }
+.search-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  margin-left: 0%;
+}
 }
 
 /* Para pantallas de 900px a 1024px */
@@ -125,6 +132,12 @@ th, td {
 .pedidos-admin h1 {
   margin-bottom: 5%;
 
+}
+.search-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  margin-left: -1%;
 }
 }
 
@@ -156,6 +169,13 @@ th, td {
   margin-bottom: 5%;
 
 }
+.search-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  margin-left: 10%;
+}
+
 }
 
 /* Para pantallas de 768px a 800px */
@@ -170,6 +190,13 @@ th, td {
   margin-bottom: 5%;
 
 }
+.search-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  margin-left: 10%;
+}
+
 }
 
 /* Para pantallas de 768px a 800px */

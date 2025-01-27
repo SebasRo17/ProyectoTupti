@@ -1,45 +1,93 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import HeaderAdmin from '../../Components/headerAdmin/headerAdmin';
 import BarraLateralAdmin from '../../Components/barraLateralAdmin/barraLateralAdmin';
 import FiltroUsuario from '../../Components/filtroUsuarios/filtroUsuario';
-import EditarUsuario from '../../Components/editarUsuario/editarUsuario';
+import { getUsersInfo, deactivateUser, activateUser } from '../../Api/userApi';
 import './usuariosAdmin.css';
 
 const UsuariosAdmin = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Mock data
-  const users = [
-    {
-      id: "USR001",
-      nombre: "Juan Pérez",
-      email: "juan@example.com",
-      fechaRegistro: "2024-03-15",
-      estado: "Activo",
-      direccion: "Registrada",
-      registro: "Completo"
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const data = await getUsersInfo();
+        setUsers(data);
+        setFilteredUsers(data); // Asegurarnos de que filteredUsers tenga los datos iniciales
+        console.log('Datos cargados:', data);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  const handleFilterChange = ({ estado, searchTerm }) => {
+    let filtered = [...users];
+
+    // Filtrar por término de búsqueda
+    if (searchTerm) {
+      const searchLower = searchTerm.toLowerCase();
+      filtered = filtered.filter(user => {
+        const nombre = user.nombre || '';
+        const email = user.email || '';
+        
+        return nombre.toLowerCase().includes(searchLower) ||
+               email.toLowerCase().includes(searchLower);
+      });
     }
-  ];
+
+    // Filtrar por estado
+    if (estado) {
+      filtered = filtered.filter(user => {
+        const userEstado = user.estado || '';
+        return userEstado.toLowerCase() === estado.toLowerCase();
+      });
+    }
+
+    setFilteredUsers(filtered);
+  };
 
   const handleDelete = (user) => {
     setSelectedUser(user);
     setShowDeleteModal(true);
   };
-  const handleEdit = (userId) => {
-    setSelectedUser(users.find((user) => user.id === userId));
-    setShowEditModal(true);
+
+  const handleEdit = async (userId) => {
+    try {
+      await activateUser(userId);
+      window.location.reload();
+      // Actualizar la lista de usuarios después de activar
+      const updatedUsers = await getUsersInfo();
+      setUsers(updatedUsers);
+    } catch (error) {
+      console.error('Error al activar usuario:', error);
+      // Opcionalmente, mostrar un mensaje de error al usuario
+    }
   };
-  const confirmDelete = () => {
-    // Add delete logic here
-    setShowDeleteModal(false);
+
+  const confirmDelete = async () => {
+    try {
+      await deactivateUser(selectedUser.id);
+      const updatedUsers = await getUsersInfo();
+      setUsers(updatedUsers);
+      window.location.reload();
+      setShowDeleteModal(false);
+    } catch (error) {
+      console.error('Error al desactivar usuario:', error);
+    }
   };
-  const handleSave = (formData) => {
-    // Add save logic here
-    //console.log('Saving:', formData);
-    setShowEditModal(false);
-  };
+
+  if (loading) return <div>Cargando usuarios...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="usuarios-admin">
@@ -47,7 +95,7 @@ const UsuariosAdmin = () => {
       <BarraLateralAdmin />
       <h2>Gestión de Usuarios</h2>
       
-      <FiltroUsuario />
+      <FiltroUsuario onFilterChange={handleFilterChange} />
       
       <div className="table-container">
         <table>
@@ -56,7 +104,6 @@ const UsuariosAdmin = () => {
               <th>Código</th>
               <th>Nombre</th>
               <th>Email</th>
-              <th>Fecha Registro</th>
               <th>Estado</th>
               <th>Dirección</th>
               <th>Registro</th>
@@ -64,37 +111,33 @@ const UsuariosAdmin = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
+            {filteredUsers.map((user) => (
               <tr key={user.id}>
-                <td>{user.id}</td>
+                <td>{user.codigo}</td>
                 <td>{user.nombre}</td>
                 <td>{user.email}</td>
-                <td>{user.fechaRegistro}</td>
                 <td>
                   <span className={`status ${user.estado.toLowerCase()}`}>
                     {user.estado}
                   </span>
                 </td>
-                <td>{user.direccion}</td>
+                <td>{user.tieneDireccion ? 'Registrada' : 'No registrada'}</td>
                 <td>{user.registro}</td>
                 <td>
-                <button className="edit-btn"onClick={() => handleEdit(user.id)}>
+                  <button 
+                    className="edit-btn" 
+                    onClick={() => handleEdit(user.id)}
+                    title="Activar Usuario"
+                  >
                     ✏️
                   </button>
-                  {showEditModal && (
-                    <EditarUsuario
-                      user={selectedUser} // Pass full user object
-                      onClose={() => setShowEditModal(false)}
-                      onSave={handleSave}
-                    />
-                  )}
                   <button 
                     className="delete-btn0"
                     onClick={() => handleDelete(user)}
+                    title="Desactivar Usuario"
                   >
                     🗑️
                   </button>
-
                 </td>
               </tr>
             ))}
@@ -119,7 +162,7 @@ const UsuariosAdmin = () => {
               </button>
               <button 
                 className="delete-btn" 
-                onClick={confirmDelete}
+                onClick={confirmDelete }
               >
                 Eliminar
               </button>

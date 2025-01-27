@@ -36,6 +36,13 @@ class KardexRepository {
       throw error;
     }
   }
+  async sumCantidadByIdProducto(idProducto) {
+    const result = await KardexProduct.findOne({
+      attributes: [[sequelize.fn('SUM', sequelize.col('Cantidad')), 'totalCantidad']],
+      where: { IdProducto: idProducto }
+    });
+    return result ? result.get('totalCantidad') : 0;
+  }
 }
 
 module.exports = KardexRepository;

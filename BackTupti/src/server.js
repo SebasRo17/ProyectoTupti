@@ -25,7 +25,11 @@ const descuentoRoutes = require ('./presentation/routes/descuentoRoutes');
 const facturaEmailRoutes = require('./presentation/routes/facturaEmailRoutes');
 const stockRoutes = require('./presentation/routes/stockRoutes'); 
 const carritoDetalleRoutes = require('./presentation/routes/carritoDetalleRoutes'); // Agregar importación de rutas de carritoDetalle
-const KardexProductRoutes = require('./presentation/routes/KardexProductRoutes'); 
+const KardexProductRoutes = require('./presentation/routes/KardexProductRoutes');
+const productDetailsRoutes = require('./presentation/routes/productDetailsRoutes');
+const tipoProductoRoutes = require('./presentation/routes/TipoProductoRoutes');
+const impuestoRoutes = require('./presentation/routes/ImpuestoRoutes');
+const productoImagenRoutes = require('./presentation/routes/ProductoImagenRoutes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -104,6 +108,11 @@ app.use('/facturas', facturaEmailRoutes);
 app.use('/api/stock', stockRoutes); 
 app.use('/carrito-detalle', carritoDetalleRoutes); 
 app.use('/kardex-product', KardexProductRoutes);
+app.use('/product-details', productDetailsRoutes); 
+app.use('/tipoproductos', tipoProductoRoutes);
+app.use('/impuestos', impuestoRoutes);
+app.use('/producto-imagen', productoImagenRoutes);
+
 
 // Sincronizar con la base de datos y iniciar el servidor
 sequelize.sync()
