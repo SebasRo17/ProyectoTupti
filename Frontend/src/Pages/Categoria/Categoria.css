@@ -153,6 +153,14 @@ body {
   cursor: pointer;
   color: #333;
   transition: transform 0.2s ease, color 0.2s ease;
+  z-index: 1002;  /* Ensure button is above other content */
+  padding: 10px;  /* Increase clickable area */
+  width: 40px;    /* Set fixed width */
+  height: 40px;   /* Set fixed height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
 }
 
 .modal-close:hover {
@@ -489,17 +497,18 @@ body {
 }
 
 
-.discount-badge {
+.discount-badge1 {
   position: absolute;
   border-style: solid;
-  border-width: 40px 40px 0 0; /* Ajusta el tamaño del triángulo */
+  border-width: 45px 45px 0 0; /* Ajusta el tamaño del triángulo */
   border-color: red transparent transparent transparent; /* Triángulo rojo */
-  z-index: 1 !important;
+  z-index: 2 !important;
   background-color: transparent  !important;
+  display: block;
 }
-.discount-badge span {
+.discount-badge1 span {
   position: absolute;
-  top: -30px !important; 
+  top: -37px !important; 
   left: 5px;
   color: white;
   font-size: 12px;
