@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",
+    "rollup": "^4.32.0",
     "terser": "^5.36.0"
   }
 }
