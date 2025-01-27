@@ -362,7 +362,7 @@ table td:last-child {
 /* FORMULARIO PANTALLA EMERGENTE */
 /* Estilos del modal */
 
-.modal-overlay10 {
+.modal-overlay11 {
   position: fixed;
   top: 0;
   left: 0;
@@ -372,7 +372,7 @@ table td:last-child {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; 
+  z-index: 9999 !important; 
   overflow: auto; 
 }
 
