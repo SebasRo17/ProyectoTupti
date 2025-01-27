@@ -40,6 +40,7 @@ const EditarDescuento = ({ descuento, onClose, onSave }) => {
     } catch (error) {
       console.error('Error updating discount:', error);
     }
+    window.location.reload();
   };
 
   return (
