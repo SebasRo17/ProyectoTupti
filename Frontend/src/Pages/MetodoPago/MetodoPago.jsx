@@ -465,7 +465,7 @@ const MetodoPago = () => {
       </div>
 
       {mostrarConfirmacion && (
-        <div className="modal-overlay10">
+        <div className="modal-overlay11">
           <div className="modal-content11">
             <h3>COMPLETA LA INFORMACIÓN</h3>
             <div className="modal-body">
