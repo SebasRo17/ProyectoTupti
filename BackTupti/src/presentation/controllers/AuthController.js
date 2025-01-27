@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const User = require('./../../domain/models/User');
 const AuthService = require('../../aplication/services/AuthService');
-const redirectURL = process.env.NODE_ENV === 'production' ? process.env.PROD_URL : process.env.DEV_URL1;
+const redirectURL = process.env.NODE_ENV === 'production' ? process.env.PROD_URL1 : process.env.DEV_URL1;
 
 const AuthController = {
   // Ruta para iniciar sesión con Google
