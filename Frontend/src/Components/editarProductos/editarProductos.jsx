@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './editarProductos.css';
-import { updatePartialProduct } from '../../api/productosApi'; 
+import { updatePartialProduct } from '../../Api/productosApi'; 
 import { createKardexProduct } from '../../Api/kardexApi.js';
 import { getProductoImagenesByIdProducto, deleteProductoImagen } from '../../Api/ProductoImagenApi.js'; 
 const EditarProductos = ({ product, onClose }) => {
