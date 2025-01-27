@@ -35,5 +35,31 @@ const KardexProductController = require('../controllers/KardexProductController'
  *         description: Error del servidor
  */
 router.post('/', (req, res) => KardexProductController.createKardex(req, res));
+/**
+ * @swagger
+ * /kardex-product/sum/{idProducto}:
+ *   get:
+ *     summary: Suma la cantidad de todos los registros de KardexProduct con un IdProducto específico
+ *     tags: [KardexProduct]
+ *     parameters:
+ *       - in: path
+ *         name: idProducto
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Suma de la cantidad obtenida exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 totalCantidad:
+ *                   type: integer
+ *       500:
+ *         description: Error del servidor
+ */
+router.get('/sum/:idProducto', (req, res) => KardexProductController.sumCantidadByIdProducto(req, res));
 
 module.exports = router;

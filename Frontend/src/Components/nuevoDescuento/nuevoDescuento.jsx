@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { getProductDetails } from '../../Api/productosApi';
+import { getProductDetails } from '../../api/productosApi';
 import { createDescuento } from '../../Api/descuentosApi';
 import './nuevoDescuento.css';
 

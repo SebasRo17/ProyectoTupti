@@ -82,4 +82,12 @@ export const getAllTipoProductos = async () => {
         throw error;
     }
 };
-
+export const updatePartialProduct = async (productId, updateData) => {
+    try {
+        const response = await axios.patch(`${API_URL}/products/${productId}`, updateData);
+        return response.data;
+    } catch (error) {
+        console.error('Error updating product partially:', error);
+        throw error;
+    }
+};

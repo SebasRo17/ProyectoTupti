@@ -12,3 +12,21 @@ export const productoImagenApi = {
     }
   }
 };
+export const getProductoImagenesByIdProducto = async (idProducto) => {
+    try {
+      const response = await axios.get(`${API_URL}/producto-imagen/producto/${idProducto}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error al obtener imágenes del producto:', error);
+      throw error;
+    }
+  };
+export const  deleteProductoImagen = async (idProductoImagen) => {
+    try {
+      const response = await axios.delete(`${API_URL}/producto-imagen/${idProductoImagen}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error al eliminar ProductoImagen:', error);
+      throw error;
+    }
+  };

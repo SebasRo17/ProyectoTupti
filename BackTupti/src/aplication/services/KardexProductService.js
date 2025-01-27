@@ -18,6 +18,14 @@ class KardexProductService {
       throw error;
     }
   }
+  async sumCantidadByIdProducto(idProducto) {
+    try {
+      return await this.kardexRepository.sumCantidadByIdProducto(idProducto);
+    } catch (error) {
+      console.error('Error en el servicio al sumar cantidad:', error);
+      throw error;
+    }
+  }
 }
 
 module.exports = new KardexProductService();

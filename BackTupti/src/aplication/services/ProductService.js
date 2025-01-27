@@ -131,6 +131,15 @@ class ProductService {
         }
         return deleted;
       }
+      async updatePartialProduct(idProducto, updateData) {
+        try {
+          const updatedProduct = await ProductRepository.updatePartial(idProducto, updateData);
+          return updatedProduct;
+        } catch (error) {
+          console.error('Error en servicio al actualizar producto:', error);
+          throw error;
+        }
+      }
     
 }
 

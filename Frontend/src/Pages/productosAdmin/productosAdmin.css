@@ -476,3 +476,7 @@ header {
   background-color: #dc3545;
   color: white;
 }
+.product-stock {
+  color: black; /* Cambia el color del texto a negro */
+  font-weight: bold; /* Opcional: hacer el texto en negrita */
+}

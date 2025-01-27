@@ -26,5 +26,56 @@ const router = express.Router();
  *         description: Error del servidor
  */
 router.post('', (req, res) => ProductoImagenController.createProductoImagen(req, res));
+/**
+ * @swagger
+ * /producto-imagen/{idProductoImagen}:
+ *   delete:
+ *     summary: Elimina una imagen de producto existente
+ *     tags: [ProductoImagen]
+ *     parameters:
+ *       - in: path
+ *         name: idProductoImagen
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       204:
+ *         description: Imagen eliminada exitosamente
+ *       404:
+ *         description: Imagen no encontrada
+ *       500:
+ *         description: Error del servidor
+ */
+router.delete('/:idProductoImagen', (req, res) => ProductoImagenController.deleteProductoImagen(req, res));
+/**
+ * @swagger
+ * /producto-imagen/producto/{idProducto}:
+ *   get:
+ *     summary: Obtiene todas las imágenes de un producto específico
+ *     tags: [ProductoImagen]
+ *     parameters:
+ *       - in: path
+ *         name: idProducto
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Lista de imágenes obtenida exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   IdImagen:
+ *                     type: integer
+ *                   ImagenUrl:
+ *                     type: string
+ *       500:
+ *         description: Error del servidor
+ */
+router.get('/producto/:idProducto', (req, res) => ProductoImagenController.getProductoImagenesByIdProducto(req, res));
 
 module.exports = router;
