@@ -163,10 +163,16 @@ class UserController {
       });
     } catch (error) {
       console.error('Error en registro:', error);
-      if (error.name === 'SequelizeUniqueConstraintError') {
-        return res.status(400).json({ message: 'Email ya registrado' });
+      if (error.message === 'El correo electrónico ya está registrado') {
+        return res.status(400).json({ 
+          success: false,
+          message: error.message 
+        });
       }
-      res.status(500).json({ message: 'Error en registro de usuario' });
+      res.status(500).json({ 
+        success: false,
+        message: 'Error en registro de usuario' 
+      });
     }
   }
 

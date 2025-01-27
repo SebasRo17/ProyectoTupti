@@ -19,9 +19,10 @@ export const registerUser = async (userData) => {
     return response.data;
   } catch (error) {
     if (error.response) {
-      throw new Error(error.response.data.message);
+      // Lanzar el mensaje específico del backend
+      throw new Error(error.response.data.message || 'Error al registrar usuario');
     }
-    throw new Error('Error al registrar usuario');
+    throw new Error('Error de conexión al servidor');
   }
 };
 
