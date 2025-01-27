@@ -12,31 +12,16 @@ class ProductController {
         }
     }
 
-    async createProducts(req, res) {
+    async createProduct(req, res) {
         try {
-            const productData = {
-                IdProducto: req.body.IdProducto, // Agregar esta línea
-                Nombre: req.body.Nombre,
-                Precio: req.body.Precio,
-                Descripcion: req.body.Descripcion,
-                IdTipoProducto: req.body.IdTipoProducto,
-                Stock: req.body.Stock
-            };
-            const newProduct = await ProductService.createProducts(productData);
-            res.status(201).json({
-                success: true,
-                message: 'Producto creado exitosamente',
-                data: newProduct
-            });
+          const productData = req.body;
+          const product = await ProductService.createProduct(productData);
+          res.status(201).json(product);
         } catch (error) {
-            console.error('Error en el controlador:', error);
-            res.status(400).json({
-                success: false,
-                message: error.message || 'Error al crear el producto'
-            });
+          console.error('Error en el controlador al crear producto:', error.message);
+          res.status(400).json({ error: error.message });
         }
-    }
-
+      }
     async updateProduct(req, res) {
         try {
             const { id } = req.params;

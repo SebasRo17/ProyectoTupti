@@ -64,3 +64,22 @@ export const getProductDetails = async (idProducto) => {
    throw error;
  }
 };
+export const createProduct = async (productData) => {
+    try {
+        const response = await axios.post(`${API_URL}/products`, productData);
+        return response.data;
+    } catch (error) {
+        console.error('Error creating product:', error);
+        throw error;
+    }
+};
+export const getAllTipoProductos = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/tipoproductos`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching tipo productos:', error);
+        throw error;
+    }
+};
+

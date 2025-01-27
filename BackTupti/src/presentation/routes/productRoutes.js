@@ -23,9 +23,10 @@ const router = express.Router();
  */
 router.get('/:id', ProductController.getProducts);
 
+
 /**
  * @swagger
- * /products:
+ * /:
  *   post:
  *     summary: Crea un nuevo producto
  *     tags: [Products]
@@ -35,10 +36,6 @@ router.get('/:id', ProductController.getProducts);
  *         application/json:
  *           schema:
  *             type: object
- *             required:
- *               - Nombre
- *               - Precio
- *               - IdTipoProducto
  *             properties:
  *               Nombre:
  *                 type: string
@@ -50,13 +47,16 @@ router.get('/:id', ProductController.getProducts);
  *                 type: integer
  *               Stock:
  *                 type: integer
+ *               IdImpuesto:
+ *                 type: integer
  *     responses:
  *       201:
  *         description: Producto creado exitosamente
  *       400:
- *         description: Error en los datos enviados
+ *         description: Error al crear el producto
  */
-router.post('/', ProductController.createProducts);
+router.post('', (req, res) => ProductController.createProduct(req, res));
+
 
 /**
  * @swagger
