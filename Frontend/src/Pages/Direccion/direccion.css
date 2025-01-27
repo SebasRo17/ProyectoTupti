@@ -129,6 +129,7 @@ body {
   width: 90%;
   max-width: 400px;
   text-align: center;
+
 }
 
 
@@ -151,6 +152,7 @@ body {
 .btn-cancelar-modal:hover{
   background-color: #cf3a2f !important;
 }	
+
 
 /* Media Queries */
 @media screen and (min-width: 1441px) {
