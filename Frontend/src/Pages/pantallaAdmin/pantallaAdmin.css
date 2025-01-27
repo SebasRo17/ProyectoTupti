@@ -1,6 +1,6 @@
 .dashboard {
   padding: 20px;
-  margin-left: 20%;
+  margin-left: -100% !important;
   margin-top: 5%;
   display: grid;
   grid-template-columns: 1fr 400px;
@@ -120,3 +120,247 @@
 .chart-card {
   min-height: 300px;
 }
+
+
+
+/*RESPONSVIVE*/
+@media (min-width: 2560px) {
+  .dashboard {
+    padding: 20px;
+    margin-left: -38%;
+    margin-top: 5%;
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 20px;
+  }
+  .overview {
+    margin-top: 20%;
+    margin-left: -175%;
+    background-color: #2095556b;
+    border-radius: 8px;
+    padding: 20px;
+    align-items: center;
+    height: 90%;
+    width: 180%;
+  }
+  .PantallaAdmin {
+    margin-left: 70%;
+    
+  }
+  .chart-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: -350%;
+    margin-right: -170%;
+    margin-left: 120%;
+  }
+  .dashboard h1 {
+    font-size: 24px;
+    margin-bottom: 350%;
+  }
+}
+@media (min-width: 2000px) and (max-width: 2560px) {
+  .dashboard {
+    padding: 20px;
+    margin-left: -38%;
+    margin-top: 5%;
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 20px;
+  }
+  .overview {
+    margin-top: 20%;
+    margin-left: -175%;
+    background-color: #2095556b;
+    border-radius: 8px;
+    padding: 20px;
+    align-items: center;
+    height: 90%;
+    width: 180%;
+  }
+  .PantallaAdmin {
+    margin-left: 70%;
+    
+  }
+  .chart-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: -350%;
+    margin-right: -170%;
+    margin-left: 120%;
+  }
+  .dashboard h1 {
+    font-size: 24px;
+    margin-bottom: 350%;
+  }
+}
+@media (min-width: 1024px) and (max-width: 2000px) {
+  .dashboard {
+    padding: 20px;
+    margin-left: -38%;
+    margin-top: 5%;
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 20px;
+  }
+  .overview {
+    margin-top: 20%;
+    margin-left: -175%;
+    background-color: #2095556b;
+    border-radius: 8px;
+    padding: 20px;
+    align-items: center;
+    height: 90%;
+    width: 180%;
+  }
+  .PantallaAdmin {
+    margin-left: 70%;
+    
+  }
+  .chart-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: -350% !important;
+    margin-right: -170%;
+    margin-left: 120%;
+  }
+  .dashboard h1 {
+    font-size: 24px;
+    margin-bottom: 350%;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1024px) {
+  .dashboard {
+    padding: 20px;
+    margin-left: -38%;
+    margin-top: 5%;
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 20px;
+  }
+  .overview {
+    margin-top: 20%;
+    margin-left: -178%;
+    background-color: #2095556b;
+    border-radius: 8px;
+    padding: 20px;
+    align-items: center;
+    height: 90%;
+    width: 180%;
+  }
+  .PantallaAdmin {
+    margin-left: 80%;
+    
+  }
+  .chart-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: -405%;
+    margin-right: -170%;
+    margin-left: 120%;
+  }
+  .dashboard h1 {
+    font-size: 24px;
+    margin-bottom: 350%;
+  }
+}
+
+@media (min-width: 800px) and (max-width: 899px) {
+  .dashboard {
+    padding: 20px;
+    margin-left: -38%;
+    margin-top: 5%;
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 20px;
+  }
+  .overview {
+    margin-top: 20%;
+    margin-left: -185%;
+    background-color: #2095556b;
+    border-radius: 8px;
+    padding: 20px;
+    align-items: center;
+    height: 90%;
+    width: 180%;
+  }
+  .PantallaAdmin {
+    margin-left: 90%;
+    
+  }
+  .chart-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: -500%;
+    margin-right: -170%;
+    margin-left: 120%;
+  }
+  .dashboard h1 {
+    font-size: 24px;
+    margin-bottom: 500%;
+    margin-left: -200%;
+  }
+  .chart-card,
+.report-card {
+  width: 100%;
+  background-color: #2095556b;
+  border-radius: 8px;
+  padding: 20px;
+  margin-left: -5%;
+}
+
+}
+
+@media (min-width: 768px) and (max-width: 799px) {
+  .dashboard {
+    padding: 20px;
+    margin-left: -39% !important;
+    margin-top: 5%;
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 20px;
+  }
+  .overview {
+    margin-top: 20%;
+    margin-left: -175%;
+    background-color: #2095556b;
+    border-radius: 8px;
+    padding: 20px;
+    align-items: center;
+    height: 90%;
+    width: 170%;
+  }
+  .PantallaAdmin {
+    margin-left: 90%;
+    
+  }
+  .chart-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: -500%;
+    margin-right: -170%;
+    margin-left: 120%;
+  }
+  .dashboard h1 {
+    font-size: 24px;
+    margin-bottom: 500%;
+    margin-left: -200%;
+  }
+  .chart-card,
+.report-card {
+  width: 100%;
+  background-color: #2095556b;
+  border-radius: 8px;
+  padding: 20px;
+  margin-left: -5%;
+}
+
+}
+

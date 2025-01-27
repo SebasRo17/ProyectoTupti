@@ -186,4 +186,84 @@ router.put('/:id', (req, res) => PedidoController.updatePedido(req, res));
  *         description: Error interno del servidor
  */
 router.delete('/:id', (req, res) => PedidoController.deletePedido(req, res));
+
+/**
+ * @swagger
+ * /pedidos/usuario/{idUsuario}/ultimo:
+ *   get:
+ *     summary: Obtener el último pedido de un usuario
+ *     tags:
+ *       - Pedidos
+ *     parameters:
+ *       - in: path
+ *         name: idUsuario
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID del usuario
+ *     responses:
+ *       200:
+ *         description: Último pedido encontrado
+ *       404:
+ *         description: No se encontró pedido para este usuario
+ *       500:
+ *         description: Error interno del servidor
+ */
+router.get('/usuario/:idUsuario/ultimo', (req, res) => PedidoController.getLastPedidoByUserId(req, res));
+
+/**
+ * @swagger
+ * /pedidos/{idPedido}/complete:
+ *   get:
+ *     summary: Obtener detalles completos del pedido incluyendo usuario y dirección
+ *     tags:
+ *       - Pedidos
+ *     parameters:
+ *       - in: path
+ *         name: idPedido
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID del pedido
+ *     responses:
+ *       200:
+ *         description: Detalles completos del pedido obtenidos exitosamente
+ *       404:
+ *         description: Pedido no encontrado
+ *       500:
+ *         description: Error interno del servidor
+ */
+router.get('/:idPedido/complete', (req, res) => PedidoController.getPedidoFullDetails(req, res));
+
+/**
+ * @swagger
+ * /pedidos/list/basic:
+ *   get:
+ *     summary: Obtener listado básico de todos los pedidos
+ *     tags:
+ *       - Pedidos
+ *     responses:
+ *       200:
+ *         description: Lista de pedidos con información básica obtenida exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   idPedido:
+ *                     type: integer
+ *                   estado:
+ *                     type: integer
+ *                   nombreUsuario:
+ *                     type: string
+ *                   fechaActualizacion:
+ *                     type: string
+ *                     format: date-time
+ *       500:
+ *         description: Error interno del servidor
+ */
+router.get('/list/basic', (req, res) => PedidoController.getAllPedidosWithBasicInfo(req, res));
+
 module.exports = router;

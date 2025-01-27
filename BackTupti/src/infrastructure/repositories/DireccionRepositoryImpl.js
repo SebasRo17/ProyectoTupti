@@ -2,16 +2,20 @@ const { sequelize } = require('../database/mysqlConnection');
 const Direccion = require('../../domain/models/Direccion');
 
 class DireccionRepositoryImpl {
-    async countByUserId(userId) {
-      try {
-        return await Direccion.count({
-          where: { IdUsuario: userId }
-        });
-      } catch (error) {
-        console.error('Error en repositorio - countByUserId:', error);
-        throw error;
-      }
+  async countByUserId(userId) {
+    try {
+      const count = await Direccion.count({
+        where: {
+          IdUsuario: userId,
+          Activo: 1
+        }
+      });
+      return count;
+    } catch (error) {
+      console.error('Error al contar direcciones:', error);
+      throw error;
     }
+  }
 
     async create(direccionData) {
       try {
@@ -24,20 +28,25 @@ class DireccionRepositoryImpl {
 
     async delete(id) {
       try {
-        const resultado = await Direccion.destroy({
-          where: { IdDireccion: id }
-        });
-        return resultado > 0;
+        const resultado = await Direccion.update(
+          { Activo: 0 },
+          { where: { IdDireccion: id } }
+        );
+        return resultado[0] > 0;
       } catch (error) {
         console.error('Error en repositorio - delete:', error);
         throw error;
       }
     }
 
+
     async findByUserId(userId) {
       try {
         return await Direccion.findAll({
-          where: { IdUsuario: userId }
+          where: { 
+            IdUsuario: userId,
+            Activo: 1
+          }
         });
       } catch (error) {
         console.error('Error en repositorio - findByUserId:', error);
@@ -77,6 +86,22 @@ class DireccionRepositoryImpl {
         return true;
       } catch (error) {
         await t.rollback();
+        throw error;
+      }
+    }
+    async obtenerDireccionSeleccionada(idUsuario) {
+      try {
+        const direccion = await Direccion.findOne({
+          where: {
+            IdUsuario: idUsuario,
+            EsSeleccionada: 1,
+            Activo: 1
+          }
+        });
+  
+        return direccion;
+      } catch (error) {
+        console.error('Error en repositorio - obtenerDireccionSeleccionada:', error);
         throw error;
       }
     }

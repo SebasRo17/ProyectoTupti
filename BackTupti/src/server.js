@@ -22,6 +22,14 @@ const pedidoRoutes = require('./presentation/routes/PedidoRoutes');
 const direccionRoutes = require('./presentation/routes/direccionRoutes'); // Corregir importación de rutas de direcciones
 const passwordResetRoutes = require('./presentation/routes/passwordResetRoutes'); // Agregar importación de rutas de reset de contraseña
 const descuentoRoutes = require ('./presentation/routes/descuentoRoutes');
+const facturaEmailRoutes = require('./presentation/routes/facturaEmailRoutes');
+const stockRoutes = require('./presentation/routes/stockRoutes'); 
+const carritoDetalleRoutes = require('./presentation/routes/carritoDetalleRoutes'); // Agregar importación de rutas de carritoDetalle
+const KardexProductRoutes = require('./presentation/routes/KardexProductRoutes');
+const productDetailsRoutes = require('./presentation/routes/productDetailsRoutes');
+const tipoProductoRoutes = require('./presentation/routes/TipoProductoRoutes');
+const impuestoRoutes = require('./presentation/routes/ImpuestoRoutes');
+const productoImagenRoutes = require('./presentation/routes/ProductoImagenRoutes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -39,7 +47,7 @@ const allowedOrigins = [
 app.use(cors({
     origin: [...allowedOrigins, /\.vercel\.app$/],
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With', 'Accept'],
     exposedHeaders: ['Access-Control-Allow-Origin']
 }));
@@ -66,7 +74,8 @@ app.use((req, res, next) => {
 });
 
 // Middlewares
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -95,6 +104,15 @@ app.use('/pedidos', pedidoRoutes);
 app.use('/direcciones', direccionRoutes); // Agregar rutas de direcciones
 app.use('/auth', passwordResetRoutes); // Agregar esta línea
 app.use('/descuentos', descuentoRoutes);
+app.use('/facturas', facturaEmailRoutes);
+app.use('/api/stock', stockRoutes); 
+app.use('/carrito-detalle', carritoDetalleRoutes); 
+app.use('/kardex-product', KardexProductRoutes);
+app.use('/product-details', productDetailsRoutes); 
+app.use('/tipoproductos', tipoProductoRoutes);
+app.use('/impuestos', impuestoRoutes);
+app.use('/producto-imagen', productoImagenRoutes);
+
 
 // Sincronizar con la base de datos y iniciar el servidor
 sequelize.sync()

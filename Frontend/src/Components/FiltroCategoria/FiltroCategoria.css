@@ -1,0 +1,281 @@
+/* FiltroCategoria.css */
+.filters-nombre15 {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 20%;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-right: auto;
+    margin-top: 500px;
+    margin-left: 40px;
+}
+
+.filter-container-nombre15 {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.filter-title-nombre15 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.range-container-nombre15 {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.range-container-nombre15 span {
+    font-size: 14px;
+    color: #666;
+}
+
+.filter-button-nombre15 {
+    padding: 10px;
+    font-size: 14px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.filter-button-nombre15:hover {
+    background-color: #45a049;
+}
+
+.category-select {
+    padding: 10px;
+    font-size: 14px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}	
+
+/* Estilos específicos para el input range */
+.range-container-nombre15 input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    border-radius: 2px;
+    outline: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+/* Estilo para el thumb */
+.range-container-nombre15 input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: #4caf50;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -6px;
+    border: none;
+}
+
+.range-container-nombre15 input[type="range"]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: #4caf50;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+/* Estilo para el foco */
+.range-container-nombre15 input[type="range"]:focus {
+    outline: none;
+}
+
+/* Estilos para el slider */
+.slider-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.range-input-nombre15 {
+    width: 100%;
+    height: 8px;
+    background: transparent; /* Fondo transparente para superponer sliders */
+    position: absolute;
+    pointer-events: none;
+}
+
+.range-input-nombre15::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #4caf50;
+    border-radius: 50%;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.range-input-nombre15::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #4caf50;
+    border-radius: 50%;
+    cursor: pointer;
+    color: black;
+}
+
+.category-select {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.category-select:focus {
+    border-color: #4caf50 !important;
+}
+
+/* Estilos adicionales para los select de categorías */
+.category-select option {
+    padding: 10px;
+    color: #333;
+}
+
+.category-select option:checked {
+    background-color: #90EE90 !important;
+    color: #333;
+}
+
+.category-select option:hover {
+    background-color: #f0f0f0;
+}
+
+.category-select:focus option:checked {
+    background-color: #90EE90 !important;
+    color: #333;
+    font-weight: bold;
+}
+
+.checkbox-container-nombre15.second-column label {
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Botón de filtro */
+.filter-button-nombre15 {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.filter-button-nombre15:hover {
+    background-color: #45a049;
+}
+
+.clear-filter-button {
+    background-color: #2d472e;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+}
+.clear-filter-button:hover {
+    background-color: #325434;
+}
+.alert-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    animation: slideIn 0.3s ease-out;
+  }
+  
+  .alert-message {
+    background-color: #ff4444;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+  
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+
+  /* Estilos para pantallas pequeñas (menores a 375px) */
+@media screen and (max-width: 600px) {
+    .filter-hamburger {
+      display: block;
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 1000;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  
+    .filters-nombre15 {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      z-index: 999;
+      margin: 0;
+      padding: 20px;
+      overflow-y: auto;
+    }
+  
+    .filters-nombre15.active {
+      display: flex;
+    }
+  
+    /* Estilos para cerrar el menú */
+    .close-menu-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+    }
+  }
+  

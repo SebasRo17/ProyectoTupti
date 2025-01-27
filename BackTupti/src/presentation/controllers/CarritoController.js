@@ -54,6 +54,19 @@ class CarritoController {
       res.status(500).json({ message: 'Error al obtener el carrito' });
     }
   }
+  async obtenerTotalesCarrito(req, res) {
+    try {
+      const { idCarrito } = req.params;
+      const totales = await CarritoService.calcularTotalesCarrito(idCarrito);
+      res.status(200).json(totales);
+    } catch (error) {
+      console.error('Error en controlador:', error);
+      res.status(500).json({ 
+        message: 'Error al obtener totales del carrito',
+        error: error.message 
+      });
+    }
+  }
 }
 
 module.exports = new CarritoController();

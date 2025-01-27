@@ -159,3 +159,215 @@ h3 {
     margin-bottom: 2%;
     color: #333;
 }
+
+
+
+
+
+/* Responsive*/
+/* Para pantallas de más de 2560px */
+@media screen and (min-width: 2560px) {
+    .detalle-pedido {
+        padding: 20px;
+        width: 90vw;
+        max-height: 100vh;
+        margin-top: 10%;
+        margin-left: 10%;
+    }
+    .payment-info-section {
+        max-width: 400px;
+        margin-left: 72%;
+        margin-top: -12.5%;
+    }
+  }
+  
+  /* Para pantallas de 1440px a 2560px */
+  @media screen and (min-width: 1440px) and (max-width: 2559px) {
+    .detalle-pedido {
+        padding: 20px;
+        width: 80vw;
+        max-height: 100vh;
+        margin-top: 10%;
+        margin-left: 10%;
+    }
+    .payment-info-section {
+        max-width: 400px;
+        margin-left: 72%;
+        margin-top: -17.5%;
+    }
+  }
+  
+  /* Para pantallas de 1024px a 1440px */
+  @media screen and (min-width: 1024px) and (max-width: 1439px) {
+    .detalle-pedido {
+        padding: 20px;
+        width: 80vw;
+        max-height: 100vh ;
+        margin-top: 14%;
+        margin-left: 15% !important ;
+        
+        
+    }
+    .payment-info-section {
+        max-width: 400px;
+        margin-left: 72%;
+        margin-top: -34%;
+    }
+  }
+  
+  /* 900px a 1024px */
+@media (max-width: 1024px) and (min-width: 900px) {
+    .detalle-pedido {
+        width: 85vw;
+        margin-left: 7.5%;
+    }
+    .top-sections-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+    .order-items-section, .payment-info-section {
+        max-width: 100%;
+    }
+    .payment-info-section {
+        margin-left: 0;
+        margin-top: 2%;
+    }
+    .info-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* 800px a 900px */
+@media (max-width: 900px) and (min-width: 800px) {
+    .detalle-pedido {
+        width: 90vw;
+        margin-left: 20%;
+        padding: 15px;
+        margin-top: 20%;
+    }
+    .top-sections-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+    .order-items-section, .payment-info-section {
+        max-width: 100%;
+    }
+    .payment-info-section {
+        margin-left: 0;
+        margin-top: 2%;
+        padding: 15px;
+    }
+    h3 {
+        font-size: 1.4em;
+    }
+    .info-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+}
+
+/* 700px a 800px */
+@media (max-width: 800px) and (min-width: 768px) {
+    .detalle-pedido {
+        width: 95vw;
+        margin-left: 25%;
+        padding: 15px;
+    }
+    .top-sections-container {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    .order-info, .customer-section {
+        padding: 10px;
+    }
+    .payment-info-section {
+        margin-left: 0;
+        margin-top: 2%;
+        max-width: 100%;
+        padding: 15px;
+    }
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    h3 {
+        font-size: 1.3em;
+    }
+    .summary-item {
+        font-size: 1em;
+    }
+}
+
+
+/* 700px a 768px */
+@media (max-width: 768px) and (min-width: 700px) {
+    .detalle-pedido {
+        width: 95vw;
+        margin-left: 25%;
+        margin-top: 20%;
+    }
+    .header-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .order-items-section, .payment-info-section {
+        max-width: 100%;
+    }
+}
+
+/* 600px a 700px */
+@media (max-width: 700px) and (min-width: 600px) {
+    .detalle-pedido {
+        width: 100vw;
+        margin-left: 27%;
+    }
+    .top-sections-container {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    .payment-info-section {
+        margin-top: 2%;
+        max-width: 100%;
+    }
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 500px a 600px */
+@media (max-width: 600px) and (min-width: 500px) {
+    .detalle-pedido {
+        width: 95vw;
+        margin-top: 20%;
+        margin-left: 38%;
+        padding: 15px;
+    }
+    .top-sections-container {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    .order-info, .customer-section {
+        padding: 10px;
+    }
+    .payment-info-section {
+        margin-left: 0;
+        margin-top: 2%;
+        max-width: 100%;
+        padding: 15px;
+    }
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    h3 {
+        font-size: 1.3em;
+    }
+    .summary-item {
+        font-size: 1em;
+    }
+}
+
+
+
+
+

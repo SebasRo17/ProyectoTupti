@@ -83,6 +83,41 @@ class PedidoController {
       res.status(500).json({ message: 'Error al eliminar el pedido' });
     }
   }
+  async getLastPedidoByUserId(req, res) {
+    try {
+      const { idUsuario } = req.params;
+      const pedido = await PedidoService.getLastPedidoByUserId(idUsuario);
+      res.json(pedido);
+    } catch (error) {
+      res.status(404).json({ message: error.message });
+    }
+  }
+  async getPedidoFullDetails(req, res) {
+    try {
+      const { idPedido } = req.params;
+      const detalles = await PedidoService.getPedidoFullDetails(idPedido);
+      res.json(detalles);
+    } catch (error) {
+      console.error('Error en el controlador:', error);
+      if (error.message === 'Pedido no encontrado') {
+        res.status(404).json({ message: error.message });
+      } else {
+        res.status(500).json({ message: 'Error al obtener detalles completos del pedido' });
+      }
+    }
+  }
+
+  async getAllPedidosWithBasicInfo(req, res) {
+    try {
+      const pedidos = await PedidoService.getAllPedidosWithBasicInfo();
+      res.json(pedidos);
+    } catch (error) {
+      console.error('Error al obtener listado de pedidos:', error);
+      res.status(500).json({ 
+        message: 'Error al obtener el listado de pedidos' 
+      });
+    }
+  }
 }
 
 module.exports = new PedidoController();

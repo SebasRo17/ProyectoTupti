@@ -23,9 +23,10 @@ const router = express.Router();
  */
 router.get('/:id', ProductController.getProducts);
 
+
 /**
  * @swagger
- * /products:
+ * /:
  *   post:
  *     summary: Crea un nuevo producto
  *     tags: [Products]
@@ -35,10 +36,6 @@ router.get('/:id', ProductController.getProducts);
  *         application/json:
  *           schema:
  *             type: object
- *             required:
- *               - Nombre
- *               - Precio
- *               - IdTipoProducto
  *             properties:
  *               Nombre:
  *                 type: string
@@ -50,24 +47,29 @@ router.get('/:id', ProductController.getProducts);
  *                 type: integer
  *               Stock:
  *                 type: integer
+ *               IdImpuesto:
+ *                 type: integer
  *     responses:
  *       201:
  *         description: Producto creado exitosamente
  *       400:
- *         description: Error en los datos enviados
+ *         description: Error al crear el producto
  */
-router.post('/', ProductController.createProducts);
+router.post('', (req, res) => ProductController.createProduct(req, res));
+
+
 
 /**
  * @swagger
- * /products/{id}:
- *   put:
- *     summary: Actualiza un producto existente
- *     tags: [Products]
+ * /products/{idProducto}:
+ *   patch:
+ *     summary: Actualizar parcialmente un producto (nombre, precio y descripción)
+ *     tags: [Productos]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: idProducto
  *         required: true
+ *         description: ID del producto a actualizar
  *         schema:
  *           type: integer
  *     requestBody:
@@ -77,30 +79,49 @@ router.post('/', ProductController.createProducts);
  *           schema:
  *             type: object
  *             properties:
- *               Nombre:
+ *               nombre:
  *                 type: string
- *               Precio:
+ *                 description: Nuevo nombre del producto
+ *               precio:
  *                 type: number
- *               Descripcion:
+ *                 format: float
+ *                 description: Nuevo precio del producto
+ *               descripcion:
  *                 type: string
- *               IdTipoProducto:
- *                 type: integer
- *               Stock:
- *                 type: integer
+ *                 description: Nueva descripción del producto
+ *             example:
+ *               nombre: "Producto Actualizado"
+ *               precio: 99.99
+ *               descripcion: "Nueva descripción del producto"
  *     responses:
  *       200:
  *         description: Producto actualizado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 IdProducto:
+ *                   type: integer
+ *                 Nombre:
+ *                   type: string
+ *                 Precio:
+ *                   type: number
+ *                 Descripcion:
+ *                   type: string
  *       404:
  *         description: Producto no encontrado
+ *       500:
+ *         description: Error del servidor
  */
-router.put('/:id', ProductController.updateProduct);
+router.patch('/:idProducto', (req, res) => ProductController.updatePartialProduct(req, res));
 
 /**
  * @swagger
  * /products/{id}:
  *   delete:
- *     summary: Elimina un producto
- *     tags: [Products]
+ *     summary: Elimina un producto existente
+ *     tags: [Producto]
  *     parameters:
  *       - in: path
  *         name: id
@@ -108,12 +129,14 @@ router.put('/:id', ProductController.updateProduct);
  *         schema:
  *           type: integer
  *     responses:
- *       200:
+ *       204:
  *         description: Producto eliminado exitosamente
  *       404:
  *         description: Producto no encontrado
+ *       500:
+ *         description: Error del servidor
  */
-router.delete('/:id', ProductController.deleteProduct);
+router.delete('/:id', (req, res) => ProductController.deleteProducto(req, res));
 
 /**
  * @swagger
@@ -154,11 +177,3 @@ router.delete('/:id', ProductController.deleteProduct);
 router.get('/', (req, res) => ProductController.getProducts(req, res));
 
 module.exports = router;
-
-
-
-
-
-
-
-

@@ -21,6 +21,7 @@ function Registro() {
   const [nombre, setNombre] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [registroError, setRegistroError] = useState("");
+  const [emailExistsError, setEmailExistsError] = useState("");
 
   const handleNombreChange = (e) => {
     setNombre(e.target.value);
@@ -39,6 +40,7 @@ function Registro() {
 
     setIsLoading(true);
     setRegistroError("");
+    setEmailExistsError(""); // Limpiar error previo
 
     try {
       const userData = {
@@ -62,7 +64,11 @@ function Registro() {
         window.location.href = '/login';
       }
     } catch (error) {
-      setRegistroError(error.message || "Error al registrar usuario");
+      if (error.message === 'El correo electrónico ya está registrado') {
+        setEmailExistsError(error.message);
+      } else {
+        setRegistroError(error.message || "Error al registrar usuario");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -236,6 +242,7 @@ function Registro() {
                 className="registro-input"
               />
               {emailError && <p className="registro-error-message">{emailError}</p>}
+              {emailExistsError && <p className="registro-error-message">{emailExistsError}</p>}
             </div>
           </div>
 
@@ -285,14 +292,15 @@ function Registro() {
           )}
 
           <div className="registro-form-group">
-            <button
-              type="button"
-              className="registro-btn"
-              disabled={!captchaVerified || emailError !== "" || passwordError !== ""}
-              onClick={handleRegister}
-            >
-              REGISTRARSE
-            </button>
+          <button
+  type="button"
+  className="registro-btn"
+  disabled={isLoading || !captchaVerified || emailError !== "" || passwordError !== ""}
+  onClick={handleRegister}
+>
+  {isLoading ? "registrado..." : "REGISTRARSE"}
+</button>
+
           </div>
 
           <div className="registro-social-text">

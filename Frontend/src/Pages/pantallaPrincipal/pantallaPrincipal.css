@@ -65,7 +65,7 @@ slider-container {
   position: relative;
   display: flex;
   overflow: hidden;
-  width: 1060px;
+  width: 100%;
   height: 450px;
   margin-top: 180px; /* Eliminado el margen superior excesivo */
 }
@@ -385,8 +385,8 @@ slider-container {
 }
 
 .promo-button {
-  width: calc(33.33% - 14px + 15px); /* Añadir 15px al ancho */
-  height: 200px;
+  width: 90%; /* Añadir 15px al ancho */
+  height: 250px;
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -403,15 +403,18 @@ slider-container {
 }
 
 .button-1 {
-  background-image: url('https://res.cloudinary.com/dd7etqrf2/image/upload/v1734134674/1_l9hngn.svg');
+  background-image: url('https://res.cloudinary.com/dd7etqrf2/image/upload/v1737154224/WhatsApp_Image_2025-01-17_at_17.47.07_10bb9cf8_yzunqf.webp');
+  margin-bottom: 1%;
 }
 
 .button-2 {
-  background-image: url('https://res.cloudinary.com/dd7etqrf2/image/upload/v1734134674/3_ubnmcx.svg');
+  background-image: url('https://res.cloudinary.com/dd7etqrf2/image/upload/v1737154268/WhatsApp_Image_2025-01-17_at_17.49.36_07e6d9bc_uskqsu.webp');
+  margin-bottom: 1%;
 }
 
 .button-3 {
-  background-image: url('https://res.cloudinary.com/dd7etqrf2/image/upload/v1735594072/tupti_Imagen_de_productos_osnxye.webp');
+  background-image: url('https://res.cloudinary.com/dd7etqrf2/image/upload/v1737154224/WhatsApp_Image_2025-01-17_at_17.47.07_e9a1a02f_bkmyjm.webp');
+  margin-bottom: 1%;
 }
 .modal-overlay {
   position: fixed;

@@ -149,9 +149,10 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
   }, []);
 
   // Mantener carouselData para las imágenes promocionales
-  const carouselData = promoImg.map((imageUrl, index) => ({
+  const carouselData = promoImg.map((promo, index) => ({
     id: index,
-    imageUrl: imageUrl,
+    imageUrl: promo.imageUrl,
+    categoryId: promo.categoryId,
     title: `Promoción ${index + 1}`
   }));  
 
@@ -333,42 +334,50 @@ const TuptiPage = ({ carouselImages, categoryImages }) => {
               transform: `translateX(-${activeSlide * 100}%)`,
             }}
           >
-            {carouselData.map((image) => (
+            
+            {carouselData.map((image, index) => (
               <img
-                key={image.id}
+              key={index}
                 src={image.imageUrl}
-                alt={image.title}
-                className={`slider-image ${image.id === activeSlide ? 'active' : ''}`}
+                alt={`Slide ${index + 1}`}
+                className={`slider-image ${index === activeSlide ? 'active' : ''}`}
+                onClick={() => navigate(`/Categoria/${image.categoryId}`)}
+                style={{ cursor: 'pointer' }}
               />
             ))}
           </div>
           <div className="progress-indicators">
-            {carouselData.map((_, index) => (
-              <div
-                key={index}
-                className={`progress-bar ${index === activeSlide ? 'active' : ''}`}
-              />
-            ))}
-          </div>
+          {carouselData.map((_, index) => (
+            <div
+              key={index}
+              className={`progress-bar ${index === activeSlide ? 'active' : ''}`}
+              onClick={() => setActiveSlide(index)}
+              style={{ cursor: 'pointer' }}
+            />
+          ))}
+        </div>
         </div>
       </div>
 
       {/* Botones de promoción */}
       <div className="promo-buttons-container">
         <button className="promo-button button-1" 
-        aria-label='Promocioón 1'
+        aria-label='Promoción 1'
         role='button'
         tabIndex="0"
+        onClick={() => navigate('/Categoria/7')}
         ></button>
         <button className="promo-button button-2"
         aria-label='Promoción 2'
         role='button'
         tabIndex="0"
+        onClick={() => navigate('/Categoria/15')}
         ></button>
         <button className="promo-button button-3"
         aria-label='Promoción 3'
         role='button'
         tabIndex="0"
+        onClick={() => navigate('/Categoria/8')}
         ></button>
       </div>
 

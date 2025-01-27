@@ -11,7 +11,7 @@ import Facturas from '../Facturas/facturas.jsx';
 import { searchProducts } from '../../Api/searchProduts.js';
 import { getCarritoByUsuario } from '../../Api/carritoApi.js';
 import jwtDecode from 'jwt-decode';
-
+import { useCart } from '../../Context/CartContext.jsx';
 const Header = ({ toggleCart, isCartOpen }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -26,7 +26,7 @@ const Header = ({ toggleCart, isCartOpen }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileDropdownOpen, setIsMobileDropdownOpen] = useState(false);
   const [productos, setProductos] = useState([]);
-
+  const { cartCount, updateCartCount } = useCart();
   useEffect(() => {
     // Verifica el token al cargar el componente
     const token = localStorage.getItem('jwtToken');
@@ -64,6 +64,10 @@ const Header = ({ toggleCart, isCartOpen }) => {
 
     fetchCarrito();
   }, [idUsuario]);
+  useEffect(() => {
+    updateCartCount(); // Initial cart count fetch
+  }, []);
+
 
   // Lógica del carrito
   const eliminarProducto = (productoId) => {
@@ -115,24 +119,34 @@ const Header = ({ toggleCart, isCartOpen }) => {
   const handleSearchSubmit = async (event) => {
     if (event.key === 'Enter' || event.type === 'click') {
       try {
-        const products = await searchProducts(searchTerm);
-        console.log('Productos filtrados:', products);
-        if (products.length > 0) {
-          const idTipoProducto = products[0].IdTipoProducto;
-          navigate(`/categoria/${idTipoProducto}`, { state: { products } }); // Redirige y pasa los productos como estado
+        const searchTermLower = searchTerm.toLowerCase().trim();
+        const allProducts = await searchProducts({});
+        const filteredProducts = allProducts.filter(product => 
+          product.Nombre.toLowerCase().includes(searchTermLower)
+        );
+  
+        console.log('Término de búsqueda:', searchTermLower);
+        console.log('Productos filtrados:', filteredProducts);
+  
+        if (filteredProducts.length > 0) {
+          navigate('/categoria/0', { 
+            state: { 
+              products: filteredProducts 
+            } 
+          });
           setSearchLabel(`Resultados para: ${searchTerm}`);
         } else {
           console.log('No se encontraron productos.');
           setSearchLabel('No se encontraron productos.');
         }
         setSearchTerm('');
+        setShowSuggestions(false);
       } catch (error) {
         console.error('Error al buscar productos:', error);
         setSearchLabel('Error al buscar productos.');
       }
     }
   };
-
   return (
     <>
       <header className="header" style={{ position: 'fixed', zIndex: 1000 }}>
@@ -209,7 +223,7 @@ const Header = ({ toggleCart, isCartOpen }) => {
                   className="user-button"
                   onClick={() => setIsMobileDropdownOpen(!isMobileDropdownOpen)}
                 >
-                  👤 {user.nombre}
+                  👤 {user.Nombre}
                 </button>
                 <div className={`mobile-user-dropdown ${isMobileDropdownOpen ? 'active' : ''}`}>
 
@@ -250,9 +264,14 @@ const Header = ({ toggleCart, isCartOpen }) => {
             <button onClick={() => {
               toggleCart();
               setIsMobileMenuOpen(false);
-            }}>
+            }} className="header-cart-button">
               <span>🛒</span>
               Carrito
+              {cartCount > 0 && (
+                <span className="cart-count">
+                  {cartCount}
+                </span>
+              )}
             </button>
           </nav>
         </div>
@@ -308,10 +327,10 @@ const Header = ({ toggleCart, isCartOpen }) => {
             </>
           )}
           <button className="header-cart-button" onClick={toggleCart}>
-            🛒 Carrito
-            {productosCarrito.length > 0 && (
+            🛒 Carrito 
+            {cartCount > 0 && (
               <span className="cart-count">
-                {productosCarrito.length}
+                {cartCount}
               </span>
             )}
           </button>

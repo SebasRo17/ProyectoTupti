@@ -39,13 +39,33 @@ const Direccion = () => {
     const token = localStorage.getItem('jwtToken');
     if (token) {
       try {
-        const payload = jwtDecode(token);
-        setIdUsuario(payload.user.IdUsuario);
+        const decoded = jwtDecode(token);
+        console.log('Token decodificado:', decoded); // Para debugging
+
+        // Modificamos la validación para adaptarnos a la estructura real del token
+        if (decoded && decoded.IdUsuario) {
+          setIdUsuario(decoded.IdUsuario);
+        } else if (decoded && decoded.user) {
+          // Alternativa si el ID está dentro de un objeto user
+          setIdUsuario(decoded.user.IdUsuario);
+        } else {
+          console.error('Estructura del token:', decoded);
+          setErrorMessage('No se pudo obtener la información del usuario.');
+          setShowErrorPopup(true);
+          // Removemos la redirección automática al login
+        }
       } catch (error) {
         console.error('Error decodificando el token:', error);
+        setErrorMessage('Error al procesar la sesión del usuario.');
+        setShowErrorPopup(true);
+        // Removemos la redirección automática al login
       }
+    } else {
+      setErrorMessage('No hay sesión activa. Por favor, inicie sesión.');
+      setShowErrorPopup(true);
+      navigate('/login');
     }
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     const updateMapFromFields = async () => {
@@ -157,32 +177,43 @@ const Direccion = () => {
         throw new Error('Debe iniciar sesión para guardar una dirección');
       }
 
+      if (!locationName.trim()) {
+        throw new Error('Debe ingresar un nombre para la ubicación');
+      }
+
       const direccionData = {
         IdUsuario: idUsuario,
-        CallePrincipal: direccion.callePrincipal,
-        Numeracion: direccion.numeracion,
-        CalleSecundaria: direccion.calleSecundaria,
-        Vecindario: direccion.barrio,
-        Ciudad: direccion.ciudad,
-        Provincia: direccion.provincia,
-        Pais: direccion.pais,
-        Descripcion: locationName
+        CallePrincipal: direccion.callePrincipal.trim(),
+        Numeracion: direccion.numeracion.trim(),
+        CalleSecundaria: direccion.calleSecundaria.trim(),
+        Vecindario: direccion.barrio.trim(),
+        Ciudad: direccion.ciudad.trim(),
+        Provincia: direccion.provincia.trim(),
+        Pais: direccion.pais.trim(),
+        Descripcion: locationName.trim()
       };
 
-      const camposRequeridos = Object.entries(direccionData);
-      for (const [campo, valor] of camposRequeridos) {
-        if (!valor) {
-          throw new Error(`El campo ${campo} es requerido`);
-        }
+      // Validar que todos los campos requeridos estén llenos
+      const camposVacios = Object.entries(direccionData)
+        .filter(([key, value]) => !value)
+        .map(([key]) => key);
+
+      if (camposVacios.length > 0) {
+        throw new Error(`Los siguientes campos son requeridos: ${camposVacios.join(', ')}`);
       }
 
       const response = await createDireccion(direccionData);
-      if (response) {
-        setShowModal(false);
-        setShowConfirmModal(true);
+      
+      if (!response) {
+        throw new Error('No se pudo guardar la dirección. Intente nuevamente.');
       }
+
+      setShowModal(false);
+      setShowConfirmModal(true);
+      
     } catch (error) {
-      setErrorMessage(error.message || 'Error desconocido');
+      console.error('Error al guardar la dirección:', error);
+      setErrorMessage(error.message || 'Error al guardar la dirección');
       setShowErrorPopup(true);
     }
   };
@@ -191,7 +222,7 @@ const Direccion = () => {
     setIsCartOpen(!isCartOpen);
   };
   return (
-    <div className="page-container">
+    <div className="page-container1">
       <Header toggleCart={toggleCart} isCartOpen={isCartOpen} />
       <div className="direccion-container">
         <div className="form-container">
@@ -298,10 +329,15 @@ const Direccion = () => {
               value={locationName}
               onChange={(e) => setLocationName(e.target.value)}
               placeholder="Nombre de la ubicación"
+              required
             />
             <div className="modal-buttons">
-              <button onClick={handleSaveLocation}>Guardar</button>
-              <button onClick={() => setShowModal(false)}>Cancelar</button>
+              <button className="btn-guardar-modal" onClick={handleSaveLocation}>
+                Guardar
+              </button>
+              <button className="btn-cancelar-modal" onClick={() => setShowModal(false)}>
+                Cancelar
+              </button>
             </div>
           </div>
         </div>

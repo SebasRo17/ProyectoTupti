@@ -22,7 +22,7 @@ const getBestSellers = async (req, res) => {
                 p.IdProducto
             ORDER BY 
                 SUM(CASE WHEN k.Movimiento = 'Venta' THEN CAST(k.Cantidad AS SIGNED) ELSE 0 END) DESC  -- Ordenar por las ventas
-            LIMIT 10;
+            LIMIT 15;
         `, { type: db.QueryTypes.SELECT });
         if (!bestSellers || bestSellers.length === 0) {
             return res.status(404).json({ message: 'No se encontraron productos' });

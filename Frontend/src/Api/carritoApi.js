@@ -21,3 +21,64 @@ export const getCarritoByUsuario = async (idUsuario) => {
       throw error;
     }
   };
+  export const getTotalesCarrito = async (idCarrito) => {
+    try {
+      const response = await fetch(`${API_URL}/carrito/${idCarrito}/totales`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+        }
+      });
+  
+      if (!response.ok) {
+        throw new Error('Error al obtener los totales del carrito');
+      }
+  
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error:', error);
+      throw error;
+    }
+  };
+  // carritoApi.js - Agregar este nuevo método
+export const actualizarEstadoCarrito = async (idCarrito, estado) => {
+  try {
+    const response = await fetch(`${API_URL}/carrito/${idCarrito}/estado`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+      },
+      body: JSON.stringify({ estado })
+    });
+
+    if (!response.ok) {
+      throw new Error('Error al actualizar el estado del carrito');
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+};
+
+export const deleteCarritoDetalle = async (id) => {
+  try {
+    const response = await fetch(`${API_URL}/carrito-detalle/${id}`, {
+      method: 'DELETE',
+    });
+    
+    if (!response.ok) {
+      throw new Error('Error al eliminar el detalle del carrito');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error en la API:', error);
+    throw error;
+  }
+};

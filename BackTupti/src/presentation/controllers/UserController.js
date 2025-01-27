@@ -1,6 +1,9 @@
 const UserService = require('../../aplication/services/UserService');
 const jwt = require('jsonwebtoken');
 const EmailVerificationService = require('../../aplication/services/EmailVerificationService');
+const { sequelize } = require('../../infrastructure/database/mysqlConnection');
+const User = require('../../domain/models/User');
+const Direccion = require('../../domain/models/Direccion');
 
 class UserController {
   async getUsers(req, res) {
@@ -44,14 +47,12 @@ class UserController {
       const userId = req.params.id;
       const { Email, Contrasenia, Activo, Nombre } = req.body;
 
-      // Validación básica
+      // Validación modificada para permitir solo actualización de Activo
       if (!Email && !Contrasenia && Activo === undefined && !Nombre) {
         return res.status(400).json({ 
           message: 'Al menos un campo es requerido' 
         });
       }
-
-      console.log('Datos recibidos para actualizar:', { Email, Contrasenia, Activo, Nombre });
 
       const updatedUser = await UserService.updateUser(userId, {
         Email,
@@ -162,10 +163,16 @@ class UserController {
       });
     } catch (error) {
       console.error('Error en registro:', error);
-      if (error.name === 'SequelizeUniqueConstraintError') {
-        return res.status(400).json({ message: 'Email ya registrado' });
+      if (error.message === 'El correo electrónico ya está registrado') {
+        return res.status(400).json({ 
+          success: false,
+          message: error.message 
+        });
       }
-      res.status(500).json({ message: 'Error en registro de usuario' });
+      res.status(500).json({ 
+        success: false,
+        message: 'Error en registro de usuario' 
+      });
     }
   }
 
@@ -192,6 +199,74 @@ class UserController {
       res.status(500).json({
         success: false,
         message: 'Error al verificar el email'
+      });
+    }
+  }
+
+  async changePassword(req, res) {
+    try {
+      const userId = req.params.id;
+      const { currentPassword, newPassword } = req.body;
+
+      if (!currentPassword || !newPassword) {
+        return res.status(400).json({
+          message: 'La contraseña actual y la nueva son requeridas'
+        });
+      }
+
+      const result = await UserService.changePassword(userId, currentPassword, newPassword);
+      
+      res.status(200).json({
+        success: true,
+        message: 'Contraseña actualizada exitosamente'
+      });
+    } catch (error) {
+      if (error.message === 'Contraseña actual incorrecta') {
+        return res.status(401).json({
+          success: false,
+          message: error.message
+        });
+      }
+      res.status(500).json({
+        success: false,
+        message: 'Error al actualizar la contraseña'
+      });
+    }
+  }
+
+  async getUserInfo(req, res) {
+    try {
+      // Obtener todos los usuarios con sus atributos necesarios
+      const users = await User.findAll({
+        attributes: ['IdUsuario', 'CodigoUs', 'Nombre', 'Email', 'Activo', 'EmailVerificado']
+      });
+
+      // Obtener las direcciones activas para todos los usuarios
+      const usersWithInfo = await Promise.all(users.map(async (user) => {
+        const tieneDireccion = await Direccion.count({
+          where: {
+            IdUsuario: user.IdUsuario,
+            Activo: true
+          }
+        }) > 0;
+
+        return {
+          id: user.IdUsuario,
+          codigo: user.CodigoUs,
+          nombre: user.Nombre,
+          email: user.Email,
+          estado: user.Activo ? 'Activo' : 'Inactivo',
+          tieneDireccion: tieneDireccion,
+          registro: user.EmailVerificado ? 'Confirmado' : 'Pendiente'
+        };
+      }));
+
+      res.json(usersWithInfo);
+    } catch (error) {
+      console.error('Error al obtener información de los usuarios:', error);
+      res.status(500).json({ 
+        message: 'Error interno del servidor',
+        error: error.message 
       });
     }
   }

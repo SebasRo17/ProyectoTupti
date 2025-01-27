@@ -11,9 +11,17 @@ export const productosApi = {
             if (filters.IdTipoProducto) queryParams.append('IdTipoProducto', filters.IdTipoProducto);
 
             const response = await axios.get(`${API_URL}/products?${queryParams}`);
-            return response.data;
+            
+            const formattedData = response.data.map(product => ({
+                ...product,
+                ImagenUrl: product.Imagenes && product.Imagenes.length > 0 
+                    ? product.Imagenes[0].ImagenUrl 
+                    : null,
+                imagenesArray: product.Imagenes || []
+            }));
+
+            return formattedData;
         } catch (error) {
-            console.error('Error fetching products:', error);
             throw error;
         }
     },
@@ -36,5 +44,50 @@ export const productosApi = {
             console.error('Error updating product:', error);
             throw error;
         }
+    }
+};
+
+export const getProductDetails = async (idProducto) => {
+ try {
+   const response = await fetch(`${API_URL}/product-details/${idProducto}`);
+   
+   if (!response.ok) {
+     if (response.status === 404) {
+       throw new Error('Producto no encontrado');
+     }
+     throw new Error(`Error ${response.status}: ${response.statusText}`);
+   }
+   
+   return await response.json();
+ } catch (error) {
+   console.error('Error al obtener detalles del producto:', error);
+   throw error;
+ }
+};
+export const createProduct = async (productData) => {
+    try {
+        const response = await axios.post(`${API_URL}/products`, productData);
+        return response.data;
+    } catch (error) {
+        console.error('Error creating product:', error);
+        throw error;
+    }
+};
+export const getAllTipoProductos = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/tipoproductos`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching tipo productos:', error);
+        throw error;
+    }
+};
+export const updatePartialProduct = async (productId, updateData) => {
+    try {
+        const response = await axios.patch(`${API_URL}/products/${productId}`, updateData);
+        return response.data;
+    } catch (error) {
+        console.error('Error updating product partially:', error);
+        throw error;
     }
 };

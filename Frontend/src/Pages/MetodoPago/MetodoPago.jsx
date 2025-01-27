@@ -5,6 +5,10 @@ import './MetodoPago.css';
 import HeaderPagos from '../../Components/headerPago/headerPago.jsx';
 import { getPedidoByCarrito, getDetallesPedido } from '../../Api/pedidoApi';
 import { createPaypalOrder, capturePaypalPayment } from '../../Api/pagosApi';
+import jwtDecode from 'jwt-decode';
+import { getSelectedAddress } from '../../Api/direccionApi';
+import { enviarFacturaPorEmail } from '../../Api/facturaEmailApi';
+import { generatePdfBlob } from '../../Components/PDFModelo/pdf.jsx';
 
 const MetodoPago = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,9 +22,43 @@ const MetodoPago = () => {
   const [numeroIdentificacion, setNumeroIdentificacion] = useState(''); // Estado para el número de identificación
   const [numeroTelefono, setNumeroTelefono] = useState(''); // Estado para el número de teléfono
   const [aceptoTerminos, setAceptoTerminos] = useState(false); // Estado para aceptar términos
+  const [idUsuario, setIdUsuario] = useState(null);
+  const [selectedAddress, setSelectedAddress] = useState(null);
+  const [nombreCliente, setNombreCliente] = useState(''); // Estado para el nombre del cliente
 
   const location = useLocation();
   const { idCarrito } = location.state || {};
+
+  useEffect(() => {
+    const token = localStorage.getItem('jwtToken');
+    if (token) {
+      try {
+        const payload = jwtDecode(token);
+        const currentTime = Date.now() / 1000;
+        setIdUsuario(payload.IdUsuario);
+  
+        if (payload.exp <= currentTime) {
+          localStorage.removeItem('jwtToken');
+        }
+      } catch (error) {
+        localStorage.removeItem('jwtToken');
+      }
+    }
+  }, []);
+  useEffect(() => {
+    const fetchSelectedAddress = async () => {
+      if (idUsuario) {
+        try {
+          const address = await getSelectedAddress(idUsuario);
+          setSelectedAddress(address);
+        } catch (error) {
+          console.error('Error al obtener la dirección:', error);
+        }
+      }
+    };
+
+    fetchSelectedAddress();
+  }, [idUsuario]);
 
   useEffect(() => {
     const obtenerPedido = async () => {
@@ -45,10 +83,157 @@ const MetodoPago = () => {
     obtenerPedido();
   }, [idCarrito]);
 
+  const startPayPalFlow = async () => {
+    if (!pedido || !detallesPedido) {
+      alert('No hay información del pedido disponible');
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+    const subtotal = detallesPedido.totales.subtotal;
+    const serviceFee = subtotal * 0.08; // 8% del subtotal
+    const totalWithFee = detallesPedido.totales.total + serviceFee;
+    const montoFormateado = Number(totalWithFee.toFixed(2));
+
+    const { approveUrl, orderId } = await createPaypalOrder(
+      pedido.idPedido,
+      montoFormateado
+    );
+
+      // Configuración del popup
+      const width = 450;
+      const height = 600;
+      const left = (window.innerWidth - width) / 2;
+      const top = (window.innerHeight - height) / 2;
+
+      const popupFeatures = `
+        width=${width},
+        height=${height},
+        left=${left},
+        top=${top},
+        scrollbars=yes,
+        status=yes,
+        resizable=yes,
+        location=yes
+      `;
+
+      const paypalPopup = window.open(approveUrl, 'PayPal', popupFeatures);
+
+      if (!paypalPopup || paypalPopup.closed || typeof paypalPopup.closed === 'undefined') {
+        alert('Por favor, habilita las ventanas emergentes para continuar con el pago');
+        setIsLoading(false);
+        return;
+      }
+
+      const checkPopupStatus = setInterval(() => {
+        if (!paypalPopup || paypalPopup.closed) {
+          clearInterval(checkPopupStatus);
+          setIsLoading(false);
+          return;
+        }
+
+        try {
+          const popupUrl = paypalPopup.location.href;
+          
+          if (popupUrl.includes('/payment-success')) {
+            paypalPopup.close();
+            clearInterval(checkPopupStatus);
+            console.log('Pago completado con éxito', orderId);
+            handlePaymentSuccess(orderId);
+          } else if (popupUrl.includes('/payment-cancel')) {
+            paypalPopup.close();
+            clearInterval(checkPopupStatus);
+            setPaymentStatus('cancelled');
+            setIsLoading(false);
+          }
+        } catch (err) {
+          // Manejar errores de cross-origin
+          console.log('Esperando completar el pago...');
+        }
+      }, 1000);
+
+    } catch (err) {
+      console.error('Error al iniciar el pago:', err);
+      setError('Error al iniciar el pago: ' + err.message);
+      setIsLoading(false);
+    }
+  };
+
+  const handlePaymentSuccess = async (orderId) => {
+    try {
+        await capturePaypalPayment(orderId);
+        
+        if (pedido && pedido.idPedido) {
+            setIsLoading(true);
+            
+            const clienteData = JSON.parse(localStorage.getItem('clienteData'));
+            if (!clienteData) {
+                throw new Error('Datos del cliente no encontrados');
+            }
+
+            // Calcular el total antes de generar el PDF
+            const subtotal = detallesPedido.totales.subtotal || 0;
+            const serviceFee = subtotal * 0.08;
+            const totalConServicio = (detallesPedido.totales.total || 0) + serviceFee;
+            const totalFacturaFinal = Number(totalConServicio.toFixed(2));
+
+            console.log('Total calculado:', {
+                subtotal,
+                serviceFee,
+                totalConServicio,
+                totalFacturaFinal
+            });
+
+            const pdfBlob = await generatePdfBlob(idUsuario);
+            
+            const reader = new FileReader();
+            reader.onloadend = async () => {
+                try {
+                    const base64data = reader.result.split(',')[1];
+                    
+                    // Usar el total pre-calculado
+                    await enviarFacturaPorEmail(
+                        pedido.idPedido, 
+                        base64data,
+                        totalFacturaFinal // Usar el valor pre-calculado
+                    );
+                    
+                    console.log('Factura enviada correctamente');
+                    setPaymentStatus('success');
+                } catch (error) {
+                    console.error('Error detallado al enviar la factura:', error);
+                    alert('Error al enviar la factura. Por favor, contacte al soporte.');
+                }
+            };
+            reader.readAsDataURL(pdfBlob);
+        }
+    } catch (error) {
+        console.error('Error al procesar el pago:', error);
+        alert('Error en el proceso de pago. Por favor, contacte al soporte.');
+    } finally {
+        setIsLoading(false);
+    }
+};
+
   const confirmarCompra = () => {
     setMostrarConfirmacion(false);
     startPayPalFlow();
   };
+
+  const cerrarConfirmacion = () => {
+    setMostrarConfirmacion(false);
+  };
+
+  // Renderizado condicional para estados de carga y error
+  if (isLoading && !detallesPedido) {
+    return (
+      <div className="pagina-metodo-pago">
+        <HeaderPagos />
+        <div className="loading-message">Cargando información del pedido...</div>
+      </div>
+    );
+  }
 
   const cerrarFormulario = () => {
     setMostrarConfirmacion(false);
@@ -58,7 +243,7 @@ const MetodoPago = () => {
     setMostrarConfirmacion(true);
   };
 
-  const manejarEnvioFormulario = (e) => {
+  const manejarEnvioFormulario = async (e) => {
     e.preventDefault();
     
     // Validar el número de identificación
@@ -73,13 +258,35 @@ const MetodoPago = () => {
         return;
       }
     }
-    
-    console.log('Formulario enviado');
-    setMostrarConfirmacion(false);
+
+    try {
+      // Guardar datos del cliente en localStorage
+      const clienteData = {
+        nombre: esConsumidorFinal ? 'Consumidor Final' : nombreCliente,
+        identificacion: esConsumidorFinal ? '9999999999999' : numeroIdentificacion
+      };
+      
+      localStorage.setItem('clienteData', JSON.stringify(clienteData));
+      console.log('Datos guardados:', clienteData); // Para verificar que se guardan
+  
+      // Cerrar el modal y comenzar el proceso de pago
+      setMostrarConfirmacion(false);
+      await startPayPalFlow();
+    } catch (error) {
+      console.error('Error al procesar el formulario:', error);
+      alert('Error al procesar el pago. Por favor, intente nuevamente.');
+    }
   };
 
   const handleConsumidorFinalChange = (e) => {
     setEsConsumidorFinal(e.target.checked); // Actualiza el estado según el valor del checkbox
+    if (e.target.checked) {
+      setNumeroIdentificacion('9999999999999');
+      setNombreCliente('Consumidor Final');
+    } else {
+      setNumeroIdentificacion('');
+      setNombreCliente('');
+    }
   };
 
   const handleTipoDocumentoChange = (e) => {
@@ -106,6 +313,10 @@ const MetodoPago = () => {
     setAceptoTerminos(e.target.checked); // Actualiza el estado cuando cambia el checkbox de términos
   };
 
+  const handleNombreClienteChange = (e) => {
+    setNombreCliente(e.target.value);
+  };
+
   if (isLoading && !detallesPedido) {
     return (
       <div className="pagina-metodo-pago">
@@ -128,6 +339,16 @@ const MetodoPago = () => {
       </div>
     );
   }
+
+   // Validación del formulario
+   const esFormularioValido = 
+   (esConsumidorFinal && aceptoTerminos) || 
+   (!esConsumidorFinal && 
+     nombreCliente && 
+     numeroIdentificacion && 
+     numeroTelefono && 
+     aceptoTerminos);
+
 
   return (
     <div className="pagina-metodo-pago">
@@ -153,6 +374,7 @@ const MetodoPago = () => {
                     <th>Precio Unitario</th>
                     <th>Subtotal</th>
                     <th>Impuesto</th>
+                    <th>Descuento</th> 
                   </tr>
                 </thead>
                 <tbody>
@@ -165,30 +387,55 @@ const MetodoPago = () => {
                       <td>
                         {item.impuesto.nombre} ({item.impuesto.porcentaje}%)
                       </td>
+                      <td>${item.producto.descuento.toFixed(2)}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
 
-              <div className="resumen-totales">
-                <h4>Resumen del Pedido</h4>
-                <div className="totales-grid">
-                  <p>Cantidad total de items:</p>
-                  <p>{detallesPedido.totales.cantidadItems}</p>
+              <div className="detalles-container">
+                <div className="resumen-totales">
+                  <h4>Resumen del Pedido</h4>
+                  <div className="totales-grid">
+                    <p>Cantidad total de items:</p>
+                    <p>{detallesPedido.totales.cantidadItems}</p>
 
-                  <p>Subtotal:</p>
-                  <p>${detallesPedido.totales.subtotal.toFixed(2)}</p>
+                    <p>Subtotal:</p>
+                    <p>${detallesPedido.totales.subtotal.toFixed(2)}</p>
 
-                  <p>Impuestos:</p>
-                  <p>${detallesPedido.totales.impuestos.toFixed(2)}</p>
+                    <p>Impuestos:</p>
+                    <p>${detallesPedido.totales.impuestos.toFixed(2)}</p>
 
-                  <p>
-                    <strong>Total Final:</strong>
-                  </p>
-                  <p>
-                    <strong>${detallesPedido.totales.total.toFixed(2)}</strong>
-                  </p>
+                    <p>Descuento Total:</p>
+                    <p>${detallesPedido.totales.descuentos.toFixed(2)}</p>
+                   
+                    <p>Cuota de servicio (8%):</p>
+                    <p>${(detallesPedido.totales.subtotal * 0.08).toFixed(2)}</p>
+
+                    <p>
+                      <strong>Total Final:</strong>
+                    </p>
+                    <p>
+                      <strong>${(detallesPedido.totales.total + (detallesPedido.totales.subtotal * 0.08)).toFixed(2)}</strong>
+                    </p>
+                  </div>
                 </div>
+
+                {selectedAddress && (
+                  <div className="resumen-direccion">
+                    <h4>Dirección de Envío</h4>
+                    <div className="direccion-grid">
+                      <p><strong>Calle Principal:</strong></p>
+                      <p>{selectedAddress.CallePrincipal} {selectedAddress.Numeracion}</p>
+
+                      <p><strong>Calle Secundaria:</strong></p>
+                      <p>{selectedAddress.CalleSecundaria}</p>
+
+                      <p><strong>Referencia:</strong></p>
+                      <p>{selectedAddress.Descripcion}</p>
+                    </div>
+                  </div>
+                )}
               </div>
             </>
           )}
@@ -238,6 +485,8 @@ const MetodoPago = () => {
                   placeholder="Nombre del titular"
                   required={!esConsumidorFinal}
                   disabled={esConsumidorFinal}
+                  value={nombreCliente}
+                  onChange={handleNombreClienteChange}
                 />
 
                 <select
@@ -287,14 +536,14 @@ const MetodoPago = () => {
                     la <a href="#">política de privacidad</a>
                   </label>
                 </div>
-
                 <button
-                  type="submit"
-                  className="boton-confirmacion"
-                  disabled={isLoading || !aceptoTerminos} // Deshabilitado si no se marcan los términos
-                >
-                  {isLoading ? 'Procesando...' : 'Ir a la plataforma de pago'}
-                </button>
+  type="submit"
+  className="boton-confirmacion"
+  disabled={!esFormularioValido || isLoading}
+>
+  {isLoading ? 'Procesando...' : 'Ir a la plataforma de pago'}
+</button>
+
               </form>
               <button className="boton-salir" onClick={cerrarFormulario}>
                 Cerrar

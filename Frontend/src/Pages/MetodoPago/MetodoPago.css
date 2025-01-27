@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   gap: 40px;
-  padding: 5%;
+  padding: 0%;
   margin: 0 auto;
   width: 90%;
   max-width: 1200px;
@@ -79,8 +79,15 @@
   border-radius: 5px;
   border: 1px solid #ddd;
   font-size: 1rem;
+  background-color: white;
 }
-
+.modal-body select	{
+  background-color: white;;
+  color: #333
+}
+.modal-body select option{
+  color:#333;
+}
 /* Estilos para el checkbox de "Consumidor final" */
 #checkbox-consufinal {
   width: 15px;
@@ -301,15 +308,28 @@ table td:last-child {
 }
 
 /* Totales */
-.resumen-totales {
+.detalles-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  margin-top: 30px;
+  width: 100%;
+}
+
+.resumen-totales,
+.resumen-direccion {
+  flex: 1;
   margin-top: 20px;
-  padding: 15px;
+  padding: 20px;
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: #f9f9f9;
+  min-width: 300px;
+  max-width: calc(50% - 15px);
 }
 
-.totales-grid {
+.totales-grid,
+.direccion-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
@@ -317,17 +337,31 @@ table td:last-child {
   color: black;
 }
 
-.totales-grid p {
+.totales-grid p,
+.direccion-grid p {
   margin: 5px 0;
 }
 
-.totales-grid p:nth-child(even) {
+.totales-grid p:nth-child(even),
+.direccion-grid p:nth-child(even) {
   text-align: right;
   color: black;
 }
 
+@media (max-width: 768px) {
+  .detalles-container {
+    flex-direction: column;
+  }
+
+  .resumen-totales,
+  .resumen-direccion {
+    max-width: 100%;
+  }
+}
+
 /* FORMULARIO PANTALLA EMERGENTE */
 /* Estilos del modal */
+
 .modal-overlay10 {
   position: fixed;
   top: 0;
@@ -398,6 +432,9 @@ transform: translateY(45px);
 .modal-content11 button[type="submit"]:hover {
   background-color: #45a049; 
 }
+.modal-content11 button[type="submit"]:disabled {
+  background-color: #b4b6b4; 
+}
 
 .modal-content11 .boton-salir {
   background-color: #f44336; 
@@ -417,8 +454,6 @@ transform: translateY(45px);
 .modal-content11 input {
   border-radius: 8px; 
 }
-
-
 
 
 /* Estilos para el checkbox de "Consumidor final" */

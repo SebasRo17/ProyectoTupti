@@ -3,7 +3,7 @@
     position: fixed;
     top: 67px;
     left: 0;
-    width: 97% !important;
+    width: 100% !important;
     height: 118px;
     background-color: white;
     padding: 0;
@@ -25,7 +25,7 @@
     margin-left: 55px;
     flex-wrap: nowrap;
     -webkit-overflow-scrolling: touch;
-    width: 96%;
+    width: 100vw !important;
     position: relative;
     z-index: 1000 !important;
     box-sizing: border-box;
@@ -61,23 +61,20 @@
 }
 
 .category-nav-button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: #1dd056;
-    color: white;
-    border: none;
-    border-radius: 40%;
-    width: 40px;
-    height: 30px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    font-size: 18px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
-    z-index: 10000 !important;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #1dd056;
+  color: white;
+  border: none;
+  border-radius: 40%;
+  width: 40px;
+  height: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
 }
 
 .category-nav-button:hover {
@@ -90,9 +87,8 @@
 }
 
 .category-nav-button.right {
-    right: 1.5%;
-    margin-top: -15%;
-    position: fixed;
+    right: 5px;
+
     z-index: 99999 !important;
     
 }
@@ -101,6 +97,35 @@
     .categories-container{
     width: 100%;
     }
+    .categories-bar {
+      width: 93% !important;
+    }
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1440px) {
+    .categories-container {
+      width: 100%;
+    }
+    .categories-bar {
+      width: 92% !important;
+    }
+    .category-item {
+      padding: 0 5px;
+    }
+    .category-icon {
+      width: 50px;
+      height: 50px;
+    }
+  
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .categories-container {
+    width: 100%;
+  }
+  .categories-bar {
+    width: 92% !important;
+  }
 }
 /* Mobile styles */
 @media screen and (max-width: 767px) {
@@ -118,8 +143,8 @@
 
     .categories-bar {
       padding: 12px 5px;
+      width: 82% !important;
     }
-
     .category-item {
       min-width: 60px;
       max-width: 80px;

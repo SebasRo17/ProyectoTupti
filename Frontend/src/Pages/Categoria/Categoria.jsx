@@ -8,11 +8,12 @@ import Footer from "../../Components/footer/footer.jsx";
 import { createCalificacion, getCalificaciones } from '../../Api/calificacionApi';
 import "./Categoria.css";
 import "./ResponsiveCategoria.css";
-import Filtros from "../../Components/Filtros/Filtros.jsx";
+import FiltroCategoria from "../../Components/FiltroCategoria/FiltroCategoria.jsx";
 import { addToCart } from '../../Api/carritoApi.js';
 import jwtDecode from 'jwt-decode';
 import LoadingSpinner from '../../Components/LoadingSpinner/LoadingSpinner';
-
+import { createKardexProduct, validateStock } from '../../Api/kardexApi.js';
+import { useCart } from '../../Context/CartContext.jsx';
 function Categoria() {
    const [productos, setProductos] = useState([]);
    const [loading, setLoading] = useState(true);
@@ -29,6 +30,10 @@ function Categoria() {
    const location = useLocation();
    const [isCartOpen, setIsCartOpen] = useState(false); 
    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+   const [showErrorMessage, setShowErrorMessage] = useState(false);
+   const [showStockError, setShowStockError] = useState(false);
+   const [stockErrorMessage, setStockErrorMessage] = useState('');
+   const { updateCartCount } = useCart();
 
    const toggleCart = () => {
       setIsCartOpen(!isCartOpen);
@@ -90,6 +95,7 @@ function Categoria() {
          try {
              // Revisar si hay productos filtrados en el estado de location
              const filteredProducts = location.state?.products || [];
+             console.log('Productos filtrados:', filteredProducts);
             
              if (filteredProducts.length > 0) {
                 // Si hay productos filtrados, usarlos
@@ -97,6 +103,7 @@ function Categoria() {
              } else if (id && id !== "0") {
                 // Si no hay productos filtrados, buscar por categoría
                 const data = await getCategoryProducts(id);
+                console.log('Productos recibidos:', data);
                 setProductos(data);
              } else {
                 setError("No se encontraron productos");
@@ -148,25 +155,54 @@ function Categoria() {
    
    const handleAgregarCarrito = async () => {
       try {
+        if (!idUsuario) {
+          setShowErrorMessage(true);
+          setTimeout(() => setShowErrorMessage(false), 3000);
+          return;
+        }
+    
+        // Primero validar stock
+        const stockValidation = await validateStock(
+          selectedProduct.IdProducto, 
+          cantidad
+        );
+    
+        if (!stockValidation || !stockValidation.disponible) {
+         setShowStockError(true);
+         setStockErrorMessage(stockValidation.error || 'Stock insuficiente');
+         setTimeout(() => {
+           setShowStockError(false);
+           setStockErrorMessage('');
+         }, 3000);
+         return;
+       }
         const productData = {
-          idUsuario: idUsuario, // Usar el idUsuario del estado
+          idUsuario: idUsuario,
           idProducto: selectedProduct.IdProducto,
           cantidad: cantidad
         };
-  
+    
         const result = await addToCart(productData);
-        console.log('Producto agregado al carrito:', result);
-        // Mostrar mensaje de éxito
-         setShowSuccessMessage(true);
-
-         // Ocultar el mensaje después de 3 segundos
-         setTimeout(() => {
-         setShowSuccessMessage(false);
-         }, 3000);
+        updateCartCount(); 
+        // Crear registro de Kardex
+        const kardexData = {
+          idProducto: selectedProduct.IdProducto,
+          movimiento: 'Venta',
+          cantidad: -cantidad // Cantidad negativa para salida
+        };
+    
+        await createKardexProduct(kardexData);
+    
+        setShowSuccessMessage(true);
+        setTimeout(() => setShowSuccessMessage(false), 3000);
       } catch (error) {
-        // Manejar error
-        console.error('Error al agregar al carrito:', error);
-      }
+         setShowStockError(true);
+         setStockErrorMessage(error.response?.data?.error || 'Error al validar stock');
+         setTimeout(() => {
+           setShowStockError(false);
+           setStockErrorMessage('');
+         }, 3000);
+       }
     };
   
    const handleEnviarResena = async () => {
@@ -209,15 +245,28 @@ function Categoria() {
                Producto agregado exitosamente al carrito
             </div>
          )}
+         {showErrorMessage && (
+        <div className="alert-message error">
+          Debes iniciar sesión para agregar productos al carrito
+        </div>
+      )}
+      {showStockError && (
+      <div className="alert-message error">
+         {stockErrorMessage || 'Producto fuera de stock. Intenta más tarde.'}
+      </div>
+      )}
 
          <Header 
             toggleCart={toggleCart} 
             isCartOpen={isCartOpen}
          />
+         {/* Filtro de Categoría fijo */}
+      <div className="filtro-container16">
+         <FiltroCategoria />
+      </div>
          <CategoriesBar categoryData={categoryData} />
          <div className="categoria-container">
-
-            <h1 className="categoria-titulo">Productos de la Categoría</h1>
+         <h1 className="categoria-titulo">Productos</h1>
             <div className="productos-grid">
                {productos.map((producto) => {
                   // Procesar imágenes de manera uniforme
@@ -230,6 +279,11 @@ function Categoria() {
                         className="producto-card"
                         onClick={() => handleProductClick(producto)}
                      >
+                           {producto.descuento && producto.descuento.porcentaje !== 0 && (
+                              <div className="discount-badge1">
+                                   <span>-{producto.descuento.porcentaje}%</span>
+                              </div>
+                           )}
                         <img
                            src={primeraImagen}
                            alt={producto.Nombre || producto.Producto}
@@ -239,9 +293,19 @@ function Categoria() {
                            }}
                         />
                         <div className="producto-info">
-                           <h3>{producto.Nombre || producto.Producto}</h3>
-                           <p className="producto-precio">${producto.Precio}</p>
+                        <h3>{producto.Nombre || producto.Producto}</h3>
+                           {producto.descuento && producto.descuento.porcentaje !== 0 ? (
+                              <>
+                                    <p className="producto-precio-original">${producto.Precio}</p>
+                                    <p className="producto-precio-descuento">
+                                       ${producto.descuento.precioConDescuento}
+                                    </p>
+                              </>
+                           ) : (
+                              <p className="producto-precio">${producto.Precio}</p>
+                           )}
                         </div>
+                        
                      </div>
                   );
                })}
@@ -253,6 +317,11 @@ function Categoria() {
                <div className="modal-content4" onClick={e => e.stopPropagation()}>
                   <button className="modal-close" onClick={closeModal}>&times;</button>
                   <div className="modal-product">
+                  {selectedProduct.descuento && selectedProduct.descuento.porcentaje !== 0 && (
+                     <div className="discount-badge-modal">
+                           <span>-{selectedProduct.descuento.porcentaje}%</span>
+                     </div>
+                  )}
                      <div className="modal-images">
                         {procesarImagenes(selectedProduct).map((imagen, index) => (
                            <img 
@@ -266,9 +335,20 @@ function Categoria() {
                            />
                         ))}
                      </div>
-                     <div className="modal-info">
+                     
+                     <div className="modal-info8">
                         <h2>{selectedProduct.Nombre || selectedProduct.Producto}</h2>
-                        <p className="modal-precio">${selectedProduct.Precio}</p>
+                        {selectedProduct.descuento && selectedProduct.descuento.porcentaje !== 0 ? (
+                           <div className="modal-precios">
+                              <p className="modal-precio-original">Precio Normal: ${selectedProduct.Precio}</p>
+                              <p className="modal-precio-descuento">
+                                    Precio Oferta: ${(selectedProduct.descuento.precioConDescuento)}
+                              </p>
+                           </div>
+                        ): (
+                           <p className="modal-precio">${selectedProduct.Precio}</p>
+                        )}
+                        
                         <p className="modal-descripcion">{selectedProduct.Descripcion}</p>
                         
                         <div className="cantidad-container">
@@ -365,7 +445,6 @@ function Categoria() {
 
           <Footer />
 
-          <Filtros /> 
       </div>
    );
 }

@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HeaderAdmin from '../../Components/headerAdmin/headerAdmin.jsx';
 import BarraLateralAdmin from '../../Components/barraLateralAdmin/barraLateralAdmin.jsx'; 
 import './pantallaAdmin.css'
 import { Pie, Bar } from 'react-chartjs-2';
+import { getAllPedidosWithBasicInfo } from '../../Api/pedidoApi';
+import { getUsersInfo } from '../../Api/userApi';
+import { getAllDiscounts } from '../../Api/descuentosApi';
 import {
   Chart as ChartJS,
   ArcElement,
@@ -26,11 +29,43 @@ ChartJS.register(
 );
 
 function PantallaAdmin() {
+  const [pedidos, setPedidos] = useState([]);
+  const [usuarios, setUsuarios] = useState({ activos: 0, inactivos: 0 });
+  const [descuentos, setDescuentos] = useState([]);
+
+  useEffect(() => {
+    const cargarDatos = async () => {
+      try {
+        // Cargar pedidos
+        const pedidosData = await getAllPedidosWithBasicInfo();
+        setPedidos(pedidosData);
+
+        // Cargar usuarios - Corregido para usar el campo estado
+        const usuariosData = await getUsersInfo();
+        const usuariosActivos = usuariosData.filter(u => u.estado === "Activo").length;
+        const usuariosInactivos = usuariosData.filter(u => u.estado === "Inactivo").length;
+        setUsuarios({ activos: usuariosActivos, inactivos: usuariosInactivos });
+
+        // Cargar descuentos
+        const descuentosData = await getAllDiscounts();
+        setDescuentos(descuentosData.filter(d => d.estado));
+      } catch (error) {
+        console.error("Error al cargar datos:", error);
+      }
+    };
+
+    cargarDatos();
+  }, []);
+
   const pieData = {
-    labels: ['Completas', 'Confirmadas', 'Canceladas', 'Reembolsadas'],
+    labels: ['Entregadas', 'En Espera', 'Reembolsadas'],
     datasets: [{
-      data: [150, 45, 12, 8],
-      backgroundColor: ['#4caf50', '#ffc107', '#f44336', '#9e9e9e']
+      data: [
+        pedidos.filter(p => p.estado === 2).length,
+        pedidos.filter(p => p.estado === 0).length,
+        pedidos.filter(p => p.estado === 1).length
+      ],
+      backgroundColor: ['#4caf50', '#ffc107', '#f44336']
     }]
   };
 
@@ -87,30 +122,25 @@ function PantallaAdmin() {
             </div>
           </div>
           <div className="chart-card">
-    <h3>Descuentos Activos</h3>
-    <div className="discount-list">
-      <div className="discount-item">
-        <span className="product-name">Tomate</span>
-        <span className="discount-badge">-15%</span>
-      </div>
-      <div className="discount-item">
-        <span className="product-name">Coca Cola</span>
-        <span className="discount-badge">-25%</span>
-      </div>
-      <div className="discount-item">
-        <span className="product-name">Cerveza Pilsener</span>
-        <span className="discount-badge">-20%</span>
-      </div>
-      <div className="discount-item">
-        <span className="product-name">Dog Chow 2kg</span>
-        <span className="discount-badge">-30%</span>
-      </div>
-    </div>
-  </div>
+            <h3>Descuentos Activos</h3>
+            <div className="discount-list">
+              {descuentos.map((descuento) => (
+                <div key={descuento.id} className="discount-item">
+                  <span className="product-name">{descuento.nombre}</span>
+                  <span className="discount-badge2">-{descuento.porcentaje}%</span>
+                </div>
+              ))}
+              {descuentos.length === 0 && (
+                <div className="discount-item">
+                  <span className="product-name">No hay descuentos activos</span>
+                </div>
+              )}
+            </div>
+          </div>
           <div className="report-card">
             <ul>
-              <li>Usuarios Activos: <span className="positive">3</span></li>
-              <li>Usuarios Inhabilitados: <span className="negative">3</span></li>
+              <li>Usuarios Activos: <span className="positive">{usuarios.activos}</span></li>
+              <li>Usuarios Inhabilitados: <span className="negative">{usuarios.inactivos}</span></li>
             </ul>
           </div>
         </div>

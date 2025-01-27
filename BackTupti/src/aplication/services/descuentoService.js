@@ -79,6 +79,68 @@ class DescuentoService {
       throw error;
     }
   }
+  async getAllDiscounts() {
+    try {
+      const discounts = await this.descuentoRepository.getAllDiscountsWithDetails();
+      return discounts.map(discount => ({
+        nombre: discount.Producto?.Nombre || discount.TipoProducto?.detalle || 'N/A',
+        estado: discount.Activo === 1,
+        porcentaje: discount.Porcentaje,
+        fechaInicio: discount.FechaInicio,
+        fechaFin: discount.FechaFin
+      }));
+    } catch (error) {
+      throw new Error(`Error in discount service: ${error.message}`);
+    }
+  }
+  async getAllDiscounts() {
+    try {
+      const discounts = await this.descuentoRepository.getAllDiscountsWithDetails();
+      
+      return discounts.map(discount => {
+        return {
+          id: discount.IdDescuento,
+          nombre: discount.Producto?.Nombre || discount.TipoProducto?.detalle || 'N/A',
+          estado: Boolean(discount.Activo), // Convert 0/1 to boolean
+          porcentaje: discount.Porcentaje,
+          fechaInicio: discount.FechaInicio,
+          fechaFin: discount.FechaFin
+        };
+      });
+    } catch (error) {
+      console.error('Error in getAllDiscounts:', error);
+      throw new Error(`Error in discount service: ${error.message}`);
+    }
+  }
+  async updateDiscount(idDescuento, data) {
+    try {
+      if (!idDescuento) throw new Error('ID de descuento es requerido');
+      
+      const updated = await this.descuentoRepository.updateDiscount(idDescuento, {
+        porcentaje: data.porcentaje,
+        fechaInicio: data.fechaInicio,
+        fechaFin: data.fechaFin,
+        activo: data.activo
+      });
+
+      if (!updated) throw new Error('Descuento no encontrado');
+      return { success: true };
+    } catch (error) {
+      throw new Error(`Error updating discount: ${error.message}`);
+    }
+  }
+  async deleteDescuento(id) {
+    try {
+      const result = await this.descuentoRepository.delete(id);
+      if (!result) {
+        throw new Error('Descuento no encontrado');
+      }
+      return result;
+    } catch (error) {
+      console.error('Error en el servicio al eliminar descuento:', error);
+      throw error;
+    }
+  }
 }
 
 module.exports = DescuentoService;

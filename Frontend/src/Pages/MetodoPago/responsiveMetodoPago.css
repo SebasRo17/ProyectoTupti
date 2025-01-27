@@ -2198,10 +2198,14 @@ table td {
     transform: translateX(300px);
   }
   .pagina-metodo-pago {
-    padding: 10px;
-    margin-left: 9%;
-    max-width: 90%;
-  
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    padding: 0%;
+    margin: 0 auto;
+    width: 90%;
+    max-width: 1200px;
+    margin-top: 5%;
   }
   
   .informacion-tabla, .formulario-pago {

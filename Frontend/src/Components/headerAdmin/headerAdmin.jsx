@@ -35,38 +35,7 @@ const HeaderAdmin = () => {
   
   return (
     <header className="headerAdmin">
-      <div className="header-search">
-        <div className="search-input-container">
-          <input 
-            type="text" 
-            placeholder="Buscar productos..." 
-            className="search-input"
-            value={searchTerm}
-            onChange={handleSearch}
-            onFocus={() => setShowSuggestions(true)}
-          />
-          {showSuggestions && suggestions.length > 0 && (
-            <ul className="suggestions-list">
-              {suggestions.map((product) => (
-                <li 
-                  key={product.id} 
-                  onClick={() => handleSuggestionClick(product)}
-                  className="suggestion-item"
-                >
-                  <img src={product.image} alt={product.name} className="suggestion-image" />
-                  <div className="suggestion-details">
-                    <span>{product.name}</span>
-                    <span className="suggestion-price">{product.price}</span>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-        <button className="search-button2">🔍</button>
-      </div>
-      <div className="header-actions">
-      </div>
+
     </header>
   );
 };

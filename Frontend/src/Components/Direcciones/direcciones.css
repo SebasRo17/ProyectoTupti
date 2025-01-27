@@ -1,15 +1,22 @@
 .direcciones-container {
-    max-width: 1200px;
+    width: 80%;
     margin: 0 auto;
     padding: 20px;
     margin-top: 2%;
+    margin-left: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   
   .direcciones-list1 {
     display: flex;
+    justify-content: center;
     color : #333;
     gap: 20px;
     width: 100%;
+    transition: all 0.3s ease;
   }
   
   .direccion-card {
@@ -20,7 +27,28 @@
     box-shadow: 0 2px 4px rgba(106, 221, 221, 0.705);
     display: flex;
     flex-direction: column;
+    width: 25%;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.3s ease;
+  }
+  
+  .direccion-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
     width: 100%;
+    height: 0;
+    background-color: rgba(220, 53, 69, 0.1);
+    transition: height 0.3s ease;
+    z-index: 0;
+    pointer-events: none;
+  }
+  
+  .direccion-card[data-deletehover="true"]::before {
+    height: 100%;
   }
   
   .direccion-detalles {
@@ -28,14 +56,17 @@
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 10px;
     padding: 10px 0;
+    position: relative;
+    z-index: 1;
   }
   
   .direccion-detalles p {
     margin: 5px 0;
     padding: 5px;
   }
+
   .delete-btn1 {
-    text-align: start;
+    text-align: end;
     padding: 8px 16px;
     background: #dc3545;
     color: white;
@@ -44,7 +75,15 @@
     cursor: pointer;
     width: 20% !important;
     margin-left: 80%;
+    position: relative;
+    z-index: 1;
+    transition: background-color 0.3s ease;
   }
+  
+  .delete-btn1:hover {
+    background-color: #bd2130;
+  }
+  
   /* Modal Styles */
 .modal-overlay3 {
   position: fixed;
@@ -105,16 +144,17 @@
   margin-top: 20px;
 }
 
-.cancel-btn5 {
+.boton-cancelar {
   padding: 8px 16px;
   border: 1px solid #ddd;
   background: rgb(45, 112, 18) !important;
   border-radius: 4px;
   cursor: pointer;
+  margin-left: -800% !important;
 }
-.delete-btn5 {
+.eliminar-boton {
   padding: 8px 16px;
-  background: #dc3545;
+  background: #dc3545 !important;
   color: white;
   border: none;
   border-radius: 4px;
@@ -135,4 +175,33 @@
     margin-bottom: 15px;
     border-bottom: 2px solid #eee;
     padding-bottom: 10px;
+    position: relative;
+    z-index: 1;
   }
+
+    @media screen and (max-width: 645px) {
+      .direcciones-list1 {
+          flex-wrap: wrap;
+          justify-content: center;
+      }
+  
+      .direccion-card {
+          flex-basis: calc(50% - 10px); /* 50% width minus gap */
+          min-width: 250px;
+          margin-bottom: 20px;
+      }
+      .direcciones-container h1{
+        margin-top: -2% !important;
+        margin-bottom: 10% !important;
+      }
+  }
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .direcciones-list1 {
+        justify-content: center;
+        align-items: center;
+    }
+
+    .direccion-card {
+        margin-bottom: 20px;
+    }
+}
