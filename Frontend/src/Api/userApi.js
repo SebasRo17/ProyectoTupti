@@ -1,13 +1,15 @@
 import axios from 'axios';
+import { API_URL } from '../config/config';
 
 export const updateUserName = async (userId, name) => {
-  const response = await axios.put(`${import.meta.env.VITE_API_URL_DEVELOPMENT}/users/${userId}`, { Nombre: name });
+  const response = await axios.put(`${API_URL}/users/${userId}`, { Nombre: name });
   return response.data;
 };
+
 export const registerUser = async (userData) => {
   try {
     const response = await axios.post(
-      `${import.meta.env.VITE_API_URL_DEVELOPMENT}/users/register`, 
+      `${API_URL}/users/register`, 
       {
         email: userData.email,
         contrasenia: userData.contrasenia,
@@ -17,16 +19,17 @@ export const registerUser = async (userData) => {
     return response.data;
   } catch (error) {
     if (error.response) {
-      throw new Error(error.response.data.message);
+      // Lanzar el mensaje específico del backend
+      throw new Error(error.response.data.message || 'Error al registrar usuario');
     }
-    throw new Error('Error al registrar usuario');
+    throw new Error('Error de conexión al servidor');
   }
 };
 
 export const changePassword = async (userId, currentPassword, newPassword) => {
   try {
     const response = await axios.post(
-      `${import.meta.env.VITE_API_URL_DEVELOPMENT}/users/${userId}/change-password`,
+      `${API_URL}/users/${userId}/change-password`,
       {
         currentPassword,
         newPassword
@@ -41,7 +44,7 @@ export const changePassword = async (userId, currentPassword, newPassword) => {
 export const getUserInfo = async (userId) => {
   try {
     const response = await axios.get(
-      `${import.meta.env.VITE_API_URL_DEVELOPMENT}/users/${userId}/info`
+      `${API_URL}/users/${userId}/info`
     );
     return response.data;
   } catch (error) {
@@ -55,7 +58,7 @@ export const getUserInfo = async (userId) => {
 export const getUsersInfo = async () => {
   try {
     const response = await axios.get(
-      `${import.meta.env.VITE_API_URL_DEVELOPMENT}/users/info`
+      `${API_URL}/users/info`
     );
     return response.data;
   } catch (error) {
@@ -66,7 +69,7 @@ export const getUsersInfo = async () => {
 export const deactivateUser = async (userId) => {
   try {
     const response = await axios.put(
-      `${import.meta.env.VITE_API_URL_DEVELOPMENT}/users/${userId}`,
+      `${API_URL}/users/${userId}`,
       { Activo: false }
     );
     return response.data;
@@ -78,7 +81,7 @@ export const deactivateUser = async (userId) => {
 export const activateUser = async (userId) => {
   try {
     const response = await axios.put(
-      `${import.meta.env.VITE_API_URL_DEVELOPMENT}/users/${userId}`,
+      `${API_URL}/users/${userId}`,
       { Activo: true }
     );
     return response.data;

@@ -72,6 +72,21 @@ class UserRepositoryImpl {
       throw error;
     }
   }
+
+  async emailExists(email) {
+    try {
+      const count = await User.count({
+        where: {
+          Email: email
+        }
+      });
+      return count > 0;
+    } catch (error) {
+      console.error('Error al verificar email existente:', error);
+      throw error;
+    }
+  }
+
   async updatePassword(userId, newPassword) {
     try {
       const hashedPassword = await bcrypt.hash(newPassword, 10);
