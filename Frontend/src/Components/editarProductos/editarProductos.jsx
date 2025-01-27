@@ -11,6 +11,7 @@ const EditarProductos = ({ product, onClose }) => {
     });
     const [imagePreview, setImagePreview] = useState('');
 
+    
     useEffect(() => {
         //console.log('Producto actualizado:', product);
         if (product) {
