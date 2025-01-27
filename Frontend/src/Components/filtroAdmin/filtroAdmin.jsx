@@ -3,11 +3,33 @@ import { Link } from 'react-router-dom';
 import NuevoDescuento from '../nuevoDescuento/nuevoDescuento';
 import './filtroAdmin.css';
 
-const FiltroAdmin = ({ showNewProduct = true, showNewDiscount = true, onSearch, onFilterStateChange, onFilterNameChange, discounts, onFilterCategory, categorias = [] }) => {
+const FiltroAdmin = ({ showNewProduct = true, showNewDiscount = true, onSearch, onFilterStateChange, onFilterNameChange, discounts, onFilterCategory }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const categorias = [
+    { IdCategoria: "Carnes", Nombre: "Carnes" },
+    { IdCategoria: "Vegetales", Nombre: "Vegetales" },
+    { IdCategoria: "Frutas", Nombre: "Frutas" },
+    { IdCategoria: "Bebidas", Nombre: "Bebidas" },
+    { IdCategoria: "Lácteos", Nombre: "Lácteos" },
+    { IdCategoria: "Panadería", Nombre: "Panadería" },
+    { IdCategoria: "Snacks", Nombre: "Snacks" },
+    { IdCategoria: "Limpieza", Nombre: "Limpieza" },
+    { IdCategoria: "Congelados", Nombre: "Congelados" },
+    { IdCategoria: "Granos", Nombre: "Granos" },
+    { IdCategoria: "Condimentos", Nombre: "Condimentos" },
+    { IdCategoria: "Cuidado Personal", Nombre: "Cuidado Personal" },
+    { IdCategoria: "Mascotas", Nombre: "Mascotas" },
+    { IdCategoria: "Electrónica", Nombre: "Electrónica" },
+    { IdCategoria: "Dulces y Chocolates", Nombre: "Dulces y Chocolates" },
+    { IdCategoria: "Enlatados", Nombre: "Enlatados" },
+    { IdCategoria: "Pastas y Arroces", Nombre: "Pastas y Arroces" },
+    { IdCategoria: "Aceites y Aderezos", Nombre: "Aceites y Aderezos" },
+    { IdCategoria: "Bebidas Alcohólicas", Nombre: "Bebidas Alcohólicas" }
+  ];
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
@@ -86,7 +108,7 @@ const FiltroAdmin = ({ showNewProduct = true, showNewDiscount = true, onSearch, 
           {categorias.map(categoria => (
             <option 
               key={categoria.IdCategoria} 
-              value={categoria.IdCategoria}
+              value={categoria.Nombre}
             >
               {categoria.Nombre}
             </option>
