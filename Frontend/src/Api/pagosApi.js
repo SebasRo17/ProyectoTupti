@@ -2,7 +2,7 @@ import { API_URL } from '../config/config';
 
 export const createPaypalOrder = async (idPedido, monto) => {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL_DEVELOPMENT}/api/payments/create`, {
+    const response = await fetch(`${API_URL}/api/payments/create`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -21,7 +21,7 @@ export const createPaypalOrder = async (idPedido, monto) => {
 };
 export const capturePaypalPayment = async (orderId) => {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL_DEVELOPMENT}/api/payments/capture/${orderId}`, {
+    const response = await fetch(`${API_URL}/api/payments/capture/${orderId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

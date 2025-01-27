@@ -17,7 +17,13 @@ class UserService {
   async createUser({ Email, Contrasenia, Nombre }) {
     try {
       console.log('Datos recibidos en createUser:', { Email, Contrasenia, Nombre });
-  
+
+      // Verificar si el email ya existe
+      const emailExists = await UserRepository.emailExists(Email);
+      if (emailExists) {
+        throw new Error('El correo electrónico ya está registrado');
+      }
+
       const hashedPassword = await bcrypt.hash(Contrasenia, 10);
       const user = await User.create({
         Email,
@@ -26,11 +32,11 @@ class UserService {
         IdRol: 2,
         Activo: true
       });
-  
+
       const CodigoUs = `US${String(user.IdUsuario).padStart(3, '0')}`;
       user.CodigoUs = CodigoUs;
       await user.save();
-  
+
       return user;
     } catch (error) {
       console.error('Error al crear usuario:', error);
