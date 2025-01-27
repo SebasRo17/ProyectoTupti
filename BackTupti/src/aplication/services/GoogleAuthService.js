@@ -11,7 +11,7 @@ class GoogleAuthService {
   }
 
   initializePassport() {
-    const callbackURL = process.env.NODE_ENV === 'production' ? process.env.PROD_URL : process.env.DEV_URL1;
+    const callbackURL = process.env.NODE_ENV === 'production' ? process.env.PROD_URL1 : process.env.DEV_URL1;
 
     passport.use(new GoogleStrategy({
       clientID: process.env.GOOGLE_CLIENT_ID,
