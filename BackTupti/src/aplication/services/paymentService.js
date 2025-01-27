@@ -73,8 +73,8 @@ async createOrder(idPedido, monto) {
         }
       }],
       application_context: {
-        return_url: `${process.env.DEV_URL1}/payment-success`, // URL for successful payment
-        cancel_url: `${process.env.DEV_URL1}/payment-cancel`,  // URL for cancelled payment
+        return_url: `${process.env.PROD_URL1}/payment-success`, // URL for successful payment
+        cancel_url: `${process.env.PROD_URL1}/payment-cancel`,  // URL for cancelled payment
         user_action: 'PAY_NOW', // This forces the PayPal popup to show the payment button immediately
       }
     });

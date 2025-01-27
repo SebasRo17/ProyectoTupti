@@ -7,7 +7,7 @@ const AuthService = require('../aplication/services/AuthService');
 
 module.exports = function configurePassport() {
   // Configurar estrategia de Google
-  const callbackURL = process.env.NODE_ENV === 'production' ? process.env.PROD_URL : process.env.DEV_URL;
+  const callbackURL = process.env.NODE_ENV === 'production' ? process.env.PROD_URL1 : process.env.DEV_URL1;
   passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
