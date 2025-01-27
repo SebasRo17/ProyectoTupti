@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HeaderAdmin from '../../Components/headerAdmin/headerAdmin.jsx';
 import BarraLateralAdmin from '../../Components/barraLateralAdmin/barraLateralAdmin.jsx'; 
 import './pantallaAdmin.css'
 import { Pie, Bar } from 'react-chartjs-2';
+import { getAllPedidosWithBasicInfo } from '../../Api/pedidoApi';
+import { getUsersInfo } from '../../Api/userApi';
 import {
   Chart as ChartJS,
   ArcElement,
@@ -26,11 +28,38 @@ ChartJS.register(
 );
 
 function PantallaAdmin() {
+  const [pedidos, setPedidos] = useState([]);
+  const [usuarios, setUsuarios] = useState({ activos: 0, inactivos: 0 });
+
+  useEffect(() => {
+    const cargarDatos = async () => {
+      try {
+        // Cargar pedidos
+        const pedidosData = await getAllPedidosWithBasicInfo();
+        setPedidos(pedidosData);
+
+        // Cargar usuarios
+        const usuariosData = await getUsersInfo();
+        const usuariosActivos = usuariosData.filter(u => u.Activo).length;
+        const usuariosInactivos = usuariosData.filter(u => !u.Activo).length;
+        setUsuarios({ activos: usuariosActivos, inactivos: usuariosInactivos });
+      } catch (error) {
+        console.error("Error al cargar datos:", error);
+      }
+    };
+
+    cargarDatos();
+  }, []);
+
   const pieData = {
-    labels: ['Completas', 'Confirmadas', 'Canceladas', 'Reembolsadas'],
+    labels: ['Entregadas', 'En Espera', 'Reembolsadas'],
     datasets: [{
-      data: [150, 45, 12, 8],
-      backgroundColor: ['#4caf50', '#ffc107', '#f44336', '#9e9e9e']
+      data: [
+        pedidos.filter(p => p.estado === 2).length,
+        pedidos.filter(p => p.estado === 0).length,
+        pedidos.filter(p => p.estado === 1).length
+      ],
+      backgroundColor: ['#4caf50', '#ffc107', '#f44336']
     }]
   };
 
@@ -109,8 +138,8 @@ function PantallaAdmin() {
   </div>
           <div className="report-card">
             <ul>
-              <li>Usuarios Activos: <span className="positive">3</span></li>
-              <li>Usuarios Inhabilitados: <span className="negative">3</span></li>
+              <li>Usuarios Activos: <span className="positive">{usuarios.activos}</span></li>
+              <li>Usuarios Inhabilitados: <span className="negative">{usuarios.inactivos}</span></li>
             </ul>
           </div>
         </div>
