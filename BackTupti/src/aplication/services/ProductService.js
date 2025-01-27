@@ -1,5 +1,6 @@
 const ProductRepositoryImpl = require("../../infrastructure/repositories/ProductRepositoryImpl")
 const Product = require("../../domain/models/Producto")
+const ProductRepository = require('../../infrastructure/repositories/ProductRepository');
 
 class ProductService {
     static async getIdProducts(productId) {
@@ -89,6 +90,14 @@ class ProductService {
           return await ProductRepositoryImpl.findAll(filters);
         } catch (error) {
           console.error('Error en el servicio de productos:', error);
+          throw error;
+        }
+      }
+      async getProductDetails(idProducto) {
+        try {
+          return await ProductRepository.findProductDetailsById(idProducto);
+        } catch (error) {
+          console.error('Error en servicio:', error);
           throw error;
         }
       }

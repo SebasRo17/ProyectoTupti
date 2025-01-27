@@ -154,11 +154,3 @@ router.delete('/:id', ProductController.deleteProduct);
 router.get('/', (req, res) => ProductController.getProducts(req, res));
 
 module.exports = router;
-
-
-
-
-
-
-
-

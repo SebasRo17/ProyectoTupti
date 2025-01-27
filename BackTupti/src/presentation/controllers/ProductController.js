@@ -98,6 +98,25 @@ class ProductController {
           res.status(500).json({ message: 'Error al obtener productos' });
         }
       }
+      async getProductDetails(req, res) {
+        try {
+          const { idProducto } = req.params;
+          const product = await ProductService.getProductDetails(idProducto);
+          
+          if (!product) {
+            return res.status(404).json({ message: 'Producto no encontrado' });
+          }
+          
+          res.json({
+            Nombre: product.Nombre,
+            IdTipoProducto: product.IdTipoProducto,
+            TipoProducto: product.TipoProducto.detalle
+          });
+        } catch (error) {
+          console.error('Error en controlador:', error);
+          res.status(500).json({ message: 'Error al obtener detalles del producto' });
+        }
+      }
 }
 
 module.exports = new ProductController();

@@ -180,15 +180,6 @@ header {
   margin-top: 20px;
 }
 
-.product-card {
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  width: calc(33.333% - 20px);
-  box-sizing: border-box;
-}
-
 .product-card:hover {
   transform: scale(1.05);
 }
@@ -395,4 +386,93 @@ header {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+.product-card {
+  position: relative;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: calc(33.333% - 20px);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+
+.discount-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #ff0000;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 0.9em;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 50px;
+}
+
+.discount-text {
+  text-align: center;
+  flex: 1;
+}
+
+.product-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.product-details {
+  font-size: 0.9em;
+  color: #666;
+  text-align: center;
+}
+
+.price-container {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.product-price.original {
+  text-decoration: line-through;
+  color: #666;
+  font-size: 0.9em;
+}
+
+.product-price.discounted {
+  color: #ff0000;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.card-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.editar-button, .delete-btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+.editar-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.delete-btn {
+  background-color: #dc3545;
+  color: white;
 }
