@@ -132,6 +132,64 @@ class PedidoService {
     }
   }
 
+  async getPedidoFullDetails(idPedido) {
+    try {
+      const detalles = await PedidoRepository.findPedidoFullDetails(idPedido);
+      
+      if (!detalles.length) {
+        throw new Error('Pedido no encontrado');
+      }
+
+      // Agrupar los productos del pedido
+      const productos = detalles.map(item => ({
+        idProducto: item.IdProducto,
+        nombreProducto: item.NombreProducto,
+        cantidad: item.Cantidad,
+        precioUnitario: item.PrecioUnitario
+      }));
+
+      // Construir la respuesta con los datos agrupados
+      const respuesta = {
+        pedido: {
+          idPedido: detalles[0].IdPedido,
+          estado: detalles[0].Estado,
+          fechaPedido: detalles[0].CarritoFecha
+        },
+        usuario: {
+          nombre: detalles[0].Nombre,
+          email: detalles[0].Email
+        },
+        direccion: {
+          callePrincipal: detalles[0].CallePrincipal,
+          numeracion: detalles[0].Numeracion,
+          calleSecundaria: detalles[0].CalleSecundaria,
+          vecindario: detalles[0].Vecindario,
+          ciudad: detalles[0].Ciudad
+        },
+        productos: productos
+      };
+
+      return respuesta;
+    } catch (error) {
+      console.error('Error en el servicio al obtener detalles completos del pedido:', error);
+      throw error;
+    }
+  }
+
+  async getAllPedidosWithBasicInfo() {
+    try {
+      const pedidos = await PedidoRepository.findAllPedidosWithBasicInfo();
+      return pedidos.map(pedido => ({
+        idPedido: pedido.IdPedido,
+        estado: pedido.Pedido_Estado,
+        nombreUsuario: pedido.Usuario_Nombre,
+        fechaActualizacion: pedido.Carrito_FechaActualizacion
+      }));
+    } catch (error) {
+      console.error('Error en el servicio al obtener listado de pedidos:', error);
+      throw error;
+    }
+  }
 }
 
 module.exports = new PedidoService();

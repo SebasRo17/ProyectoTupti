@@ -37,3 +37,52 @@ export const changePassword = async (userId, currentPassword, newPassword) => {
     throw new Error(error.response?.data?.message || 'Error al cambiar la contraseña');
   }
 };
+
+export const getUserInfo = async (userId) => {
+  try {
+    const response = await axios.get(
+      `${import.meta.env.VITE_API_URL_DEVELOPMENT}/users/${userId}/info`
+    );
+    return response.data;
+  } catch (error) {
+    if (error.response?.status === 404) {
+      throw new Error('Usuario no encontrado');
+    }
+    throw new Error(error.response?.data?.message || 'Error al obtener información del usuario');
+  }
+};
+
+export const getUsersInfo = async () => {
+  try {
+    const response = await axios.get(
+      `${import.meta.env.VITE_API_URL_DEVELOPMENT}/users/info`
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || 'Error al obtener información de los usuarios');
+  }
+};
+
+export const deactivateUser = async (userId) => {
+  try {
+    const response = await axios.put(
+      `${import.meta.env.VITE_API_URL_DEVELOPMENT}/users/${userId}`,
+      { Activo: false }
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || 'Error al desactivar usuario');
+  }
+};
+
+export const activateUser = async (userId) => {
+  try {
+    const response = await axios.put(
+      `${import.meta.env.VITE_API_URL_DEVELOPMENT}/users/${userId}`,
+      { Activo: true }
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || 'Error al activar usuario');
+  }
+};

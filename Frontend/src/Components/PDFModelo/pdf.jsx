@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import { getDetallesPedido, getLastPedidoByUserId } from "../../Api/pedidoApi";
-import { Page, Text, View, Document, PDFViewer, StyleSheet, Image } from "@react-pdf/renderer";
+import { Page, Text, View, Document, PDFViewer, StyleSheet, Image, pdf } from "@react-pdf/renderer";
 
 // Definición de estilos
 const styles = StyleSheet.create({
@@ -155,8 +155,8 @@ const generateClaveAcceso = (fecha, numeroFactura) => {
     return `${baseClaveAcceso}${digitoVerificador}`;
 };
 
-// Componente principal
-const InvoicePDF = ({ idUsuario }) => {
+// Modificar la exportación del componente InvoicePDF
+const InvoicePDF = ({ idUsuario, forEmail = false }) => {
     const [invoiceData, setInvoiceData] = useState({
         customer: {
             name: "Cliente",
@@ -186,6 +186,11 @@ const InvoicePDF = ({ idUsuario }) => {
             }
 
             try {
+                // Si es para email, asegurarse de que los datos estén cargados
+                if (forEmail) {
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                }
+
                 // Leer datos del cliente del localStorage
                 let clienteData;
                 try {
@@ -286,7 +291,7 @@ const InvoicePDF = ({ idUsuario }) => {
         };
 
         fetchPedidoData();
-    }, [idUsuario, numeroFactura]);
+    }, [idUsuario, numeroFactura, forEmail]);
 
     // En el render, agregar validaciones para evitar errores de undefined
     const renderPrecio = (valor) => {
@@ -407,10 +412,18 @@ const InvoicePDF = ({ idUsuario }) => {
                 </View>
             ))}
 
+            {/* Cuota de servicio */}
+            <View style={styles.rowTotales}>
+                <Text style={styles.colLabelTotales}>Cuota de servicio (8%)</Text>
+                <Text style={styles.colValueTotales}>{renderPrecio(invoiceData.totales.subtotal * 0.08)}</Text>
+            </View>
+
             {/* Valor Total */}
             <View style={styles.rowTotales}>
                 <Text style={styles.colLabelTotales}>VALOR TOTAL</Text>
-                <Text style={styles.colValueTotales}>{renderPrecio(invoiceData.totales.total)}</Text>
+                <Text style={styles.colValueTotales}>
+                    {renderPrecio(invoiceData.totales.total + (invoiceData.totales.subtotal * 0.08))}
+                </Text>
             </View>
           </View>
   
@@ -421,7 +434,227 @@ const InvoicePDF = ({ idUsuario }) => {
     );
   };
   
+// Modificar la función generatePdfBlob para incluir un tiempo de espera
+const generatePdfBlob = async (idUsuario) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      // Obtener los datos del pedido primero
+      const ultimoPedido = await getLastPedidoByUserId(idUsuario);
+      const pedidoData = await getDetallesPedido(ultimoPedido.IdPedido);
+      
+      // Obtener datos del cliente del localStorage
+      const clienteData = JSON.parse(localStorage.getItem('clienteData'));
+      
+      // Generar datos de factura
+      const currentDate = new Date();
+      const formattedDate = currentDate.toLocaleDateString('es-EC');
+      const formattedDateTime = currentDate.toLocaleString('es-EC');
+      const numeroFactura = ultimoPedido.IdPedido;
+      const claveAcceso = generateClaveAcceso(formattedDate, numeroFactura);
 
+      // Calcular subtotales por IVA
+      const subtotalesPorIva = {};
+      pedidoData.items.forEach(item => {
+        const iva = item.impuesto?.porcentaje || 0;
+        const subtotal = item.producto.precioUnitario * item.producto.cantidad;
+        const ivaKey = Math.round(iva);
+        if (!subtotalesPorIva[ivaKey]) {
+          subtotalesPorIva[ivaKey] = 0;
+        }
+        subtotalesPorIva[ivaKey] += subtotal;
+      });
+
+      const pdfDoc = (
+        <Document>
+          <Page size="A4" style={styles.page}>
+            {/* Cabecera */}
+            <View style={styles.headerContainer}>
+              <View style={styles.logoContainer}>
+                <Image 
+                  style={styles.logoT}
+                  src="https://res.cloudinary.com/dd7etqrf2/image/upload/v1734638598/tupti_3_r82cww_dsbubc.png"
+                />
+                <View style={styles.infoContainer}>
+                  <Text style={styles.infoLine}>TUPTI</Text>
+                  <Text style={styles.infoLine}>DIR MATRIZ: AV. 16 DE JULIO 123, QUITO - ECUADOR</Text>
+                  <Text style={styles.infoLine}>DIR SUCURSAL: AV. 16 DE JULIO 123, QUITO - ECUADOR</Text>
+                  <Text style={styles.infoLine}>CONTRIBUYENTE ESPECIAL NRO: 123456</Text>
+                  <Text style={styles.infoLine}>OBLIGADO A LLEVAR CONTABILIDAD: SI</Text>
+                </View>
+              </View>
+
+              <View style={styles.automatico}>
+                <Text style={styles.autLine}>RUC: 1751345263001</Text>
+                <Text style={styles.autLine}>FACTURA N°: 001-004-{numeroFactura.toString().padStart(9, '0')}</Text>
+                <Text style={styles.autLine}>NO. DE AUTORIZACIÓN: {claveAcceso}</Text>
+                <Text style={styles.autLine}>FECHA Y HORA DE AUTORIZACIÓN: {formattedDateTime}</Text>
+                <Text style={styles.autLine}>AMBIENTE: PRODUCCIÓN</Text>
+                <Text style={styles.autLine}>EMISIÓN: NORMAL</Text>
+                <Text style={styles.autLine}>CLAVE DE ACCESO: {claveAcceso}</Text>
+              </View>
+            </View>
+
+            {/* Información del cliente */}
+            <View style={styles.section}>
+              <Text style={styles.cliente}>RAZÓN SOCIAL / NOMBRES Y APELLIDOS: {clienteData?.nombre || 'Consumidor Final'}</Text>
+              <Text style={styles.cliente}>RUC/CI: {clienteData?.identificacion || '9999999999999'}</Text>
+              <Text style={styles.cliente}>FECHA DE EMISIÓN: {formattedDate}</Text>
+            </View>
+
+            {/* Tabla de productos */}
+            <View style={styles.table}>
+              <View style={styles.tableRow}>
+                <View style={[styles.tableColHeader, styles.codPrincipal]}>
+                  <Text>CÓD. PRINCIPAL</Text>
+                </View>
+                <View style={[styles.tableColHeader, styles.cantidad]}>
+                  <Text>CANT.</Text>
+                </View>
+                <View style={[styles.tableColHeader, styles.descripcion]}>
+                  <Text>DESCRIPCIÓN</Text>
+                </View>
+                <View style={[styles.tableColHeader, styles.precioUnitario]}>
+                  <Text>PRECIO UNITARIO</Text>
+                </View>
+                <View style={[styles.tableColHeader, styles.descuento]}>
+                  <Text>DESCUENTO</Text>
+                </View>
+                <View style={[styles.tableColHeader, styles.precioTotal]}>
+                  <Text>PRECIO TOTAL</Text>
+                </View>
+              </View>
+
+              {pedidoData.items.map((item, index) => (
+                <View style={styles.tableRow} key={index}>
+                  <View style={[styles.tableCol, styles.codPrincipal]}>
+                    <Text>{item.idCarritoDetalle}</Text>
+                  </View>
+                  <View style={[styles.tableCol, styles.cantidad]}>
+                    <Text>{item.producto.cantidad}</Text>
+                  </View>
+                  <View style={[styles.tableCol, styles.descripcion]}>
+                    <Text>{item.producto.nombre}</Text>
+                  </View>
+                  <View style={[styles.tableCol, styles.precioUnitario]}>
+                    <Text>${item.producto.precioUnitario.toFixed(2)}</Text>
+                  </View>
+                  <View style={[styles.tableCol, styles.descuento]}>
+                    <Text>${item.producto.descuento.toFixed(2)}</Text>
+                  </View>
+                  <View style={[styles.tableCol, styles.precioTotal]}>
+                    <Text>${item.producto.subtotal.toFixed(2)}</Text>
+                  </View>
+                </View>
+              ))}
+            </View>
+
+            {/* Totales */}
+            <View style={styles.tableTotales}>
+              {Object.entries(subtotalesPorIva).map(([iva, subtotal]) => (
+                <View style={styles.rowTotales} key={`subtotal-${iva}`}>
+                  <Text style={styles.colLabelTotales}>SUBTOTAL IVA {iva}%</Text>
+                  <Text style={styles.colValueTotales}>${subtotal.toFixed(2)}</Text>
+                </View>
+              ))}
+
+              <View style={styles.rowTotales}>
+                <Text style={[styles.colLabelTotales, styles.descuentoLabel]}>DESCUENTO</Text>
+                <Text style={styles.colValueTotales}>${pedidoData.totales.descuentos.toFixed(2)}</Text>
+              </View>
+
+              <View style={styles.rowTotales}>
+                <Text style={styles.colLabelTotales}>SUBTOTAL</Text>
+                <Text style={styles.colValueTotales}>${pedidoData.totales.subtotal.toFixed(2)}</Text>
+              </View>
+
+              {Object.entries(subtotalesPorIva).map(([iva, subtotal]) => (
+                <View style={styles.rowTotales} key={`iva-${iva}`}>
+                  <Text style={styles.colLabelTotales}>IVA {iva}%</Text>
+                  <Text style={styles.colValueTotales}>${(subtotal * (Number(iva)/100)).toFixed(2)}</Text>
+                </View>
+              ))}
+
+              <View style={styles.rowTotales}>
+                <Text style={styles.colLabelTotales}>Cuota de servicio (8%)</Text>
+                <Text style={styles.colValueTotales}>
+                  ${(pedidoData.totales.subtotal * 0.08).toFixed(2)}
+                </Text>
+              </View>
+
+              <View style={styles.rowTotales}>
+                <Text style={styles.colLabelTotales}>VALOR TOTAL</Text>
+                <Text style={styles.colValueTotales}>
+                  ${(pedidoData.totales.total + (pedidoData.totales.subtotal * 0.08)).toFixed(2)}
+                </Text>
+              </View>
+            </View>
+
+            {/* Footer */}
+            <Text style={styles.footer}>Gracias por su compra</Text>
+          </Page>
+        </Document>
+      );
+
+      // Generar el PDF con los datos completos
+      const blob = await pdf(pdfDoc).toBlob();
+      resolve(blob);
+    } catch (error) {
+      console.error('Error al generar PDF:', error);
+      reject(error);
+    }
+  });
+};
+
+const handlePaymentSuccess = async (orderId) => {
+    try {
+        await capturePaypalPayment(orderId);
+        
+        if (pedido && pedido.idPedido) {
+            setIsLoading(true);
+            
+            const clienteData = JSON.parse(localStorage.getItem('clienteData'));
+            if (!clienteData) {
+                throw new Error('Datos del cliente no encontrados');
+            }
+
+            const pdfBlob = await generatePdfBlob(idUsuario);
+            
+            const reader = new FileReader();
+            reader.onloadend = async () => {
+                try {
+                    const base64data = reader.result.split(',')[1];
+                    
+                    // Calcular el total incluyendo la cuota de servicio
+                    const subtotal = detallesPedido.totales.subtotal;
+                    const serviceFee = subtotal * 0.08;
+                    const totalConServicio = detallesPedido.totales.total + serviceFee;
+                    
+                    // Convertir explícitamente a número y redondear a 2 decimales
+                    const totalFactura = parseFloat(totalConServicio.toFixed(2));
+                    
+                    console.log('Total a enviar:', totalFactura, typeof totalFactura);
+                    
+                    await enviarFacturaPorEmail(
+                        pedido.idPedido, 
+                        base64data, 
+                        totalFactura
+                    );
+                    
+                    console.log('Factura enviada correctamente');
+                    setPaymentStatus('success');
+                } catch (error) {
+                    console.error('Error al enviar la factura:', error);
+                    alert('Error al enviar la factura. Por favor, contacte al soporte.');
+                }
+            };
+            reader.readAsDataURL(pdfBlob);
+        }
+    } catch (error) {
+        // ...existing code...
+    }
+};
+
+export { InvoicePDF, generatePdfBlob };
   
   // Componente del visor del PDF
   const App = () => {
