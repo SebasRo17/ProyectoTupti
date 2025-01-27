@@ -91,19 +91,19 @@ function PantallaAdmin() {
     <div className="discount-list">
       <div className="discount-item">
         <span className="product-name">Tomate</span>
-        <span className="discount-badge1">-15%</span>
+        <span className="discount-badge2">-15%</span>
       </div>
       <div className="discount-item">
         <span className="product-name">Coca Cola</span>
-        <span className="discount-badge1">-25%</span>
+        <span className="discount-badge2">-25%</span>
       </div>
       <div className="discount-item">
         <span className="product-name">Cerveza Pilsener</span>
-        <span className="discount-badge1">-20%</span>
+        <span className="discount-badge2">-20%</span>
       </div>
       <div className="discount-item">
         <span className="product-name">Dog Chow 2kg</span>
-        <span className="discount-badge1">-30%</span>
+        <span className="discount-badge2">-30%</span>
       </div>
     </div>
   </div>
