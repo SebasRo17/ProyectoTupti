@@ -101,6 +101,37 @@ class ProductService {
           throw error;
         }
       }
+      async createProduct(productData) {
+        try {
+          // Validar campos requeridos
+          if (!productData.Nombre) {
+            throw new Error('El nombre del producto es requerido');
+          }
+          if (!productData.Precio) {
+            throw new Error('El precio del producto es requerido');
+          }
+          if (!productData.IdTipoProducto) {
+            throw new Error('El tipo de producto es requerido');
+          }
+          if (!productData.IdImpuesto) {
+            throw new Error('El ID del impuesto es requerido');
+          }
+    
+          const product = await ProductRepository.create(productData);
+          return product;
+        } catch (error) {
+          console.error('Error en el servicio al crear producto:', error.message);
+          throw error;
+        }
+      }
+      async deleteProductoById(id) {
+        const deleted = await ProductRepository.deleteProductoById(id);
+        if (!deleted) {
+          throw new Error('Producto no encontrado');
+        }
+        return deleted;
+      }
+    
 }
 
 module.exports = new ProductService();

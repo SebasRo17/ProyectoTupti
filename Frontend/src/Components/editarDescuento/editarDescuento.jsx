@@ -34,12 +34,17 @@ const EditarDescuento = ({ descuento, onClose, onSave }) => {
       };
       
       console.log('ID del descuento:', descuento.id); // Verifica este valor
-      await updateDiscount(descuento.id, discountData);
+      const response = await updateDiscount(descuento.id, discountData);
+      if (response.error) {
+        console.error('Error updating discount:', response.error);
+        return;
+      }
       onSave(formData);
       onClose();
     } catch (error) {
       console.error('Error updating discount:', error);
     }
+    window.location.reload();
   };
 
   return (
