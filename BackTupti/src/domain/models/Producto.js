@@ -34,6 +34,14 @@ Product.init({
   Stock: {
     type: DataTypes.INTEGER,
     allowNull: true
+  },
+  IdImpuesto: {
+    type: DataTypes.INTEGER(11),
+    allowNull: false,
+    references: {
+      model: 'impuesto',
+      key: 'IdImpuesto'
+    }
   }
 }, {
   sequelize,

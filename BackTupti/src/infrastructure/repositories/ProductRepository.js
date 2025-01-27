@@ -17,6 +17,19 @@ class ProductRepository {
       throw error;
     }
   }
+  async create(productData) {
+    try {
+      const product = await Product.create(productData);
+      return product;
+    } catch (error) {
+      console.error('Error en el repositorio al crear producto:', error);
+      throw error;
+    }
+  }
+  async deleteProductoById(id) {
+    return await Product.destroy({ where: { IdProducto: id } });
+  }
+
 }
 
 module.exports = new ProductRepository();
