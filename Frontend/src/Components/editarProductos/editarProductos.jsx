@@ -37,6 +37,7 @@ const EditarProductos = ({ product, onClose }) => {
         e.preventDefault();
         //console.log('Submitting:', formData);
         onClose(formData);
+        window.location.reload();
     };
 
     return (

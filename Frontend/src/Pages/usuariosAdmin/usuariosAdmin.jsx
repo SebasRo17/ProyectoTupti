@@ -2,13 +2,11 @@ import React, { useState, useEffect } from 'react';
 import HeaderAdmin from '../../Components/headerAdmin/headerAdmin';
 import BarraLateralAdmin from '../../Components/barraLateralAdmin/barraLateralAdmin';
 import FiltroUsuario from '../../Components/filtroUsuarios/filtroUsuario';
-import EditarUsuario from '../../Components/editarUsuario/editarUsuario';
 import { getUsersInfo, deactivateUser, activateUser } from '../../Api/userApi';
 import './usuariosAdmin.css';
 
 const UsuariosAdmin = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
@@ -66,6 +64,7 @@ const UsuariosAdmin = () => {
   const handleEdit = async (userId) => {
     try {
       await activateUser(userId);
+      window.location.reload();
       // Actualizar la lista de usuarios después de activar
       const updatedUsers = await getUsersInfo();
       setUsers(updatedUsers);
@@ -78,13 +77,12 @@ const UsuariosAdmin = () => {
   const confirmDelete = async () => {
     try {
       await deactivateUser(selectedUser.id);
-      // Actualizar la lista de usuarios después de desactivar
       const updatedUsers = await getUsersInfo();
       setUsers(updatedUsers);
+      window.location.reload();
       setShowDeleteModal(false);
     } catch (error) {
       console.error('Error al desactivar usuario:', error);
-      // Opcionalmente, mostrar un mensaje de error al usuario
     }
   };
 
@@ -164,7 +162,7 @@ const UsuariosAdmin = () => {
               </button>
               <button 
                 className="delete-btn" 
-                onClick={confirmDelete}
+                onClick={confirmDelete }
               >
                 Eliminar
               </button>
