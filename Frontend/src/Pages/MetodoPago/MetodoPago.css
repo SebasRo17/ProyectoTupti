@@ -1,4 +1,3 @@
-
 /* Contenedor principal */
 .pagina-metodo-pago {
   display: flex;
@@ -455,7 +454,6 @@ transform: translateY(45px);
   border-radius: 8px; 
 }
 
-
 /* Estilos para el checkbox de "Consumidor final" */
 #checkbox-consufinal {
   width: 15px;
@@ -474,7 +472,16 @@ transform: translateY(45px);
  
 }
 
+.modal-overlay11 .modal-content11 h3 {
+  color: #2c5282;
+  text-align: center;
+  margin-bottom: 20px;
+}
 
+.modal-overlay11 .modal-content11 p {
+  text-align: center;
+  margin-bottom: 15px;
+}
 
 /*RESPONSIVE*/
 

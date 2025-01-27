@@ -6,13 +6,28 @@ const UserService = require('../aplication/services/UserService');
 const AuthService = require('../aplication/services/AuthService');
 
 module.exports = function configurePassport() {
+  // Configuración de URLs
+  const mainURL = process.env.NODE_ENV === 'production' 
+    ? process.env.PROD_URL1  // https://tupti.store
+    : process.env.DEV_URL1;  // http://localhost:5173
+    
+  const alternateURL = process.env.NODE_ENV === 'production'
+    ? process.env.PROD_URL   // https://proyectotupti.onrender.com
+    : process.env.DEV_URL;   // http://localhost:3000
+
+  // Logs para debugging
+  console.log('Environment:', process.env.NODE_ENV);
+  console.log('Main URL:', mainURL);
+  console.log('Alternate URL:', alternateURL);
+
   // Configurar estrategia de Google
-  const callbackURL = process.env.NODE_ENV === 'production' ? process.env.PROD_URL1 : process.env.DEV_URL1;
-  console.log('Configured callback URL:', callbackURL);
+  const googleCallbackURL = `${mainURL}/auth/google/callback`;
+  console.log('Google Callback URL:', googleCallbackURL);
+
   passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: `${callbackURL}/auth/google/callback`,
+    callbackURL: googleCallbackURL,
     passReqToCallback: true
   }, async (req, accessToken, refreshToken, profile, done) => {
     try {
@@ -21,29 +36,34 @@ module.exports = function configurePassport() {
 
       if (!user) {
         const nombre = profile.displayName || profile.name?.givenName || profile.name?.familyName || 'Usuario Google';
+        console.log('Creando nuevo usuario de Google:', nombre);
         user = await UserService.createUser({
           Email: profile.emails[0].value,
           Contrasenia: 'google-auth', 
           CodigoUs: `GOOGLE-${Date.now()}`,
-          IdRol: 2, // Rol por defecto para usuarios de Google
+          IdRol: 2,
           Nombre: nombre
         });
       }
 
       const token = AuthService.generateToken(user);
-      console.log('Token generado:', token);
+      console.log('Token generado para usuario de Google');
 
       return done(null, { user, token });
     } catch (error) {
+      console.error('Error en autenticación de Google:', error);
       return done(error, null);
     }
   }));
 
   // Configurar estrategia de Facebook
+  const facebookCallbackURL = `${mainURL}/auth/facebook/callback`;
+  console.log('Facebook Callback URL:', facebookCallbackURL);
+
   passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: `${callbackURL}/auth/facebook/callback`,
+    callbackURL: facebookCallbackURL,
     profileFields: ['id', 'emails', 'name']
   }, async (accessToken, refreshToken, profile, done) => {
     try {
@@ -51,21 +71,23 @@ module.exports = function configurePassport() {
       let user = await userRepository.findByEmail(profile.emails[0].value);
 
       if (!user) {
+        console.log('Creando nuevo usuario de Facebook');
         user = await UserService.createUser({
           Email: profile.emails[0].value,
           Contrasenia: 'facebook-auth', 
           CodigoUs: `FACEBOOK-${Date.now()}`,
           FacebookId: profile.id,
           Nombre: `${profile.name.givenName} ${profile.name.familyName}`,
-          IdRol: 2 // Rol por defecto para usuarios de Facebook
+          IdRol: 2
         });
       }
 
       const token = AuthService.generateToken(user);
-      console.log('Token generado:', token);
+      console.log('Token generado para usuario de Facebook');
 
       return done(null, { user, token });
     } catch (error) {
+      console.error('Error en autenticación de Facebook:', error);
       return done(error, null);
     }
   }));
@@ -80,6 +102,7 @@ module.exports = function configurePassport() {
       const user = await userRepository.findByPk(id);
       done(null, user);
     } catch (error) {
+      console.error('Error en deserialización:', error);
       done(error, null);
     }
   });
