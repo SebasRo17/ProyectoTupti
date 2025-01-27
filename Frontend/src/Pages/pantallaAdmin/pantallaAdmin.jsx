@@ -6,6 +6,7 @@ import './pantallaAdmin.css'
 import { Pie, Bar } from 'react-chartjs-2';
 import { getAllPedidosWithBasicInfo } from '../../Api/pedidoApi';
 import { getUsersInfo } from '../../Api/userApi';
+import { getAllDiscounts } from '../../Api/descuentosApi';
 import {
   Chart as ChartJS,
   ArcElement,
@@ -30,6 +31,7 @@ ChartJS.register(
 function PantallaAdmin() {
   const [pedidos, setPedidos] = useState([]);
   const [usuarios, setUsuarios] = useState({ activos: 0, inactivos: 0 });
+  const [descuentos, setDescuentos] = useState([]);
 
   useEffect(() => {
     const cargarDatos = async () => {
@@ -43,6 +45,10 @@ function PantallaAdmin() {
         const usuariosActivos = usuariosData.filter(u => u.Activo).length;
         const usuariosInactivos = usuariosData.filter(u => !u.Activo).length;
         setUsuarios({ activos: usuariosActivos, inactivos: usuariosInactivos });
+
+        // Cargar descuentos
+        const descuentosData = await getAllDiscounts();
+        setDescuentos(descuentosData.filter(d => d.estado));
       } catch (error) {
         console.error("Error al cargar datos:", error);
       }
@@ -116,26 +122,21 @@ function PantallaAdmin() {
             </div>
           </div>
           <div className="chart-card">
-    <h3>Descuentos Activos</h3>
-    <div className="discount-list">
-      <div className="discount-item">
-        <span className="product-name">Tomate</span>
-        <span className="discount-badge2">-15%</span>
-      </div>
-      <div className="discount-item">
-        <span className="product-name">Coca Cola</span>
-        <span className="discount-badge2">-25%</span>
-      </div>
-      <div className="discount-item">
-        <span className="product-name">Cerveza Pilsener</span>
-        <span className="discount-badge2">-20%</span>
-      </div>
-      <div className="discount-item">
-        <span className="product-name">Dog Chow 2kg</span>
-        <span className="discount-badge2">-30%</span>
-      </div>
-    </div>
-  </div>
+            <h3>Descuentos Activos</h3>
+            <div className="discount-list">
+              {descuentos.map((descuento) => (
+                <div key={descuento.id} className="discount-item">
+                  <span className="product-name">{descuento.nombre}</span>
+                  <span className="discount-badge2">-{descuento.porcentaje}%</span>
+                </div>
+              ))}
+              {descuentos.length === 0 && (
+                <div className="discount-item">
+                  <span className="product-name">No hay descuentos activos</span>
+                </div>
+              )}
+            </div>
+          </div>
           <div className="report-card">
             <ul>
               <li>Usuarios Activos: <span className="positive">{usuarios.activos}</span></li>
