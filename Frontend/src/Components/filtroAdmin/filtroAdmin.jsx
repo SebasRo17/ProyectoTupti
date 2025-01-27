@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import NuevoDescuento from '../nuevoDescuento/nuevoDescuento';
 import './filtroAdmin.css';
 
-const FiltroAdmin = ({ showNewProduct = true, showNewDiscount = true, onSearch, onFilterStateChange, onFilterNameChange, discounts }) => {
+const FiltroAdmin = ({ showNewProduct = true, showNewDiscount = true, onSearch, onFilterStateChange, onFilterNameChange, discounts, onFilterCategory, categorias = [] }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
@@ -40,6 +40,11 @@ const FiltroAdmin = ({ showNewProduct = true, showNewDiscount = true, onSearch, 
     onFilterStateChange(e.target.value);
   };
 
+  const handleCategoryChange = (e) => {
+    const categoria = e.target.value;
+    onFilterCategory(categoria);
+  };
+
   return (
     <header className="productos-header">
       <div className="search-container">
@@ -72,6 +77,20 @@ const FiltroAdmin = ({ showNewProduct = true, showNewDiscount = true, onSearch, 
           <option value="">Todos</option>
           <option value="Activo">Activo</option>
           <option value="Inactivo">Inactivo</option>
+        </select>
+        <select 
+          className="dropdown" 
+          onChange={handleCategoryChange}
+        >
+          <option value="">Todas las categorías</option>
+          {categorias.map(categoria => (
+            <option 
+              key={categoria.IdCategoria} 
+              value={categoria.IdCategoria}
+            >
+              {categoria.Nombre}
+            </option>
+          ))}
         </select>
       </div>
       <div className="action-buttons">

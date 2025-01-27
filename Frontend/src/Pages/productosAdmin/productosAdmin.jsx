@@ -24,6 +24,8 @@ const ProductosAdmin = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [productosFiltrados, setProductosFiltrados] = useState([]);
+    const [categorias, setCategorias] = useState([]);
+    const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('');
 
     const getImageUrl = (product) => {
         if (!product) return '/images/placeholder.png';
@@ -37,6 +39,7 @@ const ProductosAdmin = () => {
     
     useEffect(() => {
         fetchProductos();
+        fetchCategorias();
     }, []);
 
     useEffect(() => {
@@ -66,6 +69,16 @@ const ProductosAdmin = () => {
         } catch (error) {
             setError('Error al cargar los productos');
             setLoading(false);
+        }
+    };
+
+    const fetchCategorias = async () => {
+        try {
+            const response = await fetch('tu-api/categorias');
+            const data = await response.json();
+            setCategorias(data);
+        } catch (error) {
+            console.error('Error al cargar categorías:', error);
         }
     };
 
@@ -127,6 +140,18 @@ const ProductosAdmin = () => {
         setSelectedProduct(null);
     };
 
+    const handleFilterCategory = (categoriaId) => {
+        setCategoriaSeleccionada(categoriaId);
+        if (!categoriaId) {
+            setProductosFiltrados(productos);
+        } else {
+            const filtered = productos.filter(producto => 
+                producto.IdCategoria === parseInt(categoriaId)
+            );
+            setProductosFiltrados(filtered);
+        }
+    };
+
     return (
         <div className="PantallaProductos">
             <HeaderAdmin />
@@ -167,6 +192,8 @@ const ProductosAdmin = () => {
                     showNewProduct={true} 
                     showNewDiscount={false} 
                     onSearch={handleSearch}
+                    onFilterCategory={handleFilterCategory}
+                    categorias={categorias}
                 />
                 <main className="product-grid">
                     {loading ? (
