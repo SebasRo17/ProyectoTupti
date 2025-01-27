@@ -280,7 +280,7 @@ function Categoria() {
                         onClick={() => handleProductClick(producto)}
                      >
                            {producto.descuento && producto.descuento.porcentaje !== 0 && (
-                              <div className="discount-badge">
+                              <div className="discount-badge1">
                                    <span>-{producto.descuento.porcentaje}%</span>
                               </div>
                            )}

@@ -11,6 +11,7 @@ const EditarProductos = ({ product, onClose }) => {
     });
     const [imagePreview, setImagePreview] = useState('');
 
+    
     useEffect(() => {
         //console.log('Producto actualizado:', product);
         if (product) {
@@ -37,6 +38,7 @@ const EditarProductos = ({ product, onClose }) => {
         e.preventDefault();
         //console.log('Submitting:', formData);
         onClose(formData);
+        window.location.reload();
     };
 
     return (
