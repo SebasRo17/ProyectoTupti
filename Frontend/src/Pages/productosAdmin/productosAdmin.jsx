@@ -8,7 +8,7 @@ import './productosAdmin.css';
 import './responsiveproductosAdmin.css';
 import NuevoProducto from "../nuevoProductoAdmin/nuevoProductoAdmin.jsx";
 import FiltroAdmin from '../../Components/filtroAdmin/filtroAdmin.jsx';
-import { productosApi } from '../../api/productosApi';
+import { productosApi } from '../../Api/productosApi';
 import { sumCantidadByIdProducto } from '../../Api/kardexApi';
 
 const ProductosAdmin = () => {
