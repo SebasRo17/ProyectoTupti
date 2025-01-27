@@ -5,7 +5,7 @@ const AuthService = require('../services/AuthService');
 const User = require('../../domain/models/User'); // Asegúrate de importar el modelo User
 
 function configurePassport() {
-  const callbackURL = process.env.NODE_ENV === 'production' ? process.env.PROD_URL : process.env.DEV_URL;
+  const callbackURL = process.env.NODE_ENV === 'production' ? process.env.PROD_URL1 : process.env.DEV_URL1;
   // Estrategia de Facebook
   passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
