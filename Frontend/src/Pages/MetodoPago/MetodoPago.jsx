@@ -25,6 +25,7 @@ const MetodoPago = () => {
   const [idUsuario, setIdUsuario] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [nombreCliente, setNombreCliente] = useState(''); // Estado para el nombre del cliente
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false); // Estado para el popup de éxito
 
   const location = useLocation();
   const { idCarrito } = location.state || {};
@@ -201,6 +202,7 @@ const MetodoPago = () => {
                     
                     console.log('Factura enviada correctamente');
                     setPaymentStatus('success');
+                    setShowSuccessPopup(true); // Mostrar popup de éxito
                 } catch (error) {
                     console.error('Error detallado al enviar la factura:', error);
                     alert('Error al enviar la factura. Por favor, contacte al soporte.');
@@ -548,6 +550,23 @@ const MetodoPago = () => {
               <button className="boton-salir" onClick={cerrarFormulario}>
                 Cerrar
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showSuccessPopup && (
+        <div className="modal-overlay11">
+          <div className="modal-content11">
+            <h3>¡Pago Exitoso!</h3>
+            <div className="modal-body">
+              <p>Su pago ha sido procesado correctamente.</p>
+              <p>La factura ha sido enviada a su correo electrónico.</p>
+              <div className="botones-container">
+                <Link to="/">
+                  <button className="boton-azul-pago">Volver al inicio</button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
