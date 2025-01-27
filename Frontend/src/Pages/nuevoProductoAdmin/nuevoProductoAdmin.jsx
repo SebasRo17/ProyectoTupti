@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import HeaderAdmin from '../../Components/headerAdmin/headerAdmin.jsx';
 import BarraLateralAdmin from '../../Components/barraLateralAdmin/barraLateralAdmin.jsx';
 import './responsivenuevoProdAdmin.css';
-import { getAllTipoProductos, createProduct } from '../../api/productosApi';
+import { getAllTipoProductos, createProduct } from '../../Api/productosApi';
 import { getAllImpuestos } from '../../Api/ImpuestoApi.js';
 import { createKardexProduct } from '../../Api/kardexApi';
 import { productoImagenApi } from '../../Api/ProductoImagenApi.js';
