@@ -23,6 +23,7 @@ const ProductosAdmin = () => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
+    const [productosFiltrados, setProductosFiltrados] = useState([]);
 
     const getImageUrl = (product) => {
         if (!product) return '/images/placeholder.png';
@@ -37,6 +38,12 @@ const ProductosAdmin = () => {
     useEffect(() => {
         fetchProductos();
     }, []);
+
+    useEffect(() => {
+        if (productos.length > 0) {
+            setProductosFiltrados(productos);
+        }
+    }, [productos]);
 
     const fetchProductos = async () => {
         try {
@@ -79,22 +86,18 @@ const ProductosAdmin = () => {
         }
     };
 
-    const handleSearch = (e) => {
-        const value = e.target.value;
-        setSearchTerm(value);
-      
-        if (value.length > 0) {
-          const filteredProducts = productos.filter(product =>
-            product.Nombre.toLowerCase().includes(value.toLowerCase())
-          );
-          setSuggestions(filteredProducts);
-          setShowSuggestions(true);
-        } else {
-          setSuggestions([]);
-          setShowSuggestions(false);
+    const handleSearch = (searchTerm) => {
+        if (!searchTerm) {
+            setProductosFiltrados(productos);
+            return;
         }
+
+        const filtered = productos.filter(product =>
+            product.Nombre.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setProductosFiltrados(filtered);
     };
-      
+
     const handleSuggestionClick = (product) => {
         setSearchTerm(product.Nombre);
         setShowSuggestions(false);
@@ -160,14 +163,18 @@ const ProductosAdmin = () => {
                         </div>
                     </div>
                 )}
-                <FiltroAdmin showNewProduct={true} showNewDiscount={false} />
+                <FiltroAdmin 
+                    showNewProduct={true} 
+                    showNewDiscount={false} 
+                    onSearch={handleSearch}
+                />
                 <main className="product-grid">
                     {loading ? (
                         <p>Cargando productos...</p>
                     ) : error ? (
                         <p>{error}</p>
                     ) : (
-                        productos.map((product) => (
+                        productosFiltrados.map((product) => (
                             <div className="product-card" key={product.IdProducto}>
                             <div className="image-container">
                                 {product.descuento && (

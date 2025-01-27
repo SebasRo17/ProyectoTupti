@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import NuevoDescuento from '../nuevoDescuento/nuevoDescuento';
 import './filtroAdmin.css';
 
-const FiltroAdmin = ({ showNewProduct = true, showNewDiscount = true, onFilterStateChange, onFilterNameChange, discounts }) => {
+const FiltroAdmin = ({ showNewProduct = true, showNewDiscount = true, onSearch, onFilterStateChange, onFilterNameChange, discounts }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
@@ -15,6 +15,7 @@ const FiltroAdmin = ({ showNewProduct = true, showNewDiscount = true, onFilterSt
   const handleSearch = (e) => {
     const value = e.target.value;
     setSearchTerm(value);
+    onSearch(value); // Enviar el término de búsqueda al componente padre
     onFilterNameChange(value);
 
     if (value.length > 0) {
