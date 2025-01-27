@@ -40,10 +40,10 @@ function PantallaAdmin() {
         const pedidosData = await getAllPedidosWithBasicInfo();
         setPedidos(pedidosData);
 
-        // Cargar usuarios
+        // Cargar usuarios - Corregido para usar el campo estado
         const usuariosData = await getUsersInfo();
-        const usuariosActivos = usuariosData.filter(u => u.Activo).length;
-        const usuariosInactivos = usuariosData.filter(u => !u.Activo).length;
+        const usuariosActivos = usuariosData.filter(u => u.estado === "Activo").length;
+        const usuariosInactivos = usuariosData.filter(u => u.estado === "Inactivo").length;
         setUsuarios({ activos: usuariosActivos, inactivos: usuariosInactivos });
 
         // Cargar descuentos
