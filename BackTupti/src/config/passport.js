@@ -12,8 +12,8 @@ module.exports = function configurePassport() {
     : process.env.DEV_URL1;  // http://localhost:5173
     
   const alternateURL = process.env.NODE_ENV === 'production'
-    ? process.env.PROD_URL   // https://proyectotupti.onrender.com
-    : process.env.DEV_URL;   // http://localhost:3000
+    ? process.env.PROD_URL1   // https://proyectotupti.onrender.com
+    : process.env.DEV_URL1;   // http://localhost:3000
 
   // Logs para debugging
   console.log('Environment:', process.env.NODE_ENV);
