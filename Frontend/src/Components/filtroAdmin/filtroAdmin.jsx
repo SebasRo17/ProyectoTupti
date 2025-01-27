@@ -95,11 +95,7 @@ const FiltroAdmin = ({ showNewProduct = true, showNewDiscount = true, onSearch, 
             </ul>
           )}
         </div>
-        <select className="dropdown" onChange={handleStateChange}>
-          <option value="">Todos</option>
-          <option value="Activo">Activo</option>
-          <option value="Inactivo">Inactivo</option>
-        </select>
+        {/* Eliminamos el dropdown de estados y dejamos solo el de categorías */}
         <select 
           className="dropdown" 
           onChange={handleCategoryChange}
