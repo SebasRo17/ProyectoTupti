@@ -56,6 +56,13 @@ const PedidosAdmin = () => {
     setStats(stats);
   };
 
+  // Agregar función de filtrado
+  const filteredPedidos = pedidos.filter(pedido => {
+    const searchLower = searchTerm.toLowerCase();
+    return pedido.idPedido.toString().includes(searchLower) || 
+           pedido.nombreUsuario.toLowerCase().includes(searchLower);
+  });
+
   const getStatusText = (estado) => {
     switch (estado) {
       case 0: return 'espera';
@@ -89,15 +96,15 @@ const PedidosAdmin = () => {
       <BarraLateralAdmin />
       <h1>PEDIDOS</h1>
       
-      {/* Search Bar */}
+      {/* Search Bar - Modificar el placeholder */}
       <div className="search-container">
         <input
           type="text"
-          placeholder="Buscar pedido..."
+          placeholder="Buscar por N° Orden o Cliente..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button className="search-btn">🔍 Buscar</button>
+        {/* Remover botón de buscar ya que la búsqueda será en tiempo real */}
         <button className="export-button" onClick={() => setShowExportModal(true)}>
           Exportar
         </button>
@@ -123,7 +130,7 @@ const PedidosAdmin = () => {
         </div>
       </div>
 
-      {/* Orders Table */}
+      {/* Orders Table - Modificar para usar pedidos filtrados */}
       <div className="orders-table">
         <table>
           <thead>
@@ -136,7 +143,7 @@ const PedidosAdmin = () => {
             </tr>
           </thead>
           <tbody>
-            {pedidos.map((pedido) => (
+            {filteredPedidos.map((pedido) => (
               <tr key={pedido.idPedido}>
                 <td>{pedido.idPedido}</td>
                 <td>{pedido.nombreUsuario}</td>
