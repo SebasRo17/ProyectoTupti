@@ -1,10 +1,8 @@
-const { DataTypes, Model } = require('sequelize');
+const { DataTypes } = require('sequelize');
 const { sequelize } = require('../../infrastructure/database/mysqlConnection');
-const Usuario = require('./User'); // Corregir la ruta de importación
+const Usuario = require('./User');
 
-class PasswordReset extends Model {}
-
-PasswordReset.init({
+const PasswordReset = sequelize.define('PasswordReset', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -32,7 +30,6 @@ PasswordReset.init({
     defaultValue: false
   }
 }, {
-  sequelize,
   tableName: 'password_resets',
   timestamps: true
 });

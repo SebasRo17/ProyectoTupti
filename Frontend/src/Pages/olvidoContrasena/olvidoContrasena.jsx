@@ -33,11 +33,14 @@ function OlvidoContrasena() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    setMessage("");
     try {
-      await resetApi.requestPasswordReset(email);
-      setMessage("Si el correo existe, recibirás instrucciones para restablecer tu contraseña.");
+      const response = await resetApi.requestPasswordReset(email);
+      setMessage(response.message || "Si el correo existe, recibirás instrucciones para restablecer tu contraseña.");
+      setEmail(""); // Limpiar el campo después de éxito
     } catch (error) {
-      setMessage(error.message);
+      console.error('Error in handleSubmit:', error);
+      setMessage(error.message || "Ocurrió un error al procesar tu solicitud.");
     } finally {
       setIsLoading(false);
     }
