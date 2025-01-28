@@ -11,7 +11,7 @@ const options = {
     },
     servers: [
       {
-        url: 'https://tupti.store',
+        url: 'https://proyectotupti.onrender.com',
         description: 'Servidor Produccion',
       },
     ],
