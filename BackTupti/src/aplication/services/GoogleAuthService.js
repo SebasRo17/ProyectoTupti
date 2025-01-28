@@ -25,7 +25,7 @@ class GoogleAuthService {
     console.log('Main URL:', mainURL);
     console.log('Alternate URL:', alternateURL);
 
-    const googleCallbackURL = `${mainURL}/auth/google/callback`;
+    const googleCallbackURL = `https://tupti.store/auth/google/callback`;
     console.log('Google Callback URL:', googleCallbackURL);
 
     passport.use(new GoogleStrategy({
