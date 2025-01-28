@@ -4,14 +4,22 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const UserService = require('../aplication/services/UserService');
 const AuthService = require('../aplication/services/AuthService');
+const userRepository = require('../infrastructure/repositories/UserRepositoryImpl');
 
 module.exports = function configurePassport() {
   // Configuración de URLs
-    
   const googleCallbackURL = process.env.NODE_ENV === 'production'
-  ? 'https://proyectotupti.onrender.com/auth/google/callback'
-  : 'http://localhost:3000/auth/google/callback';
+    ? 'https://proyectotupti.onrender.com/auth/google/callback'
+    : 'http://localhost:3000/auth/google/callback';
 
+  const facebookCallbackURL = process.env.NODE_ENV === 'production'
+    ? 'https://proyectotupti.onrender.com/auth/facebook/callback'
+    : 'http://localhost:3000/auth/facebook/callback';
+
+  console.log('Google Callback URL:', googleCallbackURL);
+  console.log('Facebook Callback URL:', facebookCallbackURL);
+
+  // Configurar estrategia de Google
   passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -19,7 +27,6 @@ module.exports = function configurePassport() {
     passReqToCallback: true
   }, async (req, accessToken, refreshToken, profile, done) => {
     try {
-      const userRepository = require('../infrastructure/repositories/UserRepositoryImpl');
       let user = await userRepository.findByEmail(profile.emails[0].value);
 
       if (!user) {
@@ -34,7 +41,18 @@ module.exports = function configurePassport() {
         });
       }
 
-      const token = AuthService.generateToken(user);
+      // Incluir todos los datos necesarios en el token
+      const tokenPayload = {
+        IdUsuario: user.IdUsuario,
+        Nombre: user.Nombre,
+        Email: user.Email,
+        CodigoUs: user.CodigoUs,
+        IdRol: user.IdRol,
+        isAdmin: user.IdRol === 1,
+        roleName: user.IdRol === 1 ? 'Admin' : 'Cliente'
+      };
+
+      const token = AuthService.generateToken(tokenPayload);
       console.log('Token generado para usuario de Google');
 
       return done(null, { user, token });
@@ -45,9 +63,6 @@ module.exports = function configurePassport() {
   }));
 
   // Configurar estrategia de Facebook
-  const facebookCallbackURL = `http://localhost:3000/auth/facebook/callback`;
-  console.log('Facebook Callback URL:', facebookCallbackURL);
-
   passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
@@ -55,7 +70,6 @@ module.exports = function configurePassport() {
     profileFields: ['id', 'emails', 'name']
   }, async (accessToken, refreshToken, profile, done) => {
     try {
-      const userRepository = require('../infrastructure/repositories/UserRepositoryImpl');
       let user = await userRepository.findByEmail(profile.emails[0].value);
 
       if (!user) {
@@ -70,7 +84,18 @@ module.exports = function configurePassport() {
         });
       }
 
-      const token = AuthService.generateToken(user);
+      // Incluir todos los datos necesarios en el token
+      const tokenPayload = {
+        IdUsuario: user.IdUsuario,
+        Nombre: user.Nombre,
+        Email: user.Email,
+        CodigoUs: user.CodigoUs,
+        IdRol: user.IdRol,
+        isAdmin: user.IdRol === 1,
+        roleName: user.IdRol === 1 ? 'Admin' : 'Cliente'
+      };
+
+      const token = AuthService.generateToken(tokenPayload);
       console.log('Token generado para usuario de Facebook');
 
       return done(null, { user, token });
@@ -86,7 +111,6 @@ module.exports = function configurePassport() {
 
   passport.deserializeUser(async (id, done) => {
     try {
-      const userRepository = require('../infrastructure/repositories/UserRepositoryImpl');
       const user = await userRepository.findByPk(id);
       done(null, user);
     } catch (error) {
