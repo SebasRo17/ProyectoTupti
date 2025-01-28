@@ -12,22 +12,10 @@ class GoogleAuthService {
 
   initializePassport() {
     // Configuración de URLs
-    const mainURL = process.env.NODE_ENV === 'production' 
-      ? process.env.PROD_URL1  // https://tupti.store
-      : process.env.DEV_URL1;  // http://localhost:5173
-      
-    const alternateURL = process.env.NODE_ENV === 'production'
-      ? process.env.PROD_URL1   // https://proyectotupti.onrender.com
-      : process.env.DEV_URL1;   // http://localhost:3000
-
-    // Logs para debugging
-    console.log('Environment:', process.env.NODE_ENV);
-    console.log('Main URL:', mainURL);
-    console.log('Alternate URL:', alternateURL);
-
-    const googleCallbackURL = `${mainURL}/auth/google/callback`;
-    console.log('Google Callback URL:', googleCallbackURL);
-
+    const googleCallbackURL = process.env.NODE_ENV === 'production'
+    ? 'https://proyectotupti.onrender.com/auth/google/callback'
+    : 'http://localhost:3000/auth/google/callback';
+    
     passport.use(new GoogleStrategy({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,

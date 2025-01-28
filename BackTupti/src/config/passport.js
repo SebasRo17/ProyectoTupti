@@ -8,9 +8,9 @@ const AuthService = require('../aplication/services/AuthService');
 module.exports = function configurePassport() {
   // Configuración de URLs
     
-  const googleCallbackURL = process.env.NODE_ENV === 'development' 
-  ? 'http://localhost:3000/auth/google/callback'  // URL del backend
-  : `https://proyectotupti.onrender.com  `;
+  const googleCallbackURL = process.env.NODE_ENV === 'production'
+  ? 'https://proyectotupti.onrender.com/auth/google/callback'
+  : 'http://localhost:3000/auth/google/callback';
 
   passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
