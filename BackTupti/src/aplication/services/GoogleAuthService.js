@@ -13,8 +13,8 @@ class GoogleAuthService {
   initializePassport() {
     // Configuración de URLs
     const googleCallbackURL = process.env.NODE_ENV === 'production'
-    ? 'https://proyectotupti.onrender.com/auth/google/callback'
-    : 'http://localhost:3000/auth/google/callback';
+      ? 'https://proyectotupti.onrender.com/auth/google/callback'
+      : 'http://localhost:3000/auth/google/callback';
     
     passport.use(new GoogleStrategy({
       clientID: process.env.GOOGLE_CLIENT_ID,
@@ -38,7 +38,18 @@ class GoogleAuthService {
           });
         }
 
-        const token = AuthService.generateToken(user);
+        // Incluir todos los datos necesarios en el token
+        const tokenPayload = {
+          IdUsuario: user.IdUsuario,
+          Nombre: user.Nombre,
+          Email: user.Email,
+          CodigoUs: user.CodigoUs,
+          IdRol: user.IdRol,
+          isAdmin: user.IdRol === 1,
+          roleName: user.IdRol === 1 ? 'Admin' : 'Cliente'
+        };
+
+        const token = AuthService.generateToken(tokenPayload);
         console.log('Token generado para usuario de Google');
 
         return done(null, { user, token });
