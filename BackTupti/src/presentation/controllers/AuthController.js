@@ -17,21 +17,38 @@ const AuthController = {
 
   // Ruta de callback de Google
   googleCallback: (req, res) => {
-    const redirectUrl = req.query.state || `${redirectURL}`;
-
-    // Usar el usuario del objeto req.user
-    const userData = req.user.user;
-    const token = AuthService.generateToken(userData);
-
-    const script = `
-      <script>
-        window.opener.postMessage({ token: '${token}' }, '${redirectUrl}');
-        window.close();
-      </script>
-    `;
-    res.send(script);
+    try {
+      const redirectUrl = process.env.NODE_ENV === 'production' 
+        ? process.env.PROD_URL1 
+        : 'http://localhost:5173';
+  
+      if (!req.user) {
+        console.error('No user data in request');
+        return res.status(401).send('Authentication failed');
+      }
+  
+      const token = AuthService.generateToken(req.user);
+      console.log('Authentication successful, redirecting to:', redirectUrl);
+  
+      const script = `
+        <script>
+          try {
+            window.opener.postMessage({ 
+              type: 'AUTH_SUCCESS',
+              token: '${token}' 
+            }, '${redirectUrl}');
+            window.close();
+          } catch (e) {
+            console.error('PostMessage error:', e);
+          }
+        </script>
+      `;
+      res.send(script);
+    } catch (error) {
+      console.error('Callback error:', error);
+      res.status(500).send('Internal server error');
+    }
   },
-
   // Ruta para iniciar sesión con Facebook
   facebookLogin: (req, res, next) => {
     const redirectUrl = req.query.redirect || `${redirectURL}`;

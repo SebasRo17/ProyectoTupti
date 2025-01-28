@@ -93,20 +93,33 @@ function Login() {
   };
   
   const handleGoogleLogin = () => {
-    const googleAuthUrl = `${apiUrl}/auth/google`;
-    console.log('URL de autenticación de Google:', googleAuthUrl);
-    const width = 600;
+    const width = 500;
     const height = 600;
-    const left = (window.innerWidth - width) / 2;
-    const top = (window.innerHeight - height) / 2;
+    const left = window.screenX + (window.outerWidth - width) / 2;
+    const top = window.screenY + (window.outerHeight - height) / 2;
   
-    window.open(
-      googleAuthUrl, 
-      'Google Login', 
-      `width=${width},height=${height},top=${top},left=${left}`
+    const authUrl = process.env.NODE_ENV === 'production'
+      ? 'https://proyectotupti.onrender.com/auth/google'
+      : 'http://localhost:3000/auth/google';
+  
+    const popup = window.open(
+      authUrl,
+      'Google Login',
+      `width=${width},height=${height},left=${left},top=${top}`
     );
+  
+    window.addEventListener('message', (event) => {
+      const allowedOrigins = [
+        'https://tupti.store',
+        'http://localhost:5173'
+      ];
+  
+      if (allowedOrigins.includes(event.origin) && event.data.token) {
+        localStorage.setItem('token', event.data.token);
+        // Manejar el login exitoso
+      }
+    });
   };
-
   const handleEmailChange = (e) => {
     const value = e.target.value;
     setEmail(value);
