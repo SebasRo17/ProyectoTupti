@@ -79,7 +79,7 @@ function Login() {
   
   
   const handleFacebookLogin = () => {
-    const facebookAuthUrl = `${import.meta.env.VITE_API_URL}/auth/facebook`;
+    const facebookAuthUrl = `${apiUrl}/auth/facebook`;
     const width = 600;
     const height = 600;
     const left = (window.innerWidth - width) / 2;
@@ -93,7 +93,7 @@ function Login() {
   };
   
   const handleGoogleLogin = () => {
-    const googleAuthUrl = `https://tupti.store/auth/google`;
+    const googleAuthUrl = `${apiUrl}/auth/google`;
     console.log('URL de autenticación de Google:', googleAuthUrl);
     const width = 600;
     const height = 600;

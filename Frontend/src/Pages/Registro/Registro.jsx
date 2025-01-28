@@ -7,7 +7,9 @@ import { HiEye, HiEyeOff } from "react-icons/hi"; // Iconos de ojo
 import ReCAPTCHA from "react-google-recaptcha";
 import { registerUser } from '../../Api/userApi';
 import "./responsiveRegistro.css";
-
+const apiUrl = import.meta.env.MODE === 'development' 
+  ? import.meta.env.VITE_API_URL_DEVELOPMENT 
+  : import.meta.env.VITE_API_URL_PRODUCTION;
 
 
 function Registro() {
@@ -99,7 +101,7 @@ function Registro() {
   };
 
   const handleFacebookLogin = () => {
-    const facebookAuthUrl = `${import.meta.env.VITE_API_URL}/auth/facebook`;
+    const facebookAuthUrl = `${apiUrl}/auth/facebook`;
     const width = 600;
     const height = 600;
     const left = (window.innerWidth - width) / 2;
@@ -114,7 +116,7 @@ function Registro() {
     }, 1000);
   };
   const handleGoogleLogin = () => {
-    const googleAuthUrl = `${import.meta.env.VITE_API_URL}/auth/google`;
+    const googleAuthUrl = `${apiUrl}/auth/google`;
     const width = 600;
     const height = 600;
     const left = (window.innerWidth - width) / 2;

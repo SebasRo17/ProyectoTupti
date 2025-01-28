@@ -9,10 +9,10 @@ module.exports = function configurePassport() {
   // Configuración de URLs
   const mainURL = process.env.NODE_ENV === 'production' 
     ? process.env.PROD_URL1  // https://tupti.store
-    : process.env.DEV_URL1;  // http://localhost:5173
+    : process.env.DEV_URL1;  // https://proyectotupti.onrender.com
     
   const alternateURL = process.env.NODE_ENV === 'production'
-    ? process.env.PROD_URL1   // https://proyectotupti.onrender.com
+    ? process.env.PROD_URL1   // http://localhost:5173
     : process.env.DEV_URL1;   // http://localhost:3000
 
   // Logs para debugging
@@ -21,7 +21,7 @@ module.exports = function configurePassport() {
   console.log('Alternate URL:', alternateURL);
 
   // Configurar estrategia de Google
-  const googleCallbackURL = `https://tupti.store/auth/google/callback`;
+  const googleCallbackURL = `${mainURL}/auth/google/callback`;
   console.log('Google Callback URL:', googleCallbackURL);
 
   passport.use(new GoogleStrategy({
