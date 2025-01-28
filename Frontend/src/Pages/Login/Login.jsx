@@ -60,8 +60,30 @@ function Login() {
     };
   }, [navigate, location, apiUrl]);
 
+  useEffect(() => {
+    // Inicializar el SDK de Facebook
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId: import.meta.env.VITE_FACEBOOK_APP_ID,
+        cookie: true,
+        xfbml: true,
+        version: 'v18.0'
+      });
+    };
+
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/es_LA/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  }, []);
+
   const handleFacebookLogin = () => {
-    const facebookAuthUrl = `${apiUrl}/auth/facebook`;
+    const facebookAuthUrl = process.env.NODE_ENV === 'production'
+      ? 'https://proyectotupti.onrender.com/auth/facebook'
+      : 'http://localhost:3000/auth/facebook';
     const width = 600;
     const height = 600;
     const left = (window.innerWidth - width) / 2;
