@@ -16,59 +16,46 @@ class GoogleAuthService {
       ? 'https://proyectotupti.onrender.com/auth/google/callback'
       : 'http://localhost:3000/auth/google/callback';
     
-    passport.use(new GoogleStrategy({
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: googleCallbackURL,
-      passReqToCallback: true
-    }, async (req, accessToken, refreshToken, profile, done) => {
-      try {
-        const userRepository = require('../../infrastructure/repositories/UserRepositoryImpl');
-        let user = await userRepository.findByEmail(profile.emails[0].value);
+    // En la estrategia de Google (GoogleAuthService.js)
+passport.use(new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: googleCallbackURL,
+  passReqToCallback: true
+}, async (req, accessToken, refreshToken, profile, done) => {
+  try {
+    const userRepository = require('../../infrastructure/repositories/UserRepositoryImpl');
+    let user = await userRepository.findByEmail(profile.emails[0].value);
 
-        if (!user) {
-          const nombre = profile.displayName || profile.name?.givenName || profile.name?.familyName || 'Usuario Google';
-          console.log('Creando nuevo usuario de Google:', nombre);
-          user = await UserService.createUser({
-            Email: profile.emails[0].value,
-            Contrasenia: 'google-auth', 
-            CodigoUs: `GOOGLE-${Date.now()}`,
-            IdRol: 2,
-            Nombre: nombre
-          });
-        }
+    if (!user) {
+      const nombre = profile.displayName || profile.name?.givenName || profile.name?.familyName || 'Usuario Google';
+      console.log('Creando nuevo usuario de Google:', nombre);
+      user = await UserService.createUser({
+        Email: profile.emails[0].value,
+        Contrasenia: 'google-auth', 
+        CodigoUs: `GOOGLE-${Date.now()}`,
+        IdRol: 2,
+        Nombre: nombre
+      });
+    }
 
-        // Incluir todos los datos necesarios en el token
-        const tokenPayload = {
-          IdUsuario: user.IdUsuario,
-          Nombre: user.Nombre,
-          Email: user.Email,
-          CodigoUs: user.CodigoUs,
-          IdRol: user.IdRol,
-          isAdmin: user.IdRol === 1,
-          roleName: user.IdRol === 1 ? 'Admin' : 'Cliente'
-        };
+    // Asegúrate de que todos los campos necesarios estén presentes
+    const tokenPayload = {
+      IdUsuario: user.IdUsuario,
+      Nombre: user.Nombre,
+      Email: user.Email,
+      CodigoUs: user.CodigoUs,
+      IdRol: user.IdRol,
+      isAdmin: user.IdRol === 1,
+      roleName: user.IdRol === 1 ? 'Administrador' : 'Cliente'
+    };
 
-        const token = AuthService.generateToken(tokenPayload);
-        console.log('Token generado para usuario de Google');
-
-        return done(null, { user, token });
-      } catch (error) {
-        console.error('Error en autenticación de Google:', error);
-        return done(error, null);
-      }
-    }));
-
-    passport.serializeUser((data, done) => {
-      try {
-        console.log('Serializando usuario:', data.user.IdUsuario);
-        done(null, data.user.IdUsuario);
-      } catch (error) {
-        console.error('Error en serialización:', error);
-        done(error, null);
-      }
-    });
-
+    return done(null, { user: tokenPayload, token: null });
+  } catch (error) {
+    console.error('Error en autenticación de Google:', error);
+    return done(error, null);
+  }
+}));
     passport.deserializeUser(async (id, done) => {
       try {
         const user = await User.findByPk(id);
