@@ -19,7 +19,7 @@ const AuthController = {
   googleCallback: (req, res) => {
     try {
       const redirectUrl = process.env.NODE_ENV === 'production' 
-        ? process.env.PROD_URL1 
+        ? 'https://www.tupti.store'  // Asegúrate de incluir www si es necesario
         : 'http://localhost:5173';
   
       if (!req.user) {
@@ -28,25 +28,38 @@ const AuthController = {
       }
   
       const token = AuthService.generateToken(req.user);
-      console.log('Authentication successful, redirecting to:', redirectUrl);
+      console.log('Token generado:', token);
+      console.log('Redirigiendo a:', redirectUrl);
   
+      // Script mejorado para el postMessage
       const script = `
         <script>
           try {
-            window.opener.postMessage({ 
-              type: 'AUTH_SUCCESS',
-              token: '${token}' 
-            }, '${redirectUrl}');
-            window.close();
+            if (window.opener) {
+              window.opener.postMessage(
+                { 
+                  type: 'AUTH_SUCCESS',
+                  token: '${token}',
+                  user: ${JSON.stringify(req.user)}
+                }, 
+                '${redirectUrl}'
+              );
+              console.log('Mensaje enviado al opener');
+              window.close();
+            } else {
+              console.error('No window.opener found');
+              window.location.href = '${redirectUrl}?token=${token}';
+            }
           } catch (e) {
-            console.error('PostMessage error:', e);
+            console.error('Error en postMessage:', e);
+            window.location.href = '${redirectUrl}?token=${token}';
           }
         </script>
       `;
       res.send(script);
     } catch (error) {
-      console.error('Callback error:', error);
-      res.status(500).send('Internal server error');
+      console.error('Error en callback:', error);
+      res.status(500).send('Error interno del servidor');
     }
   },
   // Ruta para iniciar sesión con Facebook
