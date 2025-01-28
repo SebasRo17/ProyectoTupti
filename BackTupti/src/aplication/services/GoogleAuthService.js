@@ -72,13 +72,10 @@ class GoogleAuthService {
 
     passport.deserializeUser(async (id, done) => {
       try {
-        const userRepository = require('../../infrastructure/repositories/UserRepositoryImpl');
-        const user = await userRepository.findByPk(id);
+        const user = await User.findByPk(id);
         if (!user) {
-          console.log('Usuario no encontrado en deserialización:', id);
-          return done(null, false);
+          return done(new Error('Usuario no encontrado'), null);
         }
-        console.log('Usuario deserializado:', id);
         done(null, user);
       } catch (error) {
         console.error('Error en deserialización:', error);

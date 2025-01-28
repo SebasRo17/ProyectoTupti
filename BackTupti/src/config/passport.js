@@ -7,22 +7,10 @@ const AuthService = require('../aplication/services/AuthService');
 
 module.exports = function configurePassport() {
   // Configuración de URLs
-  const mainURL = process.env.NODE_ENV === 'production' 
-    ? process.env.PROD_URL1  // https://tupti.store
-    : process.env.DEV_URL1;  // https://proyectotupti.onrender.com
     
-  const alternateURL = process.env.NODE_ENV === 'production'
-    ? process.env.PROD_URL1   // http://localhost:5173
-    : process.env.DEV_URL1;   // http://localhost:3000
-
-  // Logs para debugging
-  console.log('Environment:', process.env.NODE_ENV);
-  console.log('Main URL:', mainURL);
-  console.log('Alternate URL:', alternateURL);
-
-  // Configurar estrategia de Google
-  const googleCallbackURL = `${mainURL}/auth/google/callback`;
-  console.log('Google Callback URL:', googleCallbackURL);
+  const googleCallbackURL = process.env.NODE_ENV === 'development' 
+  ? 'http://localhost:3000/auth/google/callback'  // URL del backend
+  : `https://proyectotupti.onrender.com  `;
 
   passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
@@ -57,7 +45,7 @@ module.exports = function configurePassport() {
   }));
 
   // Configurar estrategia de Facebook
-  const facebookCallbackURL = `${mainURL}/auth/facebook/callback`;
+  const facebookCallbackURL = `http://localhost:3000/auth/facebook/callback`;
   console.log('Facebook Callback URL:', facebookCallbackURL);
 
   passport.use(new FacebookStrategy({
