@@ -49,7 +49,7 @@ module.exports = function configurePassport() {
         CodigoUs: user.CodigoUs,
         IdRol: user.IdRol,
         isAdmin: user.IdRol === 1,
-        roleName: user.IdRol === 1 ? 'Admin' : 'Cliente'
+        roleName: user.IdRol === 1 ? 'Administrador' : 'Cliente'
       };
 
       const token = AuthService.generateToken(tokenPayload);
@@ -92,7 +92,7 @@ module.exports = function configurePassport() {
         CodigoUs: user.CodigoUs,
         IdRol: user.IdRol,
         isAdmin: user.IdRol === 1,
-        roleName: user.IdRol === 1 ? 'Admin' : 'Cliente'
+        roleName: user.IdRol === 1 ? 'Administrador' : 'Cliente'
       };
 
       const token = AuthService.generateToken(tokenPayload);

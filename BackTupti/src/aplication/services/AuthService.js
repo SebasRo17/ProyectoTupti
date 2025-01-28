@@ -27,17 +27,19 @@ class AuthService {
     }
   }
 
-  static generateToken(user) {
-    return jwt.sign({ 
-      IdUsuario: user.IdUsuario,
-        Nombre: user.Nombre,
-        Email: user.Email,
-        CodigoUs: user.CodigoUs,
-        IdRol: user.IdRol,
-        isAdmin: user.IdRol === 1,
-        roleName: user.IdRol === 1 ? 'Administrador' : 'Cliente'
-    }, process.env.JWT_SECRET, { expiresIn: '1h' });
-  }
+static generateToken(user) {
+  const payload = {
+    IdUsuario: user.IdUsuario,
+    Nombre: user.Nombre,
+    Email: user.Email,
+    CodigoUs: user.CodigoUs,
+    IdRol: user.IdRol,
+    isAdmin: user.IdRol === 1,
+    roleName: user.IdRol === 1 ? 'Administrador' : 'Cliente'
+  };
+  
+  return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+}
 
   static verifyToken(token) {
     try {

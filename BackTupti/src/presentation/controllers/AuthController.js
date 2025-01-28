@@ -15,53 +15,66 @@ const AuthController = {
     })(req, res, next);
   },
 
-  // Ruta de callback de Google
-  googleCallback: (req, res) => {
-    try {
-      const redirectUrl = process.env.NODE_ENV === 'production' 
-        ? 'https://www.tupti.store'  // Asegúrate de incluir www si es necesario
-        : 'http://localhost:5173';
-  
-      if (!req.user) {
-        console.error('No user data in request');
-        return res.status(401).send('Authentication failed');
-      }
-  
-      const token = AuthService.generateToken(req.user);
-      console.log('Token generado:', token);
-      console.log('Redirigiendo a:', redirectUrl);
-  
-      // Script mejorado para el postMessage
-      const script = `
-        <script>
-          try {
-            if (window.opener) {
-              window.opener.postMessage(
-                { 
-                  type: 'AUTH_SUCCESS',
-                  token: '${token}',
-                  user: ${JSON.stringify(req.user)}
-                }, 
-                '${redirectUrl}'
-              );
-              console.log('Mensaje enviado al opener');
-              window.close();
-            } else {
-              console.error('No window.opener found');
-              window.location.href = '${redirectUrl}?token=${token}';
-            }
-          } catch (e) {
-            console.error('Error en postMessage:', e);
+ // En AuthController.js
+googleCallback: (req, res) => {
+  try {
+    const redirectUrl = process.env.NODE_ENV === 'production' 
+      ? 'https://www.tupti.store'
+      : 'http://localhost:5173';
+
+    if (!req.user) {
+      console.error('No user data in request');
+      return res.status(401).send('Authentication failed');
+    }
+
+    // Aquí está el cambio importante - asegúrate de usar req.user.user
+    const userData = req.user.user;
+    
+    // Crear el objeto con todos los datos necesarios
+    const tokenPayload = {
+      IdUsuario: userData.IdUsuario,
+      Nombre: userData.Nombre,
+      Email: userData.Email,
+      CodigoUs: userData.CodigoUs,
+      IdRol: userData.IdRol,
+      isAdmin: userData.IdRol === 1,
+      roleName: userData.IdRol === 1 ? 'Administrador' : 'Cliente'
+    };
+
+    const token = AuthService.generateToken(tokenPayload);
+    console.log('Token generado:', token);
+    console.log('Datos del usuario:', tokenPayload);
+
+    const script = `
+      <script>
+        try {
+          if (window.opener) {
+            window.opener.postMessage(
+              { 
+                type: 'AUTH_SUCCESS',
+                token: '${token}',
+                user: ${JSON.stringify(tokenPayload)}
+              }, 
+              '${redirectUrl}'
+            );
+            console.log('Mensaje enviado al opener');
+            window.close();
+          } else {
+            console.error('No window.opener found');
             window.location.href = '${redirectUrl}?token=${token}';
           }
-        </script>
-      `;
-      res.send(script);
-    } catch (error) {
-      console.error('Error en callback:', error);
-      res.status(500).send('Error interno del servidor');
-    }
-  },
+        } catch (e) {
+          console.error('Error en postMessage:', e);
+          window.location.href = '${redirectUrl}?token=${token}';
+        }
+      </script>
+    `;
+    res.send(script);
+  } catch (error) {
+    console.error('Error en callback:', error);
+    res.status(500).send('Error interno del servidor');
+  }
+},
   // Ruta para iniciar sesión con Facebook
   facebookLogin: (req, res, next) => {
     const redirectUrl = req.query.redirect || `${redirectURL}`;
