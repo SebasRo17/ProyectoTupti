@@ -36,7 +36,7 @@ const PORT = process.env.PORT || 3000;
 // Configuración de CORS
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://tupti.store'] 
+    ? ['https://tupti.store', 'https://www.tupti.store'] 
     : ['http://localhost:5173'],
   credentials: true
 };
