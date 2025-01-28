@@ -8,10 +8,16 @@ const authController = require('./../controllers/AuthController');
 router.get('/google', authController.googleLogin);
 router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/' }), authController.googleCallback);
 
-// Rutas de autenticación con Facebook
-router.get('/facebook', authController.facebookLogin);
-router.get('/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/' }), authController.facebookCallback);
-
+router.get('/facebook', passport.authenticate('facebook', { 
+    scope: ['email', 'public_profile']
+  }));
+  
+  router.get('/facebook/callback', 
+    passport.authenticate('facebook', { 
+      failureRedirect: '/' 
+    }), 
+    authController.facebookCallback
+  );
 // Ruta protegida del dashboard
 
 module.exports = router;

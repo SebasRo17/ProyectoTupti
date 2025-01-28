@@ -84,23 +84,65 @@ googleCallback: (req, res) => {
     })(req, res, next);
   },
 
-  // Ruta de callback de Facebook
-  facebookCallback: (req, res) => {
-    const redirectUrl = req.query.state || `${redirectURL}`;
+facebookCallback: (req, res) => {
+  try {
+    const redirectUrl = process.env.NODE_ENV === 'production' 
+      ? 'https://www.tupti.store'
+      : 'http://localhost:5173';
 
-    // Usar el usuario del objeto req.user
+    if (!req.user) {
+      console.error('No user data in request');
+      return res.status(401).send('Authentication failed');
+    }
+
+    // Usar los datos del usuario
     const userData = req.user.user;
-    const token = AuthService.generateToken(userData);
+    
+    // Crear el token con todos los datos necesarios
+    const tokenPayload = {
+      IdUsuario: userData.IdUsuario,
+      Nombre: userData.Nombre,
+      Email: userData.Email,
+      CodigoUs: userData.CodigoUs,
+      IdRol: userData.IdRol,
+      isAdmin: userData.IdRol === 1,
+      roleName: userData.IdRol === 1 ? 'Administrador' : 'Cliente'
+    };
+
+    const token = AuthService.generateToken(tokenPayload);
+    console.log('Token generado:', token);
+    console.log('Datos del usuario:', tokenPayload);
 
     const script = `
       <script>
-        window.opener.postMessage({ token: '${token}' }, '${redirectUrl}');
-        window.close();
+        try {
+          if (window.opener) {
+            window.opener.postMessage(
+              { 
+                type: 'AUTH_SUCCESS',
+                token: '${token}',
+                user: ${JSON.stringify(tokenPayload)}
+              }, 
+              '${redirectUrl}'
+            );
+            console.log('Mensaje enviado al opener');
+            window.close();
+          } else {
+            console.error('No window.opener found');
+            window.location.href = '${redirectUrl}?token=${token}';
+          }
+        } catch (e) {
+          console.error('Error en postMessage:', e);
+          window.location.href = '${redirectUrl}?token=${token}';
+        }
       </script>
     `;
     res.send(script);
-  },
-
+  } catch (error) {
+    console.error('Error en callback de Facebook:', error);
+    res.status(500).send('Error interno del servidor');
+  }
+},
   // Middleware para validar el token JWT
   authenticateToken: (req, res, next) => {
     const token = req.query.token || req.headers['authorization'];
