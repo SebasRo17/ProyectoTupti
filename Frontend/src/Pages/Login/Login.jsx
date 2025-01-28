@@ -84,6 +84,7 @@ function Login() {
     const facebookAuthUrl = process.env.NODE_ENV === 'production'
       ? 'https://proyectotupti.onrender.com/auth/facebook'
       : 'http://localhost:3000/auth/facebook';
+      console.log(facebookAuthUrl);
     const width = 600;
     const height = 600;
     const left = (window.innerWidth - width) / 2;
@@ -160,7 +161,7 @@ function Login() {
       if (allowedOrigins.includes(event.origin) && event.data.token) {
         localStorage.setItem('jwtToken', event.data.token);
         const payload = jwtDecode(event.data.token);
-        const from = location.state?.from || (payload.isAdmin ? '/admin' : '/');
+        const from = location.state?.from || '/';
         navigate(from);
       }
     });
