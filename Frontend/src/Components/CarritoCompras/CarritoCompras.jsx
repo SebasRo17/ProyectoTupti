@@ -95,26 +95,26 @@ const CarritoCompras = () => {
   }, [idUsuario]);
 
   // Update fetchDescuentos useEffect
-useEffect(() => {
-  const fetchDescuentos = async () => {
-    if (idCarrito && productos.length > 0) {
-      try {
-        const descuentosData = await getDescuentoCarrito(idCarrito);
-        if (descuentosData) {
-          setDescuentos(descuentosData);
+  useEffect(() => {
+    const fetchDescuentos = async () => {
+      if (idCarrito && productos.length > 0) {
+        try {
+          const descuentosData = await getDescuentoCarrito(idCarrito);
+          if (descuentosData) {
+            setDescuentos(descuentosData);
+          }
+        } catch (error) {
+          console.error('Error al obtener descuentos:', error);
+          setDescuentos({ descuentoTotal: 0, detallesConDescuento: [] });
         }
-      } catch (error) {
-        console.error('Error al obtener descuentos:', error);
+      } else {
+        // Reset descuentos when cart is empty
         setDescuentos({ descuentoTotal: 0, detallesConDescuento: [] });
       }
-    } else {
-      // Reset descuentos when cart is empty
-      setDescuentos({ descuentoTotal: 0, detallesConDescuento: [] });
-    }
-  };
+    };
 
-  fetchDescuentos();
-}, [idCarrito, productos]); 
+    fetchDescuentos();
+  }, [idCarrito, productos]); 
 
   useEffect(() => {
     const fetchTotales = async () => {
@@ -177,11 +177,20 @@ useEffect(() => {
   };
 
   const actualizarCantidad = async (id, cambio) => {
+    const producto = productos.find(p => p.id === id);
+    if (!producto) return;
+
+    // Actualizar visualmente la cantidad antes de la petición
+    setProductos(
+      productos.map((producto) =>
+        producto.id === id
+          ? { ...producto, cantidad: Math.max(1, producto.cantidad + cambio) }
+          : producto
+      )
+    );
+
     try {
-      const producto = productos.find(p => p.id === id);
-      if (producto.cantidad < 1) return;
-  
-      // Only validate stock when increasing quantity
+      // Solo validar stock cuando se incrementa la cantidad
       if (cambio > 0) {
         const stockValidation = await validateStock(id, 1);
         
@@ -195,23 +204,15 @@ useEffect(() => {
           return;
         }
       }
-  
+
       const kardexData = {
         idProducto: id,
         movimiento: cambio > 0 ? 'Venta' : 'Ingreso',
         cantidad: cambio > 0 ? -1 : 1
       };
-  
+
       await handleAgregarCarrito(id, cambio);
       await createKardexProduct(kardexData);
-  
-      setProductos(
-        productos.map((producto) =>
-          producto.id === id
-            ? { ...producto, cantidad: Math.max(1, producto.cantidad + cambio) }
-            : producto
-        )
-      );
     } catch (error) {
       console.error('Error al actualizar cantidad:', error);
       setShowStockError(true);
@@ -223,7 +224,6 @@ useEffect(() => {
     }
   };
 
-  
   const handlePagar = async (e) => {
     e.preventDefault();
     
