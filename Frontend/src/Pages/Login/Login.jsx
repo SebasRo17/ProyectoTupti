@@ -93,7 +93,7 @@ function Login() {
   };
   
   const handleGoogleLogin = () => {
-    const googleAuthUrl = `${import.meta.env.VITE_API_URL}/auth/google`;
+    const googleAuthUrl = `https://tupti.store/auth/google`;
     console.log('URL de autenticación de Google:', googleAuthUrl);
     const width = 600;
     const height = 600;

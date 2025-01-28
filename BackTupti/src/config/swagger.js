@@ -11,8 +11,8 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:3000',
-        description: 'Servidor local',
+        url: 'https://proyectotupti.onrender.com',
+        description: 'Servidor Produccion',
       },
     ],
     paths: {

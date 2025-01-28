@@ -21,7 +21,7 @@ module.exports = function configurePassport() {
   console.log('Alternate URL:', alternateURL);
 
   // Configurar estrategia de Google
-  const googleCallbackURL = `${mainURL}/auth/google/callback`;
+  const googleCallbackURL = `https://tupti.store/auth/google/callback`;
   console.log('Google Callback URL:', googleCallbackURL);
 
   passport.use(new GoogleStrategy({
