@@ -1,47 +1,55 @@
 const jwt = require('jsonwebtoken');
 
 const authMiddleware = (req, res, next) => {
-    console.group('🔑 Verificación de Autenticación');
+    console.group('🔑 Verificación de Token');
     try {
-        console.log('Headers completos:', req.headers);
-        console.log('Authorization header:', req.headers.authorization);
-
         const authHeader = req.headers.authorization;
-        if (!authHeader) {
-            console.error('❌ No se encontró header de autorización');
-            return res.status(401).json({
-                error: 'Token no proporcionado',
-                details: 'No se encontró el header Authorization'
-            });
-        }
+        console.log('Headers recibidos:', {
+            auth: authHeader?.substring(0, 30) + '...',
+            contentType: req.headers['content-type']
+        });
 
-        if (!authHeader.startsWith('Bearer ')) {
-            console.error('❌ Formato de token inválido');
+        if (!authHeader?.startsWith('Bearer ')) {
+            console.error('❌ Header de autorización inválido');
             return res.status(401).json({
-                error: 'Token inválido',
-                details: 'El token debe ser de tipo Bearer'
+                error: 'Token no proporcionado o formato inválido'
             });
         }
 
         const token = authHeader.split(' ')[1];
-        console.log('Token extraído:', token.substring(0, 20) + '...');
-
+        
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            console.log('✅ Token decodificado exitosamente:', decoded);
+            console.log('Token decodificado:', {
+                IdUsuario: decoded.IdUsuario,
+                Email: decoded.Email,
+                CodigoUs: decoded.CodigoUs,
+                roleName: decoded.roleName
+            });
+
+            // Verificar que el token tiene la estructura correcta
+            if (!decoded.IdUsuario || !decoded.Email || !decoded.CodigoUs) {
+                console.error('❌ Token no contiene los campos requeridos');
+                return res.status(401).json({
+                    error: 'Token inválido',
+                    details: 'Estructura del token incorrecta'
+                });
+            }
+
             req.user = decoded;
+            console.log('✅ Token válido para usuario:', decoded.IdUsuario);
             next();
         } catch (jwtError) {
-            console.error('❌ Error verificando JWT:', jwtError);
+            console.error('❌ Error al verificar JWT:', jwtError);
             return res.status(401).json({
                 error: 'Token inválido',
                 details: jwtError.message
             });
         }
     } catch (error) {
-        console.error('❌ Error general en middleware:', error);
+        console.error('❌ Error general:', error);
         res.status(500).json({
-            error: 'Error interno del servidor',
+            error: 'Error del servidor',
             details: error.message
         });
     } finally {
