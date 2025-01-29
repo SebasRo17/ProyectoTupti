@@ -16,43 +16,58 @@ const Facturas = () => {
     useEffect(() => {
         const fetchFacturas = async () => {
             try {
-                // Verificar sesión
-                const sessionToken = sessionStorage.getItem('token') || localStorage.getItem('token');
-                console.log('Verificando token en todas las fuentes:', {
-                    sessionToken,
-                    localToken: localStorage.getItem('token'),
-                    sessionStorageToken: sessionStorage.getItem('token')
+                // Debug storage
+                console.group('Estado de almacenamiento');
+                console.table({
+                    'sessionStorage token': sessionStorage.getItem('token'),
+                    'localStorage token': localStorage.getItem('token'),
+                    'cookies': document.cookie
                 });
+                console.groupEnd();
+
+                // Obtener token de cualquier almacenamiento
+                const sessionToken = sessionStorage.getItem('token') || localStorage.getItem('token');
 
                 if (!sessionToken) {
-                    throw new Error('No hay sesión activa');
+                    console.error('📛 Error de autenticación: No se encontró token en ningún almacenamiento');
+                    throw new Error('No hay sesión activa. Por favor, inicie sesión nuevamente.');
                 }
 
-                // Decodificar token de forma más segura
+                // Debug token y decodificación
                 let payload;
                 try {
+                    console.group('Información del Token');
                     const base64Url = sessionToken.split('.')[1];
                     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-                    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-                        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-                    }).join(''));
+                    const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => 
+                        '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+                    ).join(''));
                     payload = JSON.parse(jsonPayload);
-                    console.log('Payload decodificado completo:', payload);
+                    console.table(payload);
+                    console.groupEnd();
                 } catch (e) {
                     console.error('Error decodificando token:', e);
-                    throw new Error('Token inválido');
+                    throw new Error('Token inválido o malformado');
                 }
 
                 if (!payload.IdUsuario) {
                     console.error('Payload sin IdUsuario:', payload);
-                    throw new Error('Token no contiene ID de usuario');
+                    throw new Error('Token no contiene información de usuario válida');
                 }
 
+                console.log('UserId extraído:', payload.IdUsuario);
                 const data = await facturaApi.getFacturasByUsuario(payload.IdUsuario);
+                console.log('Datos recibidos de la API:', data);
+                
                 setFacturas(data);
                 setLoading(false);
             } catch (err) {
-                console.error('Error en fetchFacturas:', err);
+                console.group('🚨 Error en Facturas');
+                console.error('Tipo de error:', err.name);
+                console.error('Mensaje:', err.message);
+                console.error('Stack:', err.stack);
+                console.groupEnd();
+                
                 setError(err.message);
                 setLoading(false);
             }
