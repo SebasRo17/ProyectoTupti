@@ -4,11 +4,18 @@ export const facturaApi = {
     // Obtener todas las facturas de un usuario
     getFacturasByUsuario: async (userId) => {
         try {
+            if (!userId) {
+                throw new Error('ID de usuario no proporcionado');
+            }
+
+            const token = localStorage.getItem('token');
+            
             const response = await fetch(`${API_URL}/factura/usuario/${userId}`, {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 }
             });
 
