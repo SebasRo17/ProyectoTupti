@@ -57,6 +57,12 @@ function PantallaAdmin() {
     cargarDatos();
   }, []);
 
+  // Calcular estadísticas de pedidos
+  const pedidosEntregados = pedidos.filter(p => p.estado === 2).length;
+  const pedidosEnEspera = pedidos.filter(p => p.estado === 0).length;
+  const pedidosReembolsados = pedidos.filter(p => p.estado === 1).length;
+  const pedidosTotales = pedidos.length;
+
   const pieData = {
     labels: ['Entregadas', 'En Espera', 'Reembolsadas'],
     datasets: [{
@@ -87,24 +93,24 @@ function PantallaAdmin() {
          <div className="overview">
       <div className="stats">
         <div className="stat">
-          <h3>150</h3>
-          <p>Ordenes Completas</p>
-          <span className="positive">+14.36%</span>
+          <h3>{pedidosTotales}</h3>
+          <p>Ordenes Totales</p>
+          <span className="positive">100%</span>
         </div>
         <div className="stat">
-          <h3>45</h3>
-          <p>Ordenes Confirmadas</p>
-          <span className="positive">+45.21%</span>
+          <h3>{pedidosEnEspera}</h3>
+          <p>Ordenes En Espera</p>
+          <span className="positive">{((pedidosEnEspera/pedidosTotales) * 100).toFixed(1)}%</span>
         </div>
         <div className="stat">
-          <h3>12</h3>
-          <p>Ordenes Canceladas</p>
-          <span className="negative">-12%</span>
+          <h3>{pedidosEntregados}</h3>
+          <p>Ordenes Entregadas</p>
+          <span className="positive">{((pedidosEntregados/pedidosTotales) * 100).toFixed(1)}%</span>
         </div>
         <div className="stat">
-          <h3>8</h3>
+          <h3>{pedidosReembolsados}</h3>
           <p>Ordenes Reembolsadas</p>
-          <span className="negative">-5.36%</span>
+          <span className="negative">{((pedidosReembolsados/pedidosTotales) * 100).toFixed(1)}%</span>
         </div>
       </div>
       <div className="pie-chart-container">
