@@ -1,14 +1,19 @@
 import { API_URL } from '../config/config';
 
 export const facturaApi = {
-    // Obtener todas las facturas de un usuario
     getFacturasByUsuario: async (userId) => {
+        console.group('🌐 Petición getFacturasByUsuario');
         try {
             const token = sessionStorage.getItem('token') || localStorage.getItem('token');
-            console.log('Token para petición:', token);
+            
+            console.log('📝 Detalles de la petición:', {
+                url: `${API_URL}/factura/usuario/${userId}`,
+                userId,
+                tokenExists: !!token
+            });
 
             if (!token) {
-                throw new Error('No hay token disponible');
+                throw new Error('Token no disponible para la petición');
             }
 
             const headers = new Headers({
@@ -16,7 +21,7 @@ export const facturaApi = {
                 'Authorization': `Bearer ${token}`
             });
 
-            console.log('Headers de la petición:', Object.fromEntries(headers.entries()));
+            console.log('🔒 Headers configurados:', Object.fromEntries(headers.entries()));
 
             const response = await fetch(`${API_URL}/factura/usuario/${userId}`, {
                 method: 'GET',
@@ -24,21 +29,28 @@ export const facturaApi = {
                 credentials: 'include'
             });
 
-            console.log('Respuesta del servidor:', {
+            console.log('📨 Respuesta recibida:', {
                 status: response.status,
-                statusText: response.statusText
+                statusText: response.statusText,
+                headers: Object.fromEntries(response.headers.entries())
             });
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(errorData.message || `Error ${response.status}`);
+                throw new Error(`Error ${response.status}: ${errorData.message || response.statusText}`);
             }
 
             const data = await response.json();
+            console.log('✅ Datos recibidos:', data);
             return data;
         } catch (error) {
-            console.error('Error en getFacturasByUsuario:', error);
+            console.error('❌ Error en petición:', {
+                message: error.message,
+                stack: error.stack
+            });
             throw error;
+        } finally {
+            console.groupEnd();
         }
     },
 
