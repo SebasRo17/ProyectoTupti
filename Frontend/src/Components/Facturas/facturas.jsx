@@ -4,6 +4,7 @@ import Header from '../../Components/header/header';
 import Footer from '../../Components/footer/footer';
 import './facturas.css';
 import { API_URL } from '../../config/config';
+import { facturaApi } from '../../Api/facturaApi';
 
 const Facturas = () => {
     const [currentDateTime, setCurrentDateTime] = useState(new Date());
@@ -15,17 +16,21 @@ const Facturas = () => {
     useEffect(() => {
         const fetchFacturas = async () => {
             try {
-                // Obtener el ID del usuario del localStorage o donde lo tengas almacenado
-                const userId = localStorage.getItem('userId');
-                const response = await fetch(`http://localhost:3000/factura/usuario/${userId}`, {
-                    credentials: 'include'
-                });
-                
-                if (!response.ok) {
-                    throw new Error('Error al cargar las facturas');
+                // Obtener el token y decodificarlo
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    throw new Error('No hay sesión activa');
                 }
-                
-                const data = await response.json();
+
+                // Decodificar el token para obtener el ID del usuario
+                const payload = JSON.parse(atob(token.split('.')[1]));
+                const userId = payload.id;
+
+                if (!userId) {
+                    throw new Error('No se pudo obtener el ID del usuario');
+                }
+
+                const data = await facturaApi.getFacturasByUsuario(userId);
                 setFacturas(data);
                 setLoading(false);
             } catch (err) {
