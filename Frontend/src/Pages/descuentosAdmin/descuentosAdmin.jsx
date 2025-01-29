@@ -17,6 +17,7 @@ const DescuentosAdmin = () => {
     const [isNuevoDescuentoOpen, setIsNuevoDescuentoOpen] = useState(false);
     const [filterState, setFilterState] = useState(''); // Estado para el filtro de estado
     const [filterName, setFilterName] = useState(''); // Estado para el filtro de nombre
+    const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('');
 
     const fetchDiscounts = async () => {
         try {
@@ -103,12 +104,24 @@ const DescuentosAdmin = () => {
         fetchDiscounts();
     };
 
-    // Filtrar descuentos
+    // Modificar la función de búsqueda para filtrar por nombre
+    const handleSearch = (searchTerm) => {
+        setFilterName(searchTerm);
+    };
+
+    // Agregar función para filtrar por categoría
+    const handleFilterCategory = (categoria) => {
+        setCategoriaSeleccionada(categoria);
+    };
+
+    // Modificar la lógica de filtrado
     const filteredDiscounts = discounts.filter(discount => {
-        return (
-            (filterState === '' || discount.estado === filterState) &&
-            (filterName === '' || discount.producto.toLowerCase().includes(filterName.toLowerCase()))
-        );
+        const matchesName = filterName === '' || 
+            discount.producto.toLowerCase().includes(filterName.toLowerCase());
+        const matchesCategory = categoriaSeleccionada === '' || 
+            discount.categoria === categoriaSeleccionada; // Asegúrate de que tus descuentos tengan una propiedad categoria
+
+        return matchesName && matchesCategory;
     });
 
     return (
@@ -142,6 +155,8 @@ const DescuentosAdmin = () => {
                 showNewDiscount={true}
                 onFilterStateChange={setFilterState}
                 onFilterNameChange={setFilterName}
+                onSearch={handleSearch}
+                onFilterCategory={handleFilterCategory}
                 discounts={discounts}
             />
            
