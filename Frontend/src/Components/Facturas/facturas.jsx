@@ -16,26 +16,39 @@ const Facturas = () => {
     useEffect(() => {
         const fetchFacturas = async () => {
             try {
-                // Obtener el token y decodificarlo
                 const token = localStorage.getItem('token');
-                if (!token) {
+                console.log('Token encontrado:', token); // Debug
+
+                // Verificar que el token existe
+                if (!token || token === 'undefined' || token === 'null') {
                     throw new Error('No hay sesión activa');
                 }
 
-                // Decodificar el token y obtener IdUsuario en lugar de id
-                const payload = JSON.parse(atob(token.split('.')[1]));
-                const userId = payload.IdUsuario; // Cambio aquí: usando IdUsuario en lugar de id
-
-                if (!userId) {
-                    throw new Error('No se pudo obtener el ID del usuario');
+                // Decodificar el token de forma segura
+                let payload;
+                try {
+                    const base64Url = token.split('.')[1];
+                    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                    payload = JSON.parse(window.atob(base64));
+                    console.log('Token decodificado:', payload); // Debug
+                } catch (e) {
+                    throw new Error('Token inválido');
                 }
 
-                console.log('ID de usuario obtenido:', userId); // Para debugging
+                // Verificar que el payload contiene IdUsuario
+                if (!payload || !payload.IdUsuario) {
+                    throw new Error('Token no contiene información de usuario');
+                }
+
+                const userId = payload.IdUsuario;
+                console.log('UserId extraído:', userId); // Debug
+
                 const data = await facturaApi.getFacturasByUsuario(userId);
+                console.log('Datos recibidos:', data); // Debug
                 setFacturas(data);
                 setLoading(false);
             } catch (err) {
-                console.error('Error completo:', err);
+                console.error('Error detallado:', err);
                 setError(err.message);
                 setLoading(false);
             }

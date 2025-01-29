@@ -4,12 +4,13 @@ export const facturaApi = {
     // Obtener todas las facturas de un usuario
     getFacturasByUsuario: async (userId) => {
         try {
+            const token = localStorage.getItem('token');
+            console.log('API - UserId:', userId); // Debug
+            console.log('API - Token:', token); // Debug
+
             if (!userId) {
                 throw new Error('ID de usuario no proporcionado');
             }
-
-            const token = localStorage.getItem('token');
-            console.log('Haciendo petición para usuario:', userId); // Para debugging
 
             const response = await fetch(`${API_URL}/factura/usuario/${userId}`, {
                 method: 'GET',
@@ -20,15 +21,18 @@ export const facturaApi = {
                 }
             });
 
+            console.log('API - Response status:', response.status); // Debug
+
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(errorData.message || 'Error al obtener las facturas');
+                throw new Error(errorData.message || `Error ${response.status}: ${response.statusText}`);
             }
 
             const data = await response.json();
+            console.log('API - Datos recibidos:', data); // Debug
             return data;
         } catch (error) {
-            console.error('Error en getFacturasByUsuario:', error);
+            console.error('API - Error completo:', error);
             throw error;
         }
     },
