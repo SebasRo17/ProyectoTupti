@@ -1,45 +1,46 @@
 import { API_URL } from '../config/config';
 
 const getAuthToken = () => {
-    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-    if (!token) {
-        throw new Error('Token no disponible');
-    }
-    console.log('Token encontrado en API:', token.substring(0, 20) + '...');
+    const token = localStorage.getItem('token');
+    console.log('Token encontrado:', token ? 'Sí' : 'No');
+    console.log('Token completo:', token);
     return token;
 };
 
 export const facturaApi = {
     getFacturasByUsuario: async (userId) => {
+        console.group('🌐 Petición getFacturasByUsuario');
         try {
             const token = getAuthToken();
             
-            const headers = {
+            const headers = new Headers({
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
-            };
-            
-            console.log('Headers de la petición:', headers);
-            
+            });
+
+            console.log('Request completo:', {
+                url: `${API_URL}/factura/usuario/${userId}`,
+                headers: Object.fromEntries(headers.entries()),
+                token: token
+            });
+
             const response = await fetch(`${API_URL}/factura/usuario/${userId}`, {
                 method: 'GET',
                 headers: headers,
                 credentials: 'include'
             });
-            
-            console.log('Respuesta del servidor:', {
-                status: response.status,
-                statusText: response.statusText
-            });
 
             if (!response.ok) {
-                throw new Error(`Error en la petición: ${response.status}`);
+                const errorData = await response.json();
+                throw new Error(errorData.message || `Error ${response.status}`);
             }
 
             return await response.json();
         } catch (error) {
-            console.error('Error en getFacturasByUsuario:', error);
+            console.error('Error en petición:', error);
             throw error;
+        } finally {
+            console.groupEnd();
         }
     },
 
