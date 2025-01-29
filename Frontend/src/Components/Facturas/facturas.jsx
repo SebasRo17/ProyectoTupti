@@ -22,18 +22,20 @@ const Facturas = () => {
                     throw new Error('No hay sesión activa');
                 }
 
-                // Decodificar el token para obtener el ID del usuario
+                // Decodificar el token y obtener IdUsuario en lugar de id
                 const payload = JSON.parse(atob(token.split('.')[1]));
-                const userId = payload.id;
+                const userId = payload.IdUsuario; // Cambio aquí: usando IdUsuario en lugar de id
 
                 if (!userId) {
                     throw new Error('No se pudo obtener el ID del usuario');
                 }
 
+                console.log('ID de usuario obtenido:', userId); // Para debugging
                 const data = await facturaApi.getFacturasByUsuario(userId);
                 setFacturas(data);
                 setLoading(false);
             } catch (err) {
+                console.error('Error completo:', err);
                 setError(err.message);
                 setLoading(false);
             }
