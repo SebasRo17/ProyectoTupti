@@ -114,12 +114,12 @@ const DescuentosAdmin = () => {
         setCategoriaSeleccionada(categoria);
     };
 
-    // Modificar la lógica de filtrado
+    // Modificar la lógica de filtrado para buscar en la columna Producto
     const filteredDiscounts = discounts.filter(discount => {
         const matchesName = filterName === '' || 
             discount.producto.toLowerCase().includes(filterName.toLowerCase());
         const matchesCategory = categoriaSeleccionada === '' || 
-            discount.categoria === categoriaSeleccionada; // Asegúrate de que tus descuentos tengan una propiedad categoria
+            discount.producto.toLowerCase().includes(categoriaSeleccionada.toLowerCase());
 
         return matchesName && matchesCategory;
     });
