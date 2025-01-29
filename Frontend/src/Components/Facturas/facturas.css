@@ -59,6 +59,26 @@
     color: #333;
 }
 
+.download-btn {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.download-btn:hover {
+    background-color: #357abd;
+}
+
+.error-message {
+    color: #dc3545;
+    padding: 1rem;
+    text-align: center;
+}
+
 @media (min-width: 1441px) {
   .app-wrapper{
     min-height: 100vh;
