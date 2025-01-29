@@ -5,6 +5,7 @@ import Footer from '../../Components/footer/footer';
 import './facturas.css';
 import { API_URL } from '../../config/config';
 import { facturaApi } from '../../Api/facturaApi';
+import jwt_decode from 'jwt-decode';
 
 const Facturas = () => {
     const navigate = useNavigate();
@@ -17,29 +18,20 @@ const Facturas = () => {
     useEffect(() => {
         const fetchFacturas = async () => {
             try {
-                const token = localStorage.getItem('token');
-                console.log('Token actual:', token);
-
+                const token = localStorage.getItem('jwtToken');
                 if (!token) {
-                    console.error('No hay token disponible');
-                    setError('Error de autenticación');
-                    setLoading(false);
+                    navigate('/login');
                     return;
                 }
 
-                // Decodificar token
-                const base64Url = token.split('.')[1];
-                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-                const payload = JSON.parse(atob(base64));
-                console.log('Token decodificado:', payload);
+                const decodedToken = jwt_decode(token);
+                const userId = decodedToken.IdUsuario;
 
-                if (!payload.IdUsuario) {
-                    setError('Token inválido');
-                    setLoading(false);
-                    return;
+                if (!userId) {
+                    throw new Error('No se pudo obtener el ID del usuario');
                 }
 
-                const data = await facturaApi.getFacturasByUsuario(payload.IdUsuario);
+                const data = await facturaApi.getFacturasByUsuario(userId);
                 console.log('Datos recibidos:', data);
                 setFacturas(data);
                 setLoading(false);

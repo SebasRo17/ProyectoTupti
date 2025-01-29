@@ -1,7 +1,7 @@
 import { API_URL } from '../config/config';
 
 const getAuthToken = () => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('jwtToken');
     console.log('Token encontrado:', token ? 'Sí' : 'No');
     console.log('Token completo:', token);
     return token;
