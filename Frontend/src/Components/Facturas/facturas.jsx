@@ -45,7 +45,7 @@ const Facturas = () => {
         fetchFacturas();
     }, [navigate]);
 
-    const handleDownloadPDF = async (pdfUrl) => {
+    const handleDownloadPDF = async (pdfUrl, idPedido) => {
         try {
             const token = localStorage.getItem('jwtToken');
             const response = await fetch(`${API_URL}${pdfUrl}`, {
@@ -64,7 +64,7 @@ const Facturas = () => {
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            link.download = `factura.pdf`;
+            link.download = `factura-pedido-${idPedido}.pdf`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -111,7 +111,7 @@ const Facturas = () => {
                                                 <td>
                                                     <button 
                                                         className="download-btn"
-                                                        onClick={() => handleDownloadPDF(factura.pdfUrl)}
+                                                        onClick={() => handleDownloadPDF(factura.pdfUrl, factura.idPedido)}
                                                     >
                                                         Descargar PDF
                                                     </button>
