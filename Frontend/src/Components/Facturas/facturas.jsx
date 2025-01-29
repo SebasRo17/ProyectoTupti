@@ -47,7 +47,28 @@ const Facturas = () => {
 
     const handleDownloadPDF = async (pdfUrl) => {
         try {
-            window.open(`${API_URL}${pdfUrl}`, '_blank');
+            const token = localStorage.getItem('jwtToken');
+            const response = await fetch(`${API_URL}${pdfUrl}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                credentials: 'include'
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al descargar el PDF');
+            }
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `factura.pdf`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
         } catch (error) {
             console.error('Error al descargar el PDF:', error);
         }

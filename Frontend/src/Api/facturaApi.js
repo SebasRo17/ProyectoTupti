@@ -47,8 +47,12 @@ export const facturaApi = {
     // Descargar PDF de una factura
     downloadFacturaPDF: async (facturaId) => {
         try {
+            const token = localStorage.getItem('jwtToken');
             const response = await fetch(`${API_URL}/factura/download/${facturaId}`, {
                 method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
                 credentials: 'include',
             });
 
