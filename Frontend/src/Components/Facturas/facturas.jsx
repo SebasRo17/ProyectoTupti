@@ -15,59 +15,36 @@ const Facturas = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const verifyAndGetToken = () => {
-            const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-            console.log('Token encontrado:', token ? 'Sí' : 'No');
-            console.log('Token length:', token?.length);
-            
-            if (!token) {
-                throw new Error('No hay token almacenado');
-            }
-            
-            try {
-                // Verificar que el token sea válido
-                const parts = token.split('.');
-                if (parts.length !== 3) {
-                    throw new Error('Formato de token inválido');
-                }
-                
-                const payload = JSON.parse(atob(parts[1]));
-                console.log('Payload del token:', payload);
-                
-                if (!payload.IdUsuario) {
-                    throw new Error('Token no contiene IdUsuario');
-                }
-                
-                return { token, payload };
-            } catch (e) {
-                console.error('Error procesando token:', e);
-                // Si hay error, limpiar tokens inválidos
-                localStorage.removeItem('token');
-                sessionStorage.removeItem('token');
-                throw new Error('Token inválido');
-            }
-        };
-
         const fetchFacturas = async () => {
             try {
-                const { token, payload } = verifyAndGetToken();
-                console.log('Token verificado:', token.substring(0, 20) + '...');
-                console.log('ID de usuario:', payload.IdUsuario);
+                const token = localStorage.getItem('token');
+                console.log('Token actual:', token);
+
+                if (!token) {
+                    console.error('No hay token disponible');
+                    setError('Error de autenticación');
+                    setLoading(false);
+                    return;
+                }
+
+                // Decodificar token
+                const base64Url = token.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const payload = JSON.parse(atob(base64));
+                console.log('Token decodificado:', payload);
+
+                if (!payload.IdUsuario) {
+                    setError('Token inválido');
+                    setLoading(false);
+                    return;
+                }
 
                 const data = await facturaApi.getFacturasByUsuario(payload.IdUsuario);
+                console.log('Datos recibidos:', data);
                 setFacturas(data);
                 setLoading(false);
             } catch (err) {
                 console.error('Error en fetchFacturas:', err);
-                if (err.message.includes('No hay token') || err.message.includes('Token inválido')) {
-                    navigate('/login', {
-                        replace: true,
-                        state: { 
-                            from: '/facturas',
-                            message: 'Por favor inicie sesión nuevamente'
-                        }
-                    });
-                }
                 setError(err.message);
                 setLoading(false);
             }
