@@ -16,39 +16,43 @@ const Facturas = () => {
     useEffect(() => {
         const fetchFacturas = async () => {
             try {
-                const token = localStorage.getItem('token');
-                console.log('Token encontrado:', token); // Debug
+                // Verificar sesión
+                const sessionToken = sessionStorage.getItem('token') || localStorage.getItem('token');
+                console.log('Verificando token en todas las fuentes:', {
+                    sessionToken,
+                    localToken: localStorage.getItem('token'),
+                    sessionStorageToken: sessionStorage.getItem('token')
+                });
 
-                // Verificar que el token existe
-                if (!token || token === 'undefined' || token === 'null') {
+                if (!sessionToken) {
                     throw new Error('No hay sesión activa');
                 }
 
-                // Decodificar el token de forma segura
+                // Decodificar token de forma más segura
                 let payload;
                 try {
-                    const base64Url = token.split('.')[1];
+                    const base64Url = sessionToken.split('.')[1];
                     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-                    payload = JSON.parse(window.atob(base64));
-                    console.log('Token decodificado:', payload); // Debug
+                    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                    }).join(''));
+                    payload = JSON.parse(jsonPayload);
+                    console.log('Payload decodificado completo:', payload);
                 } catch (e) {
+                    console.error('Error decodificando token:', e);
                     throw new Error('Token inválido');
                 }
 
-                // Verificar que el payload contiene IdUsuario
-                if (!payload || !payload.IdUsuario) {
-                    throw new Error('Token no contiene información de usuario');
+                if (!payload.IdUsuario) {
+                    console.error('Payload sin IdUsuario:', payload);
+                    throw new Error('Token no contiene ID de usuario');
                 }
 
-                const userId = payload.IdUsuario;
-                console.log('UserId extraído:', userId); // Debug
-
-                const data = await facturaApi.getFacturasByUsuario(userId);
-                console.log('Datos recibidos:', data); // Debug
+                const data = await facturaApi.getFacturasByUsuario(payload.IdUsuario);
                 setFacturas(data);
                 setLoading(false);
             } catch (err) {
-                console.error('Error detallado:', err);
+                console.error('Error en fetchFacturas:', err);
                 setError(err.message);
                 setLoading(false);
             }
