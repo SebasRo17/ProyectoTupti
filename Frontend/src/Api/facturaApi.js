@@ -4,35 +4,40 @@ export const facturaApi = {
     // Obtener todas las facturas de un usuario
     getFacturasByUsuario: async (userId) => {
         try {
-            const token = localStorage.getItem('token');
-            console.log('API - UserId:', userId); // Debug
-            console.log('API - Token:', token); // Debug
+            const token = sessionStorage.getItem('token') || localStorage.getItem('token');
+            console.log('Token para petición:', token);
 
-            if (!userId) {
-                throw new Error('ID de usuario no proporcionado');
+            if (!token) {
+                throw new Error('No hay token disponible');
             }
+
+            const headers = new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            });
+
+            console.log('Headers de la petición:', Object.fromEntries(headers.entries()));
 
             const response = await fetch(`${API_URL}/factura/usuario/${userId}`, {
                 method: 'GET',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                }
+                headers: headers,
+                credentials: 'include'
             });
 
-            console.log('API - Response status:', response.status); // Debug
+            console.log('Respuesta del servidor:', {
+                status: response.status,
+                statusText: response.statusText
+            });
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(errorData.message || `Error ${response.status}: ${response.statusText}`);
+                throw new Error(errorData.message || `Error ${response.status}`);
             }
 
             const data = await response.json();
-            console.log('API - Datos recibidos:', data); // Debug
             return data;
         } catch (error) {
-            console.error('API - Error completo:', error);
+            console.error('Error en getFacturasByUsuario:', error);
             throw error;
         }
     },

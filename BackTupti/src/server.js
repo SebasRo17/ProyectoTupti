@@ -32,6 +32,7 @@ const impuestoRoutes = require('./presentation/routes/ImpuestoRoutes');
 const productoImagenRoutes = require('./presentation/routes/ProductoImagenRoutes');
 const facturaRoutes = require('./presentation/routes/facturaRoutes');
 const setupAssociations = require('./domain/models/associations');
+const authMiddleware = require('./middleware/authMiddleware');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -84,6 +85,9 @@ app.use('/product-details', productDetailsRoutes);
 app.use('/tipoproductos', tipoProductoRoutes);
 app.use('/impuestos', impuestoRoutes);
 app.use('/producto-imagen', productoImagenRoutes);
+
+// Middleware de autenticación para rutas protegidas
+app.use('/factura', authMiddleware);
 app.use('/factura', facturaRoutes);
 
 // Configurar las asociaciones
