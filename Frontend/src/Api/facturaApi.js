@@ -1,56 +1,45 @@
 import { API_URL } from '../config/config';
 
+const getAuthToken = () => {
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    if (!token) {
+        throw new Error('Token no disponible');
+    }
+    console.log('Token encontrado en API:', token.substring(0, 20) + '...');
+    return token;
+};
+
 export const facturaApi = {
     getFacturasByUsuario: async (userId) => {
-        console.group('🌐 Petición getFacturasByUsuario');
         try {
-            const token = sessionStorage.getItem('token') || localStorage.getItem('token');
+            const token = getAuthToken();
             
-            console.log('📝 Detalles de la petición:', {
-                url: `${API_URL}/factura/usuario/${userId}`,
-                userId,
-                tokenExists: !!token
-            });
-
-            if (!token) {
-                throw new Error('Token no disponible para la petición');
-            }
-
-            const headers = new Headers({
+            const headers = {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
-            });
-
-            console.log('🔒 Headers configurados:', Object.fromEntries(headers.entries()));
-
+            };
+            
+            console.log('Headers de la petición:', headers);
+            
             const response = await fetch(`${API_URL}/factura/usuario/${userId}`, {
                 method: 'GET',
                 headers: headers,
                 credentials: 'include'
             });
-
-            console.log('📨 Respuesta recibida:', {
+            
+            console.log('Respuesta del servidor:', {
                 status: response.status,
-                statusText: response.statusText,
-                headers: Object.fromEntries(response.headers.entries())
+                statusText: response.statusText
             });
 
             if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(`Error ${response.status}: ${errorData.message || response.statusText}`);
+                throw new Error(`Error en la petición: ${response.status}`);
             }
 
-            const data = await response.json();
-            console.log('✅ Datos recibidos:', data);
-            return data;
+            return await response.json();
         } catch (error) {
-            console.error('❌ Error en petición:', {
-                message: error.message,
-                stack: error.stack
-            });
+            console.error('Error en getFacturasByUsuario:', error);
             throw error;
-        } finally {
-            console.groupEnd();
         }
     },
 

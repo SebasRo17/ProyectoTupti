@@ -7,6 +7,7 @@ import { API_URL } from '../../config/config';
 import { facturaApi } from '../../Api/facturaApi';
 
 const Facturas = () => {
+    const navigate = useNavigate();
     const [currentDateTime, setCurrentDateTime] = useState(new Date());
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [facturas, setFacturas] = useState([]);
@@ -14,67 +15,66 @@ const Facturas = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        const verifyAndGetToken = () => {
+            const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+            console.log('Token encontrado:', token ? 'Sí' : 'No');
+            console.log('Token length:', token?.length);
+            
+            if (!token) {
+                throw new Error('No hay token almacenado');
+            }
+            
+            try {
+                // Verificar que el token sea válido
+                const parts = token.split('.');
+                if (parts.length !== 3) {
+                    throw new Error('Formato de token inválido');
+                }
+                
+                const payload = JSON.parse(atob(parts[1]));
+                console.log('Payload del token:', payload);
+                
+                if (!payload.IdUsuario) {
+                    throw new Error('Token no contiene IdUsuario');
+                }
+                
+                return { token, payload };
+            } catch (e) {
+                console.error('Error procesando token:', e);
+                // Si hay error, limpiar tokens inválidos
+                localStorage.removeItem('token');
+                sessionStorage.removeItem('token');
+                throw new Error('Token inválido');
+            }
+        };
+
         const fetchFacturas = async () => {
             try {
-                // Debug storage
-                console.group('Estado de almacenamiento');
-                console.table({
-                    'sessionStorage token': sessionStorage.getItem('token'),
-                    'localStorage token': localStorage.getItem('token'),
-                    'cookies': document.cookie
-                });
-                console.groupEnd();
+                const { token, payload } = verifyAndGetToken();
+                console.log('Token verificado:', token.substring(0, 20) + '...');
+                console.log('ID de usuario:', payload.IdUsuario);
 
-                // Obtener token de cualquier almacenamiento
-                const sessionToken = sessionStorage.getItem('token') || localStorage.getItem('token');
-
-                if (!sessionToken) {
-                    console.error('📛 Error de autenticación: No se encontró token en ningún almacenamiento');
-                    throw new Error('No hay sesión activa. Por favor, inicie sesión nuevamente.');
-                }
-
-                // Debug token y decodificación
-                let payload;
-                try {
-                    console.group('Información del Token');
-                    const base64Url = sessionToken.split('.')[1];
-                    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-                    const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => 
-                        '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
-                    ).join(''));
-                    payload = JSON.parse(jsonPayload);
-                    console.table(payload);
-                    console.groupEnd();
-                } catch (e) {
-                    console.error('Error decodificando token:', e);
-                    throw new Error('Token inválido o malformado');
-                }
-
-                if (!payload.IdUsuario) {
-                    console.error('Payload sin IdUsuario:', payload);
-                    throw new Error('Token no contiene información de usuario válida');
-                }
-
-                console.log('UserId extraído:', payload.IdUsuario);
                 const data = await facturaApi.getFacturasByUsuario(payload.IdUsuario);
-                console.log('Datos recibidos de la API:', data);
-                
                 setFacturas(data);
                 setLoading(false);
             } catch (err) {
-                console.group('🚨 Error en Facturas');
-                console.error('Tipo de error:', err.name);
-                console.error('Mensaje:', err.message);
-                console.error('Stack:', err.stack);
-                console.groupEnd();
-                
+                console.error('Error en fetchFacturas:', err);
+                if (err.message.includes('No hay token') || err.message.includes('Token inválido')) {
+                    navigate('/login', {
+                        replace: true,
+                        state: { 
+                            from: '/facturas',
+                            message: 'Por favor inicie sesión nuevamente'
+                        }
+                    });
+                }
                 setError(err.message);
                 setLoading(false);
             }
         };
 
         fetchFacturas();
-    }, []);
+    }, [navigate]);
 
     const handleDownloadPDF = async (pdfUrl) => {
         try {
