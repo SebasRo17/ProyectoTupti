@@ -9,7 +9,8 @@ export const facturaApi = {
             }
 
             const token = localStorage.getItem('token');
-            
+            console.log('Haciendo petición para usuario:', userId); // Para debugging
+
             const response = await fetch(`${API_URL}/factura/usuario/${userId}`, {
                 method: 'GET',
                 credentials: 'include',
@@ -20,7 +21,8 @@ export const facturaApi = {
             });
 
             if (!response.ok) {
-                throw new Error('Error al obtener las facturas');
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Error al obtener las facturas');
             }
 
             const data = await response.json();
