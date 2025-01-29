@@ -30,6 +30,8 @@ const productDetailsRoutes = require('./presentation/routes/productDetailsRoutes
 const tipoProductoRoutes = require('./presentation/routes/TipoProductoRoutes');
 const impuestoRoutes = require('./presentation/routes/ImpuestoRoutes');
 const productoImagenRoutes = require('./presentation/routes/ProductoImagenRoutes');
+const facturaRoutes = require('./presentation/routes/facturaRoutes');
+const setupAssociations = require('./domain/models/associations');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -82,6 +84,10 @@ app.use('/product-details', productDetailsRoutes);
 app.use('/tipoproductos', tipoProductoRoutes);
 app.use('/impuestos', impuestoRoutes);
 app.use('/producto-imagen', productoImagenRoutes);
+app.use('/factura', facturaRoutes);
+
+// Configurar las asociaciones
+setupAssociations();
 
 // Sincronizar con la base de datos y iniciar el servidor
 sequelize.sync()
