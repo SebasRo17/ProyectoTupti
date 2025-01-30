@@ -2,7 +2,13 @@ const ProductoImagen = require('../../domain/models/ProductoImagen');
 
 class ProductoImagenRepository {
   async createProductoImagen(data) {
-    return await ProductoImagen.create(data);
+    try {
+      const productoImagen = await ProductoImagen.create(data);
+      return productoImagen;
+    } catch (error) {
+      console.error('Error en el repositorio al crear ProductoImagen:', error.message);
+      throw error;
+    }
   }
   async deleteProductoImagenById(idProductoImagen) {
     return await ProductoImagen.destroy({ where: { IdImagen: idProductoImagen } });

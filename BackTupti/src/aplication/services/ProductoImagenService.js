@@ -4,10 +4,6 @@ class ProductoImagenService {
   async createProductoImagen(data) {
     return await ProductoImagenRepository.createProductoImagen(data);
   }
-  async createProductoImagen(data) {
-    return await ProductoImagenRepository.createProductoImagen(data);
-  }
-
   async deleteProductoImagenById(idProductoImagen) {
     const deleted = await ProductoImagenRepository.deleteProductoImagenById(idProductoImagen);
     if (!deleted) {
