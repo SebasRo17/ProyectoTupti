@@ -31,8 +31,16 @@ class PasswordResetService {
       expiresAt
     });
 
-    // Enviar email
-    const resetUrl = `${process.env.FRONTEND_URL}/recuperar-contrasena/${token}`;
+    // Usar la URL correcta según el entorno
+    const frontendUrl = process.env.NODE_ENV === 'production' 
+      ? process.env.PROD_URL1 
+      : process.env.DEV_URL1;
+    
+    // Construir la URL de reset
+    const resetUrl = `${frontendUrl}/recuperar-contrasena/${token}`;
+    
+    console.log('Reset URL:', resetUrl); // Para debugging
+
     await this.sendResetEmail(email, resetUrl);
 
     return true;
