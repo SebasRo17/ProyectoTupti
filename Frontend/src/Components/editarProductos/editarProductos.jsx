@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './editarProductos.css';
 import { updatePartialProduct } from '../../Api/productosApi'; 
 import { createKardexProduct } from '../../Api/kardexApi.js';
-import { getProductoImagenesByIdProducto, deleteProductoImagen } from '../../Api/ProductoImagenApi.js'; 
+import { getProductoImagenesByIdProducto, deleteProductoImagen, createProductoImagen } from '../../Api/ProductoImagenApi.js'; 
 const EditarProductos = ({ product, onClose }) => {
     const [formData, setFormData] = useState({
         id: '',
@@ -57,18 +57,21 @@ const EditarProductos = ({ product, onClose }) => {
             alert('Por favor ingrese una URL de imagen válida');
             return;
         }
-
+    
+        // Corregimos el formato de los datos
         const imagenData = {
-            idProducto: formData.id,
+            IdProducto: parseInt(formData.id), // Aseguramos que sea número y usamos mayúscula
             ImagenUrl: newImageUrl
         };
-
+        
         try {
             const nuevaImagen = await createProductoImagen(imagenData);
             setImagenes([...imagenes, nuevaImagen]);
-            setNewImageUrl(''); // Limpiar el input después de agregar la imagen
+            setNewImageUrl('');
         } catch (error) {
             console.error('Error al agregar la imagen del producto:', error);
+            // Agregamos un mensaje más descriptivo para el usuario
+            alert('Error al agregar la imagen. Por favor verifique la URL y vuelva a intentarlo.');
         }
     };
 

@@ -41,7 +41,9 @@ const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
     ? ['https://tupti.store', 'https://www.tupti.store'] 
     : ['http://localhost:5173'],
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 };
 
 app.use(cors(corsOptions));
