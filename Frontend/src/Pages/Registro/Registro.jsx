@@ -101,48 +101,92 @@ function Registro() {
   };
 
   const handleFacebookLogin = () => {
-    const facebookAuthUrl = `${apiUrl}/auth/facebook`;
-    const width = 600;
-    const height = 600;
-    const left = (window.innerWidth - width) / 2;
-    const top = (window.innerHeight - height) / 2;
-
-    const newWindow = window.open(facebookAuthUrl, 'Facebook Login', `width=${width},height=${height},top=${top},left=${left}`);
-    const checkWindowClosed = setInterval(() => {
-      if (newWindow.closed) {
-        clearInterval(checkWindowClosed);
-        window.location.reload(); // Recargar la página principal después de cerrar la ventana emergente
-      }
-    }, 1000);
-  };
-  const handleGoogleLogin = () => {
-    const width = 500;
-    const height = 600;
-    const left = window.screenX + (window.outerWidth - width) / 2;
-    const top = window.screenY + (window.outerHeight - height) / 2;
+      const facebookAuthUrl = process.env.NODE_ENV === 'production'
+        ? 'https://proyectotupti.onrender.com/auth/facebook'
+        : 'http://localhost:3000/auth/facebook';
+        console.log(facebookAuthUrl);
+      const width = 600;
+      const height = 600;
+      const left = (window.innerWidth - width) / 2;
+      const top = (window.innerHeight - height) / 2;
   
-    const authUrl = process.env.NODE_ENV === 'production'
-      ? 'https://proyectotupti.onrender.com/auth/google'
-      : 'http://localhost:3000/auth/google';
+      const loginWindow = window.open(
+        facebookAuthUrl,
+        'Facebook Login',
+        `width=${width},height=${height},top=${top},left=${left}`
+      );
   
-    const popup = window.open(
-      authUrl,
-      'Google Login',
-      `width=${width},height=${height},left=${left},top=${top}`
-    );
+      const handleMessage = async (event) => {
+        const allowedOrigins = [
+          'https://tupti.store',
+          'https://www.tupti.store',
+          'http://localhost:5173'
+        ];
   
-    window.addEventListener('message', (event) => {
-      const allowedOrigins = [
-        'https://tupti.store',
-        'http://localhost:5173'
-      ];
+        if (!allowedOrigins.includes(event.origin)) {
+          console.error('Origen no permitido:', event.origin);
+          return;
+        }
   
-      if (allowedOrigins.includes(event.origin) && event.data.token) {
-        localStorage.setItem('token', event.data.token);
-        // Manejar el login exitoso
-      }
-    });
-  };
+        try {
+          if (event.data.type === 'AUTH_SUCCESS' && event.data.token) {
+            localStorage.setItem('jwtToken', event.data.token);
+            const payload = jwtDecode(event.data.token);
+            const from = location.state?.from || (payload.isAdmin ? '/admin' : '/');
+            navigate(from);
+          }
+        } catch (error) {
+          console.error('Error al procesar el mensaje:', error);
+        } finally {
+          window.removeEventListener('message', handleMessage);
+          if (loginWindow && !loginWindow.closed) {
+            loginWindow.close();
+          }
+        }
+      };
+  
+      window.addEventListener('message', handleMessage);
+  
+      const checkWindow = setInterval(() => {
+        if (loginWindow && loginWindow.closed) {
+          clearInterval(checkWindow);
+          window.removeEventListener('message', handleMessage);
+          console.log('Ventana de login cerrada');
+        }
+      }, 1000);
+    };
+  
+    const handleGoogleLogin = () => {
+      const width = 500;
+      const height = 600;
+      const left = window.screenX + (window.outerWidth - width) / 2;
+      const top = window.screenY + (window.outerHeight - height) / 2;
+  
+      const authUrl = process.env.NODE_ENV === 'production'
+        ? 'https://proyectotupti.onrender.com/auth/google'
+        : 'http://localhost:3000/auth/google';
+  
+      const popup = window.open(
+        authUrl,
+        'Google Login',
+        `width=${width},height=${height},left=${left},top=${top}`
+      );
+  
+      window.addEventListener('message', (event) => {
+        const allowedOrigins = [
+          'https://tupti.store',
+          'http://localhost:5173'
+        ];
+  
+        if (allowedOrigins.includes(event.origin) && event.data.token) {
+          localStorage.setItem('jwtToken', event.data.token);
+          const payload = jwtDecode(event.data.token);
+          const from = location.state?.from || '/';
+          navigate(from);
+        }
+      });
+    };
+  
   const handleEmailChange = (e) => {
     const value = e.target.value;
     setEmail(value);
